@@ -24,5 +24,15 @@ namespace Marlin
         {
             InitializeComponent();
         }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void TextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+
+        }
     }
 }
