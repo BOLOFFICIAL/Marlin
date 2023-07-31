@@ -1,6 +1,4 @@
-﻿
-using Marlin.Models;
-using Marlin.ViewModels.Base;
+﻿using Marlin.ViewModels.Base;
 
 namespace Marlin.ViewModels
 {
