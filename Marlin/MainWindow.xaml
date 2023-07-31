@@ -3,12 +3,15 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:Marlin.ViewModels"
         xmlns:local="clr-namespace:Marlin"
         mc:Ignorable="d"
-        Title="Marlin" Height="450" Width="800">
-    <Window.Resources>
-        
-    </Window.Resources>
+        Title="Marlin" 
+        Height="450" 
+        Width="800">
+    <Window.DataContext>
+        <vm:MainWindowViewModel/>
+    </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -24,25 +27,32 @@
             </Grid.ColumnDefinitions>
             <Menu 
                 Grid.Column="0"
-                FontSize="15"
+                FontWeight="Bold"
                 Background="White"
                 VerticalAlignment="Center">
                 <MenuItem 
-                    Header="Marlin">
+                    Header="Marlin"
+                    FontSize="20"
+                    Height="30px">
                     <MenuItem 
+                        FontSize="15"
                         Header="Настройки" 
                         Click="MenuItem_Click"/>
                     <MenuItem 
+                        FontSize="15"
                         Header="Скрипты" 
                         Click="MenuItem_Click"/>
                     <MenuItem 
+                        FontSize="15"
                         Header="Действия" 
                         Click="MenuItem_Click"/>
                 </MenuItem>
             </Menu>
             <CheckBox
-                Margin="15,0"
+                Margin="20,0"
+                FontSize="15"
                 Grid.Column="1"
+                FontWeight="Bold"
                 Content="Озвучивать"
                 IsChecked="True"/>
         </Grid>
@@ -51,34 +61,70 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition 
                     Width="*"/>
-                <ColumnDefinition 
+                <ColumnDefinition
                     Width="3*"/>
                 <ColumnDefinition 
                     Width="*"/>
             </Grid.ColumnDefinitions>
-            <Grid 
-                Grid.Column="1"
-                Margin="10"
-                VerticalAlignment="Center">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition 
-                        Width="*"/>
-                    <ColumnDefinition 
-                        Width="auto"/>
-                </Grid.ColumnDefinitions>
-                <TextBox
-                    FontSize="20"
-                    Padding="15,0"
-                    HorizontalContentAlignment="Center"
-                    VerticalContentAlignment="Center"
-                    KeyDown="TextBox_KeyDown"
-                    Grid.Column="0"/>
-                <Button
-                    FontSize="15"
-                    Margin="5"
-                    Foreground="White"
-                    Grid.Column="1"
-                    Content="Выполнить"/>
+
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Border 
+                    BorderBrush="Red"
+                    BorderThickness="2"
+                    CornerRadius="20,20,0,0"
+                    Grid.Row="0"
+                    Margin="5,5,5,0">
+                    <Grid 
+                        Margin="10">
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Text="{Binding Path=Command}"/>
+                    </Grid>
+                </Border>
+                <Border 
+                    BorderBrush="Red"
+                    BorderThickness="2"
+                    CornerRadius="0,0,20,20"
+                    Grid.Row="1"
+                    Margin="5,-2,5,5">
+                    <Grid 
+                        Margin="10"
+                        VerticalAlignment="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition 
+                                Width="*"/>
+                            <ColumnDefinition 
+                                Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox
+                            FontSize="20"
+                            Padding="15,0"
+                            Margin="5"
+                            Text="{Binding Path=Command,UpdateSourceTrigger=PropertyChanged}"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            KeyDown="TextBox_KeyDown"
+                            Grid.Column="0"/>
+                        <Border 
+                            Grid.Column="1"
+                            CornerRadius="20"
+                            Padding="5"
+                            Background="Red">
+                            <Button
+                                FontSize="15"
+                                FontWeight="Bold"
+                                Foreground="White"
+                                BorderBrush="Transparent"
+                                Background="Transparent"
+                                Content="Выполнить"/>
+                        </Border>
+                    </Grid>
+                </Border>
             </Grid>
         </Grid>
     </Grid>
