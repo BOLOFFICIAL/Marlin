@@ -16,7 +16,7 @@ namespace Marlin
             {
                 if (rd is MaterialDesignThemes.Wpf.CustomColorTheme Theme)
                 {
-                    (byte alpha, byte red, byte green, byte blue) = Marlin.SystemFiles.Theme.ConvertHexToArgb(ProgramData.Theme.PageColor);
+                    (byte alpha, byte red, byte green, byte blue) = Models.ProgramColor.ConvertHexToArgb(ProgramData.Theme.PageColor);
                     Color pagecolor = Color.FromArgb(alpha, red, green, blue);
                     Theme.PrimaryColor = pagecolor;
                     Color.FromRgb(140, 0, 0).ToString();

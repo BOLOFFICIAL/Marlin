@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Windows.Media;
 
-namespace Marlin.SystemFiles
+namespace Marlin.Models
 {
-    public class Theme
+    public class ProgramColor
     {
-        public string PageColor { get;}
+        public string PageColor { get; }
         public string FontColor { get; }
-        public string BackgroundColor { get;}
-        public string ButtonfontColor { get;}
+        public string BackgroundColor { get; }
+        public string ButtonfontColor { get; }
 
-        public Theme
+        public ProgramColor
             (
             string pagecolor,
             string fontcolor,

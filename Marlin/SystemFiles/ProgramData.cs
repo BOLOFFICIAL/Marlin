@@ -1,16 +1,16 @@
 ﻿using System.Windows.Media;
+using Marlin.Models;
 
 namespace Marlin.SystemFiles
 {
     public class ProgramData
     {
-        public static Context Context = new Context();
-        public static Theme Theme = new Theme
+        public static ProgramColor Theme = new ProgramColor
             (
-            Color.FromRgb(255, 255, 255).ToString(), 
-            Color.FromRgb(255, 255, 255).ToString(), 
-            Color.FromRgb(255, 0, 102).ToString(), 
-            Color.FromRgb(255, 0, 102).ToString()
+            pagecolor: Color.FromRgb(255, 255, 255).ToString(), 
+            fontcolor: Color.FromRgb(255, 255, 255).ToString(), 
+            backgroundcolor: Color.FromRgb(255, 0, 102).ToString(), 
+            buttonfontcolor: Color.FromRgb(255, 0, 102).ToString()
             );
     }
 }

@@ -1,15 +1,14 @@
 ﻿using Marlin.SystemFiles;
 using Marlin.ViewModels.Base;
-using System.Windows.Media;
 
 namespace Marlin.ViewModels
 {
-    class MainWindowViewModel : ViewModel
+    public class MainWindowViewModel : ViewModel
     {
         public string Command
         {
-            get => ProgramData.Context.command;
-            set => Set(ref ProgramData.Context.command, value);
+            get => ProgramContext.Command;
+            set => Set(ref ProgramContext.Command, value);
         }
 
         public string PageColor
