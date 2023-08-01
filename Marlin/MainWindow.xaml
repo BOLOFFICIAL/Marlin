@@ -12,10 +12,15 @@
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
-    <Grid>
+    <Grid 
+        Background="{Binding Path=BackgroundColor}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition 
+                Height="50px"/>
+            <RowDefinition 
+                Height="*"/>
+            <RowDefinition 
+                Height="50px"/>
         </Grid.RowDefinitions>
         <Grid 
             Grid.Row="0">
@@ -28,12 +33,15 @@
             <Menu 
                 Grid.Column="0"
                 FontWeight="Bold"
-                Background="White"
+                Foreground="{Binding Path=FontColor}"
+                
                 VerticalAlignment="Center">
                 <MenuItem 
                     Header="Marlin"
                     FontSize="20"
-                    Height="30px">
+                    Padding="30,0"
+                    Background="{Binding Path=BackgroundColor}"
+                    Height="50px">
                     <MenuItem 
                         FontSize="15"
                         Header="Настройки" 
@@ -53,6 +61,8 @@
                 FontSize="15"
                 Grid.Column="1"
                 FontWeight="Bold"
+                Foreground="{Binding Path=FontColor}"
+                Background="{Binding Path=PageColor}"
                 Content="Озвучивать"
                 IsChecked="True"/>
         </Grid>
@@ -73,7 +83,7 @@
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
                 <Border 
-                    BorderBrush="Red"
+                    BorderBrush="{Binding Path=PageColor}"
                     BorderThickness="2"
                     CornerRadius="20,20,0,0"
                     Grid.Row="0"
@@ -83,11 +93,12 @@
                         <TextBlock
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
+                            Foreground="{Binding Path=FontColor}"
                             Text="{Binding Path=Command}"/>
                     </Grid>
                 </Border>
                 <Border 
-                    BorderBrush="Red"
+                    BorderBrush="{Binding Path=PageColor}"
                     BorderThickness="2"
                     CornerRadius="0,0,20,20"
                     Grid.Row="1"
@@ -105,6 +116,7 @@
                             FontSize="20"
                             Padding="15,0"
                             Margin="5"
+                            Foreground="{Binding Path=FontColor}"
                             Text="{Binding Path=Command,UpdateSourceTrigger=PropertyChanged}"
                             HorizontalContentAlignment="Center"
                             VerticalContentAlignment="Center"
@@ -114,11 +126,11 @@
                             Grid.Column="1"
                             CornerRadius="20"
                             Padding="5"
-                            Background="Red">
+                            Background="{Binding Path=PageColor}">
                             <Button
                                 FontSize="15"
                                 FontWeight="Bold"
-                                Foreground="White"
+                                Foreground="{Binding Path=ButtonfontColor}"
                                 BorderBrush="Transparent"
                                 Background="Transparent"
                                 Content="Выполнить"/>
