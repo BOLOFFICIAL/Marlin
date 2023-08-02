@@ -24,17 +24,9 @@
         </Grid.RowDefinitions>
         <Grid 
             Grid.Row="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition 
-                    Width="*"/>
-                <ColumnDefinition 
-                    Width="auto"/>
-            </Grid.ColumnDefinitions>
             <Menu 
-                Grid.Column="0"
                 FontWeight="Bold"
-                Foreground="{Binding Path=FontColor}"
-                
+                Foreground="{Binding Path=FontColor}" 
                 VerticalAlignment="Center">
                 <MenuItem 
                     Header="Marlin"
@@ -56,15 +48,6 @@
                         Click="MenuItem_Click"/>
                 </MenuItem>
             </Menu>
-            <CheckBox
-                Margin="20,0"
-                FontSize="15"
-                Grid.Column="1"
-                FontWeight="Bold"
-                Foreground="{Binding Path=FontColor}"
-                Background="{Binding Path=PageColor}"
-                Content="Озвучивать"
-                IsChecked="True"/>
         </Grid>
         <Grid 
             Grid.Row="1">

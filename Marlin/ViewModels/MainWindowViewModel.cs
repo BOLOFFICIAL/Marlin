@@ -7,28 +7,28 @@ namespace Marlin.ViewModels
     {
         public string Command
         {
-            get => ProgramContext.Command;
-            set => Set(ref ProgramContext.Command, value);
+            get => Context.Command;
+            set => Set(ref Context.Command, value);
         }
 
         public string PageColor
         {
-            get => ProgramData.Theme.PageColor;
+            get => Context.Settings.Theme.PageColor;
         }
 
         public string FontColor
         {
-            get => ProgramData.Theme.FontColor;
+            get => Context.Settings.Theme.FontColor;
         }
 
         public string BackgroundColor
         {
-            get => ProgramData.Theme.BackgroundColor;
+            get => Context.Settings.Theme.BackgroundColor;
         }
 
         public string ButtonfontColor
         {
-            get => ProgramData.Theme.ButtonfontColor;
+            get => Context.Settings.Theme.ButtonfontColor;
         }
     }
 }
