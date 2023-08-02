@@ -9,7 +9,7 @@
         Height="200" 
         Width="300"
         WindowStartupLocation="CenterScreen"
-        WindowStyle="SingleBorderWindow"
+        WindowStyle="None"
         ResizeMode="NoResize"
         Foreground="{Binding Path=FontColor}">
     <Window.DataContext>
