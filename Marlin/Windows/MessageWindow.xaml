@@ -13,7 +13,7 @@
         ResizeMode="NoResize"
         Foreground="{Binding Path=FontColor}">
     <Window.DataContext>
-        <vm:MessageViewModel/>
+        <vm:MessagePageViewModel/>
     </Window.DataContext>
     <Grid Background="{Binding Path=BackgroundColor}">
 

@@ -3,7 +3,7 @@ using Marlin.ViewModels.Base;
 
 namespace Marlin.ViewModels
 {
-    public class MessageViewModel : ViewModel
+    public class MessagePageViewModel : ViewModel
     {
         public string Message
         {

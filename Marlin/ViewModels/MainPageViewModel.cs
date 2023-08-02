@@ -3,7 +3,7 @@ using Marlin.ViewModels.Base;
 
 namespace Marlin.ViewModels
 {
-    public class MainWindowViewModel : ViewModel
+    public class MainPageViewModel : ViewModel
     {
         public string Command
         {
