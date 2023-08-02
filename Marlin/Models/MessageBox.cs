@@ -1,10 +1,4 @@
 ﻿using Marlin.SystemFiles;
-using Marlin.Windows;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Marlin.Models
 {
@@ -18,7 +12,7 @@ namespace Marlin.Models
         public string FontColor = "";
         public string PageColor = "";
 
-        public static void MakeMessage(string title, string message,string type)
+        public static void MakeMessage(string title, string message, string type)
         {
             Context.MessageBox.Title = title;
             Context.MessageBox.Text = message;
@@ -27,7 +21,7 @@ namespace Marlin.Models
             new Windows.Message().ShowDialog();
         }
 
-        public static void SetMessageColor() 
+        public static void SetMessageColor()
         {
             switch (Context.MessageBox.Type)
             {
