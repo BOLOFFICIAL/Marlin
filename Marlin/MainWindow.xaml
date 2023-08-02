@@ -107,8 +107,8 @@
                             Grid.Column="0"/>
                         <Border 
                             Grid.Column="1"
-                            CornerRadius="20"
-                            Padding="5"
+                            CornerRadius="15"
+                            Margin="5"
                             Background="{Binding Path=PageColor}">
                             <Button
                                 FontSize="15"

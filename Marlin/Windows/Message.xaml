@@ -9,24 +9,19 @@
         Height="200" 
         Width="300"
         WindowStartupLocation="CenterScreen"
-        WindowStyle="None"
+        WindowStyle="SingleBorderWindow"
         ResizeMode="NoResize"
-        Foreground="{Binding Path=FontColor}"
-        AllowsTransparency="True">
+        Foreground="{Binding Path=FontColor}">
     <Window.DataContext>
         <vm:MessageViewModel/>
     </Window.DataContext>
     <Grid Background="{Binding Path=BackgroundColor}">
-        
+
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-
-        <Button Grid.Row="0" 
-                Content="X"
-                Click="Button_Click"
-                HorizontalAlignment="Right"/>
+        
         <Border Grid.Row="1"
                 Margin="10"
                 CornerRadius="20"
