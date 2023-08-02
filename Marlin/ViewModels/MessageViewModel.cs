@@ -8,29 +8,29 @@ namespace Marlin.ViewModels
     {
         public string Message
         {
-            get => Context.Message.Text;
-            set => Set(ref Context.Message.Text, value);
+            get => Context.MessageBox.Text;
+            set => Set(ref Context.MessageBox.Text, value);
         }
 
         public string Title
         {
-            get => Context.Message.Title;
-            set => Set(ref Context.Message.Title, value);
+            get => Context.MessageBox.Title;
+            set => Set(ref Context.MessageBox.Title, value);
         }
 
         public string PageColor
         {
-            get => Context.Message.PageColor;
+            get => Context.MessageBox.PageColor;
         }
 
         public string FontColor
         {
-            get => Context.Message.FontColor;
+            get => Context.MessageBox.FontColor;
         }
 
         public string BackgroundColor
         {
-            get => Context.Message.BackgroundColor;
+            get => Context.MessageBox.BackgroundColor;
         }
     }
 }

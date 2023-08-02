@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Marlin.Models
 {
-    public class Message
+    public class MessageBox
     {
         public string Title = "";
         public string Text = "";
@@ -20,31 +20,31 @@ namespace Marlin.Models
 
         public static void MakeMessage(string title, string message,string type)
         {
-            Context.Message.Title = title;
-            Context.Message.Text = message;
-            Context.Message.Type = type;
+            Context.MessageBox.Title = title;
+            Context.MessageBox.Text = message;
+            Context.MessageBox.Type = type;
             SetMessageColor();
             new Windows.Message().ShowDialog();
         }
 
         public static void SetMessageColor() 
         {
-            switch (Context.Message.Type)
+            switch (Context.MessageBox.Type)
             {
                 case "Info":
-                    Context.Message.BackgroundColor = "#2c3e50";
-                    Context.Message.FontColor = "#ffffff";
-                    Context.Message.PageColor = "#2980b9";
+                    Context.MessageBox.BackgroundColor = "#2c3e50";
+                    Context.MessageBox.FontColor = "#ffffff";
+                    Context.MessageBox.PageColor = "#2980b9";
                     break;
                 case "Error":
-                    Context.Message.BackgroundColor = "#c0392b";
-                    Context.Message.FontColor = "#ffffff";
-                    Context.Message.PageColor = "#e74c3c";
+                    Context.MessageBox.BackgroundColor = "#c0392b";
+                    Context.MessageBox.FontColor = "#ffffff";
+                    Context.MessageBox.PageColor = "#e74c3c";
                     break;
                 case "Question":
-                    Context.Message.BackgroundColor = "#27ae60";
-                    Context.Message.FontColor = "#ffffff";
-                    Context.Message.PageColor = "#2ecc71";
+                    Context.MessageBox.BackgroundColor = "#27ae60";
+                    Context.MessageBox.FontColor = "#ffffff";
+                    Context.MessageBox.PageColor = "#2ecc71";
                     break;
             }
 

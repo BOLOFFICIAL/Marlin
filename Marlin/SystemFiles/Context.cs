@@ -10,7 +10,7 @@ namespace Marlin.SystemFiles
     public class Context
     {
         public static string Command = "";
-        public static Message Message = new Message();
+        public static MessageBox MessageBox = new MessageBox();
         public static Settings Settings = new Settings();
     }
 }

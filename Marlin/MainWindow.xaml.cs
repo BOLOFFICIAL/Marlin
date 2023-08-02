@@ -24,17 +24,17 @@ namespace Marlin
 
                 switch (menu.Header.ToString())
                 {
-                    case "Настройки": Message.MakeMessage(menu.Header.ToString(), "123", "Info"); break;
-                    case "Скрипты": Message.MakeMessage(menu.Header.ToString(), "234", "Error"); break;
-                    case "Действия": Message.MakeMessage(menu.Header.ToString(), "345", "Question"); break;
+                    case "Настройки": Models.MessageBox.MakeMessage(menu.Header.ToString(), "123", "Info"); break;
+                    case "Скрипты": Models.MessageBox.MakeMessage(menu.Header.ToString(), "234", "Error"); break;
+                    case "Действия": Models.MessageBox.MakeMessage(menu.Header.ToString(), "345", "Question"); break;
                 }
 
                 Context.Settings.Theme = new ProgramColor
                     (
-                    pagecolor: Context.Message.PageColor,
-                    fontcolor: Context.Message.FontColor,
-                    backgroundcolor: Context.Message.BackgroundColor,
-                    buttonfontcolor: Context.Message.BackgroundColor
+                    pagecolor: Context.MessageBox.PageColor,
+                    fontcolor: Context.MessageBox.FontColor,
+                    backgroundcolor: Context.MessageBox.BackgroundColor,
+                    buttonfontcolor: Context.MessageBox.BackgroundColor
                     );
             }
 
@@ -44,7 +44,7 @@ namespace Marlin
         {
             if (e.Key == Key.Enter)
             {
-                MessageBox.Show(Context.Command);
+                System.Windows.MessageBox.Show(Context.Command);
                 Settings.SaveSettings();
             }
         }
