@@ -1,0 +1,41 @@
+﻿<Page x:Class="Marlin.Views.MessagePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:vm="clr-namespace:Marlin.ViewModels.Message"
+      xmlns:local="clr-namespace:Marlin.Windows"
+      Foreground="{Binding Path=FontColor}">
+    <Page.DataContext>
+        <vm:MessagePageViewModel/>
+    </Page.DataContext>
+    <Grid Background="{Binding Path=BackgroundColor}">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="1"
+                Margin="10"
+                CornerRadius="20"
+                BorderThickness="2"
+                BorderBrush="{Binding Path=PageColor}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" 
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Text="{Binding Path=Title}"/>
+
+                <TextBlock Grid.Row="1" 
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Text="{Binding Path=Message}"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Page>

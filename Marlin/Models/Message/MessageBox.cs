@@ -1,4 +1,6 @@
 ﻿using Marlin.SystemFiles;
+using Marlin.Views;
+using System.Windows;
 
 namespace Marlin.Models
 {
@@ -18,7 +20,17 @@ namespace Marlin.Models
             Context.MessageBox.Text = message;
             Context.MessageBox.Type = type;
             SetMessageColor();
-            new Windows.Message().ShowDialog();
+            Window window = new Window
+            {
+                Height = 200,
+                Width = 300,
+                WindowStartupLocation = WindowStartupLocation.CenterScreen,
+                WindowStyle = WindowStyle.None,
+                ResizeMode = ResizeMode.NoResize,
+                Content = new MessagePage(),
+            };
+
+            window.ShowDialog();
         }
 
         public static void SetMessageColor()

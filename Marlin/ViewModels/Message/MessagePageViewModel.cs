@@ -1,7 +1,7 @@
 ﻿using Marlin.SystemFiles;
 using Marlin.ViewModels.Base;
 
-namespace Marlin.ViewModels
+namespace Marlin.ViewModels.Message
 {
     public class MessagePageViewModel : ViewModel
     {
