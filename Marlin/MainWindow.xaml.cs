@@ -1,7 +1,5 @@
 ﻿using Marlin.Models;
 using Marlin.SystemFiles;
-using System;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -23,21 +21,23 @@ namespace Marlin
         {
             if (sender is MenuItem menu)
             {
-                Context.Settings.Theme = new ProgramColor
-            (
-            pagecolor: Color.FromRgb(255, 12, 255).ToString(),
-            fontcolor: Color.FromRgb(255, 12, 255).ToString(),
-            backgroundcolor: Color.FromRgb(255, 0, 102).ToString(),
-            buttonfontcolor: Color.FromRgb(255, 0, 102).ToString()
-            );
+
                 switch (menu.Header.ToString())
                 {
                     case "Настройки": Message.MakeMessage(menu.Header.ToString(), "123", "Info"); break;
                     case "Скрипты": Message.MakeMessage(menu.Header.ToString(), "234", "Error"); break;
                     case "Действия": Message.MakeMessage(menu.Header.ToString(), "345", "Question"); break;
                 }
+
+                Context.Settings.Theme = new ProgramColor
+                    (
+                    pagecolor: Context.Message.PageColor,
+                    fontcolor: Context.Message.FontColor,
+                    backgroundcolor: Context.Message.BackgroundColor,
+                    buttonfontcolor: Context.Message.BackgroundColor
+                    );
             }
-            
+
         }
 
         private void TextBox_KeyDown(object sender, KeyEventArgs e)
@@ -46,8 +46,6 @@ namespace Marlin
             {
                 MessageBox.Show(Context.Command);
                 Settings.SaveSettings();
-
-                
             }
         }
     }

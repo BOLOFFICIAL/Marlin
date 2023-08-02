@@ -20,31 +20,31 @@ namespace Marlin.Models
 
         public static void MakeMessage(string title, string message,string type)
         {
-            Context.MessageContext.Title = title;
-            Context.MessageContext.Text = message;
-            Context.MessageContext.Type = type;
+            Context.Message.Title = title;
+            Context.Message.Text = message;
+            Context.Message.Type = type;
             SetMessageColor();
             new Windows.Message().ShowDialog();
         }
 
         public static void SetMessageColor() 
         {
-            switch (Context.MessageContext.Type)
+            switch (Context.Message.Type)
             {
                 case "Info":
-                    Context.MessageContext.BackgroundColor = "#2c3e50";
-                    Context.MessageContext.FontColor = "#ffffff";
-                    Context.MessageContext.PageColor = "#2980b9";
+                    Context.Message.BackgroundColor = "#2c3e50";
+                    Context.Message.FontColor = "#ffffff";
+                    Context.Message.PageColor = "#2980b9";
                     break;
                 case "Error":
-                    Context.MessageContext.BackgroundColor = "#c0392b";
-                    Context.MessageContext.FontColor = "#ffffff";
-                    Context.MessageContext.PageColor = "#e74c3c";
+                    Context.Message.BackgroundColor = "#c0392b";
+                    Context.Message.FontColor = "#ffffff";
+                    Context.Message.PageColor = "#e74c3c";
                     break;
                 case "Question":
-                    Context.MessageContext.BackgroundColor = "#27ae60";
-                    Context.MessageContext.FontColor = "#ffffff";
-                    Context.MessageContext.PageColor = "#2ecc71";
+                    Context.Message.BackgroundColor = "#27ae60";
+                    Context.Message.FontColor = "#ffffff";
+                    Context.Message.PageColor = "#2ecc71";
                     break;
             }
 

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Windows.Media;
 
 namespace Marlin.Models
 {
@@ -30,7 +29,16 @@ namespace Marlin.Models
                 hexColor = hexColor.Substring(1);
 
             if (hexColor.Length != 8)
-                throw new ArgumentException("Invalid HEX color format. The color should be represented as #AARRGGBB.", nameof(hexColor));
+            {
+                if (hexColor.Length == 6)
+                {
+                    hexColor = "FF" + hexColor;
+                }
+                else
+                {
+                    throw new ArgumentException("Invalid HEX color format. The color should be represented as #AARRGGBB.", nameof(hexColor));
+                }
+            }
 
             string alphaHex = hexColor.Substring(0, 2);
             string redHex = hexColor.Substring(2, 2);

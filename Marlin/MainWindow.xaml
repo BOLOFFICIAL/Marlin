@@ -116,7 +116,7 @@
                                 Foreground="{Binding Path=ButtonfontColor}"
                                 BorderBrush="Transparent"
                                 Background="Transparent"
-                                Content="Выполнить"/>
+                                Content="➤"/>
                         </Border>
                     </Grid>
                 </Border>
