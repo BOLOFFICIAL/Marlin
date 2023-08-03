@@ -50,12 +50,6 @@ namespace Marlin.Models
                 {
                     sw.WriteAsync(settings);
                 }
-                MessageBox.MakeMessage("Перезапустить приложение?", MessageType.YesNoQuestion);
-                if (Context.MessageBox.Answer == "Yes")
-                {
-                    Process.Start(Process.GetCurrentProcess().MainModule.FileName);
-                    Environment.Exit(0);
-                }
             }
             catch (Exception)
             {
