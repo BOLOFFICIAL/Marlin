@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using Marlin.SystemFiles;
+using System.Windows.Controls;
 
 namespace Marlin.Views.Message
 {
@@ -10,6 +11,11 @@ namespace Marlin.Views.Message
         public MessagePage()
         {
             InitializeComponent();
+        }
+
+        private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            Context.MessageWindow.Close();
         }
     }
 }

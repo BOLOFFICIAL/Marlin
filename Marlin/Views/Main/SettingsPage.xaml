@@ -3,12 +3,92 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:vm="clr-namespace:Marlin.ViewModels.Main"
       xmlns:local="clr-namespace:Marlin.Views.Main"
       mc:Ignorable="d" 
       d:Height="450" 
       d:Width="800"
+      Foreground="{Binding Path=FontColor}"
       Title="SettingsPage">
-    <Grid>
-        
+    <Page.DataContext>
+        <vm:SettingsPageViewModel/>
+    </Page.DataContext>
+    <Grid Background="{Binding Path=BackgroundColor,UpdateSourceTrigger=PropertyChanged}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50px"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <TextBlock  Background="Transparent"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontSize="20"
+                        Padding="30,0"
+                        Text="Настройки"/>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <ScrollViewer VerticalScrollBarVisibility="Hidden">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Border Grid.Row="0"
+                            Margin="10,0,10,5"
+                            CornerRadius="20"
+                            BorderBrush="{Binding Path=PageColor}"
+                            BorderThickness="2">
+                        <Grid Margin="15,10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0"
+                                       FontSize="15"
+                                       Text="Программа"/>
+                        </Grid>
+                    </Border>
+                    
+                    <Border Grid.Row="1"
+                            Margin="10,5,10,10"
+                            CornerRadius="20"
+                            BorderBrush="{Binding Path=PageColor}"
+                            BorderThickness="2">
+                        <Grid Margin="15,10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0"
+                                       FontSize="15"
+                                       Text="Администрирование"/>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </ScrollViewer>
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150px"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <Button Grid.Column="0"
+                    Content="Назад"
+                    Margin="4,4,2,4"
+                    Background="{Binding Path=PageColor}"
+                    Foreground="{Binding Path=BackgroundColor}"
+                    Click="Button_Click"/>
+
+            <Button Grid.Column="1"
+                    Content="Сохранить"
+                    Margin="2,4,4,4"
+                    Background="{Binding Path=PageColor}"
+                    Foreground="{Binding Path=BackgroundColor}"
+                    Click="Button_Click"/>
+        </Grid>
     </Grid>
 </Page>

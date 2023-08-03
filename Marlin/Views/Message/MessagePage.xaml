@@ -4,37 +4,72 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:vm="clr-namespace:Marlin.ViewModels.Message"
       xmlns:local="clr-namespace:Marlin.Windows"
+      Width="auto"
+      Height="auto"
       Foreground="{Binding Path=FontColor}">
     <Page.DataContext>
         <vm:MessagePageViewModel/>
     </Page.DataContext>
     <Grid Background="{Binding Path=BackgroundColor}">
-
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-
-        <Border Grid.Row="1"
+        <Border Grid.Row="0"
                 Margin="10"
                 CornerRadius="20"
                 BorderThickness="2"
                 BorderBrush="{Binding Path=PageColor}">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="40px"/>
                     <RowDefinition Height="*"/>
+                    <RowDefinition Height="40px"/>
                 </Grid.RowDefinitions>
 
                 <TextBlock Grid.Row="0" 
+                           FontSize="20"
                            HorizontalAlignment="Center"
                            VerticalAlignment="Center"
                            Text="{Binding Path=Title}"/>
 
                 <TextBlock Grid.Row="1" 
-                           HorizontalAlignment="Center"
-                           VerticalAlignment="Center"
-                           Text="{Binding Path=Message}"/>
+                       FontSize="15"
+                       TextWrapping="Wrap"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Text="{Binding Path=Message}"/>
+
+                <Button  Grid.Row="2"
+                         HorizontalAlignment="Center"
+                         VerticalAlignment="Center"
+                         Width="auto"
+                         Visibility="{Binding Path=IsOk}"
+                         Height="auto"
+                         Click="Button_Click"
+                         Content="OK"/>
+
+                <Grid Grid.Row="2"
+                      Visibility="{Binding Path=IsYesNoQuestion}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button  Grid.Column="0"
+                         HorizontalAlignment="Center"
+                         VerticalAlignment="Center"
+                         Width="auto"
+                             Margin="4,4,2,4"
+                         Height="auto"
+                         Click="Button_Click"
+                         Content="Yes"/>
+
+                    <Button  Grid.Column="1"
+                         HorizontalAlignment="Center"
+                         VerticalAlignment="Center"
+                         Width="auto"
+                         Height="auto"
+                             Margin="2,4,4,4"
+                         Click="Button_Click"
+                         Content="No"/>
+                </Grid>
             </Grid>
         </Border>
     </Grid>

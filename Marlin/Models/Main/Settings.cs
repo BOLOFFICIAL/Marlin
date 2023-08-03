@@ -25,6 +25,10 @@ namespace Marlin.Models
         {
             Theme = new ProgramColor(pagecolor.ToString(), fontcolor.ToString(), backgroundcolor.ToString(), buttonfontcolor.ToString());
         }
+        public void SetTheme(ProgramColor newtheme)
+        {
+            Theme = newtheme;
+        }
 
         public void SetVoise(string voise, int speed)
         {

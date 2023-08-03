@@ -1,5 +1,6 @@
 ﻿using Marlin.SystemFiles;
 using Marlin.ViewModels.Base;
+using System.Windows;
 
 namespace Marlin.ViewModels.Message
 {
@@ -30,6 +31,21 @@ namespace Marlin.ViewModels.Message
         public string BackgroundColor
         {
             get => Context.MessageBox.BackgroundColor;
+        }
+
+        public Visibility IsOk 
+        {
+            get => Context.MessageBox.isOk;
+        }
+
+        public Visibility IsTextQuestion
+        {
+            get => Context.MessageBox.isTextQuestion;
+        }
+
+        public Visibility IsYesNoQuestion
+        {
+            get => Context.MessageBox.isYesNoQuestion;
         }
     }
 }

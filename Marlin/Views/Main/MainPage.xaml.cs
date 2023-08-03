@@ -1,6 +1,5 @@
 ﻿using Marlin.Models;
 using Marlin.SystemFiles;
-using Marlin.Views.Main;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -21,21 +20,12 @@ namespace Marlin.Views.Main
         {
             if (sender is MenuItem menu)
             {
-
                 switch (menu.Header.ToString())
                 {
                     case "Настройки": NavigationService.Navigate(new SettingsPage()); break;
-                    case "Скрипты": Models.MessageBox.MakeMessage(menu.Header.ToString(), "234", "Error"); break;
-                    case "Действия": Models.MessageBox.MakeMessage(menu.Header.ToString(), "345", "Question"); break;
+                    case "Скрипты": Models.MessageBox.MakeMessage("Question", "Gay?", "YesNoQuestion"); break;
+                    case "Действия": Models.MessageBox.MakeMessage("Error", "На данный момент страница не доступна", "Error"); break;
                 }
-
-                Context.Settings.Theme = new ProgramColor
-                    (
-                    pagecolor: Context.MessageBox.PageColor,
-                    fontcolor: Context.MessageBox.FontColor,
-                    backgroundcolor: Context.MessageBox.BackgroundColor,
-                    buttonfontcolor: Context.MessageBox.BackgroundColor
-                    );
             }
 
         }

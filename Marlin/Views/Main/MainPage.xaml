@@ -4,18 +4,18 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:vm="clr-namespace:Marlin.ViewModels.Main"
-      xmlns:local="clr-namespace:Marlin.Views"
+      xmlns:local="clr-namespace:Marlin.Views.Main"
       mc:Ignorable="d" 
       d:DesignHeight="450" 
       d:DesignWidth="800"
       ShowsNavigationUI="False"
       Title="Marlin"
-      Foreground="{Binding Path=FontColor}">
+      Foreground="{Binding Path=FontColor,UpdateSourceTrigger=PropertyChanged}">
     <Page.DataContext>
         <vm:MainPageViewModel/>
     </Page.DataContext>
     <Grid 
-        Background="{Binding Path=BackgroundColor}">
+        Background="{Binding Path=BackgroundColor,UpdateSourceTrigger=PropertyChanged}">
         <Grid.RowDefinitions>
             <RowDefinition 
                 Height="50px"/>
@@ -28,13 +28,13 @@
             Grid.Row="0">
             <Menu 
                 FontWeight="Bold"
-                Foreground="{Binding Path=FontColor}"
+                Foreground="{Binding Path=FontColor,UpdateSourceTrigger=PropertyChanged}"
                 VerticalAlignment="Center">
                 <MenuItem 
                     Header="Marlin"
                     FontSize="20"
                     Padding="30,0"
-                    Background="{Binding Path=BackgroundColor}"
+                    Background="{Binding Path=BackgroundColor,UpdateSourceTrigger=PropertyChanged}"
                     Height="50px">
                     <MenuItem 
                         FontSize="15"
@@ -68,7 +68,7 @@
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
                 <Border 
-                    BorderBrush="{Binding Path=PageColor}"
+                    BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                     BorderThickness="2"
                     CornerRadius="20,20,0,0"
                     Grid.Row="0"
@@ -78,11 +78,11 @@
                         <TextBlock
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
-                            Text="{Binding Path=Command}"/>
+                            Text="{Binding Path=Command,UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
                 </Border>
                 <Border 
-                    BorderBrush="{Binding Path=PageColor}"
+                    BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                     BorderThickness="2"
                     CornerRadius="0,0,20,20"
                     Grid.Row="1"
@@ -109,11 +109,11 @@
                             Grid.Column="1"
                             CornerRadius="15"
                             Margin="5"
-                            Background="{Binding Path=PageColor}">
+                            Background="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}">
                             <Button
                                 FontSize="15"
                                 FontWeight="Bold"
-                                Foreground="{Binding Path=ButtonfontColor}"
+                                Foreground="{Binding Path=ButtonfontColor,UpdateSourceTrigger=PropertyChanged}"
                                 BorderBrush="Transparent"
                                 Background="Transparent"
                                 Content="➤"/>

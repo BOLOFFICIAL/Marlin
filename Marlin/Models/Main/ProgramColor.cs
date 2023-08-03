@@ -4,10 +4,10 @@ namespace Marlin.Models
 {
     public class ProgramColor
     {
-        public string PageColor { get; set; }
-        public string FontColor { get; set; }
-        public string BackgroundColor { get; set; }
-        public string ButtonfontColor { get; set; }
+        public string PageColor;
+        public string FontColor;
+        public string BackgroundColor;
+        public string ButtonfontColor;
 
         public ProgramColor
             (
