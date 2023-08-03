@@ -12,10 +12,10 @@ namespace Marlin.ViewModels.Message
             set => Set(ref Context.MessageBox.Text, value);
         }
 
-        public string Title
+        public string Symbol
         {
-            get => Context.MessageBox.Title;
-            set => Set(ref Context.MessageBox.Title, value);
+            get => Context.MessageBox.Symbol;
+            set => Set(ref Context.MessageBox.Symbol, value);
         }
 
         public string PageColor
@@ -33,7 +33,7 @@ namespace Marlin.ViewModels.Message
             get => Context.MessageBox.BackgroundColor;
         }
 
-        public Visibility IsOk 
+        public Visibility IsOk
         {
             get => Context.MessageBox.isOk;
         }

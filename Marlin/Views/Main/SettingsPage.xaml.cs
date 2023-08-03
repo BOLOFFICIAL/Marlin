@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using Marlin.Models;
+using System.Windows.Controls;
 
 namespace Marlin.Views.Main
 {
@@ -13,6 +14,11 @@ namespace Marlin.Views.Main
         }
 
         private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            Settings.SaveSettings();
+        }
+
+        private void Button_Click_1(object sender, System.Windows.RoutedEventArgs e)
         {
             NavigationService.Navigate(new MainPage());
         }

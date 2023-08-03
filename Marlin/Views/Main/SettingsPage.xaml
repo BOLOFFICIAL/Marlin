@@ -81,7 +81,7 @@
                     Margin="4,4,2,4"
                     Background="{Binding Path=PageColor}"
                     Foreground="{Binding Path=BackgroundColor}"
-                    Click="Button_Click"/>
+                    Click="Button_Click_1"/>
 
             <Button Grid.Column="1"
                     Content="Сохранить"

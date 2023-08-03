@@ -23,8 +23,8 @@ namespace Marlin.Views.Main
                 switch (menu.Header.ToString())
                 {
                     case "Настройки": NavigationService.Navigate(new SettingsPage()); break;
-                    case "Скрипты": Models.MessageBox.MakeMessage("Question", "Gay?", "YesNoQuestion"); break;
-                    case "Действия": Models.MessageBox.MakeMessage("Error", "На данный момент страница не доступна", "Error"); break;
+                    case "Скрипты": Models.MessageBox.MakeMessage("Gay?", MessageType.TextQuestion); break;
+                    case "Действия": Models.MessageBox.MakeMessage("На данный момент страница не доступна", MessageType.Error); break;
                 }
             }
 
@@ -34,8 +34,7 @@ namespace Marlin.Views.Main
         {
             if (e.Key == Key.Enter)
             {
-                System.Windows.MessageBox.Show(Context.Command);
-                Settings.SaveSettings();
+                Models.MessageBox.MakeMessage(Context.Command, MessageType.Info);
             }
         }
     }
