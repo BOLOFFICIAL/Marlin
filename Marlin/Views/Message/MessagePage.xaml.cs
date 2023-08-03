@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace Marlin.Views
+namespace Marlin.Views.Message
 {
     /// <summary>
     /// Логика взаимодействия для MessagePage.xaml

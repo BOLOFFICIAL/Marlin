@@ -1,10 +1,11 @@
 ﻿using Marlin.Models;
 using Marlin.SystemFiles;
+using Marlin.Views.Main;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace Marlin.Views
+namespace Marlin.Views.Main
 {
     /// <summary>
     /// Логика взаимодействия для MainPage.xaml
@@ -23,7 +24,7 @@ namespace Marlin.Views
 
                 switch (menu.Header.ToString())
                 {
-                    case "Настройки": Models.MessageBox.MakeMessage(menu.Header.ToString(), "123", "Info"); break;
+                    case "Настройки": NavigationService.Navigate(new SettingsPage()); break;
                     case "Скрипты": Models.MessageBox.MakeMessage(menu.Header.ToString(), "234", "Error"); break;
                     case "Действия": Models.MessageBox.MakeMessage(menu.Header.ToString(), "345", "Question"); break;
                 }

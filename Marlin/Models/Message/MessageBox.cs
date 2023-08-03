@@ -1,5 +1,6 @@
 ﻿using Marlin.SystemFiles;
 using Marlin.Views;
+using Marlin.Views.Message;
 using System.Windows;
 
 namespace Marlin.Models
