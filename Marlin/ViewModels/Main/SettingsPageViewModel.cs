@@ -1,5 +1,7 @@
 ﻿using Marlin.SystemFiles;
 using Marlin.ViewModels.Base;
+using System.Collections.Generic;
+using System.Windows.Documents;
 
 namespace Marlin.ViewModels.Main
 {
@@ -27,6 +29,12 @@ namespace Marlin.ViewModels.Main
         {
             get => Context.Settings.IsSay;
             set => Set(ref Context.Settings.IsSay, value);
+        }
+
+        public List<int> Speed 
+        {
+            get => Context.Settings.Speed;
+            set => Set(ref Context.Settings.Speed, value);
         }
     }
 }

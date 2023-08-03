@@ -66,7 +66,7 @@ namespace Marlin.Models
                     Context.MessageBox.Symbol = "?";
                     Context.MessageBox.BackgroundColor = "#CCCCCC";
                     Context.MessageBox.FontColor = "#000000";
-                    Context.MessageBox.PageColor = "#FFBA00";
+                    Context.MessageBox.PageColor = "#007DFF";
                     Context.MessageBox.isOk = Visibility.Hidden;
                     Context.MessageBox.isTextQuestion = Visibility.Hidden;
                     Context.MessageBox.isYesNoQuestion = Visibility.Visible;
@@ -75,7 +75,7 @@ namespace Marlin.Models
                     Context.MessageBox.Symbol = "?";
                     Context.MessageBox.BackgroundColor = "#CCCCCC";
                     Context.MessageBox.FontColor = "#000000";
-                    Context.MessageBox.PageColor = "#FFBA00";
+                    Context.MessageBox.PageColor = "#007DFF";
                     Context.MessageBox.isOk = Visibility.Hidden;
                     Context.MessageBox.isTextQuestion = Visibility.Visible;
                     Context.MessageBox.isYesNoQuestion = Visibility.Hidden;

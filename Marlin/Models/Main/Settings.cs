@@ -1,8 +1,10 @@
 ﻿using Marlin.SystemFiles;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Windows.Documents;
 using System.Windows.Media;
 
 namespace Marlin.Models
@@ -10,10 +12,11 @@ namespace Marlin.Models
     public class Settings
     {
         public ProgramColor Theme { get; set; } = new ProgramColor();
-        public string Password { get; set; } = "";
-        public string MainFolder { get; set; } = "";
+        public string Password  = "";
+        public string MainFolder = "";
         public Voice Voice { get; set; } = new Voice();
         public bool IsSay = true;
+        public List<int> Speed = new() { 1, 2, 3, 4, 5, 6 };
 
         public void SetTheme(Color pagecolor, Color fontcolor, Color backgroundcolor)
         {
