@@ -10,11 +10,11 @@
     <Page.DataContext>
         <vm:MessagePageViewModel/>
     </Page.DataContext>
-    <Grid Background="{Binding Path=BackgroundColor}">
+    <Grid Background="{Binding Path=PageColor}">
         <Border Grid.Row="0"
-                Margin="10"
-                CornerRadius="20"
-                BorderThickness="2"
+                CornerRadius="25"
+                BorderThickness="5"
+                Background="{Binding Path=BackgroundColor}"
                 BorderBrush="{Binding Path=PageColor}">
             <Grid>
                 <Grid.RowDefinitions>
@@ -32,15 +32,16 @@
                            HorizontalAlignment="Center"
                            VerticalAlignment="Center"
                            FontSize="70"
-                           Foreground="{Binding Path=FontColor}"
+                           Foreground="{Binding Path=PageColor}"
                            FontWeight="Bold"
                            Text="{Binding Path=Symbol}"/>
 
                     <TextBlock Grid.Column="1" 
                                FontSize="15"
+                               FontWeight="Bold"
                                Margin="0,10,10,0"
                                TextWrapping="Wrap"
-                               HorizontalAlignment="Center"
+                               HorizontalAlignment="Stretch"
                                VerticalAlignment="Center"
                                Text="{Binding Path=Message}"/>
                 </Grid>
@@ -49,7 +50,10 @@
                     <Button  HorizontalAlignment="Center"
                              VerticalAlignment="Center"
                              Width="auto"
-                             Background="{Binding Path=BackgroundColor}"
+                             BorderThickness="0"
+                             BorderBrush="Transparent"
+                             Foreground="{Binding Path=BackgroundColor}"
+                             Background="{Binding Path=PageColor}"
                              Visibility="{Binding Path=IsOk}"
                              Height="auto"
                              Click="Button_Click"
@@ -62,8 +66,10 @@
                         </Grid.ColumnDefinitions>
 
                         <Button  Grid.Column="0"
-                                 Background="{Binding Path=BackgroundColor}"
-                                 Foreground="{Binding Path=FontColor}"
+                                 BorderThickness="0"
+                                 BorderBrush="Transparent"
+                                 Foreground="{Binding Path=BackgroundColor}"
+                                 Background="{Binding Path=PageColor}"
                                  HorizontalAlignment="Center"
                                  VerticalAlignment="Center"
                                  Width="auto"
@@ -73,8 +79,10 @@
                                  Content="Yes"/>
 
                         <Button  Grid.Column="1"
-                                 Background="{Binding Path=BackgroundColor}"
-                                 Foreground="{Binding Path=FontColor}"
+                                 BorderThickness="0"
+                                 BorderBrush="Transparent"
+                                 Foreground="{Binding Path=BackgroundColor}"
+                                 Background="{Binding Path=PageColor}"
                                  HorizontalAlignment="Center"
                                  VerticalAlignment="Center"
                                  Width="auto"
@@ -97,13 +105,16 @@
                                  HorizontalContentAlignment="Center"
                                  VerticalAlignment="Center"
                                  Width="200"
+                                 Text="{Binding Path=Answer}"
                                  FontSize="20"
                                  Margin="10,10,2,10"
                                  Height="auto"/>
 
                         <Button  Grid.Column="1"
-                                 Background="{Binding Path=BackgroundColor}"
-                                 Foreground="{Binding Path=FontColor}"
+                                 BorderThickness="0"
+                                 BorderBrush="Transparent"
+                                 Foreground="{Binding Path=BackgroundColor}"
+                                 Background="{Binding Path=PageColor}"
                                  HorizontalAlignment="Center"
                                  VerticalAlignment="Center"
                                  Width="auto"

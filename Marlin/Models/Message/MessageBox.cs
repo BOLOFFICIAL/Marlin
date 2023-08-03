@@ -9,6 +9,7 @@ namespace Marlin.Models
         public string Symbol = "";
         public string Text = "";
         public MessageType Type = 0;
+        public string Answer = "";
 
         public Visibility isTextQuestion = Visibility.Hidden;
         public Visibility isYesNoQuestion = Visibility.Hidden;
@@ -20,6 +21,7 @@ namespace Marlin.Models
 
         public static void MakeMessage(string message, MessageType type)
         {
+            Context.MessageBox.Answer = "";
             Context.MessageBox.Text = message;
             Context.MessageBox.Type = type;
             SetMessageColor();
@@ -44,40 +46,40 @@ namespace Marlin.Models
             {
                 case MessageType.Info:
                     Context.MessageBox.Symbol = "!";
-                    Context.MessageBox.BackgroundColor = "#2c3e50";
-                    Context.MessageBox.FontColor = "#ffffff";
-                    Context.MessageBox.PageColor = "#2980b9";
+                    Context.MessageBox.BackgroundColor = "#CCCCCC";
+                    Context.MessageBox.FontColor = "#000000";
+                    Context.MessageBox.PageColor = "#228B22";
                     Context.MessageBox.isOk = Visibility.Visible;
                     Context.MessageBox.isTextQuestion = Visibility.Hidden;
                     Context.MessageBox.isYesNoQuestion = Visibility.Hidden;
                     break;
                 case MessageType.Error:
                     Context.MessageBox.Symbol = "X";
-                    Context.MessageBox.BackgroundColor = "#c0392b";
-                    Context.MessageBox.FontColor = "#ffffff";
-                    Context.MessageBox.PageColor = "#e74c3c";
+                    Context.MessageBox.BackgroundColor = "#CCCCCC";
+                    Context.MessageBox.FontColor = "#000000";
+                    Context.MessageBox.PageColor = "#FF4500";
                     Context.MessageBox.isOk = Visibility.Visible;
                     Context.MessageBox.isTextQuestion = Visibility.Hidden;
                     Context.MessageBox.isYesNoQuestion = Visibility.Hidden;
                     break;
                 case MessageType.YesNoQuestion:
                     Context.MessageBox.Symbol = "?";
-                    Context.MessageBox.BackgroundColor = "#27ae60";
-                    Context.MessageBox.FontColor = "#ffffff";
-                    Context.MessageBox.PageColor = "#2ecc71";
+                    Context.MessageBox.BackgroundColor = "#CCCCCC";
+                    Context.MessageBox.FontColor = "#000000";
+                    Context.MessageBox.PageColor = "#FFBA00";
                     Context.MessageBox.isOk = Visibility.Hidden;
                     Context.MessageBox.isTextQuestion = Visibility.Hidden;
                     Context.MessageBox.isYesNoQuestion = Visibility.Visible;
                     break;
                 case MessageType.TextQuestion:
                     Context.MessageBox.Symbol = "?";
-                    Context.MessageBox.BackgroundColor = "#27ae60";
-                    Context.MessageBox.FontColor = "#ffffff";
-                    Context.MessageBox.PageColor = "#2ecc71";
+                    Context.MessageBox.BackgroundColor = "#CCCCCC";
+                    Context.MessageBox.FontColor = "#000000";
+                    Context.MessageBox.PageColor = "#FFBA00";
                     Context.MessageBox.isOk = Visibility.Hidden;
                     Context.MessageBox.isTextQuestion = Visibility.Visible;
                     Context.MessageBox.isYesNoQuestion = Visibility.Hidden;
-                    break;
+                    break; 
             }
         }
     }

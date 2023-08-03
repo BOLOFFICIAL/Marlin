@@ -9,21 +9,15 @@ namespace Marlin.Models
 {
     public class Settings
     {
-        public ProgramColor Theme { get; set; } = new ProgramColor
-            (
-            pagecolor: Color.FromRgb(255, 255, 255).ToString(),
-            fontcolor: Color.FromRgb(255, 255, 255).ToString(),
-            backgroundcolor: Color.FromRgb(255, 0, 102).ToString(),
-            buttonfontcolor: Color.FromRgb(255, 0, 102).ToString()
-            );
+        public ProgramColor Theme { get; set; } = new ProgramColor();
         public string Password { get; set; } = "";
         public string MainFolder { get; set; } = "";
         public Voice Voice { get; set; } = new Voice();
-        public bool IsSay { get; set; } = true;
+        public bool IsSay = true;
 
-        public void SetTheme(Color pagecolor, Color fontcolor, Color backgroundcolor, Color buttonfontcolor)
+        public void SetTheme(Color pagecolor, Color fontcolor, Color backgroundcolor)
         {
-            Theme = new ProgramColor(pagecolor.ToString(), fontcolor.ToString(), backgroundcolor.ToString(), buttonfontcolor.ToString());
+            Theme = new ProgramColor(pagecolor.ToString(), fontcolor.ToString(), backgroundcolor.ToString());
         }
         public void SetTheme(ProgramColor newtheme)
         {
@@ -32,11 +26,14 @@ namespace Marlin.Models
 
         public void SetVoise(string voise, int speed)
         {
-            Voice = new Voice()
+            if (voise != Voice.Voise || speed != Voice.Speed)
             {
-                Voise = voise,
-                Speed = speed
-            };
+                Voice = new Voice()
+                {
+                    Voise = voise,
+                    Speed = speed
+                };
+            }
         }
 
         public static void SaveSettings()
@@ -50,8 +47,12 @@ namespace Marlin.Models
                 {
                     sw.WriteAsync(settings);
                 }
-                Process.Start(Process.GetCurrentProcess().MainModule.FileName);
-                Environment.Exit(0);
+                MessageBox.MakeMessage("Перезапустить приложение?", MessageType.YesNoQuestion);
+                if (Context.MessageBox.Answer == "Yes")
+                {
+                    Process.Start(Process.GetCurrentProcess().MainModule.FileName);
+                    Environment.Exit(0);
+                }
             }
             catch (Exception)
             {

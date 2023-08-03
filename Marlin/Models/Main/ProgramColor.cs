@@ -4,23 +4,22 @@ namespace Marlin.Models
 {
     public class ProgramColor
     {
-        public string PageColor;
-        public string FontColor;
-        public string BackgroundColor;
-        public string ButtonfontColor;
+        public string PageColor = "#000000";
+        public string FontColor = "#000000";
+        public string BackgroundColor = "#FFFFFF";
+
+        public ProgramColor() { }
 
         public ProgramColor
             (
             string pagecolor,
             string fontcolor,
-            string backgroundcolor,
-            string buttonfontcolor
+            string backgroundcolor
             )
         {
             PageColor = pagecolor;
             FontColor = fontcolor;
             BackgroundColor = backgroundcolor;
-            ButtonfontColor = buttonfontcolor;
         }
 
         public static (byte A, byte R, byte G, byte B) ConvertHexToArgb(string hexColor)

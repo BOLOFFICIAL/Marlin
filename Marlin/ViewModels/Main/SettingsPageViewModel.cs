@@ -23,10 +23,10 @@ namespace Marlin.ViewModels.Main
             set => Set(ref Context.Settings.Theme.BackgroundColor, value);
         }
 
-        public string ButtonfontColor
+        public bool IsSay
         {
-            get => Context.Settings.Theme.ButtonfontColor;
-            set => Set(ref Context.Settings.Theme.ButtonfontColor, value);
+            get => Context.Settings.IsSay;
+            set => Set(ref Context.Settings.IsSay, value);
         }
     }
 }

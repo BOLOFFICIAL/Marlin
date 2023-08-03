@@ -25,10 +25,5 @@ namespace Marlin.ViewModels.Main
         {
             get => Context.Settings.Theme.BackgroundColor;
         }
-
-        public string ButtonfontColor
-        {
-            get => Context.Settings.Theme.ButtonfontColor;
-        }
     }
 }

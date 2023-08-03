@@ -15,6 +15,10 @@ namespace Marlin.Views.Message
 
         private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
         {
+            if (sender is Button btn)
+            {
+                Context.MessageBox.Answer = btn.Content.ToString();
+            }
             Context.MessageWindow.Close();
         }
     }

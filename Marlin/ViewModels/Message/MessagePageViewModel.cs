@@ -33,6 +33,12 @@ namespace Marlin.ViewModels.Message
             get => Context.MessageBox.BackgroundColor;
         }
 
+        public string Answer
+        {
+            get => Context.MessageBox.Answer;
+            set => Set(ref Context.MessageBox.Answer, value);
+        }
+
         public Visibility IsOk
         {
             get => Context.MessageBox.isOk;
