@@ -97,6 +97,7 @@
                                  HorizontalContentAlignment="Center"
                                  VerticalAlignment="Center"
                                  Width="200"
+                                 FontSize="20"
                                  Margin="10,10,2,10"
                                  Height="auto"/>
 

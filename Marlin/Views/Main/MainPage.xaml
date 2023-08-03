@@ -97,7 +97,7 @@
                                 Width="auto"/>
                         </Grid.ColumnDefinitions>
                         <TextBox
-                            FontSize="20"
+                            FontSize="25"
                             Padding="15,0"
                             Margin="5"
                             Text="{Binding Path=Command,UpdateSourceTrigger=PropertyChanged}"
