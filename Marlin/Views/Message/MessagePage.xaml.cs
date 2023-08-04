@@ -1,4 +1,6 @@
-﻿using Marlin.SystemFiles;
+﻿using Marlin.Models;
+using Marlin.SystemFiles;
+using Marlin.Windows;
 using System.Windows.Controls;
 
 namespace Marlin.Views.Message
@@ -23,6 +25,7 @@ namespace Marlin.Views.Message
                 }
             }
             Context.MessageWindow.Close();
+            Voix.SpeakAsync("");
         }
     }
 }

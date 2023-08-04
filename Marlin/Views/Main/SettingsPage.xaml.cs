@@ -38,14 +38,8 @@ namespace Marlin.Views.Main
                             Context.Settings.NewPassword = "";
                         }
                         Context.Settings.Login = Context.Settings.NewLogin;
-                        Context.Settings.NewLogin = "";
-
                         Context.Settings.Gender = Context.Settings.NewGender;
-                        Context.Settings.NewGender = "";
-
                         Context.Settings.MainFolder = Context.Settings.NewMainFolder;
-                        Context.Settings.NewMainFolder = "";
-
                         Settings.SaveSettings();
                     }
                     else
@@ -59,14 +53,8 @@ namespace Marlin.Views.Main
                     Context.Settings.NewPassword = "";
 
                     Context.Settings.Login = Context.Settings.NewLogin;
-                    Context.Settings.NewLogin = "";
-
                     Context.Settings.Gender = Context.Settings.NewGender;
-                    Context.Settings.NewGender = "";
-
                     Context.Settings.MainFolder = Context.Settings.NewMainFolder;
-                    Context.Settings.NewMainFolder = "";
-
                     Settings.SaveSettings();
                 }
             }
