@@ -1,7 +1,5 @@
 ﻿using Marlin.SystemFiles;
 using Marlin.ViewModels.Base;
-using System.Collections.Generic;
-using System.Windows.Documents;
 
 namespace Marlin.ViewModels.Main
 {
@@ -10,19 +8,37 @@ namespace Marlin.ViewModels.Main
         public string PageColor
         {
             get => Context.Settings.Theme.PageColor;
-            set => Set(ref Context.Settings.Theme.PageColor, value);
+            set
+            {
+                if (value[0] == '#' && (value.Length == 9 || value.Length == 7))
+                {
+                    Set(ref Context.Settings.Theme.PageColor, value);
+                }
+            }
         }
 
         public string FontColor
         {
             get => Context.Settings.Theme.FontColor;
-            set => Set(ref Context.Settings.Theme.FontColor, value);
+            set
+            {
+                if (value[0] == '#' && (value.Length == 9 || value.Length == 7))
+                {
+                    Set(ref Context.Settings.Theme.FontColor, value);
+                }
+            }
         }
 
         public string BackgroundColor
         {
             get => Context.Settings.Theme.BackgroundColor;
-            set => Set(ref Context.Settings.Theme.BackgroundColor, value);
+            set
+            {
+                if (value[0] == '#' && (value.Length == 9 || value.Length == 7))
+                {
+                    Set(ref Context.Settings.Theme.BackgroundColor, value);
+                }
+            }
         }
 
         public bool IsSay
@@ -31,7 +47,12 @@ namespace Marlin.ViewModels.Main
             set => Set(ref Context.Settings.IsSay, value);
         }
 
-        public List<int> Speed 
+        public int[] Speeds
+        {
+            get => Context.Settings.Speeds;
+        }
+
+        public int Speed
         {
             get => Context.Settings.Speed;
             set => Set(ref Context.Settings.Speed, value);

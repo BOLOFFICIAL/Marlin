@@ -179,7 +179,8 @@
 
                                                 <ComboBox Grid.Column="1"
                                                           FontSize="15"
-                                                          ItemsSource="{Binding Path=Speed,UpdateSourceTrigger=PropertyChanged}"
+                                                          SelectedValue="{Binding Path=Speed,UpdateSourceTrigger=PropertyChanged}"
+                                                          ItemsSource="{Binding Path=Speeds}"
                                                           HorizontalContentAlignment="Center"/>
                                             </Grid>
 
@@ -373,17 +374,16 @@
                     Margin="10,10,5,10"
                     BorderThickness="0"
                     BorderBrush="Transparent"
-                    Foreground="{Binding Path=FontColor}"
+                    Foreground="{Binding Path=BackgroundColor}"
                     Background="{Binding Path=PageColor}"
                     Click="Button_Click_1"/>
 
             <Button Grid.Column="1"
                     Content="Сохранить"
-                    Margin="5,10,10,10"
-                    
+                    Margin="5,10,10,10" 
                     BorderThickness="0"
                     BorderBrush="Transparent"
-                    Foreground="{Binding Path=FontColor}"
+                    Foreground="{Binding Path=BackgroundColor}"
                     Background="{Binding Path=PageColor}"
                     Click="Button_Click"/>
         </Grid>

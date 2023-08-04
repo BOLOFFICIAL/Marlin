@@ -14,30 +14,9 @@ namespace Marlin.Models
         public ProgramColor Theme { get; set; } = new ProgramColor();
         public string Password  = "";
         public string MainFolder = "";
-        public Voice Voice { get; set; } = new Voice();
         public bool IsSay = true;
-        public List<int> Speed = new() { 1, 2, 3, 4, 5, 6 };
-
-        public void SetTheme(Color pagecolor, Color fontcolor, Color backgroundcolor)
-        {
-            Theme = new ProgramColor(pagecolor.ToString(), fontcolor.ToString(), backgroundcolor.ToString());
-        }
-        public void SetTheme(ProgramColor newtheme)
-        {
-            Theme = newtheme;
-        }
-
-        public void SetVoise(string voise, int speed)
-        {
-            if (voise != Voice.Voise || speed != Voice.Speed)
-            {
-                Voice = new Voice()
-                {
-                    Voise = voise,
-                    Speed = speed
-                };
-            }
-        }
+        public int Speed = 0;
+        public int[] Speeds = { 1, 2, 3, 4, 5, 6 };
 
         public static void SaveSettings()
         {
@@ -50,10 +29,16 @@ namespace Marlin.Models
                 {
                     sw.WriteAsync(settings);
                 }
+                MessageBox.MakeMessage("Для обновления всех настроек необходимо перезапустить приложение.\nПерезапустить?",MessageType.YesNoQuestion);
+                if (Context.MessageBox.Answer == "Yes") 
+                {
+                    Process.Start(Process.GetCurrentProcess().MainModule.FileName);
+                    Environment.Exit(0);
+                }
             }
             catch (Exception)
             {
-                throw;
+                MessageBox.MakeMessage("Возникла ошибка сохранения данных", MessageType.Error);
             }
         }
 
@@ -74,8 +59,7 @@ namespace Marlin.Models
                 }
                 catch (Exception)
                 {
-
-                    throw;
+                    MessageBox.MakeMessage("Возникла ошибка чтения данных", MessageType.Error);
                 }
             }
         }
