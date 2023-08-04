@@ -1,5 +1,4 @@
-﻿using Marlin.Models;
-using Marlin.SystemFiles;
+﻿using Marlin.SystemFiles;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -23,7 +22,7 @@ namespace Marlin.Views.Main
                 switch (menu.Header.ToString())
                 {
                     case "Настройки": NavigationService.Navigate(new SettingsPage()); break;
-                    case "Скрипты": Models.MessageBox.MakeMessage("Gay?", MessageType.TextQuestion); break;
+                    case "Скрипты": Models.MessageBox.MakeMessage("На данный момент страница не доступна", MessageType.Error); break;
                     case "Действия": Models.MessageBox.MakeMessage("На данный момент страница не доступна", MessageType.Error); break;
                 }
             }

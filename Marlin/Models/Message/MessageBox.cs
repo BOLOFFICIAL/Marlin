@@ -21,6 +21,7 @@ namespace Marlin.Models
 
         public static void MakeMessage(string message, MessageType type)
         {
+            Voix.SpeakAsync(message);
             Context.MessageBox.Answer = "";
             Context.MessageBox.Text = message;
             Context.MessageBox.Type = type;
@@ -42,12 +43,13 @@ namespace Marlin.Models
 
         public static void SetMessageColor()
         {
+            Context.MessageBox.BackgroundColor = Context.Settings.Theme.BackgroundColor;
+            Context.MessageBox.FontColor = Context.Settings.Theme.FontColor;
+
             switch (Context.MessageBox.Type)
             {
                 case MessageType.Info:
                     Context.MessageBox.Symbol = "!";
-                    Context.MessageBox.BackgroundColor = "#CCCCCC";
-                    Context.MessageBox.FontColor = "#000000";
                     Context.MessageBox.PageColor = "#228B22";
                     Context.MessageBox.isOk = Visibility.Visible;
                     Context.MessageBox.isTextQuestion = Visibility.Hidden;
@@ -55,8 +57,6 @@ namespace Marlin.Models
                     break;
                 case MessageType.Error:
                     Context.MessageBox.Symbol = "X";
-                    Context.MessageBox.BackgroundColor = "#CCCCCC";
-                    Context.MessageBox.FontColor = "#000000";
                     Context.MessageBox.PageColor = "#FF4500";
                     Context.MessageBox.isOk = Visibility.Visible;
                     Context.MessageBox.isTextQuestion = Visibility.Hidden;
@@ -64,8 +64,6 @@ namespace Marlin.Models
                     break;
                 case MessageType.YesNoQuestion:
                     Context.MessageBox.Symbol = "?";
-                    Context.MessageBox.BackgroundColor = "#CCCCCC";
-                    Context.MessageBox.FontColor = "#000000";
                     Context.MessageBox.PageColor = "#007DFF";
                     Context.MessageBox.isOk = Visibility.Hidden;
                     Context.MessageBox.isTextQuestion = Visibility.Hidden;
@@ -73,13 +71,11 @@ namespace Marlin.Models
                     break;
                 case MessageType.TextQuestion:
                     Context.MessageBox.Symbol = "?";
-                    Context.MessageBox.BackgroundColor = "#CCCCCC";
-                    Context.MessageBox.FontColor = "#000000";
                     Context.MessageBox.PageColor = "#007DFF";
                     Context.MessageBox.isOk = Visibility.Hidden;
                     Context.MessageBox.isTextQuestion = Visibility.Visible;
                     Context.MessageBox.isYesNoQuestion = Visibility.Hidden;
-                    break; 
+                    break;
             }
         }
     }

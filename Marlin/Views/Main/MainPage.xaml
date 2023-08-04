@@ -18,39 +18,40 @@
         Background="{Binding Path=BackgroundColor,UpdateSourceTrigger=PropertyChanged}">
         <Grid.RowDefinitions>
             <RowDefinition 
-                Height="50px"/>
+                Height="80px"/>
             <RowDefinition 
                 Height="*"/>
             <RowDefinition 
                 Height="50px"/>
         </Grid.RowDefinitions>
-        <Grid 
-            Grid.Row="0">
-            <Menu 
-                FontWeight="Bold"
-                Foreground="{Binding Path=FontColor,UpdateSourceTrigger=PropertyChanged}"
-                VerticalAlignment="Center">
-                <MenuItem 
-                    Header="Marlin"
-                    FontSize="20"
-                    Padding="30,0"
-                    Background="{Binding Path=BackgroundColor,UpdateSourceTrigger=PropertyChanged}"
-                    Height="50px">
-                    <MenuItem 
-                        FontSize="15"
-                        Header="Настройки" 
-                        Click="MenuItem_Click"/>
-                    <MenuItem 
-                        FontSize="15"
-                        Header="Скрипты" 
-                        Click="MenuItem_Click"/>
-                    <MenuItem 
-                        FontSize="15"
-                        Header="Действия" 
-                        Click="MenuItem_Click"/>
+        <Grid Grid.Row="0">
+            <Menu FontWeight="Bold"
+                  Foreground="{Binding Path=FontColor, UpdateSourceTrigger=PropertyChanged}"
+                  VerticalAlignment="Center">
+                <MenuItem Header="Marlin"
+                          FontSize="30"
+                          Padding="30,0"
+                          Background="{Binding Path=BackgroundColor, UpdateSourceTrigger=PropertyChanged}"
+                          Height="80px"
+                          HorizontalAlignment="Stretch">
+                    <MenuItem.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </MenuItem.ItemsPanel>
+                    <MenuItem FontSize="15" 
+                              Header="Настройки"
+                              Click="MenuItem_Click" />
+                    <MenuItem FontSize="15" 
+                              Header="Скрипты" 
+                              Click="MenuItem_Click" />
+                    <MenuItem FontSize="15"
+                              Header="Действия" 
+                              Click="MenuItem_Click" /> 
                 </MenuItem>
             </Menu>
         </Grid>
+
         <Grid 
             Grid.Row="1">
             <Grid.ColumnDefinitions>

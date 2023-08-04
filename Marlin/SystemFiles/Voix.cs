@@ -1,0 +1,35 @@
+﻿using System;
+using System.Speech.Synthesis;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace Marlin.SystemFiles
+{
+    public class Voix
+    {
+        private static readonly SpeechSynthesizer Synthesizer = new SpeechSynthesizer();
+        private static CancellationTokenSource CancellationTokenSource = new CancellationTokenSource();
+
+        public static async Task SpeakAsync(string text)
+        {
+            if (!Context.Settings.IsSay)
+                return;
+
+            CancellationTokenSource.Cancel();
+            CancellationTokenSource.Dispose();
+            CancellationTokenSource = new CancellationTokenSource();
+
+            try
+            {
+                Synthesizer.SpeakAsyncCancelAll();
+                Synthesizer.SelectVoice("Microsoft Irina Desktop");
+                Synthesizer.Rate = Context.Settings.Speed;
+                Synthesizer.SpeakAsync(text);
+            }
+            catch (OperationCanceledException)
+            {
+                // Отмена была вызвана, игнорируем
+            }
+        }
+    }
+}

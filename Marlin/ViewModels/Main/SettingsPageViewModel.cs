@@ -55,7 +55,40 @@ namespace Marlin.ViewModels.Main
         public int Speed
         {
             get => Context.Settings.Speed;
-            set => Set(ref Context.Settings.Speed, value);
+            set
+            {
+                Voix.SpeakAsync($"Установлена скорость озвучивания {value}");
+                Set(ref Context.Settings.Speed, value);
+            }
+        }
+
+        public string[] Genders
+        {
+            get => Context.Settings.Genders;
+        }
+
+        public string NewGender
+        {
+            get => Context.Settings.NewGender;
+            set => Set(ref Context.Settings.NewGender, value);
+        }
+
+        public string NewMainFolder
+        {
+            get => Context.Settings.NewMainFolder;
+            set => Set(ref Context.Settings.NewMainFolder, value);
+        }
+
+        public string NewPassword
+        {
+            get => Context.Settings.NewPassword;
+            set => Set(ref Context.Settings.NewPassword, value);
+        }
+
+        public string NewLogin
+        {
+            get => Context.Settings.NewLogin;
+            set => Set(ref Context.Settings.NewLogin, value);
         }
     }
 }

@@ -1,22 +1,28 @@
 ﻿using Marlin.SystemFiles;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Windows.Documents;
-using System.Windows.Media;
+using System.Linq;
+using System.Threading;
 
 namespace Marlin.Models
 {
     public class Settings
     {
         public ProgramColor Theme { get; set; } = new ProgramColor();
-        public string Password  = "";
+        public string Password = "";
+        public string NewPassword = "";
+        public string Login = "";
+        public string NewLogin = "";
         public string MainFolder = "";
+        public string NewMainFolder = "";
         public bool IsSay = true;
         public int Speed = 0;
-        public int[] Speeds = { 1, 2, 3, 4, 5, 6 };
+        public string Gender = "";
+        public string NewGender = "";
+        public int[] Speeds = Enumerable.Range(-10, 21).ToArray();
+        public string[] Genders = { "Мужской", "Женский" };
 
         public static void SaveSettings()
         {
@@ -29,9 +35,11 @@ namespace Marlin.Models
                 {
                     sw.WriteAsync(settings);
                 }
-                MessageBox.MakeMessage("Для обновления всех настроек необходимо перезапустить приложение.\nПерезапустить?",MessageType.YesNoQuestion);
-                if (Context.MessageBox.Answer == "Yes") 
+                MessageBox.MakeMessage("Для обновления всех настроек необходимо перезапустить приложение.\nПерезапустить?", MessageType.YesNoQuestion);
+                if (Context.MessageBox.Answer == "Yes")
                 {
+                    Voix.SpeakAsync("Перезапускаю");
+                    Thread.Sleep(1000);
                     Process.Start(Process.GetCurrentProcess().MainModule.FileName);
                     Environment.Exit(0);
                 }

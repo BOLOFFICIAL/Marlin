@@ -17,7 +17,10 @@ namespace Marlin.Views.Message
         {
             if (sender is Button btn)
             {
-                Context.MessageBox.Answer = btn.Content.ToString();
+                if (btn.Content.ToString() != "➤")
+                {
+                    Context.MessageBox.Answer = btn.Content.ToString();
+                }
             }
             Context.MessageWindow.Close();
         }
