@@ -70,7 +70,7 @@
                                         </Grid.ColumnDefinitions>
 
                                         <TextBlock Grid.Column="0"
-                                                   Margin="10,18"
+                                                   Margin="10,13"
                                                    FontSize="15"
                                                    FontWeight="Bold"
                                                    Foreground="{Binding Path=PageColor}"
@@ -93,7 +93,7 @@
                                                 <TextBlock Grid.Column="0"
                                                            FontSize="15"
                                                            Margin="0,0,15,0"
-                                                           VerticalAlignment="Bottom"
+                                                           VerticalAlignment="Center"
                                                            HorizontalAlignment="Center"
                                                            Text="Цвет фона:"/>
 
@@ -114,7 +114,7 @@
                                                 <TextBlock Grid.Column="0"
                                                            FontSize="15"
                                                            Margin="0,0,15,0"
-                                                           VerticalAlignment="Bottom"
+                                                           VerticalAlignment="Center"
                                                            HorizontalAlignment="Center"
                                                            Text="Цвет текста:"/>
 
@@ -135,7 +135,7 @@
                                                 <TextBlock Grid.Column="0"
                                                            FontSize="15"
                                                            Margin="0,0,15,0"
-                                                           VerticalAlignment="Bottom"
+                                                           VerticalAlignment="Center"
                                                            HorizontalAlignment="Center"
                                                            Text="Цвет объектов:"/>
 
@@ -158,7 +158,7 @@
                                         </Grid.ColumnDefinitions>
 
                                         <TextBlock Grid.Column="0"
-                                                   Margin="10,18"
+                                                   Margin="10,13"
                                                    FontSize="15"
                                                    Foreground="{Binding Path=PageColor}"
                                                    FontWeight="Bold"
@@ -180,7 +180,7 @@
                                                 <TextBlock Grid.Column="0"
                                                            FontSize="15"
                                                            Margin="0,0,15,0"
-                                                           VerticalAlignment="Bottom"
+                                                           VerticalAlignment="Center"
                                                            HorizontalAlignment="Center"
                                                            Text="Скорось озвучивания"/>
 
@@ -201,7 +201,7 @@
                                                 <TextBlock Grid.Column="0"
                                                            FontSize="15"
                                                            Margin="0,0,15,0"
-                                                           VerticalAlignment="Bottom"
+                                                           VerticalAlignment="Center"
                                                            HorizontalAlignment="Center"
                                                            Text="Озвучивать:"/>
 
@@ -248,7 +248,7 @@
                                         </Grid.ColumnDefinitions>
 
                                         <TextBlock Grid.Column="0"
-                                                   Margin="10,18"
+                                                   Margin="10,13"
                                                    FontSize="15"
                                                    FontWeight="Bold"
                                                    Foreground="{Binding Path=PageColor}"
@@ -271,7 +271,7 @@
                                                 <TextBlock Grid.Column="0"
                                                            FontSize="15"
                                                            Margin="0,0,15,0"
-                                                           VerticalAlignment="Bottom"
+                                                           VerticalAlignment="Center"
                                                            HorizontalAlignment="Center"
                                                            Text="Имя / Логин:"/>
 
@@ -292,7 +292,7 @@
                                                 <TextBlock Grid.Column="0"
                                                            FontSize="15"
                                                            Margin="0,0,15,0"
-                                                           VerticalAlignment="Bottom"
+                                                           VerticalAlignment="Center"
                                                            HorizontalAlignment="Center"
                                                            Text="Новый пароль:"/>
 
@@ -313,7 +313,7 @@
                                                 <TextBlock Grid.Column="0"
                                                            FontSize="15"
                                                            Margin="0,0,15,0"
-                                                           VerticalAlignment="Bottom"
+                                                           VerticalAlignment="Center"
                                                            HorizontalAlignment="Center"
                                                            Text="Пол:"/>
 
@@ -336,7 +336,7 @@
                                         </Grid.ColumnDefinitions>
 
                                         <TextBlock Grid.Column="0"
-                                                   Margin="10,18"
+                                                   Margin="10,13"
                                                    FontSize="15"
                                                    FontWeight="Bold"
                                                    Foreground="{Binding Path=PageColor}"
