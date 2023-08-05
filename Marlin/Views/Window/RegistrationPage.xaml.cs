@@ -34,7 +34,7 @@ namespace Marlin.Views.Window
             else
             {
                 string name = Context.Settings.NewLogin.Length > 0 ? Context.Settings.NewLogin : "";
-                Voix.SpeakAsync(name + " Необходимо заполнить все пункты");
+                Voix.SpeakAsync(name + "; Необходимо заполнить все пункты");
             }
         }
     }

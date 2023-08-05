@@ -15,7 +15,7 @@ namespace Marlin.Views.Main
         {
             if (Context.Settings.Password.Length == 0)
             {
-                Voix.SpeakAsync("Привет, прежде чем ты приступишь к использованию необходимо зарегистрироваться");
+                Voix.SpeakAsync("Прежде чем приступить к использованию необходимо зарегистрироваться");
                 System.Windows.Window window = new System.Windows.Window
                 {
                     SizeToContent = System.Windows.SizeToContent.WidthAndHeight,

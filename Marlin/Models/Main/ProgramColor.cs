@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Marlin.SystemFiles;
+using System;
 
 namespace Marlin.Models
 {
@@ -35,7 +36,7 @@ namespace Marlin.Models
                 }
                 else
                 {
-                    throw new ArgumentException("Invalid HEX color format. The color should be represented as #AARRGGBB.", nameof(hexColor));
+                    MessageBox.MakeMessage("Ошибка загрузки цветов программы",MessageType.Error);
                 }
             }
 

@@ -21,6 +21,16 @@ namespace Marlin.Views.Main
 
         private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
         {
+            if (Context.Settings.Theme.PageColor.Length < 7 ||
+                    Context.Settings.Theme.FontColor.Length < 7 ||
+                    Context.Settings.Theme.BackgroundColor.Length < 7 ||
+                    Context.Settings.Theme.PageColor.Length == 8 ||
+                    Context.Settings.Theme.FontColor.Length == 8 ||
+                    Context.Settings.Theme.BackgroundColor.Length == 8)
+            {
+                MessageBox.MakeMessage("Значение цвета должно иметь длину 7 или 9 символов", MessageType.Error);
+                return;
+            }
             var editadmin =
                 (Context.Settings.NewPassword != Context.Settings.Password && Context.Settings.NewPassword.Length > 0) ||
                 Context.Settings.NewLogin != Context.Settings.Login ||
@@ -28,14 +38,12 @@ namespace Marlin.Views.Main
                 Context.Settings.NewMainFolder != Context.Settings.MainFolder;
             if (editadmin)
             {
-                if (Context.Settings.NewLogin.Length == 0)
+                if (Context.Settings.NewPassword.Length < 1 ||
+                    Context.Settings.NewLogin.Length < 1 ||
+                    Context.Settings.NewMainFolder.Length < 1 ||
+                    Context.Settings.NewGender.Length < 1)
                 {
-                    MessageBox.MakeMessage($"Имя администратора не может быть пустым", MessageType.Error);
-                    return;
-                }
-                if (Context.Settings.NewMainFolder.Length == 0)
-                {
-                    MessageBox.MakeMessage($"Папка для хранения данных не может быть пустой", MessageType.Error);
+                    MessageBox.MakeMessage("Блок администрирования должен быть заполнен", MessageType.Error);
                     return;
                 }
                 if (Context.Settings.Password.Length > 0)
@@ -69,7 +77,17 @@ namespace Marlin.Views.Main
             }
             else
             {
-                Settings.SaveSettings();
+                if (Context.Settings.Password.Length > 0 &&
+                    Context.Settings.NewLogin.Length > 0 &&
+                    Context.Settings.NewMainFolder.Length > 0 &&
+                    Context.Settings.NewGender.Length > 0)
+                {
+                    Settings.SaveSettings();
+                }
+                else
+                {
+                    MessageBox.MakeMessage("Блок администрирования должен быть заполнен", MessageType.Error);
+                }
             }
         }
 

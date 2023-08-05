@@ -8,19 +8,40 @@ namespace Marlin.ViewModels.Main
         public string PageColor
         {
             get => Context.Settings.Theme.PageColor;
-            set => Set(ref Context.Settings.Theme.PageColor, value);
+            set 
+            {
+                if (!value.Contains("#")) 
+                {
+                    value = "#" + value;
+                }
+                Set(ref Context.Settings.Theme.PageColor, value);
+            } 
         }
 
         public string FontColor
         {
             get => Context.Settings.Theme.FontColor;
-            set => Set(ref Context.Settings.Theme.FontColor, value);
+            set 
+            {
+                if (!value.Contains("#"))
+                {
+                    value = "#" + value;
+                }
+                Set(ref Context.Settings.Theme.FontColor, value);
+            } 
         }
 
         public string BackgroundColor
         {
             get => Context.Settings.Theme.BackgroundColor;
-            set => Set(ref Context.Settings.Theme.BackgroundColor, value);
+            set 
+            {
+                if (!value.Contains("#"))
+                {
+                    value = "#" + value;
+                }
+                Set(ref Context.Settings.Theme.BackgroundColor, value);
+            } 
         }
 
         public bool IsSay
