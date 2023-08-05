@@ -13,11 +13,11 @@
     <Page.DataContext>
         <vm:RegistrationPageViewModel/>
     </Page.DataContext>
-    <Grid Background="{Binding Path=BackgroundColor}">
+    <Grid Background="{Binding Path=BackgroundColor,UpdateSourceTrigger=PropertyChanged}">
         <Border Grid.Row="1"
                 Margin="10,5,10,10"
                 CornerRadius="20"
-                BorderBrush="{Binding Path=PageColor}"
+                BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                 BorderThickness="2">
             <Grid Margin="15,10">
                 <Grid.RowDefinitions>
@@ -29,7 +29,7 @@
                            FontSize="20"
                            HorizontalAlignment="Center"
                            FontWeight="Bold"
-                           Foreground="{Binding Path=FontColor}"
+                           Foreground="{Binding Path=FontColor,UpdateSourceTrigger=PropertyChanged}"
                            Text="Регистрация в Marlin"/>
                 <Grid Grid.Row="1">
                     <Grid.RowDefinitions>
@@ -48,7 +48,7 @@
                             <TextBlock Grid.Column="0"
                                        Margin="10,13"
                                        FontSize="15"
-                                       Foreground="{Binding Path=FontColor}"
+                                       Foreground="{Binding Path=FontColor,UpdateSourceTrigger=PropertyChanged}"
                                        FontWeight="Bold"
                                        Text="Администратор:"/>
 
@@ -67,7 +67,7 @@
                                     </Grid.ColumnDefinitions>
 
                                     <TextBlock Grid.Column="0"
-                                               Foreground="{Binding Path=FontColor}"
+                                               Foreground="{Binding Path=FontColor,UpdateSourceTrigger=PropertyChanged}"
                                                FontSize="15"
                                                Margin="0,0,15,0"
                                                VerticalAlignment="Center"
@@ -93,7 +93,7 @@
                                                FontSize="15"
                                                Margin="0,0,15,0"
                                                VerticalAlignment="Center"
-                                               Foreground="{Binding Path=FontColor}"
+                                               Foreground="{Binding Path=FontColor,UpdateSourceTrigger=PropertyChanged}"
                                                HorizontalAlignment="Center"
                                                Text="Пароль:"/>
 
@@ -101,7 +101,7 @@
                                              FontSize="15"
                                              MinWidth="100"
                                              Text="{Binding Path=NewPassword,UpdateSourceTrigger=PropertyChanged}"
-                                             Foreground="{Binding Path=FontColor}"
+                                             Foreground="{Binding Path=FontColor,UpdateSourceTrigger=PropertyChanged}"
                                              HorizontalContentAlignment="Center"/>
                                 </Grid>
 
@@ -113,7 +113,7 @@
                                     </Grid.ColumnDefinitions>
 
                                     <TextBlock Grid.Column="0"
-                                               Foreground="{Binding Path=FontColor}"
+                                               Foreground="{Binding Path=FontColor,UpdateSourceTrigger=PropertyChanged}"
                                                FontSize="15"
                                                Margin="0,0,15,0"
                                                VerticalAlignment="Center"
@@ -123,7 +123,7 @@
                                     <ComboBox Grid.Column="1"
                                               FontSize="15"
                                               SelectedValue="{Binding Path=NewGender,UpdateSourceTrigger=PropertyChanged}"
-                                              ItemsSource="{Binding Path=Genders}"
+                                              ItemsSource="{Binding Path=Genders,UpdateSourceTrigger=PropertyChanged}"
                                               HorizontalContentAlignment="Center"/>
                                 </Grid>
                             </Grid>
@@ -141,7 +141,7 @@
                             <TextBlock Grid.Column="0"
                                        Margin="10,13"
                                        FontSize="15"
-                                       Foreground="{Binding Path=FontColor}"
+                                       Foreground="{Binding Path=FontColor,UpdateSourceTrigger=PropertyChanged}"
                                        FontWeight="Bold"
                                        Text="Данные:"/>
 
@@ -162,11 +162,11 @@
                                                Margin="0,0,15,0"
                                                VerticalAlignment="Center"
                                                HorizontalAlignment="Center"
-                                               Foreground="{Binding Path=FontColor}"
+                                               Foreground="{Binding Path=FontColor,UpdateSourceTrigger=PropertyChanged}"
                                                Text="Папка для хранения данных:"/>
 
                                     <TextBox Grid.Column="1"
-                                             Foreground="{Binding Path=FontColor}"
+                                             Foreground="{Binding Path=FontColor,UpdateSourceTrigger=PropertyChanged}"
                                              FontSize="15"
                                              MinWidth="100"
                                              Text="{Binding Path=NewMainFolder,UpdateSourceTrigger=PropertyChanged}"
@@ -179,6 +179,12 @@
                 </Grid>
                 <Button Grid.Row="2"
                         Click="Button_Click"
+                        Width="auto"
+                        FontSize="15"
+                        Foreground="{Binding Path=BackgroundColor,UpdateSourceTrigger=PropertyChanged}"
+                        Background="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
+                        HorizontalAlignment="Center"
+                        FontWeight="Bold"
                         Content="Зарегистрироваться"/>
             </Grid>
         </Border>

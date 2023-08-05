@@ -1,6 +1,4 @@
-﻿using Marlin.Models;
-using Marlin.SystemFiles;
-using Marlin.Windows;
+﻿using Marlin.SystemFiles;
 using System.Windows.Controls;
 
 namespace Marlin.Views.Message

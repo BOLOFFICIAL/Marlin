@@ -6,16 +6,16 @@
       xmlns:local="clr-namespace:Marlin.Windows"
       MaxWidth="500"
       MaxHeight="400"
-      Foreground="{Binding Path=FontColor}">
+      Foreground="{Binding Path=FontColor,UpdateSourceTrigger=PropertyChanged}">
     <Page.DataContext>
         <vm:MessagePageViewModel/>
     </Page.DataContext>
-    <Grid Background="{Binding Path=PageColor}">
+    <Grid Background="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}">
         <Border Grid.Row="0"
                 CornerRadius="25"
                 BorderThickness="5"
-                Background="{Binding Path=BackgroundColor}"
-                BorderBrush="{Binding Path=PageColor}">
+                Background="{Binding Path=BackgroundColor,UpdateSourceTrigger=PropertyChanged}"
+                BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
@@ -32,9 +32,9 @@
                            HorizontalAlignment="Center"
                            VerticalAlignment="Center"
                            FontSize="70"
-                           Foreground="{Binding Path=PageColor}"
+                           Foreground="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                            FontWeight="Bold"
-                           Text="{Binding Path=Symbol}"/>
+                           Text="{Binding Path=Symbol,UpdateSourceTrigger=PropertyChanged}"/>
 
                     <TextBlock Grid.Column="1" 
                                FontSize="15"
@@ -43,7 +43,7 @@
                                TextWrapping="Wrap"
                                HorizontalAlignment="Stretch"
                                VerticalAlignment="Center"
-                               Text="{Binding Path=Message}"/>
+                               Text="{Binding Path=Message,UpdateSourceTrigger=PropertyChanged}"/>
                 </Grid>
                 <Grid Grid.Row="1">
 
@@ -52,14 +52,14 @@
                              Width="auto"
                              BorderThickness="0"
                              BorderBrush="Transparent"
-                             Foreground="{Binding Path=BackgroundColor}"
-                             Background="{Binding Path=PageColor}"
-                             Visibility="{Binding Path=IsOk}"
+                             Foreground="{Binding Path=BackgroundColor,UpdateSourceTrigger=PropertyChanged}"
+                             Background="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
+                             Visibility="{Binding Path=IsOk,UpdateSourceTrigger=PropertyChanged}"
                              Height="auto"
                              Click="Button_Click"
                              Content="OK"/>
 
-                    <Grid Visibility="{Binding Path=IsYesNoQuestion}">
+                    <Grid Visibility="{Binding Path=IsYesNoQuestion,UpdateSourceTrigger=PropertyChanged}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
@@ -68,12 +68,12 @@
                         <Button  Grid.Column="0"
                                  BorderThickness="0"
                                  BorderBrush="Transparent"
-                                 Foreground="{Binding Path=BackgroundColor}"
-                                 Background="{Binding Path=PageColor}"
-                                 HorizontalAlignment="Center"
+                                 Foreground="{Binding Path=BackgroundColor,UpdateSourceTrigger=PropertyChanged}"
+                                 Background="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
+                                 HorizontalAlignment="Right"
                                  VerticalAlignment="Center"
                                  Width="auto"
-                                 Margin="4,4,2,4"
+                                 Margin="4,4,4,4"
                                  Height="auto"
                                  Click="Button_Click"
                                  Content="Yes"/>
@@ -81,31 +81,32 @@
                         <Button  Grid.Column="1"
                                  BorderThickness="0"
                                  BorderBrush="Transparent"
-                                 Foreground="{Binding Path=BackgroundColor}"
-                                 Background="{Binding Path=PageColor}"
-                                 HorizontalAlignment="Center"
+                                 Foreground="{Binding Path=BackgroundColor,UpdateSourceTrigger=PropertyChanged}"
+                                 Background="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
+                                 HorizontalAlignment="Left"
                                  VerticalAlignment="Center"
                                  Width="auto"
                                  Height="auto"
-                                 Margin="2,4,4,4"
+                                 Margin="4,4,4,4"
                                  Click="Button_Click"
                                  Content="No"/>
                     </Grid>
 
-                    <Grid Visibility="{Binding Path=IsTextQuestion}">
+                    <Grid Visibility="{Binding Path=IsTextQuestion,UpdateSourceTrigger=PropertyChanged}"
+                          HorizontalAlignment="Center">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
                         <TextBox Grid.Column="0"
-                                 Background="{Binding Path=BackgroundColor}"
-                                 Foreground="{Binding Path=FontColor}"
+                                 Background="{Binding Path=BackgroundColor,UpdateSourceTrigger=PropertyChanged}"
+                                 Foreground="{Binding Path=FontColor,UpdateSourceTrigger=PropertyChanged}"
                                  HorizontalAlignment="Center"
                                  HorizontalContentAlignment="Center"
                                  VerticalAlignment="Center"
                                  Width="200"
-                                 Text="{Binding Path=Answer}"
+                                 Text="{Binding Path=Answer,UpdateSourceTrigger=PropertyChanged}"
                                  FontSize="20"
                                  Margin="10,10,2,10"
                                  Height="auto"/>
@@ -113,8 +114,8 @@
                         <Button  Grid.Column="1"
                                  BorderThickness="0"
                                  BorderBrush="Transparent"
-                                 Foreground="{Binding Path=BackgroundColor}"
-                                 Background="{Binding Path=PageColor}"
+                                 Foreground="{Binding Path=BackgroundColor,UpdateSourceTrigger=PropertyChanged}"
+                                 Background="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                                  HorizontalAlignment="Center"
                                  VerticalAlignment="Center"
                                  Width="auto"

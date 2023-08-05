@@ -26,6 +26,7 @@ namespace Marlin.Models
 
         public static void SaveSettings(bool restart = true)
         {
+            Context.Settings.NewPassword = "";
             string exePath = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
             string filepath = Path.Combine(exePath, "Settings.json");
             string settings = JsonConvert.SerializeObject(Context.Settings);
@@ -35,7 +36,7 @@ namespace Marlin.Models
                 {
                     sw.WriteAsync(settings);
                 }
-                if (restart) 
+                if (restart)
                 {
                     MessageBox.MakeMessage("Для обновления всех настроек необходимо перезапустить приложение.\nПерезапустить?", MessageType.YesNoQuestion);
                     if (Context.MessageBox.Answer == "Yes")

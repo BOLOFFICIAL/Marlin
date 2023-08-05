@@ -1,7 +1,6 @@
 ﻿using Marlin.Models;
 using Marlin.SystemFiles;
 using Newtonsoft.Json;
-using System;
 using System.Windows.Controls;
 
 namespace Marlin.Views.Main
@@ -48,7 +47,6 @@ namespace Marlin.Views.Main
                         if (Context.Settings.NewPassword.Length > 0)
                         {
                             Context.Settings.Password = Context.Settings.NewPassword;
-                            Context.Settings.NewPassword = "";
                         }
                         Context.Settings.Login = Context.Settings.NewLogin;
                         Context.Settings.Gender = Context.Settings.NewGender;
@@ -63,8 +61,6 @@ namespace Marlin.Views.Main
                 else
                 {
                     Context.Settings.Password = Context.Settings.NewPassword;
-                    Context.Settings.NewPassword = "";
-
                     Context.Settings.Login = Context.Settings.NewLogin;
                     Context.Settings.Gender = Context.Settings.NewGender;
                     Context.Settings.MainFolder = Context.Settings.NewMainFolder;
