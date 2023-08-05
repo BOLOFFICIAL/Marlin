@@ -28,15 +28,14 @@ namespace Marlin.Models
             SetMessageColor();
             Window window = new Window
             {
-                Height = 200,
-                Width = 300,
+                SizeToContent = System.Windows.SizeToContent.WidthAndHeight,
                 WindowStartupLocation = WindowStartupLocation.CenterScreen,
                 WindowStyle = WindowStyle.None,
                 ResizeMode = ResizeMode.NoResize,
                 Content = new MessagePage(),
             };
 
-            Context.MessageWindow = window;
+            Context.Window = window;
 
             window.ShowDialog();
         }

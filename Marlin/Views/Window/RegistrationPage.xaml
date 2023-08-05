@@ -1,0 +1,186 @@
+﻿<Page x:Class="Marlin.Views.Window.RegistrationPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Marlin.Views.Window"
+      xmlns:vm="clr-namespace:Marlin.ViewModels.Window"
+      mc:Ignorable="d" 
+      MaxWidth="800"
+      MaxHeight="400"
+      Foreground="{Binding Path=FontColor}"
+      Title="Registration">
+    <Page.DataContext>
+        <vm:RegistrationPageViewModel/>
+    </Page.DataContext>
+    <Grid Background="{Binding Path=BackgroundColor}">
+        <Border Grid.Row="1"
+                Margin="10,5,10,10"
+                CornerRadius="20"
+                BorderBrush="{Binding Path=PageColor}"
+                BorderThickness="2">
+            <Grid Margin="15,10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0"
+                           FontSize="20"
+                           HorizontalAlignment="Center"
+                           FontWeight="Bold"
+                           Foreground="{Binding Path=FontColor}"
+                           Text="Регистрация в Marlin"/>
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0"
+                                      Margin="0,10">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Column="0"
+                                       Margin="10,13"
+                                       FontSize="15"
+                                       Foreground="{Binding Path=FontColor}"
+                                       FontWeight="Bold"
+                                       Text="Администратор:"/>
+
+                            <Grid Grid.Column="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+
+                                <Grid Grid.Row="0"
+                                                  Margin="0,10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Grid.Column="0"
+                                               Foreground="{Binding Path=FontColor}"
+                                               FontSize="15"
+                                               Margin="0,0,15,0"
+                                               VerticalAlignment="Center"
+                                               HorizontalAlignment="Center"
+                                               Text="Имя / Логин:"/>
+
+                                    <TextBox Grid.Column="1"
+                                             Foreground="{Binding Path=FontColor}"
+                                             FontSize="15"
+                                             Text="{Binding Path=NewLogin,UpdateSourceTrigger=PropertyChanged}"
+                                             MinWidth="100"
+                                             HorizontalContentAlignment="Center"/>
+                                </Grid>
+
+                                <Grid Grid.Row="1"
+                                                  Margin="0,10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Grid.Column="0"
+                                               FontSize="15"
+                                               Margin="0,0,15,0"
+                                               VerticalAlignment="Center"
+                                               Foreground="{Binding Path=FontColor}"
+                                               HorizontalAlignment="Center"
+                                               Text="Пароль:"/>
+
+                                    <TextBox Grid.Column="1"
+                                             FontSize="15"
+                                             MinWidth="100"
+                                             Text="{Binding Path=NewPassword,UpdateSourceTrigger=PropertyChanged}"
+                                             Foreground="{Binding Path=FontColor}"
+                                             HorizontalContentAlignment="Center"/>
+                                </Grid>
+
+                                <Grid Grid.Row="2"
+                                                  Margin="0,10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="100"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Grid.Column="0"
+                                               Foreground="{Binding Path=FontColor}"
+                                               FontSize="15"
+                                               Margin="0,0,15,0"
+                                               VerticalAlignment="Center"
+                                               HorizontalAlignment="Center"
+                                               Text="Пол:"/>
+
+                                    <ComboBox Grid.Column="1"
+                                              FontSize="15"
+                                              SelectedValue="{Binding Path=NewGender,UpdateSourceTrigger=PropertyChanged}"
+                                              ItemsSource="{Binding Path=Genders}"
+                                              HorizontalContentAlignment="Center"/>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+
+                    <Grid Grid.Row="1"
+                                      Margin="0,10">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Column="0"
+                                       Margin="10,13"
+                                       FontSize="15"
+                                       Foreground="{Binding Path=FontColor}"
+                                       FontWeight="Bold"
+                                       Text="Данные:"/>
+
+                            <Grid Grid.Column="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+
+                                <Grid Grid.Row="0"
+                                                  Margin="0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Grid.Column="0"
+                                               FontSize="15"
+                                               Margin="0,0,15,0"
+                                               VerticalAlignment="Center"
+                                               HorizontalAlignment="Center"
+                                               Foreground="{Binding Path=FontColor}"
+                                               Text="Папка для хранения данных:"/>
+
+                                    <TextBox Grid.Column="1"
+                                             Foreground="{Binding Path=FontColor}"
+                                             FontSize="15"
+                                             MinWidth="100"
+                                             Text="{Binding Path=NewMainFolder,UpdateSourceTrigger=PropertyChanged}"
+                                             VerticalAlignment="Center"
+                                             HorizontalContentAlignment="Center"/>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Grid>
+                <Button Grid.Row="2"
+                        Click="Button_Click"
+                        Content="Зарегистрироваться"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Page>

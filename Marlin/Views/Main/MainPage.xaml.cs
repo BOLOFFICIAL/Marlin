@@ -1,4 +1,7 @@
 ﻿using Marlin.SystemFiles;
+using Marlin.Views.Message;
+using Marlin.Views.Window;
+using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -12,6 +15,22 @@ namespace Marlin.Views.Main
     {
         public MainPage()
         {
+            if (Context.Settings.Password.Length == 0)
+            {
+                Voix.SpeakAsync("Привет, прежде чем ты приступишь к использованию необходимо зарегистрироваться");
+                System.Windows.Window window = new System.Windows.Window
+                {
+                    SizeToContent = System.Windows.SizeToContent.WidthAndHeight,
+                    WindowStartupLocation = WindowStartupLocation.CenterScreen,
+                    WindowStyle = WindowStyle.None,
+                    ResizeMode = ResizeMode.NoResize,
+                    Content = new RegistrationPage()
+                };
+
+                Context.Window = window;
+
+                window.ShowDialog();
+            }
             InitializeComponent();
         }
 
@@ -22,8 +41,8 @@ namespace Marlin.Views.Main
                 switch (menu.Header.ToString())
                 {
                     case "Настройки": NavigationService.Navigate(new SettingsPage()); break;
-                    case "Скрипты": Models.MessageBox.MakeMessage("На данный момент страница не доступна", MessageType.Error); break;
-                    case "Действия": Models.MessageBox.MakeMessage("На данный момент страница не доступна", MessageType.Error); break;
+                    case "Скрипты": Models.MessageBox.MakeMessage("Страница не доступна", MessageType.Error); break;
+                    case "Действия": Models.MessageBox.MakeMessage("Страница не доступна", MessageType.Error); break;
                 }
             }
 

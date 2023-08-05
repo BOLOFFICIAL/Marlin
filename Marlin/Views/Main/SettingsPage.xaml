@@ -17,17 +17,17 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="50px"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="50px"/>
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
-            <TextBlock  Background="Transparent"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        FontSize="25"
-                        FontWeight="Bold"
-                        Padding="30,0"
-                        Text="Настройки"/>
+            <TextBlock Background="Transparent"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           FontSize="25"
+                           FontWeight="Bold"
+                           Padding="30,0"
+                           Text="Настройки"/>
         </Grid>
 
         <Grid Grid.Row="1">

@@ -1,5 +1,7 @@
 ﻿using Marlin.Models;
 using Marlin.SystemFiles;
+using Newtonsoft.Json;
+using System;
 using System.Windows.Controls;
 
 namespace Marlin.Views.Main
@@ -15,17 +17,28 @@ namespace Marlin.Views.Main
             Context.Settings.NewGender = Context.Settings.Gender;
             Context.Settings.NewMainFolder = Context.Settings.MainFolder;
             InitializeComponent();
+            Context.CopySettings = JsonConvert.DeserializeObject<Settings>(JsonConvert.SerializeObject(Context.Settings));
         }
 
         private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            var heckpassowd =
+            var editadmin =
                 (Context.Settings.NewPassword != Context.Settings.Password && Context.Settings.NewPassword.Length > 0) ||
                 Context.Settings.NewLogin != Context.Settings.Login ||
                 Context.Settings.NewGender != Context.Settings.Gender ||
                 Context.Settings.NewMainFolder != Context.Settings.MainFolder;
-            if (heckpassowd)
+            if (editadmin)
             {
+                if (Context.Settings.NewLogin.Length == 0)
+                {
+                    MessageBox.MakeMessage($"Имя администратора не может быть пустым", MessageType.Error);
+                    return;
+                }
+                if (Context.Settings.NewMainFolder.Length == 0)
+                {
+                    MessageBox.MakeMessage($"Папка для хранения данных не может быть пустой", MessageType.Error);
+                    return;
+                }
                 if (Context.Settings.Password.Length > 0)
                 {
                     string oldpass = (Context.Settings.NewPassword != Context.Settings.Password && Context.Settings.NewPassword.Length > 0) ? "старый" : "";
@@ -66,10 +79,7 @@ namespace Marlin.Views.Main
 
         private void Button_Click_1(object sender, System.Windows.RoutedEventArgs e)
         {
-            Context.Settings.NewPassword = "";
-            Context.Settings.NewLogin = Context.Settings.Login;
-            Context.Settings.NewGender = Context.Settings.Gender;
-            Context.Settings.NewMainFolder = Context.Settings.MainFolder;
+            Context.Settings = Context.CopySettings;
             NavigationService.Navigate(new MainPage());
         }
     }

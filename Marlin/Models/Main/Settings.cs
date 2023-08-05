@@ -18,13 +18,13 @@ namespace Marlin.Models
         public string MainFolder = "";
         public string NewMainFolder = "";
         public bool IsSay = true;
-        public int Speed = 0;
+        public int Speed = 3;
         public string Gender = "";
         public string NewGender = "";
         public int[] Speeds = Enumerable.Range(-10, 21).ToArray();
         public string[] Genders = { "Мужской", "Женский" };
 
-        public static void SaveSettings()
+        public static void SaveSettings(bool restart = true)
         {
             string exePath = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
             string filepath = Path.Combine(exePath, "Settings.json");
@@ -35,14 +35,18 @@ namespace Marlin.Models
                 {
                     sw.WriteAsync(settings);
                 }
-                MessageBox.MakeMessage("Для обновления всех настроек необходимо перезапустить приложение.\nПерезапустить?", MessageType.YesNoQuestion);
-                if (Context.MessageBox.Answer == "Yes")
+                if (restart) 
                 {
-                    Voix.SpeakAsync("Перезапускаю");
-                    Thread.Sleep(1000);
-                    Process.Start(Process.GetCurrentProcess().MainModule.FileName);
-                    Environment.Exit(0);
+                    MessageBox.MakeMessage("Для обновления всех настроек необходимо перезапустить приложение.\nПерезапустить?", MessageType.YesNoQuestion);
+                    if (Context.MessageBox.Answer == "Yes")
+                    {
+                        Voix.SpeakAsync("Перезапускаю");
+                        Thread.Sleep(1000);
+                        Process.Start(Process.GetCurrentProcess().MainModule.FileName);
+                        Environment.Exit(0);
+                    }
                 }
+                Context.CopySettings = Context.Settings;
             }
             catch (Exception)
             {

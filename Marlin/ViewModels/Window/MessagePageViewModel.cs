@@ -2,7 +2,7 @@
 using Marlin.ViewModels.Base;
 using System.Windows;
 
-namespace Marlin.ViewModels.Message
+namespace Marlin.ViewModels.Window
 {
     public class MessagePageViewModel : ViewModel
     {

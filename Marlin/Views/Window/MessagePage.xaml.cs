@@ -24,7 +24,7 @@ namespace Marlin.Views.Message
                     Context.MessageBox.Answer = btn.Content.ToString();
                 }
             }
-            Context.MessageWindow.Close();
+            Context.Window.Close();
             Voix.SpeakAsync("");
         }
     }

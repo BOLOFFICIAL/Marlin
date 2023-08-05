@@ -8,6 +8,7 @@ namespace Marlin.SystemFiles
         public static string Command = "";
         public static Models.MessageBox MessageBox = new Models.MessageBox();
         public static Settings Settings = new Settings();
-        public static Window MessageWindow = new Window();
+        public static Settings CopySettings = new Settings();
+        public static Window Window = new Window();
     }
 }
