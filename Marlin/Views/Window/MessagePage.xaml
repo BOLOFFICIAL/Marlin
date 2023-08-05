@@ -51,6 +51,7 @@
                              VerticalAlignment="Center"
                              Width="auto"
                              BorderThickness="0"
+                             FontWeight="Bold"
                              BorderBrush="Transparent"
                              Foreground="{Binding Path=BackgroundColor,UpdateSourceTrigger=PropertyChanged}"
                              Background="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
@@ -71,6 +72,7 @@
                                  Foreground="{Binding Path=BackgroundColor,UpdateSourceTrigger=PropertyChanged}"
                                  Background="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                                  HorizontalAlignment="Right"
+                                 FontWeight="Bold"
                                  VerticalAlignment="Center"
                                  Width="auto"
                                  Margin="4,4,4,4"
@@ -80,6 +82,7 @@
 
                         <Button  Grid.Column="1"
                                  BorderThickness="0"
+                                 FontWeight="Bold"
                                  BorderBrush="Transparent"
                                  Foreground="{Binding Path=BackgroundColor,UpdateSourceTrigger=PropertyChanged}"
                                  Background="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
@@ -120,6 +123,7 @@
                                  VerticalAlignment="Center"
                                  Width="auto"
                                  Height="auto"
+                                 FontWeight="Bold"
                                  Margin="2,10,10,10"
                                  Click="Button_Click"
                                  Content="➤"/>
