@@ -1,14 +1,12 @@
 ﻿using Marlin.SystemFiles;
 using Marlin.Views.Window;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Marlin.Views.Main
 {
-    /// <summary>
-    /// Логика взаимодействия для MainPage.xaml
-    /// </summary>
     public partial class MainPage : Page
     {
         public MainPage()
@@ -24,10 +22,12 @@ namespace Marlin.Views.Main
                     ResizeMode = ResizeMode.NoResize,
                     Content = new RegistrationPage()
                 };
-
                 Context.Window = window;
-
                 window.ShowDialog();
+            }
+            if (Context.Settings.Password.Length==0) 
+            {
+                Environment.Exit(0);
             }
             InitializeComponent();
         }
