@@ -25,6 +25,10 @@ namespace Marlin.Views.Main
                 Context.Window = window;
                 window.ShowDialog();
             }
+            else
+            {
+                Voix.SpeakAsync($"С возвращением {Context.Settings.Login}");
+            }
             if (Context.Settings.Password.Length==0) 
             {
                 Environment.Exit(0);

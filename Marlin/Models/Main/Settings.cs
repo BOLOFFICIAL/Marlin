@@ -38,7 +38,7 @@ namespace Marlin.Models
                 }
                 if (restart)
                 {
-                    MessageBox.MakeMessage("Для обновления всех параметров необходимо перезапустить приложение.\nПерезапустить?", MessageType.YesNoQuestion);
+                    MessageBox.MakeMessage("Для обновления всех параметров рекомендую перезапустить приложение.\nПерезапустить?", MessageType.YesNoQuestion);
                     if (Context.MessageBox.Answer == "Yes")
                     {
                         Voix.SpeakAsync("Перезапускаю");
