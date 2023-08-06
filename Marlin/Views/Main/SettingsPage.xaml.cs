@@ -21,6 +21,12 @@ namespace Marlin.Views.Main
 
         private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
         {
+            if (Context.CopySettings.Equals(Context.Settings)) 
+            {
+                MessageBox.MakeMessage("Не найдено изменений в настройках", MessageType.Info);
+                return; 
+            }
+
             bool isInvalidColorLength =
                 Context.Settings.Theme.PageColor.Length < 7 ||
                 Context.Settings.Theme.FontColor.Length < 7 ||

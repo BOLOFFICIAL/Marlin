@@ -76,5 +76,23 @@ namespace Marlin.Models
                 }
             }
         }
+
+        public bool Equals(Settings otherSettings)
+        {
+            return 
+                Theme.BackgroundColor == otherSettings.Theme.BackgroundColor &&
+                Theme.FontColor == otherSettings.Theme.FontColor &&
+                Theme.PageColor == otherSettings.Theme.PageColor &&
+                Password == otherSettings.Password &&
+                NewPassword == otherSettings.NewPassword &&
+                Login == otherSettings.Login &&
+                NewLogin == otherSettings.NewLogin &&
+                MainFolder == otherSettings.MainFolder &&
+                NewMainFolder == otherSettings.NewMainFolder &&
+                IsSay == otherSettings.IsSay &&
+                Speed == otherSettings.Speed &&
+                Gender == otherSettings.Gender &&
+                NewGender == otherSettings.NewGender;
+        }
     }
 }
