@@ -3,15 +3,15 @@ using System;
 
 namespace Marlin.Models
 {
-    public class ProgramColor
+    public class Theme
     {
         public string PageColor = "#000000";
         public string FontColor = "#000000";
         public string BackgroundColor = "#FFFFFF";
 
-        public ProgramColor() { }
+        public Theme() { }
 
-        public ProgramColor
+        public Theme
             (
             string pagecolor,
             string fontcolor,

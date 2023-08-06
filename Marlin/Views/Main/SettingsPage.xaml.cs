@@ -45,7 +45,7 @@ namespace Marlin.Views.Main
             {
                 if (Context.Settings.NewLogin.Length < 1 || Context.Settings.NewMainFolder.Length < 1)
                 {
-                    MessageBox.MakeMessage("Блок администрирования должен быть заполнен", MessageType.Error);
+                    MessageBox.MakeMessage("Блок администрирования должен быть заполнен полностью", MessageType.Error);
                     return;
                 }
 

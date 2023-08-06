@@ -10,7 +10,7 @@ namespace Marlin.Models
 {
     public class Settings
     {
-        public ProgramColor Theme { get; set; } = new ProgramColor();
+        public Theme Theme = new Theme();
         public string Password = "";
         public string NewPassword = "";
         public string Login = "";
