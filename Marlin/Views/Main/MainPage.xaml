@@ -66,26 +66,11 @@
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
-                <Border 
+                <Border VerticalAlignment="Center"
                     BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                     BorderThickness="2"
-                    CornerRadius="20,20,0,0"
-                    Grid.Row="0"
-                    Margin="5,5,5,0">
-                    <Grid 
-                        Margin="10">
-                        <TextBlock
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Text="{Binding Path=Command,UpdateSourceTrigger=PropertyChanged}"/>
-                    </Grid>
-                </Border>
-                <Border 
-                    BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
-                    BorderThickness="2"
-                    CornerRadius="0,0,20,20"
+                    CornerRadius="25"
                     Grid.Row="1"
                     Margin="5,-2,5,5">
                     <Grid 
