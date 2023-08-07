@@ -7,7 +7,7 @@ namespace Marlin.SystemFiles
 {
     public class Context
     {
-        public static string Command = "";
+        
         public static Models.MessageBox MessageBox = new ();
         public static Settings Settings = new();
         public static Settings CopySettings = new();

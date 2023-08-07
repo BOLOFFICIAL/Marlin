@@ -1,14 +1,29 @@
 ﻿using Marlin.SystemFiles;
 using Marlin.ViewModels.Base;
+using System.Collections.Generic;
+using System.Windows.Controls;
 
 namespace Marlin.ViewModels.Main
 {
     public class MainPageViewModel : ViewModel
     {
+        private string _command = "";
+        private List<Grid> _message = new List<Grid>();
+
+        public MainPageViewModel() 
+        {
+            Context.MainPage = this;
+        }
+
         public string Command
         {
-            get => Context.Command;
-            set => Set(ref Context.Command, value);
+            get => _command;
+            set => Set(ref _command, value);
+        }
+
+        public string Author 
+        {
+            get => Context.Settings.Login;
         }
 
         public string PageColor
@@ -24,6 +39,12 @@ namespace Marlin.ViewModels.Main
         public string BackgroundColor
         {
             get => Context.Settings.Theme.BackgroundColor;
+        }
+
+        public List<Grid> Message 
+        {
+            get => _message;
+            set => Set(ref _message, value);
         }
     }
 }
