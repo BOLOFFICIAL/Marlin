@@ -3,7 +3,7 @@ using Marlin.ViewModels.Base;
 
 namespace Marlin.ViewModels.Window
 {
-    class RegistrationPageViewModel : ViewModel
+    public class RegistrationPageViewModel : ViewModel
     {
         public string PageColor
         {
