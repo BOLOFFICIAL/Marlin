@@ -55,57 +55,73 @@ namespace Marlin.Views.Main
             if (e.Key == Key.Enter && Context.MainPage.Command.Length > 0)
             {
                 MakeMessage(Context.MainPage.Command, AuthorType.User);
+                MakeMessage("BolofficialBolofficialBolofficialBolofficialBolofficialBolofficialBolofficialBolofficialBolofficial", AuthorType.Marlin);
+            }
+        }
+
+        private void ContentTextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is TextBlock text)  
+            {
+                Context.MainPage.Command = text.Text;
             }
         }
 
         private void MakeMessage(String Content, AuthorType type)
         {
+            // Создание и настройка основной сетки
             Grid mainGrid = new Grid();
-            ColumnDefinition column1 = new ColumnDefinition();
-            ColumnDefinition column2 = new ColumnDefinition();
-            column1.Width = new GridLength(1, GridUnitType.Star);
-            column2.Width = new GridLength(1, GridUnitType.Star);
+            ColumnDefinition column1 = new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) };
+            ColumnDefinition column2 = new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) };
             mainGrid.ColumnDefinitions.Add(column1);
             mainGrid.ColumnDefinitions.Add(column2);
-            Border border = new Border();
-            border.CornerRadius = new CornerRadius(15);
+
+            // Создание и настройка границы
+            Border border = new Border
+            {
+                CornerRadius = new CornerRadius(15),
+                BorderThickness = new Thickness(2),
+                Padding = new Thickness(10, 5, 10, 5)
+            };
             border.SetBinding(Border.BackgroundProperty, new Binding("ExternalBackgroundColor") { UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged });
             border.SetBinding(Border.BorderBrushProperty, new Binding("PageColor") { UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged });
-            border.BorderThickness = new Thickness(2);
+
             if (type == AuthorType.User)
             {
-                border.Margin = new Thickness(1, 4, 50, 5);
+                border.Margin = new Thickness(5, 10, -30, 10);
                 border.HorizontalAlignment = HorizontalAlignment.Left;
             }
             else
             {
-                border.Margin = new Thickness(50, 4, 1, 5);
+                border.Margin = new Thickness(-30, 10, 5, 10);
                 border.HorizontalAlignment = HorizontalAlignment.Right;
             }
-            border.Padding = new Thickness(10, 5, 10, 5);
-            
+
+            // Создание и настройка сетки внутри границы
             Grid innerGrid = new Grid();
-            RowDefinition row1 = new RowDefinition();
-            RowDefinition row2 = new RowDefinition();
-            row1.Height = new GridLength(1, GridUnitType.Star);
-            row2.Height = new GridLength(1, GridUnitType.Star);
+            RowDefinition row1 = new RowDefinition { Height = new GridLength(1, GridUnitType.Star) };
+            RowDefinition row2 = new RowDefinition { Height = new GridLength(1, GridUnitType.Star) };
             innerGrid.RowDefinitions.Add(row1);
             innerGrid.RowDefinitions.Add(row2);
 
+            // Создание и настройка сетки для автора
             Grid authorGrid = new Grid();
-            ColumnDefinition authorColumn1 = new ColumnDefinition();
-            ColumnDefinition authorColumn2 = new ColumnDefinition();
-            authorColumn1.Width = new GridLength(1, GridUnitType.Star);
-            authorColumn2.Width = new GridLength(1, GridUnitType.Star);
+            ColumnDefinition authorColumn1 = new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) };
+            ColumnDefinition authorColumn2 = new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) };
+            authorGrid.HorizontalAlignment = HorizontalAlignment.Center;
             authorGrid.ColumnDefinitions.Add(authorColumn1);
             authorGrid.ColumnDefinitions.Add(authorColumn2);
 
-            Label authorTextBlock = new Label();
-            authorTextBlock.FontSize = 13;
+            // Создание и настройка блока с именем автора
+            Label authorTextBlock = new Label
+            {
+                FontSize = 13,
+                HorizontalContentAlignment = HorizontalAlignment.Right,
+                FontWeight = FontWeights.Bold,
+                Margin = new Thickness(0, 0, type == AuthorType.User ? 5 : 0, 0)
+            };
             authorTextBlock.SetBinding(Label.ForegroundProperty, new Binding("FontColor") { UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged });
-            authorTextBlock.HorizontalContentAlignment = HorizontalAlignment.Right;
-            authorTextBlock.FontWeight = FontWeights.Bold;
-            authorTextBlock.Margin = new Thickness(0, 0, 5, 0);
+
             if (type == AuthorType.User)
             {
                 authorTextBlock.SetBinding(Label.ContentProperty, new Binding("Author") { UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged });
@@ -116,29 +132,45 @@ namespace Marlin.Views.Main
             }
             Grid.SetColumn(authorTextBlock, 0);
 
-            Label timeTextBlock = new Label();
+            // Создание и настройка блока с временем
+            Label timeTextBlock = new Label
+            {
+                Content = $"{DateTime.UtcNow.ToLocalTime().Hour:D2}:{DateTime.UtcNow.ToLocalTime().Minute:D2}",
+                FontSize = 13,
+                HorizontalContentAlignment = HorizontalAlignment.Left,
+                FontWeight = FontWeights.Bold
+            };
             timeTextBlock.SetBinding(Label.ForegroundProperty, new Binding("FontColor") { UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged });
-            timeTextBlock.Content = $"{DateTime.UtcNow.ToLocalTime().Hour:D2}:{DateTime.UtcNow.ToLocalTime().Minute:D2}";
             Grid.SetColumn(timeTextBlock, 1);
-            timeTextBlock.FontSize = 13;
-            timeTextBlock.HorizontalContentAlignment = HorizontalAlignment.Left;
-            timeTextBlock.FontWeight = FontWeights.Bold;
 
             authorGrid.Children.Add(authorTextBlock);
             authorGrid.Children.Add(timeTextBlock);
 
+            // Создание и настройка сетки для контента
             Grid contentGrid = new Grid();
-            TextBlock contentTextBlock = new TextBlock();
-            contentTextBlock.Text = Content;
-            contentTextBlock.TextWrapping = TextWrapping.Wrap;
-            contentTextBlock.FontSize = 18;
-            contentTextBlock.HorizontalAlignment = HorizontalAlignment.Center;
+            TextBlock contentTextBlock = new TextBlock
+            {
+                Text = Content,
+                TextWrapping = TextWrapping.Wrap,
+                FontSize = 18,
+                HorizontalAlignment = HorizontalAlignment.Center
+            };
+
+            if (type == AuthorType.User)
+            {
+                contentTextBlock.MouseLeftButtonDown += ContentTextBlock_MouseLeftButtonDown;
+            }
+
             contentGrid.Children.Add(contentTextBlock);
+
+            // Расположение элементов внутри сетки
             Grid.SetRow(authorGrid, 0);
             Grid.SetRow(contentGrid, 1);
             innerGrid.Children.Add(authorGrid);
             innerGrid.Children.Add(contentGrid);
             border.Child = innerGrid;
+
+            // Расположение границы в основной сетке
             Grid.SetColumn(border, type == AuthorType.User ? 0 : 1);
             mainGrid.Children.Add(border);
 
