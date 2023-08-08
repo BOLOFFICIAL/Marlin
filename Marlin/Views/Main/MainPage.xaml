@@ -15,7 +15,7 @@
         <vm:MainPageViewModel/>
     </Page.DataContext>
     <Grid 
-        Background="{Binding Path=BackgroundColor,UpdateSourceTrigger=PropertyChanged}">
+        Background="{Binding Path=ExternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}">
         <Grid.RowDefinitions>
             <RowDefinition 
                 Height="80px"/>
@@ -31,7 +31,7 @@
                 <MenuItem Header="Marlin"
                           FontSize="30"
                           Padding="30,0"
-                          Background="{Binding Path=BackgroundColor, UpdateSourceTrigger=PropertyChanged}"
+                          Background="{Binding Path=ExternalBackgroundColor, UpdateSourceTrigger=PropertyChanged}"
                           Height="80px"
                           HorizontalAlignment="Stretch">
                     <MenuItem.ItemsPanel>
@@ -73,6 +73,7 @@
                     BorderThickness="2"
                     CornerRadius="20,20,20,20"
                     Grid.Row="1"
+                    Background="{Binding Path=InternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
                     Margin="5,5,5,5">
                     <Grid 
                         Margin="10">
@@ -122,6 +123,7 @@
                 <Border 
                     BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                     BorderThickness="2"
+                    Background="{Binding Path=InternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
                     CornerRadius="20,20,20,20"
                     Grid.Row="0"
                     Margin="5,5,5,0">
@@ -151,7 +153,7 @@
                             <Button
                                 FontSize="15"
                                 FontWeight="Bold"
-                                Foreground="{Binding Path=BackgroundColor,UpdateSourceTrigger=PropertyChanged}"
+                                Foreground="{Binding Path=InternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
                                 BorderBrush="Transparent"
                                 Background="Transparent"
                                 Content="➤"/>

@@ -17,7 +17,7 @@ namespace Marlin.ViewModels.Window
 
         public string BackgroundColor
         {
-            get => Context.Settings.Theme.BackgroundColor;
+            get => Context.Settings.Theme.ExternalBackgroundColor;
         }
 
         public string[] Genders

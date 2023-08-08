@@ -7,7 +7,8 @@ namespace Marlin.Models
     {
         public string PageColor = "#000000";
         public string FontColor = "#000000";
-        public string BackgroundColor = "#FFFFFF";
+        public string InternalBackgroundColor = "#FFFFFF";
+        public string ExternalBackgroundColor = "#FFFFFF";
 
         public Theme() { }
 
@@ -15,12 +16,14 @@ namespace Marlin.Models
             (
             string pagecolor,
             string fontcolor,
-            string backgroundcolor
+            string externalbackgroundcolor,
+            string internalbackgroundcolor
             )
         {
             PageColor = pagecolor;
             FontColor = fontcolor;
-            BackgroundColor = backgroundcolor;
+            ExternalBackgroundColor = externalbackgroundcolor;
+            InternalBackgroundColor = internalbackgroundcolor;
         }
 
         public static (byte A, byte R, byte G, byte B) ConvertHexToArgb(string hexColor)

@@ -69,6 +69,7 @@ namespace Marlin.Views.Main
             mainGrid.ColumnDefinitions.Add(column2);
             Border border = new Border();
             border.CornerRadius = new CornerRadius(15);
+            border.SetBinding(Border.BackgroundProperty, new Binding("ExternalBackgroundColor") { UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged });
             border.SetBinding(Border.BorderBrushProperty, new Binding("PageColor") { UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged });
             border.BorderThickness = new Thickness(2);
             if (type == AuthorType.User)

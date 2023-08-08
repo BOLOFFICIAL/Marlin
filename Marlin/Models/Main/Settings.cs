@@ -80,7 +80,7 @@ namespace Marlin.Models
         public bool Equals(Settings otherSettings)
         {
             return 
-                Theme.BackgroundColor == otherSettings.Theme.BackgroundColor &&
+                Theme.ExternalBackgroundColor == otherSettings.Theme.ExternalBackgroundColor &&
                 Theme.FontColor == otherSettings.Theme.FontColor &&
                 Theme.PageColor == otherSettings.Theme.PageColor &&
                 Password == otherSettings.Password &&

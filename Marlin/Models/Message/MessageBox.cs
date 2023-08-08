@@ -42,7 +42,7 @@ namespace Marlin.Models
 
         public static void SetMessageColor()
         {
-            Context.MessageBox.BackgroundColor = Context.Settings.Theme.BackgroundColor;
+            Context.MessageBox.BackgroundColor = Context.Settings.Theme.ExternalBackgroundColor;
             Context.MessageBox.FontColor = Context.Settings.Theme.FontColor;
 
             switch (Context.MessageBox.Type)

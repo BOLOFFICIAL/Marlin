@@ -31,17 +31,30 @@ namespace Marlin.ViewModels.Main
             } 
         }
 
-        public string BackgroundColor
+        public string ExternalBackgroundColor
         {
-            get => Context.Settings.Theme.BackgroundColor;
-            set 
+            get => Context.Settings.Theme.ExternalBackgroundColor;
+            set
             {
                 if (!value.Contains("#"))
                 {
                     value = "#" + value;
                 }
-                Set(ref Context.Settings.Theme.BackgroundColor, value);
-            } 
+                Set(ref Context.Settings.Theme.ExternalBackgroundColor, value);
+            }
+        }
+
+        public string InternalBackgroundColor
+        {
+            get => Context.Settings.Theme.InternalBackgroundColor;
+            set
+            {
+                if (!value.Contains("#"))
+                {
+                    value = "#" + value;
+                }
+                Set(ref Context.Settings.Theme.InternalBackgroundColor, value);
+            }
         }
 
         public bool IsSay

@@ -36,9 +36,14 @@ namespace Marlin.ViewModels.Main
             get => Context.Settings.Theme.FontColor;
         }
 
-        public string BackgroundColor
+        public string ExternalBackgroundColor
         {
-            get => Context.Settings.Theme.BackgroundColor;
+            get => Context.Settings.Theme.ExternalBackgroundColor;
+        }
+
+        public string InternalBackgroundColor
+        {
+            get => Context.Settings.Theme.InternalBackgroundColor;
         }
 
         public List<Grid> Message 
