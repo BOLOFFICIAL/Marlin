@@ -48,7 +48,7 @@ namespace Marlin.Models
                         Environment.Exit(0);
                     }
                 }
-                Context.CopySettings = Context.Settings;
+                Context.CopySettings = JsonConvert.DeserializeObject<Settings>(JsonConvert.SerializeObject(Context.Settings));
             }
             catch (Exception)
             {

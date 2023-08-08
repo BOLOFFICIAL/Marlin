@@ -18,15 +18,16 @@ namespace Marlin.Views.Main
             Context.Settings.NewMainFolder = Context.Settings.MainFolder;
             InitializeComponent();
             Context.CopySettings = JsonConvert.DeserializeObject<Settings>(JsonConvert.SerializeObject(Context.Settings));
+            Context.CopySettings.NewPassword = "";
         }
 
         private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            //if (Context.CopySettings.Equals(Context.Settings))
-            //{
-            //    MessageBox.MakeMessage("Не найдено изменений в настройках", MessageType.Info);
-            //    return;
-            //}
+            if (Context.CopySettings.Equals(Context.Settings))
+            {
+                MessageBox.MakeMessage("Не найдено изменений в настройках", MessageType.Info);
+                return;
+            }
 
             if (Context.Settings.Theme.PageColor.Length < 7 ||
                     Context.Settings.Theme.FontColor.Length < 7 ||
