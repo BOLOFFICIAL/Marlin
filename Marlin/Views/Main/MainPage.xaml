@@ -64,68 +64,12 @@
             </Grid.ColumnDefinitions>
 
             <Grid Grid.Column="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
                 <Border 
                     BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                     BorderThickness="2"
-                    CornerRadius="20,20,20,20"
-                    Grid.Row="1"
-                    Background="{Binding Path=InternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
-                    Margin="5,5,5,5">
-                    <Grid 
-                        Margin="15,0">
-                        <ScrollViewer VerticalScrollBarVisibility="Hidden">
-                            <StackPanel VerticalAlignment="Top">
-                                <ItemsControl ItemsSource="{Binding Path=Message, UpdateSourceTrigger=PropertyChanged}" />
-                                <!--<Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Border Grid.Column="0"
-                                        BorderBrush="Aqua"
-                                        CornerRadius="25"
-                                        BorderThickness="2"
-                                        Padding="10,5"
-                                            Margin="10"
-                                        HorizontalAlignment="Stretch">
-                                        <Grid>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="*"/>
-                                                <RowDefinition Height="*"/>
-                                            </Grid.RowDefinitions>
-                                            <Grid Grid.Row="0">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="*"/>
-                                                    <ColumnDefinition Width="*"/>
-                                                </Grid.ColumnDefinitions>
-                                                <Label Grid.Column="0"
-                                               Content="Bolofficial"
-                                                       HorizontalContentAlignment="Right"/>
-                                                <Label Grid.Column="1"
-                                                       HorizontalContentAlignment="Left"
-                                               Content="Время"/>
-                                            </Grid>
-                                            <Grid Grid.Row="1">
-                                                <TextBlock Text="Содержимое"
-                                               HorizontalAlignment="Stretch"/>
-                                            </Grid>
-                                        </Grid>
-                                    </Border>
-                                </Grid>-->
-                            </StackPanel>
-                        </ScrollViewer>
-                    </Grid>
-                </Border>
-                <Border 
-                    BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
-                    BorderThickness="2"
+                    VerticalAlignment="Center"
                     Background="{Binding Path=InternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
                     CornerRadius="20,20,20,20"
-                    Grid.Row="0"
                     Margin="5,5,5,5">
                     <Grid 
                         Margin="10"
