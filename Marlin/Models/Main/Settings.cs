@@ -1,4 +1,5 @@
 ﻿using Marlin.SystemFiles;
+using Marlin.SystemFiles.Types;
 using Newtonsoft.Json;
 using System;
 using System.Diagnostics;

@@ -1,4 +1,4 @@
-﻿namespace Marlin.SystemFiles
+﻿namespace Marlin.SystemFiles.Types
 {
     public enum MessageType
     {

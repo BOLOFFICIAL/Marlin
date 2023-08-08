@@ -1,5 +1,6 @@
 ﻿using Marlin.Models;
 using Marlin.SystemFiles;
+using Marlin.SystemFiles.Types;
 using Newtonsoft.Json;
 using System.Windows.Controls;
 
@@ -21,11 +22,11 @@ namespace Marlin.Views.Main
 
         private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            if (Context.CopySettings.Equals(Context.Settings))
-            {
-                MessageBox.MakeMessage("Не найдено изменений в настройках", MessageType.Info);
-                return;
-            }
+            //if (Context.CopySettings.Equals(Context.Settings))
+            //{
+            //    MessageBox.MakeMessage("Не найдено изменений в настройках", MessageType.Info);
+            //    return;
+            //}
 
             if (Context.Settings.Theme.PageColor.Length < 7 ||
                     Context.Settings.Theme.FontColor.Length < 7 ||
@@ -44,8 +45,7 @@ namespace Marlin.Views.Main
                 Context.Settings.NewMainFolder != Context.Settings.MainFolder;
             if (editadmin)
             {
-                if (Context.Settings.NewPassword.Length < 1 ||
-                    Context.Settings.NewLogin.Length < 1 ||
+                if (Context.Settings.NewLogin.Length < 1 ||
                     Context.Settings.NewMainFolder.Length < 1 ||
                     Context.Settings.NewGender.Length < 1)
                 {

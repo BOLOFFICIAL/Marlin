@@ -1,4 +1,4 @@
-﻿using Marlin.SystemFiles;
+﻿using Marlin.SystemFiles.Types;
 using System;
 
 namespace Marlin.Models
