@@ -81,6 +81,7 @@ namespace Marlin.Models
         {
             return 
                 Theme.ExternalBackgroundColor == otherSettings.Theme.ExternalBackgroundColor &&
+                Theme.InternalBackgroundColor == otherSettings.Theme.InternalBackgroundColor &&
                 Theme.FontColor == otherSettings.Theme.FontColor &&
                 Theme.PageColor == otherSettings.Theme.PageColor &&
                 Password == otherSettings.Password &&
