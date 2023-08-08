@@ -56,7 +56,7 @@ namespace Marlin.Views.Main
             if (e.Key == Key.Enter && Context.MainPage.Command.Length > 0)
             {
                 MakeMessage(Context.MainPage.Command, AuthorType.User);
-                MakeMessage("BolofficialBolofficialBolofficialBolofficialBolofficialBolofficialBolofficialBolofficialBolofficial", AuthorType.Marlin);
+                MakeMessage(Context.MainPage.Command, AuthorType.Marlin);
             }
         }
 
@@ -66,6 +66,21 @@ namespace Marlin.Views.Main
             {
                 Context.MainPage.Command = text.Text;
             }
+        }
+
+        private List<Grid> AddItem(Grid newItem)
+        {
+            List<Grid> mes = new List<Grid>() { newItem }; // Предварительное выделение памяти для 101 элемента
+
+            int messageCount = Context.MainPage.Message.Count;
+            int iterations = Math.Min(messageCount, 49); // Определение количества итераций, ограниченное 100 или количеством элементов в списке
+
+            for (int i = 0; i < iterations; i++)
+            {
+                mes.Add(Context.MainPage.Message[i]);
+            }
+
+            return mes;
         }
 
         private void MakeMessage(String Content, AuthorType type)
@@ -175,16 +190,9 @@ namespace Marlin.Views.Main
             Grid.SetColumn(border, type == AuthorType.User ? 0 : 1);
             mainGrid.Children.Add(border);
 
-            var mes = new List<Grid>();
-            mes.Add(mainGrid);
+            Context.MainPage.Message = AddItem(mainGrid);
 
-            foreach (var message in Context.MainPage.Message)
-            {
-                mes.Add(message);
-            }
-            Context.MainPage.Message = mes;
-
-            if (type == AuthorType.User)
+            if (type == AuthorType.Marlin)
             {
                 Context.MainPage.Command = "";
             }
