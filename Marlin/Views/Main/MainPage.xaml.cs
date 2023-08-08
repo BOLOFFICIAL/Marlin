@@ -3,11 +3,11 @@ using Marlin.Views.Window;
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using System.Windows.Media;
 
 namespace Marlin.Views.Main
 {
@@ -52,15 +52,13 @@ namespace Marlin.Views.Main
 
         private void TextBox_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Enter && Context.MainPage.Command.Length>0)
+            if (e.Key == Key.Enter && Context.MainPage.Command.Length > 0)
             {
-                MakeMessage(Context.MainPage.Command,AuthorType.User);
-                Thread.Sleep(500);
-                MakeMessage("Bolofficial", AuthorType.Marlin);
+                MakeMessage(Context.MainPage.Command, AuthorType.User);
             }
         }
 
-        private void MakeMessage(String Content,AuthorType type) 
+        private void MakeMessage(String Content, AuthorType type)
         {
             Grid mainGrid = new Grid();
             ColumnDefinition column1 = new ColumnDefinition();
@@ -70,12 +68,21 @@ namespace Marlin.Views.Main
             mainGrid.ColumnDefinitions.Add(column1);
             mainGrid.ColumnDefinitions.Add(column2);
             Border border = new Border();
-            border.BorderBrush = Brushes.Aqua;
             border.CornerRadius = new CornerRadius(15);
+            border.SetBinding(Border.BorderBrushProperty, new Binding("PageColor") { UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged });
             border.BorderThickness = new Thickness(2);
-            border.Padding = new Thickness(15, 10, 15, 10);
-            border.Margin = new Thickness(5);
-            border.HorizontalAlignment = HorizontalAlignment.Stretch;
+            if (type == AuthorType.User)
+            {
+                border.Margin = new Thickness(1, 4, 50, 5);
+                border.HorizontalAlignment = HorizontalAlignment.Left;
+            }
+            else
+            {
+                border.Margin = new Thickness(50, 4, 1, 5);
+                border.HorizontalAlignment = HorizontalAlignment.Right;
+            }
+            border.Padding = new Thickness(10, 5, 10, 5);
+            
             Grid innerGrid = new Grid();
             RowDefinition row1 = new RowDefinition();
             RowDefinition row2 = new RowDefinition();
@@ -102,7 +109,7 @@ namespace Marlin.Views.Main
             {
                 authorTextBlock.SetBinding(Label.ContentProperty, new Binding("Author") { UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged });
             }
-            else 
+            else
             {
                 authorTextBlock.Content = "Marlin";
             }
@@ -110,7 +117,7 @@ namespace Marlin.Views.Main
 
             Label timeTextBlock = new Label();
             timeTextBlock.SetBinding(Label.ForegroundProperty, new Binding("FontColor") { UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged });
-            timeTextBlock.Content = $"{DateTime.UtcNow.Hour:D2}:{DateTime.UtcNow.Minute:D2}";
+            timeTextBlock.Content = $"{DateTime.UtcNow.ToLocalTime().Hour:D2}:{DateTime.UtcNow.ToLocalTime().Minute:D2}";
             Grid.SetColumn(timeTextBlock, 1);
             timeTextBlock.FontSize = 13;
             timeTextBlock.HorizontalContentAlignment = HorizontalAlignment.Left;
@@ -143,7 +150,7 @@ namespace Marlin.Views.Main
             }
             Context.MainPage.Message = mes;
 
-            if (type == AuthorType.User) 
+            if (type == AuthorType.User)
             {
                 Context.MainPage.Command = "";
             }

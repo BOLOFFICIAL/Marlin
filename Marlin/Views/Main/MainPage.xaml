@@ -65,15 +65,15 @@
 
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
                     <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Border 
                     BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                     BorderThickness="2"
-                    CornerRadius="20,20,0,0"
-                    Grid.Row="0"
-                    Margin="5,5,5,0">
+                    CornerRadius="20,20,20,20"
+                    Grid.Row="1"
+                    Margin="5,5,5,5">
                     <Grid 
                         Margin="10">
                         <ScrollViewer VerticalScrollBarVisibility="Hidden">
@@ -122,9 +122,9 @@
                 <Border 
                     BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                     BorderThickness="2"
-                    CornerRadius="0,0,20,20"
-                    Grid.Row="1"
-                    Margin="5,-2,5,5">
+                    CornerRadius="20,20,20,20"
+                    Grid.Row="0"
+                    Margin="5,5,5,0">
                     <Grid 
                         Margin="10"
                         VerticalAlignment="Center">
