@@ -69,7 +69,7 @@
                     BorderThickness="2"
                     VerticalAlignment="Center"
                     Background="{Binding Path=InternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
-                    CornerRadius="20,20,20,20"
+                    CornerRadius="25"
                     Margin="5,5,5,5">
                     <Grid 
                         Margin="10"
