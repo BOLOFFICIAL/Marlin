@@ -20,7 +20,7 @@ namespace Marlin.Models
         public string FontColor = "";
         public string PageColor = "";
 
-        public static void MakeMessage(string message, MessageType type)
+        public static void MakeMessage(string message, MessageType type = MessageType.Info)
         {
             Voix.SpeakAsync(message);
             Context.MessageBox.Answer = "";

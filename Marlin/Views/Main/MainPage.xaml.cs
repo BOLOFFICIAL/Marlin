@@ -1,15 +1,9 @@
-﻿using Marlin.Models;
-using Marlin.SystemFiles;
+﻿using Marlin.SystemFiles;
 using Marlin.SystemFiles.Types;
 using Marlin.Views.Window;
-using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Input;
 
 namespace Marlin.Views.Main
@@ -57,7 +51,8 @@ namespace Marlin.Views.Main
         {
             if (e.Key == Key.Enter && Context.MainPage.Command.Length > 0)
             {
-                //работа с командой
+                Models.MessageBox.MakeMessage(Context.MainPage.Command);
+                Context.MainPage.Command = "";
             }
         }
     }

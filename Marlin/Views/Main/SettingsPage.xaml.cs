@@ -25,7 +25,7 @@ namespace Marlin.Views.Main
         {
             if (Context.CopySettings.Equals(Context.Settings))
             {
-                MessageBox.MakeMessage("Не найдено изменений в настройках", MessageType.Info);
+                MessageBox.MakeMessage("Не обнаружено  изменений в настройках");
                 return;
             }
 

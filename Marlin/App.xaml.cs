@@ -13,7 +13,7 @@ namespace Marlin
 
             Settings.LoadSettings();
 
-            if (Context.Settings.Password.Length>0)
+            if (Context.Settings.Password.Length > 0)
             {
                 Voix.SpeakAsync($"С возвращением {Context.Settings.Login}");
             }

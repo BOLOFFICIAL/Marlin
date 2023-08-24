@@ -16,6 +16,7 @@
     </Page.DataContext>
     <Grid 
         Background="{Binding Path=ExternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}">
+        
         <Grid.RowDefinitions>
             <RowDefinition 
                 Height="80px"/>
@@ -24,12 +25,13 @@
             <RowDefinition 
                 Height="50px"/>
         </Grid.RowDefinitions>
+        
         <Grid Grid.Row="0">
             <Menu FontWeight="Bold"
                   Foreground="{Binding Path=FontColor, UpdateSourceTrigger=PropertyChanged}"
                   VerticalAlignment="Center">
                 <MenuItem Header="Marlin"
-                          FontSize="30"
+                          FontSize="30" 
                           Padding="30,0"
                           Background="{Binding Path=ExternalBackgroundColor, UpdateSourceTrigger=PropertyChanged}"
                           Height="80px"

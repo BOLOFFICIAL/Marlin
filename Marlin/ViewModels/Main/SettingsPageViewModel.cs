@@ -8,27 +8,27 @@ namespace Marlin.ViewModels.Main
         public string PageColor
         {
             get => Context.Settings.Theme.PageColor;
-            set 
+            set
             {
-                if (!value.Contains("#")) 
+                if (!value.Contains("#"))
                 {
                     value = "#" + value;
                 }
                 Set(ref Context.Settings.Theme.PageColor, value);
-            } 
+            }
         }
 
         public string FontColor
         {
             get => Context.Settings.Theme.FontColor;
-            set 
+            set
             {
                 if (!value.Contains("#"))
                 {
                     value = "#" + value;
                 }
                 Set(ref Context.Settings.Theme.FontColor, value);
-            } 
+            }
         }
 
         public string ExternalBackgroundColor

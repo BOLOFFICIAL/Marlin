@@ -39,7 +39,7 @@ namespace Marlin.Models
                 }
                 else
                 {
-                    MessageBox.MakeMessage("Ошибка загрузки цветов программы",MessageType.Error);
+                    MessageBox.MakeMessage("Ошибка загрузки цветов программы", MessageType.Error);
                 }
             }
 

@@ -10,7 +10,7 @@ namespace Marlin.ViewModels.Main
         private string _command = "";
         private List<Grid> _message = new List<Grid>();
 
-        public MainPageViewModel() 
+        public MainPageViewModel()
         {
             Context.MainPage = this;
         }
@@ -21,7 +21,7 @@ namespace Marlin.ViewModels.Main
             set => Set(ref _command, value);
         }
 
-        public string Author 
+        public string Author
         {
             get => Context.Settings.Login;
         }
@@ -46,7 +46,7 @@ namespace Marlin.ViewModels.Main
             get => Context.Settings.Theme.InternalBackgroundColor;
         }
 
-        public List<Grid> Message 
+        public List<Grid> Message
         {
             get => _message;
             set => Set(ref _message, value);
