@@ -24,6 +24,7 @@ namespace Marlin.Models
         public string NewGender = "";
         public int[] Speeds = Enumerable.Range(-10, 21).ToArray();
         public string[] Genders = { "Мужской", "Женский" };
+        public bool IsАutorun = true;
 
         public static void SaveSettings(bool restart = true)
         {

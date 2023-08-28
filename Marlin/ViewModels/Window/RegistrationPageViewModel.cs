@@ -10,6 +10,12 @@ namespace Marlin.ViewModels.Window
             get => Context.Settings.Theme.PageColor;
         }
 
+        public bool Аutorun
+        {
+            get => Context.Settings.IsАutorun;
+            set => Set(ref Context.Settings.IsАutorun, value);
+        }
+
         public string FontColor
         {
             get => Context.Settings.Theme.FontColor;
