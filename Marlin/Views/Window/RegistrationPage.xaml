@@ -24,6 +24,7 @@
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="0"
                            FontSize="20"
@@ -186,6 +187,21 @@
                         HorizontalAlignment="Center"
                         FontWeight="Bold"
                         Content="Зарегистрироваться"/>
+                <Grid Grid.Row="3"
+                      Margin="0,10,0,0"
+                      HorizontalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0"
+                               Text="Добавить в автозапуск"/>
+
+                    <CheckBox Grid.Column="1"
+                              Margin="5,0,0,0"
+                              IsChecked="True"/>
+                </Grid>
             </Grid>
         </Border>
     </Grid>
