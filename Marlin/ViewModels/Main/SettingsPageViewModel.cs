@@ -91,14 +91,14 @@ namespace Marlin.ViewModels.Main
 
         public string NewGender
         {
-            get => Context.Settings.NewGender;
-            set => Set(ref Context.Settings.NewGender, value);
+            get => Context.Settings.Gender;
+            set => Set(ref Context.Settings.Gender, value);
         }
 
         public string NewMainFolder
         {
-            get => Context.Settings.NewMainFolder;
-            set => Set(ref Context.Settings.NewMainFolder, value);
+            get => Context.Settings.MainFolder;
+            set => Set(ref Context.Settings.MainFolder, value);
         }
 
         public string NewPassword
@@ -109,8 +109,8 @@ namespace Marlin.ViewModels.Main
 
         public string NewLogin
         {
-            get => Context.Settings.NewLogin;
-            set => Set(ref Context.Settings.NewLogin, value);
+            get => Context.Settings.Login;
+            set => Set(ref Context.Settings.Login, value);
         }
     }
 }

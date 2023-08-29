@@ -5,7 +5,10 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Shapes;
 
 namespace Marlin.Models
 {
@@ -15,13 +18,10 @@ namespace Marlin.Models
         public string Password = "";
         public string NewPassword = "";
         public string Login = "";
-        public string NewLogin = "";
         public string MainFolder = "";
-        public string NewMainFolder = "";
         public bool IsSay = true;
         public int Speed = 3;
         public string Gender = "";
-        public string NewGender = "";
         public int[] Speeds = Enumerable.Range(-10, 21).ToArray();
         public string[] Genders = { "Мужской", "Женский" };
         public bool IsАutorun = true;
@@ -29,8 +29,8 @@ namespace Marlin.Models
         public static void SaveSettings(bool restart = true)
         {
             Context.Settings.NewPassword = "";
-            string exePath = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
-            string filepath = Path.Combine(exePath, "Settings.json");
+            string exePath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
+            string filepath = System.IO.Path.Combine(exePath, "Settings.json");
             string settings = JsonConvert.SerializeObject(Context.Settings);
             try
             {
@@ -59,8 +59,8 @@ namespace Marlin.Models
 
         public static void LoadSettings()
         {
-            string exePath = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
-            string filepath = Path.Combine(exePath, "Settings.json");
+            string exePath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
+            string filepath = System.IO.Path.Combine(exePath, "Settings.json");
             string settings;
             if (File.Exists(filepath))
             {
@@ -79,6 +79,47 @@ namespace Marlin.Models
             }
         }
 
+        public static void RunCmd(string command) 
+        {
+            Task.Run(() => 
+            {
+                Process process = new Process();
+                ProcessStartInfo startInfo = new ProcessStartInfo();
+
+                startInfo.FileName = "cmd.exe";                
+                startInfo.RedirectStandardInput = true;        
+                startInfo.RedirectStandardOutput = true;       
+                startInfo.CreateNoWindow = true;               
+                startInfo.UseShellExecute = false;             
+                startInfo.StandardOutputEncoding = Encoding.Default;
+
+                process.StartInfo = startInfo;
+                process.Start();                               
+
+                process.StandardInput.WriteLine(command);       
+                process.StandardInput.Flush();
+                process.StandardInput.Close();
+
+                string output = process.StandardOutput.ReadToEnd(); 
+
+                process.WaitForExit();
+            });
+        }
+
+        public static void AddAutorun() 
+        {
+            string path = System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName;
+            string command = "reg add \"HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run\" /v Marlin /t REG_SZ /d " + $"{path}";
+
+            RunCmd(command);
+        }
+
+        public static void RemoveAutorun()
+        {
+            string command = $"reg delete \"HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run\" /v Marlin /f";
+            RunCmd(command);
+        }
+
         public bool Equals(Settings otherSettings)
         {
             return
@@ -89,13 +130,14 @@ namespace Marlin.Models
                 Password == otherSettings.Password &&
                 NewPassword == otherSettings.NewPassword &&
                 Login == otherSettings.Login &&
-                NewLogin == otherSettings.NewLogin &&
+                Login == otherSettings.Login &&
                 MainFolder == otherSettings.MainFolder &&
-                NewMainFolder == otherSettings.NewMainFolder &&
+                MainFolder == otherSettings.MainFolder &&
                 IsSay == otherSettings.IsSay &&
                 Speed == otherSettings.Speed &&
                 Gender == otherSettings.Gender &&
-                NewGender == otherSettings.NewGender;
+                Gender == otherSettings.Gender &&
+                IsАutorun == otherSettings.IsАutorun;
         }
     }
 }

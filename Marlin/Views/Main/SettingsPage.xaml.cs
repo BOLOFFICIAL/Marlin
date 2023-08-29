@@ -13,9 +13,6 @@ namespace Marlin.Views.Main
     {
         public SettingsPage()
         {
-            Context.Settings.NewLogin = Context.Settings.Login;
-            Context.Settings.NewGender = Context.Settings.Gender;
-            Context.Settings.NewMainFolder = Context.Settings.MainFolder;
             InitializeComponent();
             Context.CopySettings = JsonConvert.DeserializeObject<Settings>(JsonConvert.SerializeObject(Context.Settings));
             Context.CopySettings.NewPassword = "";
@@ -40,15 +37,16 @@ namespace Marlin.Views.Main
                 return;
             }
             var editadmin =
-                (Context.Settings.NewPassword != Context.Settings.Password && Context.Settings.NewPassword.Length > 0) ||
-                Context.Settings.NewLogin != Context.Settings.Login ||
-                Context.Settings.NewGender != Context.Settings.Gender ||
-                Context.Settings.NewMainFolder != Context.Settings.MainFolder;
+                (Context.CopySettings.NewPassword != Context.Settings.Password && Context.CopySettings.NewPassword.Length > 0) ||
+                Context.CopySettings.Login != Context.Settings.Login ||
+                Context.CopySettings.Gender != Context.Settings.Gender ||
+                Context.CopySettings.MainFolder != Context.Settings.MainFolder ||
+                Context.CopySettings.IsАutorun != Context.Settings.IsАutorun;
             if (editadmin)
             {
-                if (Context.Settings.NewLogin.Length < 1 ||
-                    Context.Settings.NewMainFolder.Length < 1 ||
-                    Context.Settings.NewGender.Length < 1)
+                if (Context.Settings.Login.Length < 1 ||
+                    Context.Settings.MainFolder.Length < 1 ||
+                    Context.Settings.Gender.Length < 1)
                 {
                     MessageBox.MakeMessage("Блок администрирования должен быть заполнен", MessageType.Error);
                     return;
@@ -63,9 +61,14 @@ namespace Marlin.Views.Main
                         {
                             Context.Settings.Password = Context.Settings.NewPassword;
                         }
-                        Context.Settings.Login = Context.Settings.NewLogin;
-                        Context.Settings.Gender = Context.Settings.NewGender;
-                        Context.Settings.MainFolder = Context.Settings.NewMainFolder;
+                        if (Context.Settings.IsАutorun)
+                        {
+                            Settings.AddAutorun();
+                        }
+                        else
+                        {
+                            Settings.RemoveAutorun();
+                        }
                         Settings.SaveSettings();
                     }
                     else
@@ -76,18 +79,15 @@ namespace Marlin.Views.Main
                 else
                 {
                     Context.Settings.Password = Context.Settings.NewPassword;
-                    Context.Settings.Login = Context.Settings.NewLogin;
-                    Context.Settings.Gender = Context.Settings.NewGender;
-                    Context.Settings.MainFolder = Context.Settings.NewMainFolder;
                     Settings.SaveSettings();
                 }
             }
             else
             {
                 if (Context.Settings.Password.Length > 0 &&
-                    Context.Settings.NewLogin.Length > 0 &&
-                    Context.Settings.NewMainFolder.Length > 0 &&
-                    Context.Settings.NewGender.Length > 0)
+                    Context.Settings.Login.Length > 0 &&
+                    Context.Settings.MainFolder.Length > 0 &&
+                    Context.Settings.Gender.Length > 0)
                 {
                     Settings.SaveSettings();
                 }
