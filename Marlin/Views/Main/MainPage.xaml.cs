@@ -44,7 +44,6 @@ namespace Marlin.Views.Main
                     case "Действия": Models.MessageBox.MakeMessage("Страница не доступна", MessageType.Error); break;
                 }
             }
-
         }
 
         private void TextBox_KeyDown(object sender, KeyEventArgs e)

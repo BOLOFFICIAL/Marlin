@@ -70,6 +70,10 @@ namespace Marlin.Models
                     {
                         settings = sr.ReadLine();
                     }
+                    if (settings is null || settings.Length == 0) 
+                    {
+                        return;
+                    }
                     Context.Settings = JsonConvert.DeserializeObject<Settings>(settings);
                 }
                 catch (Exception)
