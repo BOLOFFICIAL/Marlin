@@ -460,9 +460,9 @@
                     FontWeight="Bold"
                     BorderThickness="0"
                     BorderBrush="Transparent"
+                    Command="{Binding Path=ToMainCommand}"
                     Foreground="{Binding Path=ExternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
-                    Background="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
-                    Click="Button_Click_1"/>
+                    Background="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"/>
 
             <Button Grid.Column="1"
                     Content="Сохранить"
@@ -471,9 +471,9 @@
                     Margin="5,10,10,10" 
                     BorderThickness="0"
                     BorderBrush="Transparent"
+                    Command="{Binding Path=SaveSettingsCommand}"
                     Foreground="{Binding Path=ExternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
-                    Background="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
-                    Click="Button_Click"/>
+                    Background="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"/>
         </Grid>
     </Grid>
 </Page>

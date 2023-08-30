@@ -3,11 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:vm="clr-namespace:Marlin.ViewModels.Window"
         xmlns:local="clr-namespace:Marlin.Windows"
         mc:Ignorable="d" 
+        SizeToContent="WidthAndHeight"
         Foreground="{Binding Path=FontColor}">
-    <Window.DataContext>
-        <vm:MessagePageViewModel/>
-    </Window.DataContext>
 </Window>

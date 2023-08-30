@@ -1,10 +1,24 @@
-﻿using Marlin.SystemFiles;
+﻿using Marlin.Commands;
+using Marlin.Models;
+using Marlin.SystemFiles;
+using Marlin.SystemFiles.Types;
 using Marlin.ViewModels.Base;
+using Marlin.Views.Main;
+using System.Windows.Input;
 
 namespace Marlin.ViewModels.Main
 {
     public class SettingsPageViewModel : ViewModel
     {
+        public ICommand ToMainCommand { get; }
+        public ICommand SaveSettingsCommand { get; }
+
+        public SettingsPageViewModel() 
+        {
+            ToMainCommand = new LambdaCommand(OnToMainCommandExecuted);
+            SaveSettingsCommand = new LambdaCommand(OnSaveSettingsCommandExecuted);
+        }
+
         public string PageColor
         {
             get => Context.Settings.Theme.PageColor;
@@ -112,5 +126,90 @@ namespace Marlin.ViewModels.Main
             get => Context.Settings.Login;
             set => Set(ref Context.Settings.Login, value);
         }
+
+        private void OnToMainCommandExecuted(object p)
+        {
+            Context.MainWindow.Content = new MainPage();
+        }
+
+        private void OnSaveSettingsCommandExecuted(object p)
+        {
+            if (Context.CopySettings.Equals(Context.Settings))
+            {
+                MessageBox.MakeMessage("Не обнаружено  изменений в настройках");
+                return;
+            }
+
+            if (Context.Settings.Theme.PageColor.Length < 7 ||
+                    Context.Settings.Theme.FontColor.Length < 7 ||
+                    Context.Settings.Theme.ExternalBackgroundColor.Length < 7 ||
+                    Context.Settings.Theme.PageColor.Length == 8 ||
+                    Context.Settings.Theme.FontColor.Length == 8 ||
+                    Context.Settings.Theme.ExternalBackgroundColor.Length == 8)
+            {
+                MessageBox.MakeMessage("Значение цвета должно иметь длину 7 или 9 символов", MessageType.Error);
+                return;
+            }
+            var editadmin =
+                (Context.CopySettings.NewPassword != Context.Settings.Password && Context.CopySettings.NewPassword.Length > 0) ||
+                Context.CopySettings.Login != Context.Settings.Login ||
+                Context.CopySettings.Gender != Context.Settings.Gender ||
+                Context.CopySettings.MainFolder != Context.Settings.MainFolder ||
+                Context.CopySettings.IsАutorun != Context.Settings.IsАutorun;
+            if (editadmin)
+            {
+                if (Context.Settings.Login.Length < 1 ||
+                    Context.Settings.MainFolder.Length < 1 ||
+                    Context.Settings.Gender.Length < 1)
+                {
+                    MessageBox.MakeMessage("Блок администрирования должен быть заполнен", MessageType.Error);
+                    return;
+                }
+                if (Context.Settings.Password.Length > 0)
+                {
+                    string oldpass = (Context.Settings.NewPassword != Context.Settings.Password && Context.Settings.NewPassword.Length > 0) ? "старый" : "";
+                    MessageBox.MakeMessage($"Были изменены настройки администрирования.\nДля сохранения введите {oldpass} пароль администпратора.", MessageType.TextQuestion);
+                    if (Context.MessageBox.Answer == Context.Settings.Password)
+                    {
+                        if (Context.Settings.NewPassword.Length > 0)
+                        {
+                            Context.Settings.Password = Context.Settings.NewPassword;
+                        }
+                        if (Context.Settings.IsАutorun)
+                        {
+                            Settings.AddAutorun();
+                        }
+                        else
+                        {
+                            Settings.RemoveAutorun();
+                        }
+                        Settings.SaveSettings();
+                    }
+                    else
+                    {
+                        MessageBox.MakeMessage($"Введен неправильный пароль", MessageType.Error);
+                    }
+                }
+                else
+                {
+                    Context.Settings.Password = Context.Settings.NewPassword;
+                    Settings.SaveSettings();
+                }
+            }
+            else
+            {
+                if (Context.Settings.Password.Length > 0 &&
+                    Context.Settings.Login.Length > 0 &&
+                    Context.Settings.MainFolder.Length > 0 &&
+                    Context.Settings.Gender.Length > 0)
+                {
+                    Settings.SaveSettings();
+                }
+                else
+                {
+                    MessageBox.MakeMessage("Блок администрирования должен быть заполнен", MessageType.Error);
+                }
+            }
+        }    
     }
 }

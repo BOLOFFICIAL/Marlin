@@ -17,5 +17,7 @@ namespace Marlin.SystemFiles
         public static SettingsPageViewModel SettingsPage = new();
         public static MessagePageViewModel MessagePage = new();
         public static RegistrationPageViewModel RegistrationPage = new();
+
+        public static Window MainWindow = new();
     }
 }

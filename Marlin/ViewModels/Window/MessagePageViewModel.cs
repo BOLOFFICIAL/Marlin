@@ -1,11 +1,22 @@
-﻿using Marlin.SystemFiles;
+﻿using Marlin.Commands;
+using Marlin.Models;
+using Marlin.SystemFiles;
 using Marlin.ViewModels.Base;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace Marlin.ViewModels.Window
 {
     public class MessagePageViewModel : ViewModel
     {
+        public ICommand SendAnswerCommand { get; }
+
+        public MessagePageViewModel() 
+        {
+            SendAnswerCommand = new LambdaCommand(OnSendAnswerCommandExecute, CanSendAnswerCommandExecute);
+        }   
+
         public string Message
         {
             get => Context.MessageBox.Text;
@@ -52,6 +63,21 @@ namespace Marlin.ViewModels.Window
         public Visibility IsYesNoQuestion
         {
             get => Context.MessageBox.isYesNoQuestion;
+        }
+
+        private bool CanSendAnswerCommandExecute(object parameter)
+        {
+            return true;
+        }
+
+        private void OnSendAnswerCommandExecute(object parameter)
+        {
+            if (parameter.ToString() != "➤")
+            {
+                Context.MessageBox.Answer = parameter.ToString();
+            }
+            Context.Window.Close();
+            Voix.SpeakAsync("");
         }
     }
 }

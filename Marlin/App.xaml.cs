@@ -1,5 +1,6 @@
 ﻿using Marlin.Models;
 using Marlin.SystemFiles;
+using System;
 using System.Windows;
 using System.Windows.Media;
 
@@ -33,6 +34,11 @@ namespace Marlin
                     break;
                 }
             }
+        }
+
+        protected override void OnExit(ExitEventArgs e)
+        {
+            base.OnExit(e);
         }
     }
 }

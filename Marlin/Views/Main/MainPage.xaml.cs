@@ -32,27 +32,5 @@ namespace Marlin.Views.Main
             }
             InitializeComponent();
         }
-
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is MenuItem menu)
-            {
-                switch (menu.Header.ToString())
-                {
-                    case "Настройки": NavigationService.Navigate(new SettingsPage()); break;
-                    case "Скрипты": Models.MessageBox.MakeMessage("Страница не доступна", MessageType.Error); break;
-                    case "Действия": Models.MessageBox.MakeMessage("Страница не доступна", MessageType.Error); break;
-                }
-            }
-        }
-
-        private void TextBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter && Context.MainPage.Command.Length > 0)
-            {
-                Models.MessageBox.MakeMessage(Context.MainPage.Command);
-                Context.MainPage.Command = "";
-            }
-        }
     }
 }

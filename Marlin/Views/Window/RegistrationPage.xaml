@@ -179,7 +179,7 @@
                     </Grid>
                 </Grid>
                 <Button Grid.Row="2"
-                        Click="Button_Click"
+                        Command="{Binding Path=RegistrationCommand}"
                         Width="auto"
                         FontSize="15"
                         Foreground="{Binding Path=BackgroundColor,UpdateSourceTrigger=PropertyChanged}"

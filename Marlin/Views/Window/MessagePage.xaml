@@ -57,7 +57,8 @@
                              Background="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                              Visibility="{Binding Path=IsOk,UpdateSourceTrigger=PropertyChanged}"
                              Height="auto"
-                             Click="Button_Click"
+                             Command="{Binding Path=SendAnswerCommand}"
+                             CommandParameter="OK"
                              Content="OK"/>
 
                     <Grid Visibility="{Binding Path=IsYesNoQuestion,UpdateSourceTrigger=PropertyChanged}">
@@ -77,7 +78,8 @@
                                  Width="auto"
                                  Margin="4,4,4,4"
                                  Height="auto"
-                                 Click="Button_Click"
+                                 Command="{Binding Path=SendAnswerCommand}"
+                                 CommandParameter="Yes"
                                  Content="Yes"/>
 
                         <Button  Grid.Column="1"
@@ -91,7 +93,8 @@
                                  Width="auto"
                                  Height="auto"
                                  Margin="4,4,4,4"
-                                 Click="Button_Click"
+                                 Command="{Binding Path=SendAnswerCommand}"
+                                 CommandParameter="No"
                                  Content="No"/>
                     </Grid>
 
@@ -125,7 +128,8 @@
                                  Height="auto"
                                  FontWeight="Bold"
                                  Margin="2,10,10,10"
-                                 Click="Button_Click"
+                                 Command="{Binding Path=SendAnswerCommand}"
+                                 CommandParameter="➤"
                                  Content="➤"/>
                     </Grid>
 

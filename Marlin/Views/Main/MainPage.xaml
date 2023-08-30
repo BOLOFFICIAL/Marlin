@@ -43,13 +43,16 @@
                     </MenuItem.ItemsPanel>
                     <MenuItem FontSize="15" 
                               Header="Настройки"
-                              Click="MenuItem_Click" />
+                              Command="{Binding Path=MenuCommand}" 
+                              CommandParameter="Настройки"/>
                     <MenuItem FontSize="15" 
                               Header="Скрипты" 
-                              Click="MenuItem_Click" />
+                              Command="{Binding Path=MenuCommand}"
+                              CommandParameter="Скрипты"/>
                     <MenuItem FontSize="15"
                               Header="Действия" 
-                              Click="MenuItem_Click" /> 
+                              Command="{Binding Path=MenuCommand}"
+                              CommandParameter="Действия"/> 
                 </MenuItem>
             </Menu>
         </Grid>
@@ -82,15 +85,18 @@
                             <ColumnDefinition 
                                 Width="auto"/>
                         </Grid.ColumnDefinitions>
-                        <TextBox
-                            FontSize="25"
-                            Padding="15,0"
-                            Margin="5"
-                            Text="{Binding Path=Command,UpdateSourceTrigger=PropertyChanged}"
-                            HorizontalContentAlignment="Center"
-                            VerticalContentAlignment="Center"
-                            KeyDown="TextBox_KeyDown"
-                            Grid.Column="0"/>
+                        <TextBox FontSize="25"
+                                 Padding="15,0"
+                                 Margin="5"
+                                 Text="{Binding Path=Command, UpdateSourceTrigger=PropertyChanged}"
+                                 HorizontalContentAlignment="Center"
+                                 VerticalContentAlignment="Center"
+                                 Grid.Column="0">
+                            <TextBox.InputBindings>
+                                <KeyBinding Key="Enter"
+                                            Command="{Binding SendCommand}" />
+                            </TextBox.InputBindings>
+                        </TextBox>
                         <Border 
                             Grid.Column="1"
                             CornerRadius="15"
@@ -102,6 +108,7 @@
                                 Foreground="{Binding Path=InternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
                                 BorderBrush="Transparent"
                                 Background="Transparent"
+                                Command="{Binding Path=SendCommand}"
                                 Content="➤"/>
                         </Border>
                     </Grid>
