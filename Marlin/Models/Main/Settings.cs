@@ -25,6 +25,8 @@ namespace Marlin.Models
         public string[] Genders = { "Мужской", "Женский" };
         public bool IsАutorun = true;
         public string BackgraundImage = "";
+        public string ImageViewport = "0,0,300,300";
+        public string ImageScail = "300";
 
         public static void SaveSettings(bool restart = true)
         {

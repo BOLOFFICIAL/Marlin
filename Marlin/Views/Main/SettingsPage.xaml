@@ -19,7 +19,7 @@
             <Grid.Background>
                 <ImageBrush ImageSource="{Binding Path=BackgraundImage}" 
                             TileMode="Tile" 
-                            Viewport="0,0,300,300" 
+                            Viewport="{Binding Path=ImageViewport}" 
                             ViewportUnits="Absolute"/>
             </Grid.Background>
             
@@ -88,6 +88,7 @@
 
                                             <Grid Grid.Column="1">
                                                 <Grid.RowDefinitions>
+                                                    <RowDefinition Height="*"/>
                                                     <RowDefinition Height="*"/>
                                                     <RowDefinition Height="*"/>
                                                     <RowDefinition Height="*"/>
@@ -199,6 +200,27 @@
                                                          Text="{Binding Path=BackgraundImage,UpdateSourceTrigger=PropertyChanged}"
                                                          VerticalAlignment="Center"
                                                          HorizontalContentAlignment="Center"/>
+                                                </Grid>
+
+                                                <Grid Grid.Row="5"
+                                                  Margin="0,10">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="auto"/>
+                                                        <ColumnDefinition Width="auto"/>
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <TextBlock Grid.Column="0"
+                                                           FontSize="15"
+                                                           Margin="0,0,15,0"
+                                                           VerticalAlignment="Center"
+                                                           HorizontalAlignment="Center"
+                                                           Text="Масштаб изображения:"/>
+
+                                                    <Slider Grid.Column="1" 
+                                                            Width="100" 
+                                                            Minimum="100" 
+                                                            Maximum="1000" 
+                                                            Value="{Binding Path=ImageScail}"/>
                                                 </Grid>
                                             </Grid>
                                         </Grid>

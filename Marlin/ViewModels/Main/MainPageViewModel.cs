@@ -65,6 +65,11 @@ namespace Marlin.ViewModels.Main
             get => Context.Settings.BackgraundImage;
         }
 
+        public string ImageViewport
+        {
+            get => Context.Settings.ImageViewport;
+        }
+
         public List<Grid> Message
         {
             get => _message;

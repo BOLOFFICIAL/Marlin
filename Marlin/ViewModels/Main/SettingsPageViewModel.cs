@@ -133,8 +133,25 @@ namespace Marlin.ViewModels.Main
             set => Set(ref Context.Settings.BackgraundImage, value);
         }
 
+        public string ImageViewport 
+        {
+            get => Context.Settings.ImageViewport;
+            set => Set(ref Context.Settings.ImageViewport, value);
+        }
+
+        public string ImageScail
+        {
+            get => Context.Settings.ImageScail;
+            set 
+            {
+                ImageViewport = $"0,0,{value},{value}";
+                Set(ref Context.Settings.ImageScail, value);
+            } 
+        }
+
         private void OnToMainCommandExecuted(object p)
         {
+            Context.Settings = Context.CopySettings;
             Context.MainWindow.Content = new MainPage();
         }
 

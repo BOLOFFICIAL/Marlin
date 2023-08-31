@@ -21,7 +21,7 @@
             <Grid.Background>
                 <ImageBrush ImageSource="{Binding Path=BackgraundImage}" 
                             TileMode="Tile" 
-                            Viewport="0,0,300,300" 
+                            Viewport="{Binding Path=ImageViewport}" 
                             ViewportUnits="Absolute"/>
             </Grid.Background>
 
