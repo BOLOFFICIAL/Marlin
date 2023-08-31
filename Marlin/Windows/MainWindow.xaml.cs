@@ -16,12 +16,9 @@ namespace Marlin
         {
             InitializeComponent();
             Context.MainWindow = this;
-            SetPage(new MainPage());
-        }
-
-        public void SetPage(Page page) 
-        {
-            this.Content = page;
+            Context.MainWindow.MinWidth = 800;
+            Context.MainWindow.MinHeight = 450;
+            Context.MainWindow.Content = new MainPage();
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

@@ -1,6 +1,9 @@
 ﻿using Marlin.Models;
 using Marlin.SystemFiles;
 using System;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading;
 using System.Windows;
 using System.Windows.Media;
 
@@ -13,6 +16,13 @@ namespace Marlin
             base.OnStartup(e);
 
             Settings.LoadSettings();
+
+            Thread.Sleep(300);
+            if (CheckRun())
+            {
+                Models.MessageBox.MakeMessage("Копия Marlin уже запущена");
+                Environment.Exit(0);
+            }
 
             if (Context.Settings.Password.Length > 0)
             {
@@ -36,9 +46,11 @@ namespace Marlin
             }
         }
 
-        protected override void OnExit(ExitEventArgs e)
+        private bool CheckRun()
         {
-            base.OnExit(e);
+            string appname = Process.GetCurrentProcess().ProcessName;
+            int count = Process.GetProcesses().Count(process => process.ProcessName == appname);
+            return count > 1;
         }
     }
 }
