@@ -8,7 +8,6 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Shapes;
 
 namespace Marlin.Models
 {
@@ -70,7 +69,7 @@ namespace Marlin.Models
                     {
                         settings = sr.ReadLine();
                     }
-                    if (settings is null || settings.Length == 0) 
+                    if (settings is null || settings.Length == 0)
                     {
                         return;
                     }
@@ -83,34 +82,34 @@ namespace Marlin.Models
             }
         }
 
-        public static void RunCmd(string command) 
+        public static void RunCmd(string command)
         {
-            Task.Run(() => 
+            Task.Run(() =>
             {
                 Process process = new Process();
                 ProcessStartInfo startInfo = new ProcessStartInfo();
 
-                startInfo.FileName = "cmd.exe";                
-                startInfo.RedirectStandardInput = true;        
-                startInfo.RedirectStandardOutput = true;       
-                startInfo.CreateNoWindow = true;               
-                startInfo.UseShellExecute = false;             
+                startInfo.FileName = "cmd.exe";
+                startInfo.RedirectStandardInput = true;
+                startInfo.RedirectStandardOutput = true;
+                startInfo.CreateNoWindow = true;
+                startInfo.UseShellExecute = false;
                 startInfo.StandardOutputEncoding = Encoding.Default;
 
                 process.StartInfo = startInfo;
-                process.Start();                               
+                process.Start();
 
-                process.StandardInput.WriteLine(command);       
+                process.StandardInput.WriteLine(command);
                 process.StandardInput.Flush();
                 process.StandardInput.Close();
 
-                string output = process.StandardOutput.ReadToEnd(); 
+                string output = process.StandardOutput.ReadToEnd();
 
                 process.WaitForExit();
             });
         }
 
-        public static void AddAutorun() 
+        public static void AddAutorun()
         {
             string path = System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName;
             string command = "reg add \"HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run\" /v Marlin /t REG_SZ /d " + $"{path}";

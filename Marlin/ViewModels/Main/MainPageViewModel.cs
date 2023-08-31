@@ -5,7 +5,6 @@ using Marlin.SystemFiles.Types;
 using Marlin.ViewModels.Base;
 using Marlin.Views.Main;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -19,7 +18,7 @@ namespace Marlin.ViewModels.Main
         public ICommand ToSettingsCommand { get; }
         public ICommand SendCommand { get; }
         public ICommand MenuCommand { get; }
-        
+
 
         public MainPageViewModel()
         {
@@ -27,7 +26,7 @@ namespace Marlin.ViewModels.Main
             ToSettingsCommand = new LambdaCommand(OnToSettingsCommandExecuted);
             SendCommand = new LambdaCommand(OnSendCommandExecute, CanSendCommandExecute);
             MenuCommand = new LambdaCommand(OnMenuCommandExecute);
-            
+
         }
 
         public string Command
@@ -93,6 +92,6 @@ namespace Marlin.ViewModels.Main
                 case "Скрипты": Models.MessageBox.MakeMessage("Страница не доступна", MessageType.Error); break;
                 case "Действия": Models.MessageBox.MakeMessage("Страница не доступна", MessageType.YesNoQuestion); break;
             }
-        } 
+        }
     }
 }

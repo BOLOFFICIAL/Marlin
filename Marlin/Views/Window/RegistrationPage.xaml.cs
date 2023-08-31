@@ -1,12 +1,4 @@
-﻿using Marlin.Models;
-using Marlin.SystemFiles;
-using System;
-using System.Diagnostics;
-using System.IO;
-using System.Reflection;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
+﻿using System.Windows.Controls;
 
 namespace Marlin.Views.Window
 {

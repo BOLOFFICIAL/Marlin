@@ -1,5 +1,4 @@
-﻿using Marlin.SystemFiles;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 
 namespace Marlin.Views.Message
 {

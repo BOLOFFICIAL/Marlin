@@ -2,8 +2,6 @@
 using Marlin.Models;
 using Marlin.SystemFiles;
 using Marlin.ViewModels.Base;
-using System.Diagnostics;
-using System;
 using System.Windows.Input;
 
 namespace Marlin.ViewModels.Window
@@ -69,7 +67,7 @@ namespace Marlin.ViewModels.Window
 
         private bool CanRegistrationCommandExecute(object parameter)
         {
-            return 
+            return
                 Context.Settings.NewPassword.Length > 0 &&
                 Context.Settings.Login.Length > 0 &&
                 Context.Settings.MainFolder.Length > 0 &&

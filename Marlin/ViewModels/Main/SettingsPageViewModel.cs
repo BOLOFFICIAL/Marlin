@@ -13,7 +13,7 @@ namespace Marlin.ViewModels.Main
         public ICommand ToMainCommand { get; }
         public ICommand SaveSettingsCommand { get; }
 
-        public SettingsPageViewModel() 
+        public SettingsPageViewModel()
         {
             ToMainCommand = new LambdaCommand(OnToMainCommandExecuted);
             SaveSettingsCommand = new LambdaCommand(OnSaveSettingsCommandExecuted);
@@ -210,6 +210,6 @@ namespace Marlin.ViewModels.Main
                     MessageBox.MakeMessage("Блок администрирования должен быть заполнен", MessageType.Error);
                 }
             }
-        }    
+        }
     }
 }

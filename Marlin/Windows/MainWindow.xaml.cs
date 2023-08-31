@@ -1,9 +1,7 @@
 ﻿using Marlin.SystemFiles;
 using Marlin.Views.Main;
-using Marlin.Views.Window;
 using System;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace Marlin
 {

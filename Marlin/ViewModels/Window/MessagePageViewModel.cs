@@ -1,9 +1,7 @@
 ﻿using Marlin.Commands;
-using Marlin.Models;
 using Marlin.SystemFiles;
 using Marlin.ViewModels.Base;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Marlin.ViewModels.Window
@@ -12,10 +10,10 @@ namespace Marlin.ViewModels.Window
     {
         public ICommand SendAnswerCommand { get; }
 
-        public MessagePageViewModel() 
+        public MessagePageViewModel()
         {
             SendAnswerCommand = new LambdaCommand(OnSendAnswerCommandExecute, CanSendAnswerCommandExecute);
-        }   
+        }
 
         public string Message
         {

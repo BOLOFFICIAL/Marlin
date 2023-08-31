@@ -1,10 +1,8 @@
 ﻿using Marlin.SystemFiles;
-using Marlin.SystemFiles.Types;
 using Marlin.Views.Window;
 using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 
 namespace Marlin.Views.Main
 {
