@@ -17,92 +17,100 @@
     <Grid 
         Background="{Binding Path=ExternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}">
         
-        <Grid.RowDefinitions>
-            <RowDefinition 
+        <Grid>
+            <Grid.Background>
+                <ImageBrush ImageSource="{Binding Path=BackgraundImage}" 
+                            TileMode="Tile" 
+                            Viewport="0,0,300,300" 
+                            ViewportUnits="Absolute"/>
+            </Grid.Background>
+
+            <Grid.RowDefinitions>
+                <RowDefinition 
                 Height="80px"/>
-            <RowDefinition 
+                <RowDefinition 
                 Height="*"/>
-            <RowDefinition 
+                <RowDefinition 
                 Height="50px"/>
-        </Grid.RowDefinitions>
-        
-        <Grid Grid.Row="0">
-            <Menu FontWeight="Bold"
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <Menu FontWeight="Bold"
                   Foreground="{Binding Path=FontColor, UpdateSourceTrigger=PropertyChanged}"
                   VerticalAlignment="Center">
-                <MenuItem Header="Marlin"
+                    <MenuItem Header="Marlin"
                           FontSize="30" 
                           Padding="30,0"
                           Background="{Binding Path=ExternalBackgroundColor, UpdateSourceTrigger=PropertyChanged}"
                           Height="80px"
                           HorizontalAlignment="Stretch">
-                    <MenuItem.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel Orientation="Horizontal" />
-                        </ItemsPanelTemplate>
-                    </MenuItem.ItemsPanel>
-                    <MenuItem FontSize="15" 
+                        <MenuItem.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </MenuItem.ItemsPanel>
+                        <MenuItem FontSize="15" 
                               Header="Настройки"
                               Command="{Binding Path=MenuCommand}" 
                               CommandParameter="Настройки"/>
-                    <MenuItem FontSize="15" 
+                        <MenuItem FontSize="15" 
                               Header="Скрипты" 
                               Command="{Binding Path=MenuCommand}"
                               CommandParameter="Скрипты"/>
-                    <MenuItem FontSize="15"
+                        <MenuItem FontSize="15"
                               Header="Действия" 
                               Command="{Binding Path=MenuCommand}"
-                              CommandParameter="Действия"/> 
-                </MenuItem>
-            </Menu>
-        </Grid>
+                              CommandParameter="Действия"/>
+                    </MenuItem>
+                </Menu>
+            </Grid>
 
-        <Grid 
+            <Grid 
             Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition 
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition 
                     Width="*"/>
-                <ColumnDefinition
+                    <ColumnDefinition
                     Width="3*"/>
-                <ColumnDefinition 
+                    <ColumnDefinition 
                     Width="*"/>
-            </Grid.ColumnDefinitions>
+                </Grid.ColumnDefinitions>
 
-            <Grid Grid.Column="1">
-                <Border 
+                <Grid Grid.Column="1">
+                    <Border 
                     BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                     BorderThickness="2"
                     VerticalAlignment="Center"
                     Background="{Binding Path=InternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
                     CornerRadius="25"
                     Margin="5,5,5,5">
-                    <Grid 
+                        <Grid 
                         Margin="10"
                         VerticalAlignment="Center">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition 
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition 
                                 Width="*"/>
-                            <ColumnDefinition 
+                                <ColumnDefinition 
                                 Width="auto"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBox FontSize="25"
+                            </Grid.ColumnDefinitions>
+                            <TextBox FontSize="25"
                                  Padding="15,0"
                                  Margin="5"
                                  Text="{Binding Path=Command, UpdateSourceTrigger=PropertyChanged}"
                                  HorizontalContentAlignment="Center"
                                  VerticalContentAlignment="Center"
                                  Grid.Column="0">
-                            <TextBox.InputBindings>
-                                <KeyBinding Key="Enter"
+                                <TextBox.InputBindings>
+                                    <KeyBinding Key="Enter"
                                             Command="{Binding SendCommand}" />
-                            </TextBox.InputBindings>
-                        </TextBox>
-                        <Border 
+                                </TextBox.InputBindings>
+                            </TextBox>
+                            <Border 
                             Grid.Column="1"
                             CornerRadius="15"
                             Margin="5"
                             Background="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}">
-                            <Button
+                                <Button
                                 FontSize="15"
                                 FontWeight="Bold"
                                 Foreground="{Binding Path=InternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
@@ -110,9 +118,10 @@
                                 Background="Transparent"
                                 Command="{Binding Path=SendCommand}"
                                 Content="➤"/>
-                        </Border>
-                    </Grid>
-                </Border>
+                            </Border>
+                        </Grid>
+                    </Border>
+                </Grid>
             </Grid>
         </Grid>
     </Grid>

@@ -24,6 +24,7 @@ namespace Marlin.Models
         public int[] Speeds = Enumerable.Range(-10, 21).ToArray();
         public string[] Genders = { "Мужской", "Женский" };
         public bool IsАutorun = true;
+        public string BackgraundImage = "";
 
         public static void SaveSettings(bool restart = true)
         {
@@ -125,22 +126,26 @@ namespace Marlin.Models
 
         public bool Equals(Settings otherSettings)
         {
-            return
-                Theme.ExternalBackgroundColor == otherSettings.Theme.ExternalBackgroundColor &&
-                Theme.InternalBackgroundColor == otherSettings.Theme.InternalBackgroundColor &&
-                Theme.FontColor == otherSettings.Theme.FontColor &&
-                Theme.PageColor == otherSettings.Theme.PageColor &&
-                Password == otherSettings.Password &&
-                NewPassword == otherSettings.NewPassword &&
-                Login == otherSettings.Login &&
-                Login == otherSettings.Login &&
-                MainFolder == otherSettings.MainFolder &&
-                MainFolder == otherSettings.MainFolder &&
-                IsSay == otherSettings.IsSay &&
-                Speed == otherSettings.Speed &&
-                Gender == otherSettings.Gender &&
-                Gender == otherSettings.Gender &&
-                IsАutorun == otherSettings.IsАutorun;
+            if (otherSettings is null)
+            {
+                return false;
+            }
+
+            string thissettings = JsonConvert.SerializeObject(this);
+            string othersettings = JsonConvert.SerializeObject(otherSettings);
+
+            if (thissettings.Length!= othersettings.Length) 
+            {
+                return false;
+            }
+            for (int i=0;i< thissettings.Length;i++) 
+            {
+                if (thissettings[i] != othersettings[i]) 
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }

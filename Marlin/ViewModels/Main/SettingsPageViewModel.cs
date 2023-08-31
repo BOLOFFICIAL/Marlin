@@ -127,6 +127,12 @@ namespace Marlin.ViewModels.Main
             set => Set(ref Context.Settings.Login, value);
         }
 
+        public string BackgraundImage
+        {
+            get => Context.Settings.BackgraundImage;
+            set => Set(ref Context.Settings.BackgraundImage, value);
+        }
+
         private void OnToMainCommandExecuted(object p)
         {
             Context.MainWindow.Content = new MainPage();

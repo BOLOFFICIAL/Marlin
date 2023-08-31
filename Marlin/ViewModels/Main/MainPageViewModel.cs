@@ -60,6 +60,11 @@ namespace Marlin.ViewModels.Main
             get => Context.Settings.Theme.InternalBackgroundColor;
         }
 
+        public string BackgraundImage
+        {
+            get => Context.Settings.BackgraundImage;
+        }
+
         public List<Grid> Message
         {
             get => _message;
