@@ -19,6 +19,7 @@ namespace Marlin
 
             Settings.LoadSettings();
 
+            Thread.Sleep(1000);
             CheckRun();
 
             if (Context.Settings.Password.Length > 0)

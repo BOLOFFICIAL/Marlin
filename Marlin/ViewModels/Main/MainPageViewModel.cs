@@ -65,6 +65,11 @@ namespace Marlin.ViewModels.Main
             get => Context.Settings.BackgraundImage;
         }
 
+        public string BackgraundImagePath
+        {
+            get => Context.Settings.BackgraundImagePath;
+        }
+
         public string ImageViewport
         {
             get => Context.Settings.ImageViewport;

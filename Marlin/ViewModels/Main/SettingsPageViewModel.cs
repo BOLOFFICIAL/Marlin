@@ -4,6 +4,9 @@ using Marlin.SystemFiles;
 using Marlin.SystemFiles.Types;
 using Marlin.ViewModels.Base;
 using Marlin.Views.Main;
+using Microsoft.Win32;
+using System.IO;
+using Microsoft.WindowsAPICodePack.Dialogs;
 using System.Windows.Input;
 
 namespace Marlin.ViewModels.Main
@@ -12,11 +15,13 @@ namespace Marlin.ViewModels.Main
     {
         public ICommand ToMainCommand { get; }
         public ICommand SaveSettingsCommand { get; }
+        public ICommand ChoseCommand { get; }
 
         public SettingsPageViewModel()
         {
             ToMainCommand = new LambdaCommand(OnToMainCommandExecuted);
             SaveSettingsCommand = new LambdaCommand(OnSaveSettingsCommandExecuted);
+            ChoseCommand = new LambdaCommand(OnChoseCommandExecuted);
         }
 
         public string PageColor
@@ -27,6 +32,10 @@ namespace Marlin.ViewModels.Main
                 if (!value.Contains("#"))
                 {
                     value = "#" + value;
+                }
+                if (value.Contains("#") && value.Length == 1)
+                {
+                    value += "000000";
                 }
                 Set(ref Context.Settings.Theme.PageColor, value);
             }
@@ -47,6 +56,10 @@ namespace Marlin.ViewModels.Main
                 {
                     value = "#" + value;
                 }
+                if (value.Contains("#") && value.Length == 1)
+                {
+                    value += "000000";
+                }
                 Set(ref Context.Settings.Theme.FontColor, value);
             }
         }
@@ -60,6 +73,10 @@ namespace Marlin.ViewModels.Main
                 {
                     value = "#" + value;
                 }
+                if (value.Contains("#") && value.Length == 1)
+                {
+                    value += "FFFFFF";
+                }
                 Set(ref Context.Settings.Theme.ExternalBackgroundColor, value);
             }
         }
@@ -72,6 +89,10 @@ namespace Marlin.ViewModels.Main
                 if (!value.Contains("#"))
                 {
                     value = "#" + value;
+                }
+                if (value.Contains("#") && value.Length == 1) 
+                {
+                    value += "FFFFFF";
                 }
                 Set(ref Context.Settings.Theme.InternalBackgroundColor, value);
             }
@@ -133,6 +154,12 @@ namespace Marlin.ViewModels.Main
             set => Set(ref Context.Settings.BackgraundImage, value);
         }
 
+        public string BackgraundImagePath
+        {
+            get => Context.Settings.BackgraundImagePath;
+            set => Set(ref Context.Settings.BackgraundImagePath, value);
+        }
+
         public string ImageViewport 
         {
             get => Context.Settings.ImageViewport;
@@ -142,7 +169,7 @@ namespace Marlin.ViewModels.Main
         public string ImageScail
         {
             get => Context.Settings.ImageScail;
-            set 
+            set
             {
                 ImageViewport = $"{value},{value},{value},{value}";
                 Set(ref Context.Settings.ImageScail, value);
@@ -153,6 +180,42 @@ namespace Marlin.ViewModels.Main
         {
             Context.Settings = Context.CopySettings;
             Context.MainWindow.Content = new MainPage();
+        }
+
+        private void OnChoseCommandExecuted(object p)
+        {
+            switch (p.ToString()) 
+            {
+                case "Фоновое изображение":
+                    OpenFileDialog openFileDialog = new OpenFileDialog();
+                    openFileDialog.Title = "Выбор фоновового изображения";
+                    openFileDialog.Filter = "Изображения (*.jpeg;*.jpg;*.png)|*.jpeg;*.jpg;*.png";
+
+                    bool? result = openFileDialog.ShowDialog();
+
+                    if (result == true)
+                    {
+                        string path = openFileDialog.FileName;
+                        BackgraundImagePath = path;
+                        BackgraundImage = Path.GetFileName(path);
+                    }
+                    break;
+                case "Папка для хранения данных":
+                    CommonOpenFileDialog folderPicker = new CommonOpenFileDialog();
+
+                    folderPicker.IsFolderPicker = true;
+                    folderPicker.Title = "Выбор папки для хранения данных";
+
+                    CommonFileDialogResult dialogResult = folderPicker.ShowDialog();
+
+                    if (dialogResult == CommonFileDialogResult.Ok)
+                    {
+                        string selectedFolderPath = folderPicker.FileName;
+                        Context.Settings.MainFolderPath = selectedFolderPath;
+                        NewMainFolder = Path.GetFileName(selectedFolderPath);
+                    }
+                    break;
+            }
         }
 
         private void OnSaveSettingsCommandExecuted(object p)

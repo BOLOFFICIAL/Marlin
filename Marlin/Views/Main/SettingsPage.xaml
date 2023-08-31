@@ -6,7 +6,7 @@
       xmlns:vm="clr-namespace:Marlin.ViewModels.Main"
       xmlns:local="clr-namespace:Marlin.Views.Main"
       mc:Ignorable="d" 
-      d:Height="450" 
+      d:Height="1450" 
       d:Width="800"
       ShowsNavigationUI="False"
       Foreground="{Binding Path=FontColor}"
@@ -17,7 +17,7 @@
     <Grid Background="{Binding Path=ExternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}">
         <Grid>
             <Grid.Background>
-                <ImageBrush ImageSource="{Binding Path=BackgraundImage}" 
+                <ImageBrush ImageSource="{Binding Path=BackgraundImagePath}" 
                             TileMode="Tile" 
                             Viewport="{Binding Path=ImageViewport}" 
                             ViewportUnits="Absolute"/>
@@ -187,19 +187,26 @@
                                                         <ColumnDefinition Width="auto"/>
                                                     </Grid.ColumnDefinitions>
 
-                                                    <TextBlock Grid.Column="0"
-                                                           FontSize="15"
-                                                           Margin="0,0,15,0"
-                                                           VerticalAlignment="Center"
-                                                           HorizontalAlignment="Center"
-                                                           Text="Фоновое изображение:"/>
+                                                    <Button Grid.Column="0"
+                                                            FontSize="15"
+                                                            Margin="0,0,15,0"
+                                                            BorderThickness="0"
+                                                            BorderBrush="Transparent"
+                                                            Foreground="{Binding Path=ExternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
+                                                            Background="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
+                                                            VerticalAlignment="Center"
+                                                            HorizontalAlignment="Center"
+                                                            Command="{Binding Path=ChoseCommand}"
+                                                            CommandParameter="Фоновое изображение"
+                                                            Content="Фоновое изображение"/>
 
-                                                    <TextBox Grid.Column="1"
-                                                         FontSize="15"
-                                                         MinWidth="100"
-                                                         Text="{Binding Path=BackgraundImage,UpdateSourceTrigger=PropertyChanged}"
-                                                         VerticalAlignment="Center"
-                                                         HorizontalContentAlignment="Center"/>
+                                                    <TextBox Grid.Column="1" 
+                                                             FontSize="15"
+                                                             IsReadOnly="True"
+                                                             MinWidth="100"
+                                                             Text="{Binding Path=BackgraundImage,UpdateSourceTrigger=PropertyChanged}"
+                                                             VerticalAlignment="Center"
+                                                             HorizontalContentAlignment="Center"/>
                                                 </Grid>
 
                                                 <Grid Grid.Row="5"
@@ -433,19 +440,26 @@
                                                         <ColumnDefinition Width="auto"/>
                                                     </Grid.ColumnDefinitions>
 
-                                                    <TextBlock Grid.Column="0"
-                                                           FontSize="15"
-                                                           Margin="0,0,15,0"
-                                                           VerticalAlignment="Center"
-                                                           HorizontalAlignment="Center"
-                                                           Text="Папка для хранения данных:"/>
+                                                    <Button Grid.Column="0"
+                                                            FontSize="15"
+                                                            Margin="0,0,15,0"
+                                                            BorderThickness="0"
+                                                            BorderBrush="Transparent"
+                                                            Foreground="{Binding Path=ExternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
+                                                            Background="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
+                                                            VerticalAlignment="Center"
+                                                            HorizontalAlignment="Center"
+                                                            Command="{Binding Path=ChoseCommand}"
+                                                            CommandParameter="Папка для хранения данных"
+                                                            Content="Папка для хранения данных"/>
 
                                                     <TextBox Grid.Column="1"
-                                                         FontSize="15"
-                                                         MinWidth="100"
-                                                         Text="{Binding Path=NewMainFolder,UpdateSourceTrigger=PropertyChanged}"
-                                                         VerticalAlignment="Center"
-                                                         HorizontalContentAlignment="Center"/>
+                                                             FontSize="15"
+                                                             MinWidth="100"
+                                                             IsReadOnly="True"
+                                                             Text="{Binding Path=NewMainFolder,UpdateSourceTrigger=PropertyChanged}"
+                                                             VerticalAlignment="Center"
+                                                             HorizontalContentAlignment="Center"/>
                                                 </Grid>
                                             </Grid>
                                         </Grid>

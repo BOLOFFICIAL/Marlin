@@ -18,6 +18,7 @@ namespace Marlin.Models
         public string NewPassword = "";
         public string Login = "";
         public string MainFolder = "";
+        public string MainFolderPath = "";
         public bool IsSay = true;
         public int Speed = 3;
         public string Gender = "";
@@ -25,6 +26,7 @@ namespace Marlin.Models
         public string[] Genders = { "Мужской", "Женский" };
         public bool IsАutorun = true;
         public string BackgraundImage = "";
+        public string BackgraundImagePath = "";
         public string ImageScail = "300";
         public string ImageViewport = "300,300,300,300";
         

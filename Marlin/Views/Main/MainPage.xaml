@@ -19,19 +19,16 @@
         
         <Grid>
             <Grid.Background>
-                <ImageBrush ImageSource="{Binding Path=BackgraundImage}" 
+                <ImageBrush ImageSource="{Binding Path=BackgraundImagePath}" 
                             TileMode="Tile" 
                             Viewport="{Binding Path=ImageViewport}" 
                             ViewportUnits="Absolute"/>
             </Grid.Background>
 
             <Grid.RowDefinitions>
-                <RowDefinition 
-                Height="80px"/>
-                <RowDefinition 
-                Height="*"/>
-                <RowDefinition 
-                Height="50px"/>
+                <RowDefinition Height="80px"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="50px"/>
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0">
