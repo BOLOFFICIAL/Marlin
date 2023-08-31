@@ -1,8 +1,10 @@
 ﻿using Marlin.Models;
 using Marlin.SystemFiles;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows;
 using System.Windows.Media;
@@ -17,12 +19,7 @@ namespace Marlin
 
             Settings.LoadSettings();
 
-            Thread.Sleep(300);
-            if (CheckRun())
-            {
-                Models.MessageBox.MakeMessage("Копия Marlin уже запущена");
-                Environment.Exit(0);
-            }
+            CheckRun();
 
             if (Context.Settings.Password.Length > 0)
             {
@@ -46,11 +43,39 @@ namespace Marlin
             }
         }
 
-        private bool CheckRun()
+        private void CheckRun()
         {
-            string appname = Process.GetCurrentProcess().ProcessName;
-            int count = Process.GetProcesses().Count(process => process.ProcessName == appname);
-            return count > 1;
+            [DllImport("user32.dll")]
+            static extern bool SetForegroundWindow(IntPtr hWnd);
+
+            string appName = Process.GetCurrentProcess().ProcessName;
+            int currentProcessId = Process.GetCurrentProcess().Id;
+
+            List<int> processIds = GetProcessIdsByName(appName);
+            processIds.Remove(currentProcessId);
+
+            if (processIds.Count > 0)
+            {
+                int targetProcessId = processIds[0];
+
+                try
+                {
+                    Process targetProcess = Process.GetProcessById(targetProcessId);
+                    SetForegroundWindow(targetProcess.MainWindowHandle);
+                    Process currentProcess = Process.GetCurrentProcess();
+                    currentProcess.Kill();
+                }
+                catch (ArgumentException)
+                {
+                    Models.MessageBox.MakeMessage($"Процесс с ID {targetProcessId} не найден.");
+                }
+            }
+        }
+
+        static List<int> GetProcessIdsByName(string processName)
+        {
+            Process[] processes = Process.GetProcessesByName(processName);
+            return processes.Select(process => process.Id).ToList();
         }
     }
 }
