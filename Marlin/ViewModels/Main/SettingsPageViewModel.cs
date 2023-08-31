@@ -151,7 +151,7 @@ namespace Marlin.ViewModels.Main
                 return;
             }
             var editadmin =
-                (Context.CopySettings.NewPassword != Context.Settings.Password && Context.CopySettings.NewPassword.Length > 0) ||
+                (Context.Settings.NewPassword != Context.Settings.Password && Context.Settings.NewPassword.Length > 0) ||
                 Context.CopySettings.Login != Context.Settings.Login ||
                 Context.CopySettings.Gender != Context.Settings.Gender ||
                 Context.CopySettings.MainFolder != Context.Settings.MainFolder ||

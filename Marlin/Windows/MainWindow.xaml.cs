@@ -14,8 +14,6 @@ namespace Marlin
         {
             InitializeComponent();
             Context.MainWindow = this;
-            Context.MainWindow.MinWidth = 800;
-            Context.MainWindow.MinHeight = 450;
             Context.MainWindow.Content = new MainPage();
         }
 
