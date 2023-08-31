@@ -144,7 +144,7 @@ namespace Marlin.ViewModels.Main
             get => Context.Settings.ImageScail;
             set 
             {
-                ImageViewport = $"0,0,{value},{value}";
+                ImageViewport = $"{value},{value},{value},{value}";
                 Set(ref Context.Settings.ImageScail, value);
             } 
         }
