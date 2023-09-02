@@ -79,8 +79,6 @@ namespace Marlin.ViewModels.Main
             get => Context.Settings.ImageViewport;
         }
 
-        
-
         public List<Grid> Message
         {
             get => _message;
@@ -89,8 +87,8 @@ namespace Marlin.ViewModels.Main
 
         public GridLength Length
         {
-            get => Context.MainPageVM._length;
-            set => Set(ref Context.MainPageVM._length, value);
+            get => _length;
+            set => Set(ref _length, value);
         }
 
         private void OnToSettingsCommandExecuted(object p)
@@ -102,20 +100,17 @@ namespace Marlin.ViewModels.Main
 
         private bool CanSendCommandExecute(object parameter)
         {
-            return Context.MainPageVM.Command.Length > 0;
+            return Command.Length > 0;
         }
 
         private void OnSendCommandExecute(object parameter)
         {
             Models.MessageBox.MakeMessage(Context.MainPageVM.Command);
-            Context.MainPageVM.Command = "";
+            Command = "";
         }
 
         private void OnMenuCommandExecute(object parameter)
         {
-            Context.MainPageVM.Length = new GridLength(0, GridUnitType.Pixel);
-            _openmenu = false;
-
             switch (parameter.ToString())
             {
                 case "Настройки": SystemFiles.System.SetPage(new SettingsPage()); break;
@@ -128,11 +123,11 @@ namespace Marlin.ViewModels.Main
         {
             if (_openmenu)
             {
-                Context.MainPageVM.Length = new GridLength(0, GridUnitType.Pixel);
+                Length = new GridLength(0, GridUnitType.Pixel);
             }
             else 
             {
-                Context.MainPageVM.Length = GridLength.Auto;
+                Length = GridLength.Auto;
             }
             _openmenu = !_openmenu;
         }
