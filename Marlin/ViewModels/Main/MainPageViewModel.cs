@@ -6,6 +6,7 @@ using Marlin.ViewModels.Base;
 using Marlin.Views.Main;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -13,20 +14,23 @@ namespace Marlin.ViewModels.Main
 {
     public class MainPageViewModel : ViewModel
     {
+        private bool _openmenu = false;
+        private GridLength _length = new GridLength(0, GridUnitType.Pixel);
         private string _command = "";
         private List<Grid> _message = new List<Grid>();
         public ICommand ToSettingsCommand { get; }
         public ICommand SendCommand { get; }
         public ICommand MenuCommand { get; }
+        public ICommand OpenMenuCommand { get; }
 
 
         public MainPageViewModel()
         {
-            Context.MainPage = this;
+            Context.MainPageVM = this;
             ToSettingsCommand = new LambdaCommand(OnToSettingsCommandExecuted);
             SendCommand = new LambdaCommand(OnSendCommandExecute, CanSendCommandExecute);
             MenuCommand = new LambdaCommand(OnMenuCommandExecute);
-
+            OpenMenuCommand = new LambdaCommand(OnOpenMenuCommandExecute);
         }
 
         public string Command
@@ -75,10 +79,18 @@ namespace Marlin.ViewModels.Main
             get => Context.Settings.ImageViewport;
         }
 
+        
+
         public List<Grid> Message
         {
             get => _message;
             set => Set(ref _message, value);
+        }
+
+        public GridLength Length
+        {
+            get => Context.MainPageVM._length;
+            set => Set(ref Context.MainPageVM._length, value);
         }
 
         private void OnToSettingsCommandExecuted(object p)
@@ -90,23 +102,39 @@ namespace Marlin.ViewModels.Main
 
         private bool CanSendCommandExecute(object parameter)
         {
-            return Context.MainPage.Command.Length > 0;
+            return Context.MainPageVM.Command.Length > 0;
         }
 
         private void OnSendCommandExecute(object parameter)
         {
-            Models.MessageBox.MakeMessage(Context.MainPage.Command);
-            Context.MainPage.Command = "";
+            Models.MessageBox.MakeMessage(Context.MainPageVM.Command);
+            Context.MainPageVM.Command = "";
         }
 
         private void OnMenuCommandExecute(object parameter)
         {
+            Context.MainPageVM.Length = new GridLength(0, GridUnitType.Pixel);
+            _openmenu = false;
+
             switch (parameter.ToString())
             {
-                case "Настройки": Context.MainWindow.Content = new SettingsPage(); break;
+                case "Настройки": SystemFiles.System.SetPage(new SettingsPage()); break;
                 case "Скрипты": Models.MessageBox.MakeMessage("Страница не доступна", MessageType.Error); break;
-                case "Действия": Models.MessageBox.MakeMessage("Страница не доступна", MessageType.YesNoQuestion); break;
+                case "Команды": Models.MessageBox.MakeMessage("Страница не доступна", MessageType.YesNoQuestion); break;
             }
+        }
+
+        private void OnOpenMenuCommandExecute(object parameter) 
+        {
+            if (_openmenu)
+            {
+                Context.MainPageVM.Length = new GridLength(0, GridUnitType.Pixel);
+            }
+            else 
+            {
+                Context.MainPageVM.Length = GridLength.Auto;
+            }
+            _openmenu = !_openmenu;
         }
     }
 }

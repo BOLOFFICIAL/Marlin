@@ -26,44 +26,77 @@
             </Grid.Background>
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="80px"/>
+                <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="50px"/>
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0">
-                <Menu FontWeight="Bold"
-                  Foreground="{Binding Path=FontColor, UpdateSourceTrigger=PropertyChanged}"
-                  VerticalAlignment="Center">
-                    <MenuItem Header="Marlin"
-                          FontSize="30" 
-                          Padding="30,0"
-                          Background="{Binding Path=ExternalBackgroundColor, UpdateSourceTrigger=PropertyChanged}"
-                          Height="80px"
-                          HorizontalAlignment="Stretch">
-                        <MenuItem.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <StackPanel Orientation="Horizontal" />
-                            </ItemsPanelTemplate>
-                        </MenuItem.ItemsPanel>
-                        <MenuItem FontSize="15" 
-                              Header="Настройки"
-                              Command="{Binding Path=MenuCommand}" 
-                              CommandParameter="Настройки"/>
-                        <MenuItem FontSize="15" 
-                              Header="Скрипты" 
-                              Command="{Binding Path=MenuCommand}"
-                              CommandParameter="Скрипты"/>
-                        <MenuItem FontSize="15"
-                              Header="Действия" 
-                              Command="{Binding Path=MenuCommand}"
-                              CommandParameter="Действия"/>
-                    </MenuItem>
-                </Menu>
-            </Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="{Binding Path=Length}"/>
+                </Grid.ColumnDefinitions>
+                
+                <Button Grid.Column="0"
+                        BorderBrush="Transparent"
+                        BorderThickness="0"
+                        Height="auto"
+                        Margin="5"
+                        VerticalAlignment="Center"
+                        Foreground="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
+                        Background="Transparent"
+                        FontSize="35"
+                        Command="{Binding Path=OpenMenuCommand}"
+                        FontWeight="Bold"
+                        Content="Marlin"/>
+                
+                <Grid Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
 
-            <Grid 
-            Grid.Row="1">
+                    <Button Grid.Column="0"
+                            Margin="0,0,10,0"
+                            FontWeight="Bold"
+                            FontSize="15"
+                            VerticalAlignment="Center"
+                            BorderBrush="Transparent"
+                            BorderThickness="0"
+                            Command="{Binding Path=MenuCommand}"
+                            CommandParameter="Настройки"
+                            Background="{Binding Path=PageColor}"
+                            Foreground="{Binding Path=InternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
+                            Content="Настройки"/>
+                    
+                    <Button Grid.Column="1"
+                            FontWeight="Bold"
+                            FontSize="15"
+                            Background="{Binding Path=PageColor}"
+                            Foreground="{Binding Path=InternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
+                            Margin="0,0,10,0"
+                            BorderBrush="Transparent"
+                            BorderThickness="0"
+                            Command="{Binding Path=MenuCommand}"
+                            CommandParameter="Команды"
+                            Content="Команды"/>
+                    
+                    <Button Grid.Column="2"
+                            FontWeight="Bold"
+                            FontSize="15"
+                            Background="{Binding Path=PageColor}"
+                            Foreground="{Binding Path=InternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
+                            Margin="0,0,10,0"
+                            BorderBrush="Transparent"
+                            BorderThickness="0"
+                            Command="{Binding Path=MenuCommand}"
+                            CommandParameter="Скрипты"
+                            Content="Скрипты"/>
+                </Grid>
+            </Grid>
+            
+            <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition 
                     Width="*"/>

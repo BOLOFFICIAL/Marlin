@@ -76,7 +76,7 @@ namespace Marlin.ViewModels.Window
 
         private void OnRegistrationCommandExecute(object parameter)
         {
-            if (Context.RegistrationPage.Аutorun)
+            if (Context.RegistrationPageVM.Аutorun)
             {
                 Settings.AddAutorun();
             }

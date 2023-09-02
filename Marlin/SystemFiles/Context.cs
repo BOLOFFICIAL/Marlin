@@ -1,6 +1,7 @@
 ﻿using Marlin.Models;
 using Marlin.ViewModels.Main;
 using Marlin.ViewModels.Window;
+using Marlin.Views.Main;
 using System.Windows;
 
 namespace Marlin.SystemFiles
@@ -13,10 +14,10 @@ namespace Marlin.SystemFiles
         public static Settings CopySettings = new();
         public static Window Window = new();
 
-        public static MainPageViewModel MainPage = new();
-        public static SettingsPageViewModel SettingsPage = new();
-        public static MessagePageViewModel MessagePage = new();
-        public static RegistrationPageViewModel RegistrationPage = new();
+        public static MainPageViewModel MainPageVM = new();
+        public static SettingsPageViewModel SettingsPageVM = new();
+        public static MessagePageViewModel MessagePageVM = new();
+        public static RegistrationPageViewModel RegistrationPageVM = new();
 
         public static Window MainWindow = new();
     }

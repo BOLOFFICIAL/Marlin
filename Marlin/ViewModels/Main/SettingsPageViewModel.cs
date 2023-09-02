@@ -182,7 +182,7 @@ namespace Marlin.ViewModels.Main
         private void OnToMainCommandExecuted(object p)
         {
             Context.Settings = Context.CopySettings;
-            Context.MainWindow.Content = new MainPage();
+            SystemFiles.System.SetPage(new MainPage());
         }
 
         private void OnChoseCommandExecuted(object p)
