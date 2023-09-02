@@ -29,7 +29,7 @@ namespace Marlin.Models
         public string BackgraundImagePath = "";
         public string ImageScail = "300";
         public string ImageViewport = "300,300,300,300";
-        
+
 
         public static void SaveSettings(bool restart = true)
         {
@@ -139,13 +139,13 @@ namespace Marlin.Models
             string thissettings = JsonConvert.SerializeObject(this);
             string othersettings = JsonConvert.SerializeObject(otherSettings);
 
-            if (thissettings.Length!= othersettings.Length) 
+            if (thissettings.Length != othersettings.Length)
             {
                 return false;
             }
-            for (int i=0;i< thissettings.Length;i++) 
+            for (int i = 0; i < thissettings.Length; i++)
             {
-                if (thissettings[i] != othersettings[i]) 
+                if (thissettings[i] != othersettings[i])
                 {
                     return false;
                 }

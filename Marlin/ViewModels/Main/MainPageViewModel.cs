@@ -119,13 +119,13 @@ namespace Marlin.ViewModels.Main
             }
         }
 
-        private void OnOpenMenuCommandExecute(object parameter) 
+        private void OnOpenMenuCommandExecute(object parameter)
         {
             if (_openmenu)
             {
                 Length = new GridLength(0, GridUnitType.Pixel);
             }
-            else 
+            else
             {
                 Length = GridLength.Auto;
             }

@@ -5,10 +5,10 @@ using Marlin.SystemFiles.Types;
 using Marlin.ViewModels.Base;
 using Marlin.Views.Main;
 using Microsoft.Win32;
-using System.IO;
 using Microsoft.WindowsAPICodePack.Dialogs;
-using System.Windows.Input;
 using System.Drawing;
+using System.IO;
+using System.Windows.Input;
 
 namespace Marlin.ViewModels.Main
 {
@@ -93,7 +93,7 @@ namespace Marlin.ViewModels.Main
                 {
                     value = "#" + value;
                 }
-                if (value.Contains("#") && value.Length == 1) 
+                if (value.Contains("#") && value.Length == 1)
                 {
                     value += "FFFFFF";
                 }
@@ -163,7 +163,7 @@ namespace Marlin.ViewModels.Main
             set => Set(ref Context.Settings.BackgraundImagePath, value);
         }
 
-        public string ImageViewport 
+        public string ImageViewport
         {
             get => Context.Settings.ImageViewport;
             set => Set(ref Context.Settings.ImageViewport, value);
@@ -176,7 +176,7 @@ namespace Marlin.ViewModels.Main
             {
                 ImageViewport = $"{value},{value},{value},{value}";
                 Set(ref Context.Settings.ImageScail, value);
-            } 
+            }
         }
 
         private void OnToMainCommandExecuted(object p)
@@ -187,7 +187,7 @@ namespace Marlin.ViewModels.Main
 
         private void OnChoseCommandExecuted(object p)
         {
-            switch (p.ToString()) 
+            switch (p.ToString())
             {
                 case "Фоновое изображение":
                     MessageBox.MakeMessage("Рекомендую выбирать бесшовные изображения");
@@ -198,7 +198,7 @@ namespace Marlin.ViewModels.Main
                     break;
             }
 
-            void SelectImage() 
+            void SelectImage()
             {
                 OpenFileDialog openFileDialog = new OpenFileDialog();
                 openFileDialog.Title = "Выбор фоновового изображения";
@@ -224,7 +224,7 @@ namespace Marlin.ViewModels.Main
                 }
             }
 
-            void SelectFolder() 
+            void SelectFolder()
             {
                 CommonOpenFileDialog folderPicker = new CommonOpenFileDialog();
 
@@ -322,7 +322,7 @@ namespace Marlin.ViewModels.Main
             }
         }
 
-        private void OnDeleteImageCommandExecuted(object p) 
+        private void OnDeleteImageCommandExecuted(object p)
         {
             BackgraundImagePath = "";
             BackgraundImage = "";
