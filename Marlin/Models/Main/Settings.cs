@@ -86,47 +86,10 @@ namespace Marlin.Models
                     MessageBox.MakeMessage("Возникла ошибка чтения данных", MessageType.Error);
                 }
             }
-        }
-
-        public static void RunCmd(string command)
-        {
-            Task.Run(() =>
+            else 
             {
-                Process process = new Process();
-                ProcessStartInfo startInfo = new ProcessStartInfo();
-
-                startInfo.FileName = "cmd.exe";
-                startInfo.RedirectStandardInput = true;
-                startInfo.RedirectStandardOutput = true;
-                startInfo.CreateNoWindow = true;
-                startInfo.UseShellExecute = false;
-                startInfo.StandardOutputEncoding = Encoding.Default;
-
-                process.StartInfo = startInfo;
-                process.Start();
-
-                process.StandardInput.WriteLine(command);
-                process.StandardInput.Flush();
-                process.StandardInput.Close();
-
-                string output = process.StandardOutput.ReadToEnd();
-
-                process.WaitForExit();
-            });
-        }
-
-        public static void AddAutorun()
-        {
-            string path = System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName;
-            string command = "reg add \"HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run\" /v Marlin /t REG_SZ /d " + $"{path}";
-
-            RunCmd(command);
-        }
-
-        public static void RemoveAutorun()
-        {
-            string command = $"reg delete \"HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run\" /v Marlin /f";
-            RunCmd(command);
+                Context.Settings = new Settings();
+            }
         }
 
         public bool Equals(Settings otherSettings)

@@ -182,7 +182,7 @@ namespace Marlin.ViewModels.Main
         private void OnToMainCommandExecuted(object p)
         {
             Context.Settings = Context.CopySettings;
-            SystemFiles.System.SetPage(new MainPage());
+            Program.SetPage(new MainPage());
         }
 
         private void OnChoseCommandExecuted(object p)
@@ -287,11 +287,11 @@ namespace Marlin.ViewModels.Main
                         }
                         if (Context.Settings.IsАutorun)
                         {
-                            Settings.AddAutorun();
+                            Program.AddAutorun();
                         }
                         else
                         {
-                            Settings.RemoveAutorun();
+                            Program.RemoveAutorun();
                         }
                         Settings.SaveSettings();
                     }

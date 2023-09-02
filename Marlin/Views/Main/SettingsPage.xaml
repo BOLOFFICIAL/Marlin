@@ -218,11 +218,14 @@
                                                         <Button Grid.Column="1"
                                                                 BorderThickness="0"
                                                                 FontSize="15"
+                                                                Padding="0,-2,0,0"
+                                                                Width="22"
+                                                                Height="18"
                                                                 BorderBrush="Transparent"
                                                                 Foreground="{Binding Path=ExternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
                                                                 Background="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                                                                 Command="{Binding Path=DeleteImageCommand}"
-                                                                Content="X"/>
+                                                                Content="⌦"/>
                                                     </Grid>
                                                 </Grid>
 

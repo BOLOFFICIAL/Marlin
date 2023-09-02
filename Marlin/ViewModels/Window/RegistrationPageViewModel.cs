@@ -2,6 +2,8 @@
 using Marlin.Models;
 using Marlin.SystemFiles;
 using Marlin.ViewModels.Base;
+using Microsoft.WindowsAPICodePack.Dialogs;
+using System.IO;
 using System.Windows.Input;
 
 namespace Marlin.ViewModels.Window
@@ -9,10 +11,13 @@ namespace Marlin.ViewModels.Window
     public class RegistrationPageViewModel : ViewModel
     {
         public ICommand RegistrationCommand { get; }
+        public ICommand ChoseCommand { get; }
+
 
         public RegistrationPageViewModel()
         {
             RegistrationCommand = new LambdaCommand(OnRegistrationCommandExecute, CanRegistrationCommandExecute);
+            ChoseCommand = new LambdaCommand(OnChoseCommandExecuted);
         }
 
         public string PageColor
@@ -78,13 +83,34 @@ namespace Marlin.ViewModels.Window
         {
             if (Context.RegistrationPageVM.Аutorun)
             {
-                Settings.AddAutorun();
+                Program.AddAutorun();
+            }
+            else 
+            {
+                Program.RemoveAutorun();
             }
             Context.Settings.Password = Context.Settings.NewPassword;
             Context.Settings.NewPassword = "";
             Settings.SaveSettings(false);
             Context.Window.Close();
             Voix.SpeakAsync("Приветствую вас " + Context.Settings.Login);
+        }
+
+        private void OnChoseCommandExecuted(object p)
+        {
+            CommonOpenFileDialog folderPicker = new CommonOpenFileDialog();
+
+            folderPicker.IsFolderPicker = true;
+            folderPicker.Title = "Выбор папки для хранения данных";
+
+            CommonFileDialogResult dialogResult = folderPicker.ShowDialog();
+
+            if (dialogResult == CommonFileDialogResult.Ok)
+            {
+                string selectedFolderPath = folderPicker.FileName;
+                Context.Settings.MainFolderPath = selectedFolderPath;
+                NewMainFolder = Path.GetFileName(selectedFolderPath);
+            }
         }
     }
 }

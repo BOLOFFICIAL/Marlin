@@ -113,7 +113,7 @@ namespace Marlin.ViewModels.Main
         {
             switch (parameter.ToString())
             {
-                case "Настройки": SystemFiles.System.SetPage(new SettingsPage()); break;
+                case "Настройки": Program.SetPage(new SettingsPage()); break;
                 case "Скрипты": Models.MessageBox.MakeMessage("Страница не доступна", MessageType.Error); break;
                 case "Команды": Models.MessageBox.MakeMessage("Страница не доступна", MessageType.YesNoQuestion); break;
             }

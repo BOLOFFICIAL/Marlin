@@ -158,21 +158,25 @@
                                         <ColumnDefinition Width="auto"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <TextBlock Grid.Column="0"
-                                               FontSize="15"
-                                               Margin="0,0,15,0"
-                                               VerticalAlignment="Center"
-                                               HorizontalAlignment="Center"
-                                               Foreground="{Binding Path=FontColor,UpdateSourceTrigger=PropertyChanged}"
-                                               Text="Папка для хранения данных:"/>
+                                    <Button Grid.Column="0"
+                                                            FontSize="15"
+                                                            Margin="0,0,15,0"
+                                                            BorderThickness="0"
+                                                            BorderBrush="Transparent"
+                                                            Foreground="{Binding Path=ExternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
+                                                            Background="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
+                                                            VerticalAlignment="Center"
+                                                            HorizontalAlignment="Center"
+                                                            Command="{Binding Path=ChoseCommand}"
+                                                            Content="Папка для хранения данных"/>
 
                                     <TextBox Grid.Column="1"
-                                             Foreground="{Binding Path=FontColor,UpdateSourceTrigger=PropertyChanged}"
-                                             FontSize="15"
-                                             MinWidth="100"
-                                             Text="{Binding Path=NewMainFolder,UpdateSourceTrigger=PropertyChanged}"
-                                             VerticalAlignment="Center"
-                                             HorizontalContentAlignment="Center"/>
+                                                             FontSize="15"
+                                                             MinWidth="100"
+                                                             IsReadOnly="True"
+                                                             Text="{Binding Path=NewMainFolder,UpdateSourceTrigger=PropertyChanged}"
+                                                             VerticalAlignment="Center"
+                                                             HorizontalContentAlignment="Center"/>
                                 </Grid>
                             </Grid>
                         </Grid>
@@ -182,8 +186,10 @@
                         Command="{Binding Path=RegistrationCommand}"
                         Width="auto"
                         FontSize="15"
-                        Foreground="{Binding Path=BackgroundColor,UpdateSourceTrigger=PropertyChanged}"
-                        Background="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
+                        BorderThickness="0"
+                                                            BorderBrush="Transparent"
+                                                            Foreground="{Binding Path=ExternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
+                                                            Background="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                         HorizontalAlignment="Center"
                         FontWeight="Bold"
                         Content="Зарегистрироваться"/>
