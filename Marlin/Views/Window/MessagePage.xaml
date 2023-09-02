@@ -80,7 +80,7 @@
                                  Height="auto"
                                  Command="{Binding Path=SendAnswerCommand}"
                                  CommandParameter="Yes"
-                                 Content="Yes"/>
+                                 Content="Да"/>
 
                         <Button  Grid.Column="1"
                                  BorderThickness="0"
@@ -95,7 +95,7 @@
                                  Margin="4,4,4,4"
                                  Command="{Binding Path=SendAnswerCommand}"
                                  CommandParameter="No"
-                                 Content="No"/>
+                                 Content="Нет"/>
                     </Grid>
 
                     <Grid Visibility="{Binding Path=IsTextQuestion,UpdateSourceTrigger=PropertyChanged}"

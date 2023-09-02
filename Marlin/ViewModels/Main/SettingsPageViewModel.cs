@@ -8,6 +8,7 @@ using Microsoft.Win32;
 using System.IO;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using System.Windows.Input;
+using System.Drawing;
 
 namespace Marlin.ViewModels.Main
 {
@@ -16,12 +17,14 @@ namespace Marlin.ViewModels.Main
         public ICommand ToMainCommand { get; }
         public ICommand SaveSettingsCommand { get; }
         public ICommand ChoseCommand { get; }
+        public ICommand DeleteImageCommand { get; }
 
         public SettingsPageViewModel()
         {
             ToMainCommand = new LambdaCommand(OnToMainCommandExecuted);
             SaveSettingsCommand = new LambdaCommand(OnSaveSettingsCommandExecuted);
             ChoseCommand = new LambdaCommand(OnChoseCommandExecuted);
+            DeleteImageCommand = new LambdaCommand(OnDeleteImageCommandExecuted, CanDeleteImageCommandExecute);
         }
 
         public string PageColor
@@ -187,34 +190,55 @@ namespace Marlin.ViewModels.Main
             switch (p.ToString()) 
             {
                 case "Фоновое изображение":
-                    OpenFileDialog openFileDialog = new OpenFileDialog();
-                    openFileDialog.Title = "Выбор фоновового изображения";
-                    openFileDialog.Filter = "Изображения (*.jpeg;*.jpg;*.png)|*.jpeg;*.jpg;*.png";
-
-                    bool? result = openFileDialog.ShowDialog();
-
-                    if (result == true)
-                    {
-                        string path = openFileDialog.FileName;
-                        BackgraundImagePath = path;
-                        BackgraundImage = Path.GetFileName(path);
-                    }
+                    MessageBox.MakeMessage("Рекомендую выбирать бесшовные изображения");
+                    SelectImage();
                     break;
                 case "Папка для хранения данных":
-                    CommonOpenFileDialog folderPicker = new CommonOpenFileDialog();
-
-                    folderPicker.IsFolderPicker = true;
-                    folderPicker.Title = "Выбор папки для хранения данных";
-
-                    CommonFileDialogResult dialogResult = folderPicker.ShowDialog();
-
-                    if (dialogResult == CommonFileDialogResult.Ok)
-                    {
-                        string selectedFolderPath = folderPicker.FileName;
-                        Context.Settings.MainFolderPath = selectedFolderPath;
-                        NewMainFolder = Path.GetFileName(selectedFolderPath);
-                    }
+                    SelectFolder();
                     break;
+            }
+
+            void SelectImage() 
+            {
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Title = "Выбор фоновового изображения";
+                openFileDialog.Filter = "Изображения (*.jpeg;*.jpg;*.png)|*.jpeg;*.jpg;*.png";
+
+                bool? result = openFileDialog.ShowDialog();
+
+                if (result == true)
+                {
+                    string path = openFileDialog.FileName;
+                    Image image = Image.FromFile(path);
+                    if (image.Width != image.Height)
+                    {
+                        MessageBox.MakeMessage("Выбранное изображение не имеет квадратную форму.\nЭто может привести к искажению пропорций изображения.\nВыбрать другое изображение?", MessageType.YesNoQuestion);
+                        if (Context.MessageBox.Answer == "Yes")
+                        {
+                            SelectImage();
+                            return;
+                        }
+                    }
+                    BackgraundImagePath = path;
+                    BackgraundImage = Path.GetFileName(path);
+                }
+            }
+
+            void SelectFolder() 
+            {
+                CommonOpenFileDialog folderPicker = new CommonOpenFileDialog();
+
+                folderPicker.IsFolderPicker = true;
+                folderPicker.Title = "Выбор папки для хранения данных";
+
+                CommonFileDialogResult dialogResult = folderPicker.ShowDialog();
+
+                if (dialogResult == CommonFileDialogResult.Ok)
+                {
+                    string selectedFolderPath = folderPicker.FileName;
+                    Context.Settings.MainFolderPath = selectedFolderPath;
+                    NewMainFolder = Path.GetFileName(selectedFolderPath);
+                }
             }
         }
 
@@ -296,6 +320,17 @@ namespace Marlin.ViewModels.Main
                     MessageBox.MakeMessage("Блок администрирования должен быть заполнен", MessageType.Error);
                 }
             }
+        }
+
+        private void OnDeleteImageCommandExecuted(object p) 
+        {
+            BackgraundImagePath = "";
+            BackgraundImage = "";
+        }
+
+        private bool CanDeleteImageCommandExecute(object p)
+        {
+            return BackgraundImagePath.Length > 0;
         }
     }
 }
