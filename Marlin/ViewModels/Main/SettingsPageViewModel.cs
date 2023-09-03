@@ -23,7 +23,7 @@ namespace Marlin.ViewModels.Main
         public SettingsPageViewModel()
         {
             ToMainCommand = new LambdaCommand(OnToMainCommandExecuted);
-            SaveSettingsCommand = new LambdaCommand(OnSaveSettingsCommandExecuted);
+            SaveSettingsCommand = new LambdaCommand(OnSaveSettingsCommandExecuted, CanSaveSettingsCommandExecute);
             ChoseCommand = new LambdaCommand(OnChoseCommandExecuted);
             DeleteImageCommand = new LambdaCommand(OnDeleteImageCommandExecuted, CanDeleteImageCommandExecute);
         }
@@ -33,15 +33,33 @@ namespace Marlin.ViewModels.Main
             get => Context.Settings.Theme.PageColor;
             set
             {
-                if (!value.Contains("#"))
+                if (!value.StartsWith("#"))
                 {
                     value = "#" + value;
                 }
+                if (value.Length < 7)
+                {
+                    Set(ref Context.Settings.Theme.PageColor, value);
+                    return;
+                }
                 if (value.Contains("#") && value.Length == 1)
                 {
-                    value += "000000";
+                    value += "FFFFFF";
                 }
-                Set(ref Context.Settings.Theme.PageColor, value);
+                if (Set(ref Context.Settings.Theme.PageColor, value))
+                {
+                    PageColorInt = Theme.HexColorToNumber(value);
+                }
+            }
+        }
+
+        public int PageColorInt
+        {
+            get => Context.Settings.Theme.PageColorInt;
+            set
+            {
+                Set(ref Context.Settings.Theme.PageColorInt, value);
+                PageColor = Theme.NumberToHexColor(PageColorInt);
             }
         }
 
@@ -56,15 +74,33 @@ namespace Marlin.ViewModels.Main
             get => Context.Settings.Theme.FontColor;
             set
             {
-                if (!value.Contains("#"))
+                if (!value.StartsWith("#"))
                 {
                     value = "#" + value;
                 }
+                if (value.Length < 7)
+                {
+                    Set(ref Context.Settings.Theme.FontColor, value);
+                    return;
+                }
                 if (value.Contains("#") && value.Length == 1)
                 {
-                    value += "000000";
+                    value += "FFFFFF";
                 }
-                Set(ref Context.Settings.Theme.FontColor, value);
+                if (Set(ref Context.Settings.Theme.FontColor, value))
+                {
+                    FontColorInt = Theme.HexColorToNumber(value);
+                }
+            }
+        }
+
+        public int FontColorInt
+        {
+            get => Context.Settings.Theme.FontColorInt;
+            set
+            {
+                Set(ref Context.Settings.Theme.FontColorInt, value);
+                FontColor = Theme.NumberToHexColor(FontColorInt);
             }
         }
 
@@ -73,15 +109,33 @@ namespace Marlin.ViewModels.Main
             get => Context.Settings.Theme.ExternalBackgroundColor;
             set
             {
-                if (!value.Contains("#"))
+                if (!value.StartsWith("#"))
                 {
                     value = "#" + value;
+                }
+                if (value.Length < 7)
+                {
+                    Set(ref Context.Settings.Theme.ExternalBackgroundColor, value);
+                    return;
                 }
                 if (value.Contains("#") && value.Length == 1)
                 {
                     value += "FFFFFF";
                 }
-                Set(ref Context.Settings.Theme.ExternalBackgroundColor, value);
+                if (Set(ref Context.Settings.Theme.ExternalBackgroundColor, value))
+                {
+                    ExternalBackgroundColorInt = Theme.HexColorToNumber(value);
+                }
+            }
+        }
+
+        public int ExternalBackgroundColorInt
+        {
+            get => Context.Settings.Theme.ExternalBackgroundColorInt;
+            set
+            {
+                Set(ref Context.Settings.Theme.ExternalBackgroundColorInt, value);
+                ExternalBackgroundColor = Theme.NumberToHexColor(ExternalBackgroundColorInt);
             }
         }
 
@@ -90,27 +144,45 @@ namespace Marlin.ViewModels.Main
             get => Context.Settings.Theme.InternalBackgroundColor;
             set
             {
-                if (!value.Contains("#"))
+                if (!value.StartsWith("#"))
                 {
                     value = "#" + value;
+                }
+                if (value.Length < 7)
+                {
+                    Set(ref Context.Settings.Theme.InternalBackgroundColor, value);
+                    return;
                 }
                 if (value.Contains("#") && value.Length == 1)
                 {
                     value += "FFFFFF";
                 }
-                Set(ref Context.Settings.Theme.InternalBackgroundColor, value);
+                if (Set(ref Context.Settings.Theme.InternalBackgroundColor, value))
+                {
+                    InternalBackgroundColorInt = Theme.HexColorToNumber(value);
+                }
+            }
+        }
+
+        public int InternalBackgroundColorInt
+        {
+            get => Context.Settings.Theme.InternalBackgroundColorInt;
+            set
+            {
+                Set(ref Context.Settings.Theme.InternalBackgroundColorInt, value);
+                InternalBackgroundColor = Theme.NumberToHexColor(InternalBackgroundColorInt);
             }
         }
 
         public bool IsSay
         {
             get => Context.Settings.IsSay;
-            set 
+            set
             {
                 Set(ref Context.Settings.IsSay, value);
                 LengthSay = IsSay ? GridLength.Auto : new GridLength(0, GridUnitType.Pixel);
-            } 
-            
+            }
+
         }
 
         public GridLength LengthSay
@@ -259,6 +331,11 @@ namespace Marlin.ViewModels.Main
                     NewMainFolder = Path.GetFileName(selectedFolderPath);
                 }
             }
+        }
+
+        private bool CanSaveSettingsCommandExecute(object p) 
+        {
+            return !Context.CopySettings.Equals(Context.Settings);
         }
 
         private void OnSaveSettingsCommandExecuted(object p)
