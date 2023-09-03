@@ -19,10 +19,11 @@
         
         <Grid>
             <Grid.Background>
-                <ImageBrush ImageSource="{Binding Path=BackgraundImagePath}" 
-                            TileMode="Tile" 
-                            Viewport="{Binding Path=ImageViewport}" 
-                            ViewportUnits="Absolute"/>
+                <ImageBrush ImageSource="{Binding Path=BackgraundImagePath}"
+                            Stretch="{Binding Path=Stretch}"
+                            TileMode="{Binding Path=TileMode}"
+                            ViewportUnits="{Binding Path=ViewportUnits}"
+                            Viewport="{Binding Path=ImageViewport}"/>
             </Grid.Background>
 
             <Grid.RowDefinitions>

@@ -10,6 +10,8 @@ using System.Drawing;
 using System.IO;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Shapes;
 
 namespace Marlin.ViewModels.Main
 {
@@ -182,7 +184,42 @@ namespace Marlin.ViewModels.Main
                 Set(ref Context.Settings.IsSay, value);
                 LengthSay = IsSay ? GridLength.Auto : new GridLength(0, GridUnitType.Pixel);
             }
+        }
 
+        public bool Seamless
+        {
+            get => Context.Settings.Seamless;
+            set
+            {
+                if (BackgraundImagePath.Length>0&& Seamless!=true) 
+                {
+                    Image image = Image.FromFile(BackgraundImagePath);
+                    if (image.Width != image.Height)
+                    {
+                        Models.MessageBox.MakeMessage("Фоновое изображение не имеет квадратную форму.\nЭто может привести к искажению пропорций изображения.\nВключить режим безшовное заполнение?", MessageType.YesNoQuestion);
+                        if (Context.MessageBox.Answer == "No")
+                        {
+                            return;
+                        }
+                    }
+                }
+                Set(ref Context.Settings.Seamless, value);
+                LengthScale = Seamless && BackgraundImagePath.Length > 0 ? GridLength.Auto : new GridLength(0, GridUnitType.Pixel);
+                if (Seamless)
+                {
+                    Stretch = Stretch.Fill;
+                    ImageViewport = $"{ImageScail},{ImageScail},{ImageScail},{ImageScail}";
+                    TileMode = TileMode.Tile;
+                    ViewportUnits = BrushMappingMode.Absolute;
+                }
+                else 
+                {
+                    Stretch = Stretch.UniformToFill;
+                    TileMode = TileMode.None;
+                    ViewportUnits = BrushMappingMode.RelativeToBoundingBox;
+                    ImageViewport = "0,0,1,1";
+                }
+            }
         }
 
         public GridLength LengthSay
@@ -247,6 +284,12 @@ namespace Marlin.ViewModels.Main
             set => Set(ref Context.Settings.LengthImage, value);
         }
 
+        public GridLength LengthScale
+        {
+            get => Context.Settings.LengthScale;
+            set => Set(ref Context.Settings.LengthScale, value);
+        }
+
         public string BackgraundImagePath
         {
             get => Context.Settings.BackgraundImagePath;
@@ -269,6 +312,24 @@ namespace Marlin.ViewModels.Main
             }
         }
 
+        public Stretch Stretch 
+        {
+            get => Context.Settings.Stretch;
+            set => Set(ref Context.Settings.Stretch, value);
+        }
+
+        public TileMode TileMode
+        {
+            get => Context.Settings.TileMode;
+            set => Set(ref Context.Settings.TileMode, value);
+        }
+
+        public BrushMappingMode ViewportUnits
+        {
+            get => Context.Settings.ViewportUnits;
+            set => Set(ref Context.Settings.ViewportUnits, value);
+        }
+
         private void OnToMainCommandExecuted(object p)
         {
             Context.Settings = Context.CopySettings;
@@ -280,7 +341,7 @@ namespace Marlin.ViewModels.Main
             switch (p.ToString())
             {
                 case "Фоновое изображение":
-                    Models.MessageBox.MakeMessage("Рекомендую выбирать бесшовные изображения");
+                    //Models.MessageBox.MakeMessage("Рекомендую выбирать бесшовные изображения");
                     SelectImage();
                     break;
                 case "Папка для хранения данных":
@@ -300,7 +361,7 @@ namespace Marlin.ViewModels.Main
                 {
                     string path = openFileDialog.FileName;
                     Image image = Image.FromFile(path);
-                    if (image.Width != image.Height)
+                    if (image.Width != image.Height && Seamless)
                     {
                         Models.MessageBox.MakeMessage("Выбранное изображение не имеет квадратную форму.\nЭто может привести к искажению пропорций изображения.\nВыбрать другое изображение?", MessageType.YesNoQuestion);
                         if (Context.MessageBox.Answer == "Yes")
@@ -310,8 +371,9 @@ namespace Marlin.ViewModels.Main
                         }
                     }
                     BackgraundImagePath = path;
-                    BackgraundImage = Path.GetFileName(path);
+                    BackgraundImage = System.IO.Path.GetFileName(path);
                     LengthImage = GridLength.Auto;
+                    LengthScale = Seamless ? GridLength.Auto : new GridLength(0, GridUnitType.Pixel);
                 }
             }
 
@@ -328,7 +390,7 @@ namespace Marlin.ViewModels.Main
                 {
                     string selectedFolderPath = folderPicker.FileName;
                     Context.Settings.MainFolderPath = selectedFolderPath;
-                    NewMainFolder = Path.GetFileName(selectedFolderPath);
+                    NewMainFolder = System.IO.Path.GetFileName(selectedFolderPath);
                 }
             }
         }
@@ -423,6 +485,7 @@ namespace Marlin.ViewModels.Main
             BackgraundImagePath = "";
             BackgraundImage = "";
             LengthImage = new GridLength(0, GridUnitType.Pixel);
+            LengthScale = new GridLength(0, GridUnitType.Pixel);
         }
 
         private bool CanDeleteImageCommandExecute(object p)

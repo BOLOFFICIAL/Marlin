@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace Marlin.ViewModels.Main
 {
@@ -82,6 +83,24 @@ namespace Marlin.ViewModels.Main
         {
             get => _length;
             set => Set(ref _length, value);
+        }
+
+        public Stretch Stretch
+        {
+            get => Context.Settings.Stretch;
+            set => Set(ref Context.Settings.Stretch, value);
+        }
+
+        public TileMode TileMode
+        {
+            get => Context.Settings.TileMode;
+            set => Set(ref Context.Settings.TileMode, value);
+        }
+
+        public BrushMappingMode ViewportUnits
+        {
+            get => Context.Settings.ViewportUnits;
+            set => Set(ref Context.Settings.ViewportUnits, value);
         }
 
         private void OnToSettingsCommandExecuted(object p)

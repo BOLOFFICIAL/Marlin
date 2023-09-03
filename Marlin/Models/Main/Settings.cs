@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Windows;
+using System.Windows.Media;
 
 namespace Marlin.Models
 {
@@ -30,6 +31,11 @@ namespace Marlin.Models
         public string ImageViewport = "300,300,300,300";
         public GridLength LengthImage = new GridLength(0, GridUnitType.Pixel);
         public GridLength LengthSay = new GridLength(0, GridUnitType.Pixel);
+        public GridLength LengthScale = new GridLength(0, GridUnitType.Pixel);
+        public Stretch Stretch = Stretch.Fill;
+        public TileMode TileMode = TileMode.None;
+        public BrushMappingMode ViewportUnits = BrushMappingMode.Absolute;
+        public bool Seamless = false;
 
         public static void SaveSettings(bool restart = true)
         {
