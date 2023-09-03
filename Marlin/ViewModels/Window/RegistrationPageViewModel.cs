@@ -84,7 +84,7 @@ namespace Marlin.ViewModels.Window
             {
                 Program.AddAutorun();
             }
-            else 
+            else
             {
                 Program.RemoveAutorun();
             }

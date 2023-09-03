@@ -1,6 +1,5 @@
 ﻿using Marlin.SystemFiles.Types;
 using System;
-using System.Diagnostics;
 
 namespace Marlin.Models
 {
@@ -92,9 +91,9 @@ namespace Marlin.Models
             return -1;
         }
 
-        public static void SetColor() 
+        public static void SetColor()
         {
-            
+
         }
     }
 }

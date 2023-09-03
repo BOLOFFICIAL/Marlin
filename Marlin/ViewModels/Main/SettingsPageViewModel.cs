@@ -333,7 +333,7 @@ namespace Marlin.ViewModels.Main
             }
         }
 
-        private bool CanSaveSettingsCommandExecute(object p) 
+        private bool CanSaveSettingsCommandExecute(object p)
         {
             return !Context.CopySettings.Equals(Context.Settings);
         }
@@ -389,7 +389,7 @@ namespace Marlin.ViewModels.Main
                         {
                             Program.RemoveAutorun();
                         }
-                        Settings.SaveSettings(Context.CopySettings.Theme.PageColor!= Context.Settings.Theme.PageColor);
+                        Settings.SaveSettings(Context.CopySettings.Theme.PageColor != Context.Settings.Theme.PageColor);
                     }
                     else
                     {

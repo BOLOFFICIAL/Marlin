@@ -1,6 +1,4 @@
 ﻿using Marlin.Models;
-using Marlin.ViewModels.Main;
-using Marlin.ViewModels.Window;
 using System.Windows;
 
 namespace Marlin.SystemFiles
