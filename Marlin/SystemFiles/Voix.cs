@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Marlin.SystemFiles.Types;
 using System.Speech.Synthesis;
 using System.Threading;
 using System.Threading.Tasks;
@@ -26,9 +26,9 @@ namespace Marlin.SystemFiles
                 Synthesizer.Rate = Context.Settings.Speed;
                 Synthesizer.SpeakAsync(text);
             }
-            catch (OperationCanceledException)
+            catch
             {
-                // Отмена была вызвана, игнорируем
+                Models.MessageBox.MakeMessage("Возникла ошибка озвучивания", MessageType.Error);
             }
         }
     }

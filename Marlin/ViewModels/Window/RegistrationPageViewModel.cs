@@ -13,7 +13,6 @@ namespace Marlin.ViewModels.Window
         public ICommand RegistrationCommand { get; }
         public ICommand ChoseCommand { get; }
 
-
         public RegistrationPageViewModel()
         {
             RegistrationCommand = new LambdaCommand(OnRegistrationCommandExecute, CanRegistrationCommandExecute);
@@ -81,7 +80,7 @@ namespace Marlin.ViewModels.Window
 
         private void OnRegistrationCommandExecute(object parameter)
         {
-            if (Context.RegistrationPageVM.Аutorun)
+            if (Аutorun)
             {
                 Program.AddAutorun();
             }

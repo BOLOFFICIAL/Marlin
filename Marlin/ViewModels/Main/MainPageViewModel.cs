@@ -23,10 +23,8 @@ namespace Marlin.ViewModels.Main
         public ICommand MenuCommand { get; }
         public ICommand OpenMenuCommand { get; }
 
-
         public MainPageViewModel()
         {
-            Context.MainPageVM = this;
             ToSettingsCommand = new LambdaCommand(OnToSettingsCommandExecuted);
             SendCommand = new LambdaCommand(OnSendCommandExecute, CanSendCommandExecute);
             MenuCommand = new LambdaCommand(OnMenuCommandExecute);
@@ -62,11 +60,6 @@ namespace Marlin.ViewModels.Main
         public string InternalBackgroundColor
         {
             get => Context.Settings.Theme.InternalBackgroundColor;
-        }
-
-        public string BackgraundImage
-        {
-            get => Context.Settings.BackgraundImage;
         }
 
         public string BackgraundImagePath
@@ -105,7 +98,7 @@ namespace Marlin.ViewModels.Main
 
         private void OnSendCommandExecute(object parameter)
         {
-            Models.MessageBox.MakeMessage(Context.MainPageVM.Command);
+            Models.MessageBox.MakeMessage(Command);
             Command = "";
         }
 

@@ -1,7 +1,11 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Linq;
 
 namespace Marlin.SystemFiles
 {
@@ -32,6 +36,41 @@ namespace Marlin.SystemFiles
 
                 process.WaitForExit();
             });
+        }
+
+        public static void CheckRunProcess()
+        {
+            [DllImport("user32.dll")]
+            static extern bool SetForegroundWindow(IntPtr hWnd);
+
+            string appName = Process.GetCurrentProcess().ProcessName;
+            int currentProcessId = Process.GetCurrentProcess().Id;
+
+            List<int> processIds = GetProcessIdsByName(appName);
+            processIds.Remove(currentProcessId);
+
+            if (processIds.Count > 0)
+            {
+                int targetProcessId = processIds[0];
+
+                try
+                {
+                    Process targetProcess = Process.GetProcessById(targetProcessId);
+                    SetForegroundWindow(targetProcess.MainWindowHandle);
+                    Process currentProcess = Process.GetCurrentProcess();
+                    currentProcess.Kill();
+                }
+                catch (ArgumentException)
+                {
+                    Models.MessageBox.MakeMessage($"Процесс с ID {targetProcessId} не найден.");
+                }
+            }
+
+            static List<int> GetProcessIdsByName(string processName)
+            {
+                Process[] processes = Process.GetProcessesByName(processName);
+                return processes.Select(process => process.Id).ToList();
+            }
         }
     }
 }

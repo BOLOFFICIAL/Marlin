@@ -20,7 +20,7 @@ namespace Marlin
             Settings.LoadSettings();
 
             Thread.Sleep(1000);
-            CheckRun();
+            WinSystem.CheckRunProcess();
 
             if (Context.Settings.Password.Length > 0)
             {
@@ -42,41 +42,6 @@ namespace Marlin
                     break;
                 }
             }
-        }
-
-        private void CheckRun()
-        {
-            [DllImport("user32.dll")]
-            static extern bool SetForegroundWindow(IntPtr hWnd);
-
-            string appName = Process.GetCurrentProcess().ProcessName;
-            int currentProcessId = Process.GetCurrentProcess().Id;
-
-            List<int> processIds = GetProcessIdsByName(appName);
-            processIds.Remove(currentProcessId);
-
-            if (processIds.Count > 0)
-            {
-                int targetProcessId = processIds[0];
-
-                try
-                {
-                    Process targetProcess = Process.GetProcessById(targetProcessId);
-                    SetForegroundWindow(targetProcess.MainWindowHandle);
-                    Process currentProcess = Process.GetCurrentProcess();
-                    currentProcess.Kill();
-                }
-                catch (ArgumentException)
-                {
-                    Models.MessageBox.MakeMessage($"Процесс с ID {targetProcessId} не найден.");
-                }
-            }
-        }
-
-        static List<int> GetProcessIdsByName(string processName)
-        {
-            Process[] processes = Process.GetProcessesByName(processName);
-            return processes.Select(process => process.Id).ToList();
         }
     }
 }
