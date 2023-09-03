@@ -41,11 +41,11 @@
                         BorderBrush="Transparent"
                         BorderThickness="0"
                         Height="auto"
-                        Margin="5"
+                        Margin="10"
                         VerticalAlignment="Center"
                         Foreground="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                         Background="Transparent"
-                        FontSize="35"
+                        FontSize="40"
                         Command="{Binding Path=OpenMenuCommand}"
                         FontWeight="Bold"
                         Content="Marlin"/>
