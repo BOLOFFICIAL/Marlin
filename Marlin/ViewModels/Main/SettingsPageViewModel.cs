@@ -8,6 +8,7 @@ using Microsoft.Win32;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using System.Drawing;
 using System.IO;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Marlin.ViewModels.Main
@@ -104,7 +105,18 @@ namespace Marlin.ViewModels.Main
         public bool IsSay
         {
             get => Context.Settings.IsSay;
-            set => Set(ref Context.Settings.IsSay, value);
+            set 
+            {
+                Set(ref Context.Settings.IsSay, value);
+                LengthSay = IsSay ? GridLength.Auto : new GridLength(0, GridUnitType.Pixel);
+            } 
+            
+        }
+
+        public GridLength LengthSay
+        {
+            get => Context.Settings.LengthSay;
+            set => Set(ref Context.Settings.LengthSay, value);
         }
 
         public int[] Speeds
@@ -157,6 +169,12 @@ namespace Marlin.ViewModels.Main
             set => Set(ref Context.Settings.BackgraundImage, value);
         }
 
+        public GridLength LengthImage
+        {
+            get => Context.Settings.LengthImage;
+            set => Set(ref Context.Settings.LengthImage, value);
+        }
+
         public string BackgraundImagePath
         {
             get => Context.Settings.BackgraundImagePath;
@@ -190,7 +208,7 @@ namespace Marlin.ViewModels.Main
             switch (p.ToString())
             {
                 case "Фоновое изображение":
-                    MessageBox.MakeMessage("Рекомендую выбирать бесшовные изображения");
+                    Models.MessageBox.MakeMessage("Рекомендую выбирать бесшовные изображения");
                     SelectImage();
                     break;
                 case "Папка для хранения данных":
@@ -212,7 +230,7 @@ namespace Marlin.ViewModels.Main
                     Image image = Image.FromFile(path);
                     if (image.Width != image.Height)
                     {
-                        MessageBox.MakeMessage("Выбранное изображение не имеет квадратную форму.\nЭто может привести к искажению пропорций изображения.\nВыбрать другое изображение?", MessageType.YesNoQuestion);
+                        Models.MessageBox.MakeMessage("Выбранное изображение не имеет квадратную форму.\nЭто может привести к искажению пропорций изображения.\nВыбрать другое изображение?", MessageType.YesNoQuestion);
                         if (Context.MessageBox.Answer == "Yes")
                         {
                             SelectImage();
@@ -221,6 +239,7 @@ namespace Marlin.ViewModels.Main
                     }
                     BackgraundImagePath = path;
                     BackgraundImage = Path.GetFileName(path);
+                    LengthImage = GridLength.Auto;
                 }
             }
 
@@ -246,7 +265,7 @@ namespace Marlin.ViewModels.Main
         {
             if (Context.CopySettings.Equals(Context.Settings))
             {
-                MessageBox.MakeMessage("Не обнаружено  изменений в настройках");
+                Models.MessageBox.MakeMessage("Не обнаружено  изменений в настройках");
                 return;
             }
 
@@ -257,7 +276,7 @@ namespace Marlin.ViewModels.Main
                     Context.Settings.Theme.FontColor.Length == 8 ||
                     Context.Settings.Theme.ExternalBackgroundColor.Length == 8)
             {
-                MessageBox.MakeMessage("Значение цвета должно иметь длину 7 или 9 символов", MessageType.Error);
+                Models.MessageBox.MakeMessage("Значение цвета должно иметь длину 7 или 9 символов", MessageType.Error);
                 return;
             }
             var editadmin =
@@ -272,13 +291,13 @@ namespace Marlin.ViewModels.Main
                     Context.Settings.MainFolder.Length < 1 ||
                     Context.Settings.Gender.Length < 1)
                 {
-                    MessageBox.MakeMessage("Блок администрирования должен быть заполнен", MessageType.Error);
+                    Models.MessageBox.MakeMessage("Блок администрирования должен быть заполнен", MessageType.Error);
                     return;
                 }
                 if (Context.Settings.Password.Length > 0)
                 {
                     string oldpass = (Context.Settings.NewPassword != Context.Settings.Password && Context.Settings.NewPassword.Length > 0) ? "старый" : "";
-                    MessageBox.MakeMessage($"Были изменены настройки администрирования.\nДля сохранения введите {oldpass} пароль администпратора.", MessageType.TextQuestion);
+                    Models.MessageBox.MakeMessage($"Были изменены настройки администрирования.\nДля сохранения введите {oldpass} пароль администпратора.", MessageType.TextQuestion);
                     if (Context.MessageBox.Answer == Context.Settings.Password)
                     {
                         if (Context.Settings.NewPassword.Length > 0)
@@ -297,7 +316,7 @@ namespace Marlin.ViewModels.Main
                     }
                     else
                     {
-                        MessageBox.MakeMessage($"Введен неправильный пароль", MessageType.Error);
+                        Models.MessageBox.MakeMessage($"Введен неправильный пароль", MessageType.Error);
                     }
                 }
                 else
@@ -317,7 +336,7 @@ namespace Marlin.ViewModels.Main
                 }
                 else
                 {
-                    MessageBox.MakeMessage("Блок администрирования должен быть заполнен", MessageType.Error);
+                    Models.MessageBox.MakeMessage("Блок администрирования должен быть заполнен", MessageType.Error);
                 }
             }
         }
@@ -326,6 +345,7 @@ namespace Marlin.ViewModels.Main
         {
             BackgraundImagePath = "";
             BackgraundImage = "";
+            LengthImage = new GridLength(0, GridUnitType.Pixel);
         }
 
         private bool CanDeleteImageCommandExecute(object p)

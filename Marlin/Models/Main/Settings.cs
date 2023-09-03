@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Marlin.Models
 {
@@ -29,6 +30,8 @@ namespace Marlin.Models
         public string BackgraundImagePath = "";
         public string ImageScail = "300";
         public string ImageViewport = "300,300,300,300";
+        public GridLength LengthImage = new GridLength(0, GridUnitType.Pixel);
+        public GridLength LengthSay = new GridLength(0, GridUnitType.Pixel);
 
         public static void SaveSettings(bool restart = true)
         {
