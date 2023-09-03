@@ -608,26 +608,26 @@
                 </Grid.ColumnDefinitions>
 
                 <Button Grid.Column="0"
-                    Content="Назад"
-                    Margin="10,10,5,10"
-                    FontSize="15"
-                    FontWeight="Bold"
-                    BorderThickness="0"
-                    BorderBrush="Transparent"
-                    Command="{Binding Path=ToMainCommand}"
-                    Foreground="{Binding Path=ExternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
-                    Background="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"/>
+                        Content="Назад"
+                        Margin="10,10,5,10"
+                        FontSize="15"
+                        FontWeight="Bold"
+                        Command="{Binding Path=ToMainCommand}"
+                        BorderThickness="0"
+                        BorderBrush="Transparent"
+                        Foreground="{Binding Path=ExternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
+                        Background="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"/>
 
                 <Button Grid.Column="1"
-                    Content="Сохранить"
-                    FontSize="15"
-                    FontWeight="Bold"
-                    Margin="5,10,10,10" 
-                    BorderThickness="0"
-                    BorderBrush="Transparent"
-                    Command="{Binding Path=SaveSettingsCommand}"
-                    Foreground="{Binding Path=ExternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
-                    Background="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"/>
+                        Content="Сохранить"
+                        FontSize="15"
+                        FontWeight="Bold"
+                        Margin="5,10,10,10" 
+                        BorderThickness="0"
+                        BorderBrush="Transparent"
+                        Foreground="{Binding Path=ExternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
+                        Background="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
+                        Command="{Binding Path=SaveSettingsCommand}"/>
             </Grid>
         </Grid>
     </Grid>

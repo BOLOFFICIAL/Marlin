@@ -353,7 +353,7 @@ namespace Marlin.ViewModels.Main
                     Context.Settings.Theme.FontColor.Length == 8 ||
                     Context.Settings.Theme.ExternalBackgroundColor.Length == 8)
             {
-                Models.MessageBox.MakeMessage("Значение цвета должно иметь длину 7 или 9 символов", MessageType.Error);
+                Models.MessageBox.MakeMessage("Значение цвета должно иметь длину 7 символов", MessageType.Error);
                 return;
             }
             var editadmin =
@@ -389,7 +389,7 @@ namespace Marlin.ViewModels.Main
                         {
                             Program.RemoveAutorun();
                         }
-                        Settings.SaveSettings();
+                        Settings.SaveSettings(Context.CopySettings.Theme.PageColor!= Context.Settings.Theme.PageColor);
                     }
                     else
                     {
@@ -399,7 +399,7 @@ namespace Marlin.ViewModels.Main
                 else
                 {
                     Context.Settings.Password = Context.Settings.NewPassword;
-                    Settings.SaveSettings();
+                    Settings.SaveSettings(Context.CopySettings.Theme.PageColor != Context.Settings.Theme.PageColor);
                 }
             }
             else
@@ -409,7 +409,7 @@ namespace Marlin.ViewModels.Main
                     Context.Settings.MainFolder.Length > 0 &&
                     Context.Settings.Gender.Length > 0)
                 {
-                    Settings.SaveSettings();
+                    Settings.SaveSettings(Context.CopySettings.Theme.PageColor != Context.Settings.Theme.PageColor);
                 }
                 else
                 {
