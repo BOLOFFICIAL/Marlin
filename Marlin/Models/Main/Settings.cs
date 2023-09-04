@@ -28,13 +28,13 @@ namespace Marlin.Models
         public string BackgraundImage = "";
         public string BackgraundImagePath = "";
         public string ImageScail = "300";
-        public string ImageViewport = "300,300,300,300";
+        public string ImageViewport = "0,0,1,1";
         public GridLength LengthImage = new GridLength(0, GridUnitType.Pixel);
         public GridLength LengthSay = new GridLength(0, GridUnitType.Pixel);
         public GridLength LengthScale = new GridLength(0, GridUnitType.Pixel);
-        public Stretch Stretch = Stretch.Fill;
-        public TileMode TileMode = TileMode.None;
-        public BrushMappingMode ViewportUnits = BrushMappingMode.Absolute;
+        public Stretch Stretch = (Stretch)3;
+        public TileMode TileMode = (TileMode)0;
+        public BrushMappingMode ViewportUnits = (BrushMappingMode)1;
         public bool Seamless = false;
 
         public static void SaveSettings(bool restart = true)

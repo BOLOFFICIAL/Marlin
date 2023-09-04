@@ -7,11 +7,9 @@ using Marlin.Views.Main;
 using Microsoft.Win32;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using System.Drawing;
-using System.IO;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Shapes;
 
 namespace Marlin.ViewModels.Main
 {
@@ -191,7 +189,7 @@ namespace Marlin.ViewModels.Main
             get => Context.Settings.Seamless;
             set
             {
-                if (BackgraundImagePath.Length>0&& Seamless!=true) 
+                if (BackgraundImagePath.Length > 0 && Seamless != true)
                 {
                     Image image = Image.FromFile(BackgraundImagePath);
                     if (image.Width != image.Height)
@@ -212,7 +210,7 @@ namespace Marlin.ViewModels.Main
                     TileMode = TileMode.Tile;
                     ViewportUnits = BrushMappingMode.Absolute;
                 }
-                else 
+                else
                 {
                     Stretch = Stretch.UniformToFill;
                     TileMode = TileMode.None;
@@ -312,7 +310,7 @@ namespace Marlin.ViewModels.Main
             }
         }
 
-        public Stretch Stretch 
+        public Stretch Stretch
         {
             get => Context.Settings.Stretch;
             set => Set(ref Context.Settings.Stretch, value);
@@ -341,7 +339,6 @@ namespace Marlin.ViewModels.Main
             switch (p.ToString())
             {
                 case "Фоновое изображение":
-                    //Models.MessageBox.MakeMessage("Рекомендую выбирать бесшовные изображения");
                     SelectImage();
                     break;
                 case "Папка для хранения данных":

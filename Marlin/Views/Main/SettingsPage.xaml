@@ -17,11 +17,11 @@
     <Grid Background="{Binding Path=ExternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}">
         <Grid>
             <Grid.Background>
-                <ImageBrush ImageSource="{Binding Path=BackgraundImagePath}"
-                            Stretch="{Binding Path=Stretch}"
-                            TileMode="{Binding Path=TileMode}"
-                            ViewportUnits="{Binding Path=ViewportUnits}"
-                            Viewport="{Binding Path=ImageViewport}"/>
+                <ImageBrush ImageSource="{Binding Path=BackgraundImagePath,UpdateSourceTrigger=PropertyChanged}"
+                            Stretch="{Binding Path=Stretch,UpdateSourceTrigger=PropertyChanged}"
+                            TileMode="{Binding Path=TileMode,UpdateSourceTrigger=PropertyChanged}"
+                            ViewportUnits="{Binding Path=ViewportUnits,UpdateSourceTrigger=PropertyChanged}"
+                            Viewport="{Binding Path=ImageViewport,UpdateSourceTrigger=PropertyChanged}"/>
             </Grid.Background>
             
             <Grid.RowDefinitions>
