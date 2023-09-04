@@ -481,6 +481,7 @@ namespace Marlin.ViewModels.Main
         {
             BackgraundImagePath = "";
             BackgraundImage = "";
+            Seamless = false;
             LengthImage = new GridLength(0, GridUnitType.Pixel);
             LengthScale = new GridLength(0, GridUnitType.Pixel);
         }
