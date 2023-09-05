@@ -46,7 +46,7 @@ namespace Marlin.Models
             string settings = JsonConvert.SerializeObject(Context.Settings);
             try
             {
-                Sound.PlaySound(MessageType.Info);
+                Sound.PlaySoundAsync(MessageType.Info);
                 using (var sw = new StreamWriter(filepath))
                 {
                     await sw.WriteAsync(settings);
