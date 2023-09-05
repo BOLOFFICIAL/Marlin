@@ -292,18 +292,23 @@ namespace Marlin.ViewModels.Main
             var parameter = p.ToString();
             using (ColorDialog colorDialog = new ColorDialog())
             {
-                int alpha;
-                int red;
-                int green;
-                int blue;
+                int alpha = 0;
+                int red = 0;
+                int green = 0;
+                int blue = 0;
+
+                string currentcolor = "";
 
                 switch (parameter)
                 {
-                    case "ExternalBackgroundColor": (alpha, red, green, blue) = Theme.ConvertHexToArgb(ExternalBackgroundColor); break;
-                    case "InternalBackgroundColor": (alpha, red, green, blue) = Theme.ConvertHexToArgb(InternalBackgroundColor); break;
-                    case "FontColor": (alpha, red, green, blue) = Theme.ConvertHexToArgb(FontColor); break;
-                    case "PageColor": (alpha, red, green, blue) = Theme.ConvertHexToArgb(PageColor); break;
-                    default: alpha = 0; red = 0; green = 0; blue = 0; break;
+                    case "ExternalBackgroundColor": currentcolor = ExternalBackgroundColor; break;
+                    case "InternalBackgroundColor": currentcolor = InternalBackgroundColor; break;
+                    case "FontColor": currentcolor = FontColor; break;
+                    case "PageColor": currentcolor = PageColor; break;
+                }
+                if (currentcolor.Length == 7) 
+                {
+                    (alpha, red, green, blue) = Theme.ConvertHexToArgb(currentcolor);
                 }
 
                 colorDialog.Color = System.Drawing.Color.FromArgb(alpha, red, green, blue);
@@ -396,9 +401,7 @@ namespace Marlin.ViewModels.Main
             if (Context.Settings.Theme.PageColor.Length < 7 ||
                     Context.Settings.Theme.FontColor.Length < 7 ||
                     Context.Settings.Theme.ExternalBackgroundColor.Length < 7 ||
-                    Context.Settings.Theme.PageColor.Length == 8 ||
-                    Context.Settings.Theme.FontColor.Length == 8 ||
-                    Context.Settings.Theme.ExternalBackgroundColor.Length == 8)
+                    Context.Settings.Theme.InternalBackgroundColor.Length < 7)
             {
                 Models.MessageBox.MakeMessage("Значение цвета должно иметь длину 7 символов", MessageType.Error);
                 return;
