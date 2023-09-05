@@ -5,6 +5,5 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Marlin.Windows"
         mc:Ignorable="d" 
-        SizeToContent="WidthAndHeight"
-        Foreground="{Binding Path=FontColor}">
+        SizeToContent="WidthAndHeight">
 </Window>

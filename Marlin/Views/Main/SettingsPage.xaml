@@ -105,33 +105,30 @@
                                                         <ColumnDefinition Width="auto"/>
                                                     </Grid.ColumnDefinitions>
 
-                                                    <TextBlock Grid.Column="0"
-                                                           FontSize="15"
-                                                           Margin="0,0,15,0"
-                                                           VerticalAlignment="Center"
-                                                           HorizontalAlignment="Center"
-                                                           Text="Цвет внешнего фона:"/>
+                                                    <Button Grid.Column="0"
+                                                            FontSize="15"
+                                                            Command="{Binding Path=SelectColorCommand}"
+                                                            CommandParameter="ExternalBackgroundColor"
+                                                            BorderThickness="0"
+                                                            BorderBrush="Transparent"
+                                                            Foreground="{Binding Path=ExternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
+                                                            Background="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
+                                                            Margin="0,0,15,0"
+                                                            VerticalAlignment="Center"
+                                                            Content="Цвет внешнего фона"/>
 
                                                     <Grid Grid.Column="1">
                                                         <Grid.ColumnDefinitions>
                                                             <ColumnDefinition Width="100"/>
                                                             <ColumnDefinition Width="300"/>
                                                         </Grid.ColumnDefinitions>
-                                                        
+
                                                         <TextBox Grid.Column="0"
                                                                  Margin="0,0,15,0"
                                                                  MaxLength="7"
                                                                  FontSize="15"
                                                                  Text="{Binding Path=ExternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
                                                                  HorizontalContentAlignment="Center"/>
-
-                                                        <Slider Grid.Column="1"
-                                                                Minimum="0"
-                                                                Value="{Binding Path=ExternalBackgroundColorInt,UpdateSourceTrigger=PropertyChanged}"
-                                                                Width="auto"
-                                                                VerticalAlignment="Center"
-                                                                TickFrequency="50000"
-                                                                Maximum="16777215"/>
                                                     </Grid>
                                                 </Grid>
 
@@ -142,33 +139,31 @@
                                                         <ColumnDefinition Width="auto"/>
                                                     </Grid.ColumnDefinitions>
 
-                                                    <TextBlock Grid.Column="0"
+                                                    <Button Grid.Column="0"
                                                            FontSize="15"
                                                            Margin="0,0,15,0"
+                                                            HorizontalContentAlignment="Center"
                                                            VerticalAlignment="Center"
-                                                           HorizontalAlignment="Center"
-                                                           Text="Цвет внутреннего фона:"/>
+                                                            Command="{Binding Path=SelectColorCommand}"
+                                                            CommandParameter="InternalBackgroundColor"
+                                                            BorderThickness="0"
+                                                            BorderBrush="Transparent"
+                                                            Foreground="{Binding Path=ExternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
+                                                            Background="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
+                                                           Content="Цвет внутреннего фона"/>
 
                                                     <Grid Grid.Column="1">
                                                         <Grid.ColumnDefinitions>
                                                             <ColumnDefinition Width="100"/>
                                                             <ColumnDefinition Width="300"/>
                                                         </Grid.ColumnDefinitions>
-                                                        
+
                                                         <TextBox Grid.Column="0"
                                                                  Margin="0,0,15,0"
                                                                  MaxLength="7"
                                                                  FontSize="15"
                                                                  Text="{Binding Path=InternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
                                                                  HorizontalContentAlignment="Center"/>
-
-                                                        <Slider Grid.Column="1"
-                                                                Minimum="0"
-                                                                Value="{Binding Path=InternalBackgroundColorInt,UpdateSourceTrigger=PropertyChanged}"
-                                                                Width="auto"
-                                                                VerticalAlignment="Center"
-                                                                TickFrequency="50000"
-                                                                Maximum="16777215"/>
                                                     </Grid>
                                                     
                                                 </Grid>
@@ -180,12 +175,17 @@
                                                         <ColumnDefinition Width="auto"/>
                                                     </Grid.ColumnDefinitions>
 
-                                                    <TextBlock Grid.Column="0"
+                                                    <Button Grid.Column="0"
                                                            FontSize="15"
                                                            Margin="0,0,15,0"
                                                            VerticalAlignment="Center"
-                                                           HorizontalAlignment="Center"
-                                                           Text="Цвет текста:"/>
+                                                            Command="{Binding Path=SelectColorCommand}"
+                                                            CommandParameter="FontColor"
+                                                            BorderThickness="0"
+                                                            BorderBrush="Transparent"
+                                                            Foreground="{Binding Path=ExternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
+                                                            Background="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
+                                                           Content="Цвет текста"/>
 
                                                     <Grid Grid.Column="1">
                                                         <Grid.ColumnDefinitions>
@@ -199,14 +199,6 @@
                                                                  FontSize="15"
                                                                  Text="{Binding Path=FontColor,UpdateSourceTrigger=PropertyChanged}"
                                                                  HorizontalContentAlignment="Center"/>
-
-                                                        <Slider Grid.Column="1"
-                                                                Minimum="0"
-                                                                Value="{Binding Path=FontColorInt,UpdateSourceTrigger=PropertyChanged}"
-                                                                Width="auto"
-                                                                VerticalAlignment="Center"
-                                                                TickFrequency="50000"
-                                                                Maximum="16777215"/>
                                                     </Grid>
                                                 </Grid>
 
@@ -217,12 +209,17 @@
                                                         <ColumnDefinition Width="auto"/>
                                                     </Grid.ColumnDefinitions>
 
-                                                    <TextBlock Grid.Column="0"
+                                                    <Button Grid.Column="0"
                                                            FontSize="15"
                                                            Margin="0,0,15,0"
                                                            VerticalAlignment="Center"
-                                                           HorizontalAlignment="Center"
-                                                           Text="Цвет объектов:"/>
+                                                            Command="{Binding Path=SelectColorCommand}"
+                                                            CommandParameter="PageColor"
+                                                            BorderThickness="0"
+                                                            BorderBrush="Transparent"
+                                                            Foreground="{Binding Path=ExternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
+                                                            Background="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
+                                                           Content="Цвет объектов"/>
 
                                                     <Grid Grid.Column="1">
                                                         <Grid.ColumnDefinitions>
@@ -236,14 +233,6 @@
                                                                  FontSize="15"
                                                                  Text="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                                                                  HorizontalContentAlignment="Center"/>
-
-                                                        <Slider Grid.Column="1"
-                                                                Minimum="0"
-                                                                Value="{Binding Path=PageColorInt,UpdateSourceTrigger=PropertyChanged}"
-                                                                Width="auto"
-                                                                VerticalAlignment="Center"
-                                                                TickFrequency="50000"
-                                                                Maximum="16777215"/>
                                                     </Grid>
                                                 </Grid>
 
@@ -262,7 +251,6 @@
                                                             Foreground="{Binding Path=ExternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
                                                             Background="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                                                             VerticalAlignment="Center"
-                                                            HorizontalAlignment="Center"
                                                             Command="{Binding Path=ChoseCommand}"
                                                             CommandParameter="Фоновое изображение"
                                                             Content="Фоновое изображение"/>
@@ -275,23 +263,24 @@
 
                                                         <TextBox Grid.Column="0" 
                                                                  FontSize="15"
-                                                                 Margin="0,0,15,0"
+                                                                 Margin="0,0,5,0"
+                                                                 Padding="10,0"
                                                                  IsReadOnly="True"
                                                                  Text="{Binding Path=BackgraundImage,UpdateSourceTrigger=PropertyChanged}"
-                                                                 VerticalAlignment="Center"
+                                                                 VerticalContentAlignment="Center"
+                                                                 ToolTip="{Binding Path=BackgraundImagePath}"
                                                                  HorizontalContentAlignment="Center"/>
 
                                                         <Button Grid.Column="1"
                                                                 BorderThickness="0"
                                                                 FontSize="15"
-                                                                Padding="0,-2,0,0"
-                                                                Width="22"
-                                                                Height="18"
+                                                                Padding="0"
+                                                                FontWeight="Bold"
                                                                 BorderBrush="Transparent"
-                                                                Foreground="{Binding Path=ExternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
-                                                                Background="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
+                                                                Foreground="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
+                                                                Background="Transparent"
                                                                 Command="{Binding Path=DeleteImageCommand}"
-                                                                Content="⌦"/>
+                                                                Content="✖"/>
                                                     </Grid>
                                                 </Grid>
 
@@ -330,11 +319,10 @@
                                                            Text="Масштаб изображения:"/>
 
                                                     <Slider Grid.Column="1" 
-                                                            Width="100" 
+                                                            Width="300" 
                                                             Minimum="100" 
                                                             VerticalAlignment="Center"
-                                                            Maximum="1000" 
-                                                            TickFrequency="1"
+                                                            Maximum="3000"
                                                             Value="{Binding Path=ImageScail}"/>
                                                 </Grid>
                                             </Grid>
@@ -410,11 +398,11 @@
                         </Border>
 
                         <Border Grid.Row="1"
-                            Background="{Binding Path=InternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
-                            Margin="10,5,10,10"
-                            CornerRadius="20"
-                            BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
-                            BorderThickness="2">
+                                Background="{Binding Path=InternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
+                                Margin="10,5,10,10"
+                                CornerRadius="20"
+                                BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
+                                BorderThickness="2">
                             <Grid Margin="15,10">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*"/>
@@ -465,16 +453,16 @@
                                                     <TextBlock Grid.Column="0"
                                                                FontSize="15"
                                                                Margin="0,0,15,0"
-                                                               Padding="10,0"
                                                                VerticalAlignment="Center"
                                                                HorizontalAlignment="Center"
                                                                Text="Имя / Логин:"/>
 
                                                     <TextBox Grid.Column="1"
-                                                         FontSize="15"
-                                                         MinWidth="100"
-                                                         Text="{Binding Path=NewLogin,UpdateSourceTrigger=PropertyChanged}"
-                                                         HorizontalContentAlignment="Center"/>
+                                                             FontSize="15"
+                                                             Padding="10,0"
+                                                             MinWidth="100"
+                                                             Text="{Binding Path=NewLogin,UpdateSourceTrigger=PropertyChanged}"
+                                                             HorizontalContentAlignment="Center"/>
                                                 </Grid>
 
                                                 <Grid Grid.Row="1"
@@ -567,6 +555,7 @@
                                                              Padding="10,0"
                                                              IsReadOnly="True"
                                                              Text="{Binding Path=NewMainFolder,UpdateSourceTrigger=PropertyChanged}"
+                                                             ToolTip="{Binding Path=NewMainFolderPath}"
                                                              VerticalAlignment="Center"
                                                              HorizontalContentAlignment="Center"/>
                                                 </Grid>

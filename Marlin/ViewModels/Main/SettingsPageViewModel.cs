@@ -4,12 +4,13 @@ using Marlin.SystemFiles;
 using Marlin.SystemFiles.Types;
 using Marlin.ViewModels.Base;
 using Marlin.Views.Main;
-using Microsoft.Win32;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using System.Drawing;
 using System.Windows;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
+using Theme = Marlin.Models.Theme;
 
 namespace Marlin.ViewModels.Main
 {
@@ -19,6 +20,7 @@ namespace Marlin.ViewModels.Main
         public ICommand SaveSettingsCommand { get; }
         public ICommand ChoseCommand { get; }
         public ICommand DeleteImageCommand { get; }
+        public ICommand SelectColorCommand { get; }
 
         public SettingsPageViewModel()
         {
@@ -26,6 +28,7 @@ namespace Marlin.ViewModels.Main
             SaveSettingsCommand = new LambdaCommand(OnSaveSettingsCommandExecuted, CanSaveSettingsCommandExecute);
             ChoseCommand = new LambdaCommand(OnChoseCommandExecuted);
             DeleteImageCommand = new LambdaCommand(OnDeleteImageCommandExecuted, CanDeleteImageCommandExecute);
+            SelectColorCommand = new LambdaCommand(OnSelectColorCommand);
         }
 
         public string PageColor
@@ -258,6 +261,12 @@ namespace Marlin.ViewModels.Main
             set => Set(ref Context.Settings.MainFolder, value);
         }
 
+        public string NewMainFolderPath
+        {
+            get => Context.Settings.MainFolderPath;
+            set => Set(ref Context.Settings.MainFolderPath, value);
+        }
+
         public string NewPassword
         {
             get => Context.Settings.NewPassword;
@@ -334,6 +343,26 @@ namespace Marlin.ViewModels.Main
             Program.SetPage(new MainPage());
         }
 
+        private void OnSelectColorCommand(object p)
+        {
+            using (ColorDialog colorDialog = new ColorDialog())
+            {
+                colorDialog.Color = System.Drawing.Color.White;
+
+                if (colorDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string selectcolor = colorDialog.Color.ToArgb().ToString("X6").Substring(2);
+                    switch (p.ToString())
+                    {
+                        case "ExternalBackgroundColor": ExternalBackgroundColor = "#" + selectcolor; break;
+                        case "InternalBackgroundColor": InternalBackgroundColor = "#" + selectcolor; break;
+                        case "FontColor": FontColor = "#" + selectcolor; break;
+                        case "PageColor": PageColor = "#" + selectcolor; break;
+                    }
+                }
+            }
+        }
+
         private void OnChoseCommandExecuted(object p)
         {
             switch (p.ToString())
@@ -348,7 +377,7 @@ namespace Marlin.ViewModels.Main
 
             void SelectImage()
             {
-                OpenFileDialog openFileDialog = new OpenFileDialog();
+                Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
                 openFileDialog.Title = "Выбор фоновового изображения";
                 openFileDialog.Filter = "Изображения (*.jpeg;*.jpg;*.png)|*.jpeg;*.jpg;*.png";
 

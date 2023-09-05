@@ -50,12 +50,12 @@
                         Command="{Binding Path=OpenMenuCommand}"
                         FontWeight="Bold"
                         Content="Marlin"/>
-                
+
                 <Grid Grid.Column="1">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
 
                     <Button Grid.Column="0"
@@ -68,14 +68,14 @@
                             Command="{Binding Path=MenuCommand}"
                             CommandParameter="Настройки"
                             Background="{Binding Path=PageColor}"
-                            Foreground="{Binding Path=InternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
+                            Foreground="{Binding Path=ExternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
                             Content="Настройки"/>
                     
                     <Button Grid.Column="1"
                             FontWeight="Bold"
                             FontSize="15"
                             Background="{Binding Path=PageColor}"
-                            Foreground="{Binding Path=InternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
+                            Foreground="{Binding Path=ExternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
                             Margin="0,0,10,0"
                             BorderBrush="Transparent"
                             BorderThickness="0"
@@ -87,7 +87,7 @@
                             FontWeight="Bold"
                             FontSize="15"
                             Background="{Binding Path=PageColor}"
-                            Foreground="{Binding Path=InternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
+                            Foreground="{Binding Path=ExternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
                             Margin="0,0,10,0"
                             BorderBrush="Transparent"
                             BorderThickness="0"
@@ -108,29 +108,26 @@
                 </Grid.ColumnDefinitions>
 
                 <Grid Grid.Column="1">
-                    <Border 
-                    BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
-                    BorderThickness="2"
-                    VerticalAlignment="Center"
-                    Background="{Binding Path=InternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
-                    CornerRadius="25"
-                    Margin="5,5,5,5">
+                    <Border BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
+                            BorderThickness="2"
+                            VerticalAlignment="Center"
+                            Background="{Binding Path=InternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
+                            CornerRadius="25"
+                            Margin="5,5,5,5">
                         <Grid 
-                        Margin="10"
-                        VerticalAlignment="Center">
+                            Margin="10"
+                            VerticalAlignment="Center">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition 
-                                Width="*"/>
-                                <ColumnDefinition 
-                                Width="auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
                             </Grid.ColumnDefinitions>
                             <TextBox FontSize="25"
-                                 Padding="15,0"
-                                 Margin="5"
-                                 Text="{Binding Path=Command, UpdateSourceTrigger=PropertyChanged}"
-                                 HorizontalContentAlignment="Center"
-                                 VerticalContentAlignment="Center"
-                                 Grid.Column="0">
+                                     Padding="15,0"
+                                     Margin="5"
+                                     Text="{Binding Path=Command, UpdateSourceTrigger=PropertyChanged}"
+                                     HorizontalContentAlignment="Center"
+                                     VerticalContentAlignment="Center"
+                                     Grid.Column="0">
                                 <TextBox.InputBindings>
                                     <KeyBinding Key="Enter"
                                             Command="{Binding SendCommand}" />
