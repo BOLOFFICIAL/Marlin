@@ -306,7 +306,7 @@ namespace Marlin.ViewModels.Main
                     case "FontColor": currentcolor = FontColor; break;
                     case "PageColor": currentcolor = PageColor; break;
                 }
-                if (currentcolor.Length == 7) 
+                if (currentcolor.Length == 7)
                 {
                     (alpha, red, green, blue) = Theme.ConvertHexToArgb(currentcolor);
                 }
@@ -423,7 +423,7 @@ namespace Marlin.ViewModels.Main
                 }
                 if (Context.Settings.Password.Length > 0)
                 {
-                    Models.MessageBox.MakeMessage($"Были изменены настройки администрирования.\nДля сохранения введите старый пароль администпратора.", MessageType.TextQuestion);
+                    Models.MessageBox.MakeMessage($"Были изменены настройки администрирования.\nДля сохранения введите пароль администпратора.", MessageType.TextQuestion);
                     if (Context.MessageBox.Answer == Context.Settings.Password)
                     {
                         if (Context.Settings.NewPassword.Length > 0)

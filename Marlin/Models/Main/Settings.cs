@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 
@@ -37,7 +38,7 @@ namespace Marlin.Models
         public BrushMappingMode ViewportUnits = (BrushMappingMode)1;
         public bool Seamless = false;
 
-        public static void SaveSettings(bool restart = true)
+        public static async Task SaveSettings(bool restart = true)
         {
             Context.Settings.NewPassword = "";
             string exePath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
@@ -45,9 +46,11 @@ namespace Marlin.Models
             string settings = JsonConvert.SerializeObject(Context.Settings);
             try
             {
+                Sound.PlaySound(MessageType.Info);
                 using (var sw = new StreamWriter(filepath))
                 {
-                    sw.WriteAsync(settings);
+                    await sw.WriteAsync(settings);
+                    await sw.FlushAsync();
                 }
                 if (restart)
                 {
