@@ -40,29 +40,15 @@ namespace Marlin.ViewModels.Main
                 {
                     value = "#" + value;
                 }
-                if (value.Length < 7)
-                {
-                    Set(ref Context.Settings.Theme.PageColor, value);
-                    return;
-                }
                 if (value.Contains("#") && value.Length == 1)
                 {
                     value += "FFFFFF";
                 }
-                if (Set(ref Context.Settings.Theme.PageColor, value))
+                if (value.Length < 8)
                 {
-                    PageColorInt = Theme.HexColorToNumber(value);
+                    Set(ref Context.Settings.Theme.PageColor, value);
+                    return;
                 }
-            }
-        }
-
-        public int PageColorInt
-        {
-            get => Context.Settings.Theme.PageColorInt;
-            set
-            {
-                Set(ref Context.Settings.Theme.PageColorInt, value);
-                PageColor = Theme.NumberToHexColor(PageColorInt);
             }
         }
 
@@ -81,29 +67,15 @@ namespace Marlin.ViewModels.Main
                 {
                     value = "#" + value;
                 }
-                if (value.Length < 7)
-                {
-                    Set(ref Context.Settings.Theme.FontColor, value);
-                    return;
-                }
                 if (value.Contains("#") && value.Length == 1)
                 {
                     value += "FFFFFF";
                 }
-                if (Set(ref Context.Settings.Theme.FontColor, value))
+                if (value.Length < 8)
                 {
-                    FontColorInt = Theme.HexColorToNumber(value);
+                    Set(ref Context.Settings.Theme.FontColor, value);
+                    return;
                 }
-            }
-        }
-
-        public int FontColorInt
-        {
-            get => Context.Settings.Theme.FontColorInt;
-            set
-            {
-                Set(ref Context.Settings.Theme.FontColorInt, value);
-                FontColor = Theme.NumberToHexColor(FontColorInt);
             }
         }
 
@@ -116,29 +88,15 @@ namespace Marlin.ViewModels.Main
                 {
                     value = "#" + value;
                 }
-                if (value.Length < 7)
-                {
-                    Set(ref Context.Settings.Theme.ExternalBackgroundColor, value);
-                    return;
-                }
                 if (value.Contains("#") && value.Length == 1)
                 {
                     value += "FFFFFF";
                 }
-                if (Set(ref Context.Settings.Theme.ExternalBackgroundColor, value))
+                if (value.Length < 8)
                 {
-                    ExternalBackgroundColorInt = Theme.HexColorToNumber(value);
+                    Set(ref Context.Settings.Theme.ExternalBackgroundColor, value);
+                    return;
                 }
-            }
-        }
-
-        public int ExternalBackgroundColorInt
-        {
-            get => Context.Settings.Theme.ExternalBackgroundColorInt;
-            set
-            {
-                Set(ref Context.Settings.Theme.ExternalBackgroundColorInt, value);
-                ExternalBackgroundColor = Theme.NumberToHexColor(ExternalBackgroundColorInt);
             }
         }
 
@@ -151,29 +109,15 @@ namespace Marlin.ViewModels.Main
                 {
                     value = "#" + value;
                 }
-                if (value.Length < 7)
-                {
-                    Set(ref Context.Settings.Theme.InternalBackgroundColor, value);
-                    return;
-                }
                 if (value.Contains("#") && value.Length == 1)
                 {
                     value += "FFFFFF";
                 }
-                if (Set(ref Context.Settings.Theme.InternalBackgroundColor, value))
+                if (value.Length < 8)
                 {
-                    InternalBackgroundColorInt = Theme.HexColorToNumber(value);
+                    Set(ref Context.Settings.Theme.InternalBackgroundColor, value);
+                    return;
                 }
-            }
-        }
-
-        public int InternalBackgroundColorInt
-        {
-            get => Context.Settings.Theme.InternalBackgroundColorInt;
-            set
-            {
-                Set(ref Context.Settings.Theme.InternalBackgroundColorInt, value);
-                InternalBackgroundColor = Theme.NumberToHexColor(InternalBackgroundColorInt);
             }
         }
 
