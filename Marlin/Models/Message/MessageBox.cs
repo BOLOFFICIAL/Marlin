@@ -22,6 +22,7 @@ namespace Marlin.Models
 
         public static void MakeMessage(string message, MessageType type = MessageType.Info)
         {
+            Sound.PlaySound(type);
             Voix.SpeakAsync(message);
             Context.MessageBox.Answer = "";
             Context.MessageBox.Text = message;
