@@ -345,14 +345,29 @@ namespace Marlin.ViewModels.Main
 
         private void OnSelectColorCommand(object p)
         {
+            var parameter = p.ToString();
             using (ColorDialog colorDialog = new ColorDialog())
             {
-                colorDialog.Color = System.Drawing.Color.White;
+                int alpha;
+                int red;
+                int green;
+                int blue;
+
+                switch (parameter)
+                {
+                    case "ExternalBackgroundColor": (alpha, red, green, blue) = Theme.ConvertHexToArgb(ExternalBackgroundColor); break;
+                    case "InternalBackgroundColor": (alpha, red, green, blue) = Theme.ConvertHexToArgb(InternalBackgroundColor); break;
+                    case "FontColor": (alpha, red, green, blue) = Theme.ConvertHexToArgb(FontColor); break;
+                    case "PageColor": (alpha, red, green, blue) = Theme.ConvertHexToArgb(PageColor); break;
+                    default: alpha = 0; red = 0; green = 0; blue = 0; break;
+                }
+
+                colorDialog.Color = System.Drawing.Color.FromArgb(alpha, red, green, blue);
 
                 if (colorDialog.ShowDialog() == DialogResult.OK)
                 {
                     string selectcolor = colorDialog.Color.ToArgb().ToString("X6").Substring(2);
-                    switch (p.ToString())
+                    switch (parameter)
                     {
                         case "ExternalBackgroundColor": ExternalBackgroundColor = "#" + selectcolor; break;
                         case "InternalBackgroundColor": InternalBackgroundColor = "#" + selectcolor; break;
