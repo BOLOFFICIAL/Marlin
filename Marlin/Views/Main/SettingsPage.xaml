@@ -107,6 +107,7 @@
 
                                                     <Button Grid.Column="0"
                                                             FontSize="15"
+                                                            Padding="10,0"
                                                             Command="{Binding Path=SelectColorCommand}"
                                                             CommandParameter="ExternalBackgroundColor"
                                                             BorderThickness="0"
@@ -136,6 +137,7 @@
                                                     <Button Grid.Column="0"
                                                             FontSize="15"
                                                             Margin="0,0,15,0"
+                                                            Padding="10,0"
                                                             HorizontalContentAlignment="Center"
                                                            VerticalAlignment="Center"
                                                             Command="{Binding Path=SelectColorCommand}"
@@ -166,6 +168,7 @@
                                                     <Button Grid.Column="0"
                                                            FontSize="15"
                                                            Margin="0,0,15,0"
+                                                            Padding="10,0"
                                                            VerticalAlignment="Center"
                                                             Command="{Binding Path=SelectColorCommand}"
                                                             CommandParameter="FontColor"
@@ -192,24 +195,25 @@
                                                     </Grid.ColumnDefinitions>
 
                                                     <Button Grid.Column="0"
-                                                           FontSize="15"
-                                                           Margin="0,0,15,0"
-                                                           VerticalAlignment="Center"
+                                                            FontSize="15"
+                                                            Margin="0,0,15,0"
+                                                            Padding="10,0"
+                                                            VerticalAlignment="Center"
                                                             Command="{Binding Path=SelectColorCommand}"
                                                             CommandParameter="PageColor"
                                                             BorderThickness="0"
                                                             BorderBrush="Transparent"
                                                             Foreground="{Binding Path=ExternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
                                                             Background="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
-                                                           Content="Цвет объектов"/>
+                                                            Content="Цвет объектов"/>
 
                                                     <TextBox Grid.Column="1"
-                                                                 MaxLength="7"
+                                                             MaxLength="7"
                                                              Padding="10,0"
                                                              VerticalContentAlignment="Center"
                                                              FontSize="15"
-                                                                 Text="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
-                                                                 HorizontalContentAlignment="Center"/>
+                                                             Text="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
+                                                             HorizontalContentAlignment="Center"/>
                                                 </Grid>
 
                                                 <Grid Grid.Row="4"
@@ -222,6 +226,7 @@
                                                     <Button Grid.Column="0"
                                                             FontSize="15"
                                                             Margin="0,0,15,0"
+                                                            Padding="10,0"
                                                             BorderThickness="0"
                                                             BorderBrush="Transparent"
                                                             Foreground="{Binding Path=ExternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
@@ -516,6 +521,7 @@
                                                     <Button Grid.Column="0"
                                                             FontSize="15"
                                                             Margin="0,0,15,0"
+                                                            Padding="10,0"
                                                             BorderThickness="0"
                                                             BorderBrush="Transparent"
                                                             Foreground="{Binding Path=ExternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
@@ -523,8 +529,8 @@
                                                             VerticalAlignment="Center"
                                                             HorizontalAlignment="Center"
                                                             Command="{Binding Path=ChoseCommand}"
-                                                            CommandParameter="Папка для хранения данных"
-                                                            Content="Папка для хранения данных"/>
+                                                            CommandParameter="Папка для данных"
+                                                            Content="Папка для данных"/>
 
                                                     <TextBox Grid.Column="1"
                                                              FontSize="15"

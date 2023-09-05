@@ -385,7 +385,7 @@ namespace Marlin.ViewModels.Main
                 case "Фоновое изображение":
                     SelectImage();
                     break;
-                case "Папка для хранения данных":
+                case "Папка для данных":
                     SelectFolder();
                     break;
             }
@@ -476,8 +476,7 @@ namespace Marlin.ViewModels.Main
                 }
                 if (Context.Settings.Password.Length > 0)
                 {
-                    string oldpass = (Context.Settings.NewPassword != Context.Settings.Password && Context.Settings.NewPassword.Length > 0) ? "старый" : "";
-                    Models.MessageBox.MakeMessage($"Были изменены настройки администрирования.\nДля сохранения введите {oldpass} пароль администпратора.", MessageType.TextQuestion);
+                    Models.MessageBox.MakeMessage($"Были изменены настройки администрирования.\nДля сохранения введите старый пароль администпратора.", MessageType.TextQuestion);
                     if (Context.MessageBox.Answer == Context.Settings.Password)
                     {
                         if (Context.Settings.NewPassword.Length > 0)

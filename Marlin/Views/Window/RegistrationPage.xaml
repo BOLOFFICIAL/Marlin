@@ -169,7 +169,8 @@
                                             VerticalAlignment="Center"
                                             HorizontalAlignment="Center"
                                             Command="{Binding Path=ChoseCommand}"
-                                            Content="Папка для хранения данных"/>
+                                            CommandParameter="Папка для данных"
+                                            Content="Папка для данных"/>
 
                                     <TextBox Grid.Column="1"
                                              FontSize="15"
