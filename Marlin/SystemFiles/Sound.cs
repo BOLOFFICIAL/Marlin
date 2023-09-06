@@ -19,7 +19,10 @@ namespace Marlin.SystemFiles
         {
             LoadSound(messagetype);
             soundPlayer.Play();
-            Thread.Sleep(300);
+            if (Context.Settings.IsSay) 
+            {
+                Thread.Sleep(300);
+            }
         }
 
         private static void LoadSound(MessageType messagetype)

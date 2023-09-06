@@ -42,7 +42,7 @@ namespace Marlin.ViewModels.Main
                 }
                 if (value.Contains("#") && value.Length == 1)
                 {
-                    value += "FFFFFF";
+                    value += "000000";
                 }
                 if (value.Length < 8)
                 {
@@ -69,7 +69,7 @@ namespace Marlin.ViewModels.Main
                 }
                 if (value.Contains("#") && value.Length == 1)
                 {
-                    value += "FFFFFF";
+                    value += "000000";
                 }
                 if (value.Length < 8)
                 {

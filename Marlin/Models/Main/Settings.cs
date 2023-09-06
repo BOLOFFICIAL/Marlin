@@ -17,7 +17,7 @@ namespace Marlin.Models
         public Theme Theme = new Theme();
         public string Password = "";
         public string NewPassword = "";
-        public string Login = "";
+        public string Login = Environment.UserName;
         public string MainFolder = "";
         public string MainFolderPath = "";
         public bool IsSay = true;
@@ -46,7 +46,6 @@ namespace Marlin.Models
             string settings = JsonConvert.SerializeObject(Context.Settings);
             try
             {
-                Sound.PlaySoundAsync(MessageType.Info);
                 using (var sw = new StreamWriter(filepath))
                 {
                     await sw.WriteAsync(settings);
@@ -58,11 +57,13 @@ namespace Marlin.Models
                     if (Context.MessageBox.Answer == "Yes")
                     {
                         Voix.SpeakAsync("Перезапускаю");
+                        Sound.PlaySoundAsync(MessageType.Info);
                         Thread.Sleep(1000);
                         Process.Start(Process.GetCurrentProcess().MainModule.FileName);
                         Environment.Exit(0);
                     }
                 }
+                Sound.PlaySoundAsync(MessageType.Info);
                 Context.CopySettings = JsonConvert.DeserializeObject<Settings>(JsonConvert.SerializeObject(Context.Settings));
             }
             catch (Exception)

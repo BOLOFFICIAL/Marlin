@@ -6,7 +6,7 @@
       xmlns:vm="clr-namespace:Marlin.ViewModels.Main"
       xmlns:local="clr-namespace:Marlin.Views.Main"
       mc:Ignorable="d" 
-      d:Height="450" 
+      d:Height="1450" 
       d:Width="800"
       ShowsNavigationUI="False"
       Foreground="{Binding Path=FontColor}"
@@ -34,7 +34,7 @@
                 <TextBlock Background="Transparent"
                            HorizontalAlignment="Center"
                            VerticalAlignment="Center"
-                           FontSize="25"
+                           FontSize="30"
                            FontWeight="Bold"
                            Padding="30,0"
                            Text="Настройки"/>
@@ -49,11 +49,11 @@
                         </Grid.RowDefinitions>
 
                         <Border Grid.Row="0"
-                            Margin="10,0,10,5"
-                            CornerRadius="25"
-                            Background="{Binding Path=InternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
-                            BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
-                            BorderThickness="2">
+                                Margin="50,0,50,5"
+                                CornerRadius="25"
+                                Background="{Binding Path=InternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
+                                BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
+                                BorderThickness="2">
                             <Grid Margin="15,10">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*"/>
@@ -61,7 +61,8 @@
                                 </Grid.RowDefinitions>
 
                                 <TextBlock Grid.Row="0"
-                                       FontSize="20"
+                                           Margin="10,0"
+                                       FontSize="25"
                                        FontWeight="Bold"
                                        Foreground="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                                        Text="Программа"/>
@@ -81,8 +82,8 @@
                                             </Grid.ColumnDefinitions>
 
                                             <TextBlock Grid.Column="0"
-                                                   Margin="10,15"
-                                                   FontSize="15"
+                                                   Margin="10,10"
+                                                   FontSize="20"
                                                    FontWeight="Bold"
                                                    Foreground="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                                                    Text="Оформление:"/>
@@ -300,7 +301,7 @@
                                                            Text="Масштаб изображения:"/>
 
                                                     <Slider Grid.Column="1" 
-                                                            Width="300" 
+                                                            Width="100" 
                                                             Minimum="100" 
                                                             VerticalAlignment="Center"
                                                             Maximum="3000"
@@ -320,7 +321,8 @@
 
                                             <TextBlock Grid.Column="0"
                                                    Margin="10"
-                                                   FontSize="15"
+                                                   FontSize="20"
+                                                       VerticalAlignment="Center"
                                                    Foreground="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                                                    FontWeight="Bold"
                                                    Text="Озвучивание:"/>
@@ -361,7 +363,7 @@
 
                                                     <TextBlock Grid.Column="0"
                                                            FontSize="15"
-                                                           Margin="0,0,15,0"
+                                                           Margin="0,2,15,0"
                                                            VerticalAlignment="Center"
                                                            HorizontalAlignment="Center"
                                                            Text="Озвучивать:"/>
@@ -380,7 +382,7 @@
 
                         <Border Grid.Row="1"
                                 Background="{Binding Path=InternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
-                                Margin="10,5,10,10"
+                                Margin="50,5,50,0"
                                 CornerRadius="20"
                                 BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                                 BorderThickness="2">
@@ -390,7 +392,8 @@
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
                                 <TextBlock Grid.Row="0"
-                                       FontSize="20"
+                                       FontSize="25"
+                                           Margin="10,0"
                                        FontWeight="Bold"
                                        Foreground="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                                        Text="Администрирование"/>
@@ -411,8 +414,8 @@
                                             </Grid.ColumnDefinitions>
 
                                             <TextBlock Grid.Column="0"
-                                                   Margin="10"
-                                                   FontSize="15"
+                                                   Margin="10,5"
+                                                   FontSize="20"
                                                    FontWeight="Bold"
                                                    Foreground="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                                                    Text="Администратор:"/>
@@ -502,7 +505,7 @@
 
                                             <TextBlock Grid.Column="0"
                                                    Margin="10"
-                                                   FontSize="15"
+                                                   FontSize="20"
                                                    FontWeight="Bold"
                                                    Foreground="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                                                    Text="Данные:"/>
@@ -555,7 +558,8 @@
 
                                             <TextBlock Grid.Column="0"
                                                    Margin="10"
-                                                   FontSize="15"
+                                                   FontSize="20"
+                                                       VerticalAlignment="Center"
                                                    FontWeight="Bold"
                                                    Foreground="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                                                    Text="Система:"/>
@@ -574,7 +578,7 @@
 
                                                     <TextBlock Grid.Column="0"
                                                            FontSize="15"
-                                                           Margin="0,0,15,0"
+                                                           Margin="0,2,15,0"
                                                            VerticalAlignment="Center"
                                                            HorizontalAlignment="Center"
                                                            Text="Автозапуск:"/>
