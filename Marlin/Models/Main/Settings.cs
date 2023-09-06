@@ -31,7 +31,7 @@ namespace Marlin.Models
         public string ImageScail = "300";
         public string ImageViewport = "0,0,1,1";
         public GridLength LengthImage = new GridLength(0, GridUnitType.Pixel);
-        public GridLength LengthSay = new GridLength(0, GridUnitType.Pixel);
+        public GridLength LengthSay = GridLength.Auto;
         public GridLength LengthScale = new GridLength(0, GridUnitType.Pixel);
         public Stretch Stretch = (Stretch)3;
         public TileMode TileMode = (TileMode)0;
