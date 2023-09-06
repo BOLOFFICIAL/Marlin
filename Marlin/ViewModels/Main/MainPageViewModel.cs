@@ -117,7 +117,8 @@ namespace Marlin.ViewModels.Main
 
         private void OnSendCommandExecute(object parameter)
         {
-            Models.MessageBox.MakeMessage(Command);
+            // Models.MessageBox.MakeMessage(Command);  
+            WinSystem.RunCmd(Command);
             Command = "";
         }
 
