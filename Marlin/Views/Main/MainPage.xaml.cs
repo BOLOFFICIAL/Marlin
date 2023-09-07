@@ -12,10 +12,6 @@ namespace Marlin.Views.Main
         {
             if (Context.Settings.Password.Length == 0)
             {
-                var e = Context.Settings.Login;
-                var er1 = Environment.MachineName;
-                var er2 = Environment.UserDomainName;
-                var er3 = Environment.UserName;
                 Voix.SpeakAsync(Context.Settings.Login + " Прежде чем приступить к использованию необходимо зарегистрироваться");
                 System.Windows.Window window = new System.Windows.Window
                 {
