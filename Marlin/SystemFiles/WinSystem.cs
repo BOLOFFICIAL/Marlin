@@ -64,12 +64,11 @@ namespace Marlin.SystemFiles
                     Models.MessageBox.MakeMessage($"Процесс с ID {targetProcessId} не найден.");
                 }
             }
+        }
 
-            static List<int> GetProcessIdsByName(string processName)
-            {
-                Process[] processes = Process.GetProcessesByName(processName);
-                return processes.Select(process => process.Id).ToList();
-            }
+        public static List<int> GetProcessIdsByName(string processName)
+        {
+            return Process.GetProcessesByName(processName).Select(process => process.Id).ToList();
         }
     }
 }
