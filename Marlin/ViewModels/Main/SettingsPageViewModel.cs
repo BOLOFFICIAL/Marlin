@@ -423,7 +423,8 @@ namespace Marlin.ViewModels.Main
                 }
                 if (Context.Settings.Password.Length > 0)
                 {
-                    Models.MessageBox.MakeMessage($"Были изменены настройки администрирования.\nДля сохранения введите старый пароль администпратора.", MessageType.TextQuestion);
+                    string oldpass = Context.Settings.NewPassword.Length > 0 ? " старый" : "";
+                    Models.MessageBox.MakeMessage($"Были изменены настройки администрирования.\nДля сохранения введите{oldpass} пароль администпратора.", MessageType.TextQuestion);
                     if (Context.MessageBox.Answer == Context.Settings.Password)
                     {
                         if (Context.Settings.NewPassword.Length > 0)
@@ -465,6 +466,7 @@ namespace Marlin.ViewModels.Main
                     Models.MessageBox.MakeMessage("Блок администрирования должен быть заполнен", MessageType.Error);
                 }
             }
+            NewPassword = "";
         }
 
         private void OnDeleteImageCommandExecuted(object p)

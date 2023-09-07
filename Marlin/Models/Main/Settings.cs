@@ -40,7 +40,6 @@ namespace Marlin.Models
 
         public static async Task SaveSettings(bool restart = true)
         {
-            Context.Settings.NewPassword = "";
             string exePath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
             string filepath = System.IO.Path.Combine(exePath, "Settings.json");
             string settings = JsonConvert.SerializeObject(Context.Settings);
