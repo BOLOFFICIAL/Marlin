@@ -1,7 +1,6 @@
 ﻿using Marlin.SystemFiles.Types;
 using System.Media;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Marlin.SystemFiles
 {
@@ -19,9 +18,9 @@ namespace Marlin.SystemFiles
         {
             LoadSound(messagetype);
             soundPlayer.Play();
-            if (Context.Settings.IsSay) 
+            if (Context.Settings.IsSay)
             {
-                Thread.Sleep(300);
+                Thread.Sleep(400);
             }
         }
 

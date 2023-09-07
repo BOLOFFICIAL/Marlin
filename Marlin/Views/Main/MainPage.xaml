@@ -16,7 +16,6 @@
     </Page.DataContext>
     <Grid 
         Background="{Binding Path=ExternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}">
-        
         <Grid>
             <Grid.Background>
                 <ImageBrush ImageSource="{Binding Path=BackgraundImagePath,UpdateSourceTrigger=PropertyChanged}"

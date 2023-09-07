@@ -42,7 +42,7 @@ namespace Marlin.ViewModels.Main
                 }
                 if (value.Contains("#") && value.Length == 1)
                 {
-                    value += "000000";
+                    value += "FFFFFF";
                 }
                 if (value.Length < 8)
                 {
@@ -69,7 +69,7 @@ namespace Marlin.ViewModels.Main
                 }
                 if (value.Contains("#") && value.Length == 1)
                 {
-                    value += "000000";
+                    value += "FFFFFF";
                 }
                 if (value.Length < 8)
                 {
@@ -423,7 +423,7 @@ namespace Marlin.ViewModels.Main
                 }
                 if (Context.Settings.Password.Length > 0)
                 {
-                    Models.MessageBox.MakeMessage($"Были изменены настройки администрирования.\nДля сохранения введите пароль администпратора.", MessageType.TextQuestion);
+                    Models.MessageBox.MakeMessage($"Были изменены настройки администрирования.\nДля сохранения введите старый пароль администпратора.", MessageType.TextQuestion);
                     if (Context.MessageBox.Answer == Context.Settings.Password)
                     {
                         if (Context.Settings.NewPassword.Length > 0)
