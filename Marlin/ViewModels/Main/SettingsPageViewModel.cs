@@ -24,6 +24,7 @@ namespace Marlin.ViewModels.Main
 
         public SettingsPageViewModel()
         {
+            NewPassword = "";
             ToMainCommand = new LambdaCommand(OnToMainCommandExecuted);
             SaveSettingsCommand = new LambdaCommand(OnSaveSettingsCommandExecuted, CanSaveSettingsCommandExecute);
             ChoseCommand = new LambdaCommand(OnChoseCommandExecuted);
