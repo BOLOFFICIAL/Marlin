@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using Marlin.SystemFiles.Types;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
@@ -33,6 +34,17 @@ namespace Marlin.SystemFiles
         {
             string command = $"reg delete \"HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run\" /v Marlin /f";
             WinSystem.RunCmd(command);
+        }
+
+        public static bool Authentication(string message)
+        {
+            Models.MessageBox.MakeMessage(message, MessageType.TextQuestion);
+            return Context.MessageBox.Answer == Context.Settings.Password;
+        }
+
+        public static void ChangePassword(string newpassword)
+        {
+            Context.Settings.Password = newpassword;
         }
     }
 }

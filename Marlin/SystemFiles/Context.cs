@@ -12,5 +12,7 @@ namespace Marlin.SystemFiles
 
         public static Window Window = new();
         public static Window MainWindow = new();
+
+        public static string Action = "";
     }
 }

@@ -1,7 +1,6 @@
 ﻿using Marlin.Commands;
 using Marlin.Models;
 using Marlin.SystemFiles;
-using Marlin.SystemFiles.Types;
 using Marlin.ViewModels.Base;
 using Marlin.Views.Main;
 using Newtonsoft.Json;
@@ -124,11 +123,12 @@ namespace Marlin.ViewModels.Main
 
         private void OnMenuCommandExecute(object parameter)
         {
+            Context.Action = parameter.ToString();
             switch (parameter.ToString())
             {
                 case "Настройки": Program.SetPage(new SettingsPage()); break;
-                case "Команды": Models.MessageBox.MakeMessage("Страница не доступна", MessageType.Error); break;
-                case "Скрипты": Models.MessageBox.MakeMessage("Страница не доступна", MessageType.Error); break;
+                case "Команды": Program.SetPage(new ActionsPage()); break;
+                case "Скрипты": Program.SetPage(new ActionsPage()); break;
             }
         }
 

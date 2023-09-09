@@ -425,12 +425,11 @@ namespace Marlin.ViewModels.Main
                 if (Context.Settings.Password.Length > 0)
                 {
                     string oldpass = Context.Settings.NewPassword.Length > 0 ? " старый" : "";
-                    Models.MessageBox.MakeMessage($"Были изменены настройки администрирования.\nДля сохранения введите{oldpass} пароль администпратора.", MessageType.TextQuestion);
-                    if (Context.MessageBox.Answer == Context.Settings.Password)
+                    if (Program.Authentication($"Были изменены настройки администрирования.\nДля сохранения введите{oldpass} пароль администпратора."))
                     {
                         if (Context.Settings.NewPassword.Length > 0)
                         {
-                            Context.Settings.Password = Context.Settings.NewPassword;
+                            Program.ChangePassword(Context.Settings.NewPassword);
                         }
                         if (Context.Settings.IsАutorun)
                         {
@@ -450,7 +449,7 @@ namespace Marlin.ViewModels.Main
                 }
                 else
                 {
-                    Context.Settings.Password = Context.Settings.NewPassword;
+                    Program.ChangePassword(Context.Settings.NewPassword);
                     Settings.SaveSettings(Context.CopySettings.Theme.PageColor != Context.Settings.Theme.PageColor);
                 }
             }
