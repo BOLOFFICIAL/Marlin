@@ -1,6 +1,7 @@
 ﻿using Marlin.Commands;
 using Marlin.Models;
 using Marlin.SystemFiles;
+using Marlin.SystemFiles.Types;
 using Marlin.ViewModels.Base;
 using Marlin.Views.Main;
 using Newtonsoft.Json;
@@ -116,19 +117,25 @@ namespace Marlin.ViewModels.Main
 
         private void OnSendCommandExecute(object parameter)
         {
-            // Models.MessageBox.MakeMessage(Command);  
             WinSystem.RunCmd(Command);
             Command = "";
         }
 
         private void OnMenuCommandExecute(object parameter)
         {
-            Context.Action = parameter.ToString();
-            switch (parameter.ToString())
+            try 
             {
-                case "Настройки": Program.SetPage(new SettingsPage()); break;
-                case "Команды": Program.SetPage(new ActionsPage()); break;
-                case "Скрипты": Program.SetPage(new ActionsPage()); break;
+                Context.Action = (ActionType)int.Parse(parameter.ToString());
+                switch (Context.Action)
+                {
+                    case ActionType.Settings: Program.SetPage(new SettingsPage()); break;
+                    case ActionType.Command: Program.SetPage(new ActionsPage()); break;
+                    case ActionType.Script: Program.SetPage(new ActionsPage()); break;
+                }
+            }
+            catch 
+            {
+                Models.MessageBox.MakeMessage("Не удалось опеределить дейсвие", MessageType.Error);
             }
         }
 

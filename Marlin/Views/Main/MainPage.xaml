@@ -65,7 +65,7 @@
                             BorderBrush="Transparent"
                             BorderThickness="0"
                             Command="{Binding Path=MenuCommand}"
-                            CommandParameter="Настройки"
+                            CommandParameter="0"
                             Background="{Binding Path=PageColor}"
                             Foreground="{Binding Path=ExternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
                             Content="Настройки"/>
@@ -79,7 +79,7 @@
                             BorderBrush="Transparent"
                             BorderThickness="0"
                             Command="{Binding Path=MenuCommand}"
-                            CommandParameter="Команды"
+                            CommandParameter="1"
                             Content="Команды"/>
                     
                     <Button Grid.Column="2"
@@ -91,7 +91,7 @@
                             BorderBrush="Transparent"
                             BorderThickness="0"
                             Command="{Binding Path=MenuCommand}"
-                            CommandParameter="Скрипты"
+                            CommandParameter="2"
                             Content="Скрипты"/>
                 </Grid>
             </Grid>

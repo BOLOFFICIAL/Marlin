@@ -443,7 +443,6 @@ namespace Marlin.ViewModels.Main
                     }
                     else
                     {
-                        Models.MessageBox.MakeMessage($"Введен неправильный пароль", MessageType.Error);
                         return;
                     }
                 }

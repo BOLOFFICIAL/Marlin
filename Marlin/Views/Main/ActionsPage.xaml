@@ -61,57 +61,12 @@
                         <ScrollViewer VerticalScrollBarVisibility="Hidden"
                                       Margin="0,3"
                                       Content="{Binding Path=StackPanel}">
-                            <!--<StackPanel>
-                                <Border Margin="6,6,6,3"
-                                        Padding="0"
-                                        BorderBrush="{Binding Path=PageColor}"
-                                        Background="{Binding Path=ExternalBackgroundColor}"
-                                        BorderThickness="2"
-                                        CornerRadius="20">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="auto"/>
-                                            <ColumnDefinition Width="auto"/>
-                                        </Grid.ColumnDefinitions>
-
-                                        <TextBlock Grid.Column="0"
-                                               FontSize="15"
-                                               FontWeight="Bold"
-                                               Foreground="{Binding Path=FontColor}"
-                                               VerticalAlignment="Center"
-                                               HorizontalAlignment="Center"
-                                               Text="Bolofficial"/>
-
-                                        <Button Grid.Column="1"
-                                                Margin="0,5,5,5"
-                                                Padding="5,0,5,4"
-                                                Foreground="{Binding Path=FontColor}"
-                                                BorderBrush="Transparent"
-                                                Background="{Binding Path=PageColor}"
-                                                Height="30"
-                                                HorizontalAlignment="Right"
-                                                Content="Запустить"/>
-
-                                        <Button Grid.Column="2"
-                                                Margin="0,5,20,5"
-                                                Padding="0,0,0,4"
-                                                Width="33"
-                                                Foreground="{Binding Path=FontColor}"
-                                                BorderBrush="Transparent"
-                                                Background="{Binding Path=PageColor}"
-                                                Height="30"
-                                                HorizontalAlignment="Right"
-                                                Content="✏️"/>
-                                    </Grid>
-                                </Border>
-                            </StackPanel>-->
                         </ScrollViewer>
                     </Border>
 
                     <Grid Grid.Row="1">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="150px"/>
+                            <ColumnDefinition Width="auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
@@ -134,7 +89,7 @@
                                 BorderBrush="Transparent"
                                 Foreground="{Binding Path=ExternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
                                 Background="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
-                                Command="{Binding Path=SaveSettingsCommand}"/>
+                                Command="{Binding Path=AddActionCommand}"/>
                     </Grid>
                 </Grid>
 
@@ -154,6 +109,7 @@
                             <TextBlock Background="Transparent"
                                        Grid.Row="0"
                                        Margin="5"
+                                       Foreground="{Binding Path=PageColor}"
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"
                                        FontSize="20"

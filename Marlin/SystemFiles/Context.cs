@@ -1,4 +1,5 @@
 ﻿using Marlin.Models;
+using Marlin.SystemFiles.Types;
 using System.Windows;
 
 namespace Marlin.SystemFiles
@@ -13,6 +14,6 @@ namespace Marlin.SystemFiles
         public static Window Window = new();
         public static Window MainWindow = new();
 
-        public static string Action = "";
+        public static ActionType Action;
     }
 }

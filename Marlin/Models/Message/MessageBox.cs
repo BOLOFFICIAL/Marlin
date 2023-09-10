@@ -42,7 +42,7 @@ namespace Marlin.Models
             window.ShowDialog();
         }
 
-        public static void SetMessageColor()
+        private static void SetMessageColor()
         {
             Context.MessageBox.BackgroundColor = Context.Settings.Theme.InternalBackgroundColor.Length == 7 ? Context.Settings.Theme.InternalBackgroundColor : Context.CopySettings.Theme.InternalBackgroundColor;
             Context.MessageBox.FontColor = Context.Settings.Theme.FontColor.Length == 7 ? Context.Settings.Theme.FontColor : Context.CopySettings.Theme.FontColor;

@@ -25,7 +25,7 @@
             </Grid.Background>
             
             <Grid.RowDefinitions>
-                <RowDefinition Height="50px"/>
+                <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
@@ -35,6 +35,7 @@
                            HorizontalAlignment="Center"
                            VerticalAlignment="Center"
                            FontSize="30"
+                           Margin="5"
                            FontWeight="Bold"
                            Padding="30,0"
                            Text="Настройки"/>
@@ -119,12 +120,12 @@
                                                             Content="Цвет внешнего фона"/>
 
                                                     <TextBox Grid.Column="1"
-                                                                 MaxLength="7"
+                                                             MaxLength="7"
                                                              Padding="10,0"
                                                              VerticalContentAlignment="Center"
-                                                                 FontSize="15"
-                                                                 Text="{Binding Path=ExternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
-                                                                 HorizontalContentAlignment="Center"/>
+                                                             FontSize="15"
+                                                             Text="{Binding Path=ExternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
+                                                             HorizontalContentAlignment="Center"/>
                                                 </Grid>
 
                                                 <Grid Grid.Row="1"
@@ -243,14 +244,13 @@
                                                         </Grid.ColumnDefinitions>
 
                                                         <TextBox Grid.Column="0" 
-                                                                 FontSize="15"
-                                                                 MaxWidth="250"
-                                                                 Margin="0,0,5,0"
-                                                                 Padding="10,0"
-                                                                 IsReadOnly="True"
-                                                                 Text="{Binding Path=BackgraundImage,UpdateSourceTrigger=PropertyChanged}"
+                                                                   FontSize="15"
+                                                                   MaxWidth="250"
+                                                                   Margin="0,0,5,0"
+                                                                   Padding="10,0"
+                                                                   Text="{Binding Path=BackgraundImage,UpdateSourceTrigger=PropertyChanged}"
                                                                  VerticalContentAlignment="Center"
-                                                                 ToolTip="{Binding Path=BackgraundImagePath}"
+                                                                   ToolTip="{Binding Path=BackgraundImagePath}"
                                                                  HorizontalContentAlignment="Center"/>
 
                                                         <Button Grid.Column="1"
@@ -524,12 +524,11 @@
                                                             Content="Папка для данных"/>
 
                                                     <TextBox Grid.Column="1"
-                                                             FontSize="15"
-                                                             Padding="10,5"
-                                                             IsReadOnly="True"
-                                                             Text="{Binding Path=NewMainFolder,UpdateSourceTrigger=PropertyChanged}"
-                                                             ToolTip="{Binding Path=NewMainFolderPath}"
-                                                             VerticalAlignment="Center"
+                                                               FontSize="15"
+                                                               Padding="10,5"
+                                                               Text="{Binding Path=NewMainFolder,UpdateSourceTrigger=PropertyChanged}"
+                                                               ToolTip="{Binding Path=NewMainFolderPath}"
+                                                               VerticalAlignment="Center"
                                                              HorizontalContentAlignment="Center"/>
                                                 </Grid>
                                             </Grid>
@@ -587,7 +586,7 @@
 
             <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="150px"/>
+                    <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
