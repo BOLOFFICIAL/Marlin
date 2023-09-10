@@ -5,7 +5,6 @@ namespace Marlin.Models.Main
 {
     public class Command
     {
-        public static StackPanel panel = new StackPanel();
         public static List<Command> Commands = new List<Command>();
 
         public int id = 0;

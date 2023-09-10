@@ -4,6 +4,7 @@ using Marlin.SystemFiles;
 using Marlin.SystemFiles.Types;
 using Marlin.ViewModels.Base;
 using Marlin.Views.Main;
+using Newtonsoft.Json;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
