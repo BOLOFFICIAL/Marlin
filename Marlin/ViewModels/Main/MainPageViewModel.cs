@@ -123,7 +123,7 @@ namespace Marlin.ViewModels.Main
 
         private void OnMenuCommandExecute(object parameter)
         {
-            try 
+            try
             {
                 Context.Action = (ActionType)int.Parse(parameter.ToString());
                 switch (Context.Action)
@@ -133,7 +133,7 @@ namespace Marlin.ViewModels.Main
                     case ActionType.Script: Program.SetPage(new ActionsPage()); break;
                 }
             }
-            catch 
+            catch
             {
                 Models.MessageBox.MakeMessage("Не удалось опеределить дейсвие", MessageType.Error);
             }

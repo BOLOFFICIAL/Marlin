@@ -4,9 +4,6 @@ using Marlin.SystemFiles;
 using Marlin.SystemFiles.Types;
 using Marlin.ViewModels.Base;
 using Marlin.Views.Main;
-using Newtonsoft.Json;
-using System;
-using System.Buffers;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -22,7 +19,7 @@ namespace Marlin.ViewModels.Main
         public ICommand ToMainCommand { get; }
         public ICommand EditActionCommand { get; }
         public ICommand RunActionCommand { get; }
-        public ICommand AddActionCommand { get; } 
+        public ICommand AddActionCommand { get; }
 
         public ActionsPageViewModel()
         {
@@ -30,7 +27,7 @@ namespace Marlin.ViewModels.Main
             {
                 panel = Command.panel;
             }
-            if (Context.Action == ActionType.Script) 
+            if (Context.Action == ActionType.Script)
             {
                 panel = Script.panel;
             }
@@ -147,7 +144,7 @@ namespace Marlin.ViewModels.Main
 
         private void OnEditActionCommandExecuted(object p)
         {
-            if (Context.Action == ActionType.Command) 
+            if (Context.Action == ActionType.Command)
             {
                 Program.SetPage(new CommandPage());
             }
@@ -159,7 +156,7 @@ namespace Marlin.ViewModels.Main
 
         private void OnRunActionCommandExecuted(object p)
         {
-            
+
         }
 
         private void OpenAction(string titile)
@@ -173,8 +170,8 @@ namespace Marlin.ViewModels.Main
             {
                 Margin = new Thickness(6, 3, 6, 3),
                 Padding = new Thickness(0),
-                BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.PageColor)), 
-                Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.ExternalBackgroundColor)),  
+                BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.PageColor)),
+                Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.ExternalBackgroundColor)),
                 BorderThickness = new Thickness(2),
                 CornerRadius = new CornerRadius(20)
             };
@@ -189,7 +186,7 @@ namespace Marlin.ViewModels.Main
             {
                 FontSize = 15,
                 FontWeight = FontWeights.Bold,
-                Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.FontColor)), 
+                Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.FontColor)),
                 VerticalAlignment = VerticalAlignment.Center,
                 HorizontalAlignment = HorizontalAlignment.Center,
                 Text = $"Bolofficial {panel.Children.Count}"

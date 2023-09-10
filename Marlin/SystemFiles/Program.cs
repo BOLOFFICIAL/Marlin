@@ -36,14 +36,14 @@ namespace Marlin.SystemFiles
             WinSystem.RunCmd(command);
         }
 
-        public static bool Authentication(string message,string error = "Введен неправильный пароль")
+        public static bool Authentication(string message, string error = "Введен неправильный пароль")
         {
             Models.MessageBox.MakeMessage(message, MessageType.TextQuestion);
             if (Context.MessageBox.Answer == Context.Settings.Password)
             {
                 return true;
             }
-            else 
+            else
             {
                 Models.MessageBox.MakeMessage(error, MessageType.Error);
                 return false;
