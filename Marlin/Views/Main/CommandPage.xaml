@@ -6,7 +6,7 @@
       xmlns:vm="clr-namespace:Marlin.ViewModels.Main"
       xmlns:local="clr-namespace:Marlin.Views.Main"
       mc:Ignorable="d" 
-      d:DesignHeight="1450" 
+      d:DesignHeight="450" 
       d:DesignWidth="800"
       Title="CommandPage"
       Foreground="{Binding Path=FontColor}">
@@ -37,7 +37,7 @@
                        Margin="5"
                        FontWeight="Bold"
                        Padding="30,0"
-                       Text="Команда"/>
+                       Text="{Binding Path=Title}"/>
 
             <Border Grid.Row="1"
                     Margin="50,0,50,5"
@@ -75,7 +75,7 @@
                                      Padding="10,0"
                                      HorizontalContentAlignment="Center"
                                      VerticalAlignment="Center"
-                                     Text="Bolofficial 1"/>
+                                     Text="{Binding Path=CommandTitle,UpdateSourceTrigger=PropertyChanged}"/>
                         </Grid>
 
                         <Grid Grid.Row="1"
@@ -133,7 +133,7 @@
                                      Padding="10,0"
                                      FontSize="15"
                                      HorizontalContentAlignment="Center"
-                                     Text="Bolofficial"/>
+                                     Text=""/>
                         </Grid>
 
                         <Grid Grid.Row="4"
@@ -175,7 +175,7 @@
                                          IsReadOnly="True"
                                          HorizontalContentAlignment="Center"
                                          VerticalAlignment="Center"
-                                         Text="Bolofficial"/>
+                                         Text=""/>
                             </Grid>
                             <Grid Grid.Row="2"
                                   Margin="0,5">
@@ -196,7 +196,7 @@
                                          IsReadOnly="True"
                                          HorizontalContentAlignment="Center"
                                          VerticalContentAlignment="Center"
-                                         Text="Bolofficial"/>
+                                         Text=""/>
                             </Grid>
                             <Grid Grid.Row="3"
                                   Margin="0,5">
@@ -288,7 +288,7 @@
                         Background="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"/>
 
                 <Button Grid.Column="1"
-                        Content="Сохранить"
+                        Content="{Binding Path=ButtonContent}"
                         FontSize="15"
                         FontWeight="Bold"
                         Margin="5,10,50,10" 
@@ -296,7 +296,7 @@
                         BorderBrush="Transparent"
                         Foreground="{Binding Path=ExternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
                         Background="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
-                        Command="{Binding Path=SaveSettingsCommand}"/>
+                        Command="{Binding Path=ButtonActionCommand}"/>
             </Grid>
         </Grid>
     </Grid>

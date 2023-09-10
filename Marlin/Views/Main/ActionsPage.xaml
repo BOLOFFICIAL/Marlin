@@ -82,7 +82,7 @@
                                 Background="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"/>
 
                         <Button Grid.Column="1"
-                                Content="Добавить"
+                                Content="Создать"
                                 FontSize="15"
                                 FontWeight="Bold"
                                 BorderThickness="0"

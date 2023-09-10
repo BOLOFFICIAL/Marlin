@@ -15,5 +15,6 @@ namespace Marlin.SystemFiles
         public static Window MainWindow = new();
 
         public static ActionType Action;
+        public static int SelectedId = -1;
     }
 }
