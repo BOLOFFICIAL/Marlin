@@ -1,6 +1,7 @@
 ﻿using Marlin.SystemFiles.Types;
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
@@ -8,6 +9,10 @@ namespace Marlin.SystemFiles
 {
     public class Program
     {
+        public static string[] Genders = { "Мужской", "Женский" };
+
+        public static int[] Speeds = Enumerable.Range(-5, 16).ToArray();
+
         public static async Task SetPage(Page page)
         {
             for (double i = 1; i > 0; i -= 0.1)

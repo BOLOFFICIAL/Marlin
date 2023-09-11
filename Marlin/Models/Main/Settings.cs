@@ -23,8 +23,8 @@ namespace Marlin.Models
         public bool IsSay = true;
         public int Speed = 3;
         public string Gender = "";
-        public int[] Speeds = Enumerable.Range(-5, 16).ToArray();
-        public string[] Genders = { "Мужской", "Женский" };
+        //public int[] Speeds = Enumerable.Range(-5, 16).ToArray();
+        //public string[] Genders = { "Мужской", "Женский" };
         public bool IsАutorun = true;
         public string BackgraundImage = "";
         public string BackgraundImagePath = "";

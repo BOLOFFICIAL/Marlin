@@ -42,7 +42,7 @@ namespace Marlin.ViewModels.Window
 
         public string[] Genders
         {
-            get => Context.Settings.Genders;
+            get => Program.Genders;
         }
 
         public string NewGender

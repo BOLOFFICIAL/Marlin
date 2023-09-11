@@ -182,7 +182,7 @@ namespace Marlin.ViewModels.Main
 
         public int[] Speeds
         {
-            get => Context.Settings.Speeds;
+            get => Program.Speeds;
         }
 
         public int Speed
@@ -197,7 +197,7 @@ namespace Marlin.ViewModels.Main
 
         public string[] Genders
         {
-            get => Context.Settings.Genders;
+            get => Program.Genders;
         }
 
         public string NewGender
