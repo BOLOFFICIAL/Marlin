@@ -37,6 +37,7 @@ namespace Marlin.Models
         public TileMode TileMode = (TileMode)0;
         public BrushMappingMode ViewportUnits = (BrushMappingMode)1;
         public bool Seamless = false;
+        public int TimeCheckPassword = 10;
 
         public static async Task SaveSettings(bool restart = true)
         {

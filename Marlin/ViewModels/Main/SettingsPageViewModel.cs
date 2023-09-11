@@ -32,6 +32,12 @@ namespace Marlin.ViewModels.Main
             SelectColorCommand = new LambdaCommand(OnSelectColorCommand);
         }
 
+        public int TimeCheckPassword
+        {
+            get => Context.Settings.TimeCheckPassword;
+            set => Set(ref Context.Settings.TimeCheckPassword, value);
+        }
+
         public string PageColor
         {
             get => Context.Settings.Theme.PageColor;
@@ -414,6 +420,7 @@ namespace Marlin.ViewModels.Main
                 (Context.Settings.NewPassword != Context.Settings.Password && Context.Settings.NewPassword.Length > 0) ||
                 Context.CopySettings.Login != Context.Settings.Login ||
                 Context.CopySettings.Gender != Context.Settings.Gender ||
+                Context.CopySettings.TimeCheckPassword != Context.Settings.TimeCheckPassword ||
                 Context.CopySettings.MainFolder != Context.Settings.MainFolder ||
                 Context.CopySettings.IsАutorun != Context.Settings.IsАutorun;
             if (editadmin)

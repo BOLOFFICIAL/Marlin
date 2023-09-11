@@ -1,4 +1,5 @@
 ﻿using Marlin.SystemFiles.Types;
+using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Controls;
@@ -38,15 +39,23 @@ namespace Marlin.SystemFiles
 
         public static bool Authentication(string message, string error = "Введен неправильный пароль")
         {
-            Models.MessageBox.MakeMessage(message, MessageType.TextQuestion);
-            if (Context.MessageBox.Answer == Context.Settings.Password)
+            if (DateTime.Now - Context.LastCheckPassword > TimeSpan.FromSeconds(Context.Settings.TimeCheckPassword) || Context.Settings.NewPassword.Length > 0)
             {
-                return true;
+                Models.MessageBox.MakeMessage(message, MessageType.TextQuestion);
+                if (Context.MessageBox.Answer == Context.Settings.Password)
+                {
+                    Context.LastCheckPassword = DateTime.Now;
+                    return true;
+                }
+                else
+                {
+                    Models.MessageBox.MakeMessage(error, MessageType.Error);
+                    return false;
+                }
             }
             else
             {
-                Models.MessageBox.MakeMessage(error, MessageType.Error);
-                return false;
+                return true;
             }
         }
 

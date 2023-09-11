@@ -1,5 +1,6 @@
 ﻿using Marlin.Models;
 using Marlin.SystemFiles.Types;
+using System;
 using System.Windows;
 
 namespace Marlin.SystemFiles
@@ -16,5 +17,7 @@ namespace Marlin.SystemFiles
 
         public static ActionType Action;
         public static int SelectedId = -1;
+
+        public static DateTime LastCheckPassword = DateTime.MinValue;
     }
 }

@@ -413,13 +413,14 @@
 
                                             <Grid Grid.Column="1">
                                                 <Grid.RowDefinitions>
-                                                    <RowDefinition Height="*"/>
-                                                    <RowDefinition Height="*"/>
-                                                    <RowDefinition Height="*"/>
+                                                    <RowDefinition Height="auto"/>
+                                                    <RowDefinition Height="auto"/>
+                                                    <RowDefinition Height="auto"/>
+                                                    <RowDefinition Height="auto"/>
                                                 </Grid.RowDefinitions>
 
                                                 <Grid Grid.Row="0"
-                                                  Margin="0,5">
+                                                      Margin="0,5">
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="auto"/>
                                                         <ColumnDefinition Width="auto"/>
@@ -441,32 +442,71 @@
                                                 </Grid>
 
                                                 <Grid Grid.Row="1"
-                                                  Margin="0,5">
+                                                      Margin="0,5">
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="auto"/>
                                                         <ColumnDefinition Width="auto"/>
                                                     </Grid.ColumnDefinitions>
 
                                                     <TextBlock Grid.Column="0"
+                                                               FontSize="15"
+                                                               Margin="0,0,15,0"
+                                                               VerticalAlignment="Center"
+                                                               HorizontalAlignment="Center"
+                                                               Text="Новый пароль:"/>
+
+                                                    <TextBox Grid.Column="1"
+                                                             FontSize="15"
+                                                             Padding="10,5"
+                                                             MinWidth="100"
+                                                             Text="{Binding Path=NewPassword,UpdateSourceTrigger=PropertyChanged}"
+                                                             HorizontalContentAlignment="Center"/>
+                                                </Grid>
+
+                                                <Grid Grid.Row="2"
+                                                      Margin="0,5">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="auto"/>
+                                                        <ColumnDefinition Width="auto"/>
+                                                        <ColumnDefinition Width="auto"/>
+                                                        <ColumnDefinition Width="auto"/>
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <TextBlock Grid.Column="0"
+                                                               FontSize="15"
+                                                               Margin="0,0,15,0"
+                                                               VerticalAlignment="Center"
+                                                               HorizontalAlignment="Center"
+                                                               Text="Перепроверять пароль через"/>
+                                                    
+                                                    <Slider Grid.Column="1" 
+                                                            Width="100" 
+                                                            Margin="0,0,15,0"
+                                                            Minimum="10" 
+                                                            VerticalAlignment="Center"
+                                                            Maximum="300"
+                                                            Value="{Binding Path=TimeCheckPassword}"/>
+
+                                                    <TextBlock Grid.Column="2"
+                                                               FontSize="15"
+                                                               Padding="0,5"
+                                                               Margin="0,0,1,0"
+                                                               HorizontalAlignment="Center"
+                                                               Text="{Binding Path=TimeCheckPassword}"/>
+
+                                                    <TextBlock Grid.Column="3"
                                                            FontSize="15"
                                                            Margin="0,0,15,0"
                                                            VerticalAlignment="Center"
                                                            HorizontalAlignment="Center"
-                                                           Text="Новый пароль:"/>
-
-                                                    <TextBox Grid.Column="1"
-                                                         FontSize="15"
-                                                             Padding="10,5"
-                                                         MinWidth="100"
-                                                         Text="{Binding Path=NewPassword,UpdateSourceTrigger=PropertyChanged}"
-                                                         HorizontalContentAlignment="Center"/>
+                                                           Text="c."/>
                                                 </Grid>
 
-                                                <Grid Grid.Row="2"
+                                                <Grid Grid.Row="3"
                                                   Margin="0,5">
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="auto"/>
-                                                        <ColumnDefinition Width="100"/>
+                                                        <ColumnDefinition Width="150"/>
                                                     </Grid.ColumnDefinitions>
 
                                                     <TextBlock Grid.Column="0"
@@ -477,10 +517,11 @@
                                                                Text="Пол:"/>
 
                                                     <ComboBox Grid.Column="1"
-                                                          FontSize="15"
-                                                          SelectedValue="{Binding Path=NewGender,UpdateSourceTrigger=PropertyChanged}"
-                                                          ItemsSource="{Binding Path=Genders,UpdateSourceTrigger=PropertyChanged}"
-                                                          HorizontalContentAlignment="Center"/>
+                                                              FontSize="15"
+                                                              Padding="10,5"
+                                                              SelectedValue="{Binding Path=NewGender,UpdateSourceTrigger=PropertyChanged}"
+                                                              ItemsSource="{Binding Path=Genders,UpdateSourceTrigger=PropertyChanged}"
+                                                              HorizontalContentAlignment="Center"/>
                                                 </Grid>
                                             </Grid>
                                         </Grid>
