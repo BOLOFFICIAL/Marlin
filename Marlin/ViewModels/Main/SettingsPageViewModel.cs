@@ -336,7 +336,10 @@ namespace Marlin.ViewModels.Main
                     SelectImage();
                     break;
                 case "Папка для данных":
-                    SelectFolder();
+                    if (Program.Authentication("Введите пароль администратора"))
+                    {
+                        SelectFolder();
+                    }
                     break;
             }
 

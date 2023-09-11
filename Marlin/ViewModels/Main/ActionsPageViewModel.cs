@@ -4,13 +4,11 @@ using Marlin.SystemFiles;
 using Marlin.SystemFiles.Types;
 using Marlin.ViewModels.Base;
 using Marlin.Views.Main;
-using Newtonsoft.Json;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Xml.Linq;
 
 namespace Marlin.ViewModels.Main
 {
@@ -152,7 +150,7 @@ namespace Marlin.ViewModels.Main
 
         private void OnRunActionCommandExecuted(object p)
         {
-            if (Context.Action == ActionType.Command) 
+            if (Context.Action == ActionType.Command)
             {
                 var command = Command.Commands[Context.SelectedId];
                 if (command.checkpuss)
@@ -162,7 +160,7 @@ namespace Marlin.ViewModels.Main
                         WinSystem.RunCmd(command.command);
                     }
                 }
-                else 
+                else
                 {
                     WinSystem.RunCmd(command.command);
                 }

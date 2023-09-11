@@ -23,8 +23,8 @@ namespace Marlin.ViewModels.Main
             ToMainCommand = new LambdaCommand(OnToMainCommandExecuted);
             ButtonActionCommand = new LambdaCommand(OnButtonActionCommandExecuted);
 
-            if (Context.SelectedId > -1) 
-            {               
+            if (Context.SelectedId > -1)
+            {
                 title = Command.Commands[Context.SelectedId].title;
                 commandtitle = Command.Commands[Context.SelectedId].title;
                 commandfileputh = Command.Commands[Context.SelectedId].fileputh;
@@ -38,7 +38,7 @@ namespace Marlin.ViewModels.Main
 
         public string ButtonContent
         {
-            get 
+            get
             {
                 if (Context.SelectedId > -1)
                 {
@@ -47,12 +47,12 @@ namespace Marlin.ViewModels.Main
                 }
                 else
                 {
-                    return "Создать";
+                    return "Добавить";
                 }
-            } 
+            }
         }
 
-        public string Title 
+        public string Title
         {
             get => title;
         }
@@ -109,14 +109,14 @@ namespace Marlin.ViewModels.Main
 
         public string CommandTitle
         {
-            get 
+            get
             {
                 return commandtitle;
             }
-            set 
+            set
             {
                 Set(ref commandtitle, value);
-            } 
+            }
         }
 
         private void OnToMainCommandExecuted(object p)
@@ -126,9 +126,9 @@ namespace Marlin.ViewModels.Main
 
         private void OnButtonActionCommandExecuted(object p)
         {
-            if (Context.SelectedId > -1) 
+            if (Context.SelectedId > -1)
             {
-                
+
             }
             else
             {
