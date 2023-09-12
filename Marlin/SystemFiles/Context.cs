@@ -13,6 +13,7 @@ namespace Marlin.SystemFiles
         public static Settings Settings = new();
         public static Settings CopySettings = new();
 
+        public static Command CopyCommand = new();
         public static Command Command = new();
 
         public static Window Window = new();

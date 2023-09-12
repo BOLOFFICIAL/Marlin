@@ -1,10 +1,10 @@
 ﻿using Marlin.Commands;
-using Marlin.Models.Main;
 using Marlin.SystemFiles;
 using Marlin.ViewModels.Base;
 using Marlin.Views.Main;
-using System;
+using Newtonsoft.Json;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -14,31 +14,34 @@ namespace Marlin.ViewModels.Main
     {
         public ICommand ToMainCommand { get; }
         public ICommand ButtonActionCommand { get; }
+        public ICommand AddTriggerCommand { get; }
 
-        private string title = "";
-        private string commandtitle = "";
-        private string commandfileputh = "";
-        private string commandappputh = "";
+        private StackPanel panel = new StackPanel();
+
+        private string _pagetitle = "Создание команды";
 
         public CommandPageViewModel()
         {
             ToMainCommand = new LambdaCommand(OnToMainCommandExecuted);
-            ButtonActionCommand = new LambdaCommand(OnButtonActionCommandExecuted);
+            ButtonActionCommand = new LambdaCommand(OnButtonActionCommandExecuted, CanButtonActionCommandExecute);
+            AddTriggerCommand = new LambdaCommand(OnAddTriggerCommandExecuted);
+
+            Context.Command = new Models.Main.Command();
 
             if (Context.SelectedId > -1)
             {
-                title = Context.Command.Commands[Context.SelectedId].title;
-                commandtitle = Context.Command.Commands[Context.SelectedId].title;
-                commandfileputh = Context.Command.Commands[Context.SelectedId].fileputh;
-                commandappputh = Context.Command.Commands[Context.SelectedId].appputh;
+                Context.Command = ProgramData.Commands[Context.SelectedId];
+                PageTitle = Context.Command.Title;
             }
-            else
+
+            Context.CopyCommand = JsonConvert.DeserializeObject<Models.Main.Command>(JsonConvert.SerializeObject(Context.Command));
+        }
+
+        public StackPanel StackPanel
+        {
+            get
             {
-                title = "Создание команды";
-                SelectedAction = Actions[0];
-                SelectedEmbeddedAction = EmbeddedActions[0];
-                SelectedObject = Objects[0];
-                SelectedTrigger = Triggers[0];
+                return panel;
             }
         }
 
@@ -56,11 +59,6 @@ namespace Marlin.ViewModels.Main
                     return "Добавить";
                 }
             }
-        }
-
-        public string Title
-        {
-            get => title;
         }
 
         public string PageColor
@@ -113,16 +111,102 @@ namespace Marlin.ViewModels.Main
             get => Context.Settings.ViewportUnits;
         }
 
-        public string CommandTitle
+        public string PageTitle
         {
-            get
-            {
-                return commandtitle;
-            }
+            get => _pagetitle;
+            set => Set(ref _pagetitle, value);
+        }
+
+        public string Title
+        {
+            get => Context.Command.Title;
+            set => Set(ref Context.Command.Title, value);
+        }
+
+        public string FilePath
+        {
+            get => Context.Command.Filepath;
+            set => Set(ref Context.Command.Filepath, value);
+        }
+
+        public string AppPuth
+        {
+            get => Context.Command.Appputh;
+            set => Set(ref Context.Command.Appputh, value);
+        }
+
+        public string Url
+        {
+            get => Context.Command.Url;
+            set => Set(ref Context.Command.Url, value);
+        }
+
+        public string PressingKeys
+        {
+            get => Context.Command.PressingKeys;
+            set => Set(ref Context.Command.PressingKeys, value);
+        }
+
+        public string X
+        {
+            get => Context.Command.X;
+            set => Set(ref Context.Command.X, value);
+        }
+
+        public string Y
+        {
+            get => Context.Command.Y;
+            set => Set(ref Context.Command.Y, value);
+        }
+
+        public bool Checkpuss
+        {
+            get => Context.Command.Checkpuss;
+            set => Set(ref Context.Command.Checkpuss, value);
+        }
+
+        public string SelectedAction
+        {
+            get => Context.Command.SelectedAction;
             set
             {
-                Set(ref commandtitle, value);
+                Set(ref Context.Command.SelectedAction, value);
+                if (Context.Command.SelectedAction == "Сделать свое действие")
+                {
+                    LengthOwnActions = GridLength.Auto;
+                    LengthEmbeddedActions = new GridLength(0, GridUnitType.Pixel);
+                }
+                if (Context.Command.SelectedAction == "Встроенные методы")
+                {
+                    LengthEmbeddedActions = GridLength.Auto;
+                    LengthOwnActions = new GridLength(0, GridUnitType.Pixel);
+                }
             }
+        }
+
+        public bool IsReadyCmdCommand
+        {
+            get => Context.Command.IsReadyCmdCommand;
+            set
+            {
+                Set(ref Context.Command.IsReadyCmdCommand, value);
+                if (Context.Command.IsReadyCmdCommand)
+                {
+                    LengthReadyCmdCommand = GridLength.Auto;
+                    LengthCommandConstructor = new GridLength(0, GridUnitType.Pixel);
+                }
+                else
+                {
+                    LengthCommandConstructor = GridLength.Auto;
+                    LengthReadyCmdCommand = new GridLength(0, GridUnitType.Pixel);
+                }
+            }
+        }
+
+        public string Comment
+        {
+            get => Context.Command.Comment;
+            set => Set(ref Context.Command.Comment, value);
         }
 
         public GridLength LengthEmbeddedActions
@@ -172,6 +256,11 @@ namespace Marlin.ViewModels.Main
             get => Program.Actions;
         }
 
+        public string[] ObjectActions
+        {
+            get => Program.ObjectActions;
+        }
+
         public string[] EmbeddedActions
         {
             get => Program.EmbeddedActions;
@@ -187,21 +276,19 @@ namespace Marlin.ViewModels.Main
             get => Program.Triggers;
         }
 
-        public string SelectedAction
+        public string SelectedObjectAction
         {
-            get => Context.Command.SelectedAction;
+            get => Context.Command.SelectedObjectAction;
             set
             {
-                Set(ref Context.Command.SelectedAction, value);
-                if (SelectedAction == "Сделать свое действие")
+                Set(ref Context.Command.SelectedObjectAction, value);
+                if (SelectedObjectAction == "Запустить" && SelectedObject != "Папка" && SelectedObject != "Программа")
                 {
-                    LengthOwnActions = GridLength.Auto;
-                    LengthEmbeddedActions = new GridLength(0, GridUnitType.Pixel);
+                    LengthChoseApp = GridLength.Auto;
                 }
-                if (SelectedAction == "Встроенные методы")
+                else
                 {
-                    LengthEmbeddedActions = GridLength.Auto;
-                    LengthOwnActions = new GridLength(0, GridUnitType.Pixel);
+                    LengthChoseApp = new GridLength(0, GridUnitType.Pixel);
                 }
             }
         }
@@ -268,44 +355,60 @@ namespace Marlin.ViewModels.Main
             set
             {
                 Set(ref Context.Command.SelectedObject, value);
-                if (SelectedObject == "Фаил") 
+
+                if (SelectedObject == "Фаил")
                 {
                     LengthChoseObject = GridLength.Auto;
-                    LengthChoseApp = GridLength.Auto;
                     LengthInputUrl = new GridLength(0, GridUnitType.Pixel);
+                    LengthObjectAction = GridLength.Auto;
+                    if (SelectedObjectAction == "Запустить")
+                    {
+                        LengthChoseApp = GridLength.Auto;
+                    }
+                    else
+                    {
+                        LengthChoseApp = new GridLength(0, GridUnitType.Pixel);
+                    }
                 }
+
                 if (SelectedObject == "Папка")
                 {
                     LengthChoseObject = GridLength.Auto;
-                    LengthChoseApp = new GridLength(0, GridUnitType.Pixel);
                     LengthInputUrl = new GridLength(0, GridUnitType.Pixel);
+                    LengthObjectAction = GridLength.Auto;
+                    LengthChoseApp = new GridLength(0, GridUnitType.Pixel);
                 }
+
                 if (SelectedObject == "Url")
                 {
+                    SelectedObjectAction = "Запустить";
                     LengthChoseObject = new GridLength(0, GridUnitType.Pixel);
-                    LengthChoseApp = GridLength.Auto;
                     LengthInputUrl = GridLength.Auto;
+                    LengthObjectAction = new GridLength(0, GridUnitType.Pixel);
+                    if (SelectedObjectAction == "Запустить")
+                    {
+                        LengthChoseApp = GridLength.Auto;
+                    }
+                    else
+                    {
+                        LengthChoseApp = new GridLength(0, GridUnitType.Pixel);
+                    }
+                }
+
+                if (SelectedObject == "Программа")
+                {
+                    LengthChoseObject = GridLength.Auto;
+                    LengthInputUrl = new GridLength(0, GridUnitType.Pixel);
+                    LengthObjectAction = GridLength.Auto;
+                    LengthChoseApp = new GridLength(0, GridUnitType.Pixel);
                 }
             }
         }
 
-        public bool IsReadyCmdCommand
+        public string CmdCommand
         {
-            get => Context.Command.IsReadyCmdCommand;
-            set
-            {
-                Set(ref Context.Command.IsReadyCmdCommand, value);
-                if (IsReadyCmdCommand)
-                {
-                    LengthReadyCmdCommand = GridLength.Auto;
-                    LengthCommandConstructor = new GridLength(0, GridUnitType.Pixel);
-                }
-                else
-                {
-                    LengthCommandConstructor = GridLength.Auto;
-                    LengthReadyCmdCommand = new GridLength(0, GridUnitType.Pixel);
-                }
-            }
+            get => Context.Command.CmdCommand;
+            set => Set(ref Context.Command.CmdCommand, value);
         }
 
         public bool IsMultiSymbol
@@ -345,6 +448,12 @@ namespace Marlin.ViewModels.Main
             set => Set(ref Context.Command.LengthCommandConstructor, value);
         }
 
+        public GridLength LengthObjectAction
+        {
+            get => Context.Command.LengthObjectAction;
+            set => Set(ref Context.Command.LengthObjectAction, value);
+        }
+
         public GridLength LengthReadyCmdCommand
         {
             get => Context.Command.LengthReadyCmdCommand;
@@ -378,13 +487,94 @@ namespace Marlin.ViewModels.Main
         {
             if (Context.SelectedId > -1)
             {
-
+                ProgramData.Commands[Context.SelectedId] = Context.Command;
             }
             else
             {
-                Command.AddCommand(CommandTitle, CommandTitle, CommandTitle, true);
+                Models.Main.Command.AddCommand(Context.Command);
             }
             Program.SetPage(new ActionsPage());
+        }
+
+        private bool CanButtonActionCommandExecute(object p)
+        {
+            return !Context.Command.Equals(Context.CopyCommand);
+        }
+
+        private void OnAddTriggerCommandExecuted(object p)
+        {
+            Models.Main.Command.AddTrigger("123", SystemFiles.Types.TriggerType.Phrase);
+        }
+
+        private void LoadTrigger()
+        {
+            foreach (var trigger in ProgramData.Commands[Context.SelectedId].Triggers)
+            {
+                Grid grid = new Grid();
+                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+                TextBlock textBlock = new TextBlock
+                {
+                    FontSize = 15,
+                    FontWeight = FontWeights.Bold,
+                    Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.FontColor)),
+                    VerticalAlignment = VerticalAlignment.Center,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    Padding = new Thickness(10, 10, 10, 10),
+                    //Text = command.title
+                };
+                Button buttonDelete = new Button
+                {
+                    Margin = new Thickness(0, 5, 5, 5),
+                    Padding = new Thickness(5, 0, 5, 4),
+                    Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.FontColor)),
+                    BorderBrush = new SolidColorBrush(Colors.Transparent),
+                    Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.PageColor)),
+                    Height = 30,
+                    //Command = RunActionCommand,
+                    //CommandParameter = command.id,
+                    HorizontalAlignment = HorizontalAlignment.Right,
+                    Content = "Удалить"
+                };
+                Button buttonRun = new Button
+                {
+                    Margin = new Thickness(0, 5, 5, 5),
+                    Padding = new Thickness(5, 0, 5, 4),
+                    Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.FontColor)), // Установите нужный цвет текста кнопки
+                    BorderBrush = new SolidColorBrush(Colors.Transparent), // Установите нужный цвет границы кнопки
+                    Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.PageColor)), // Установите нужный цвет фона кнопки
+                    Height = 30,
+                    //Command = RunActionCommand,
+                    //CommandParameter = command.id,
+                    HorizontalAlignment = HorizontalAlignment.Right,
+                    Content = "Запустить"
+                };
+                Button buttonEdit = new Button
+                {
+                    Margin = new Thickness(0, 5, 20, 5),
+                    Padding = new Thickness(0, 0, 0, 4),
+                    Width = 33,
+                    //Command = EditActionCommand,
+                    //CommandParameter = command.id,
+                    Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.FontColor)), // Установите нужный цвет текста кнопки
+                    BorderBrush = new SolidColorBrush(Colors.Transparent), // Установите нужный цвет границы кнопки
+                    Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.PageColor)), // Установите нужный цвет фона кнопки
+                    Height = 30,
+                    HorizontalAlignment = HorizontalAlignment.Right,
+                    Content = "✏️"
+                };
+                Grid.SetColumn(textBlock, 0);
+                Grid.SetColumn(buttonDelete, 1);
+                Grid.SetColumn(buttonRun, 2);
+                Grid.SetColumn(buttonEdit, 3);
+                grid.Children.Add(textBlock);
+                grid.Children.Add(buttonDelete);
+                grid.Children.Add(buttonRun);
+                grid.Children.Add(buttonEdit);
+                panel.Children.Add(grid);
+            }
         }
     }
 }

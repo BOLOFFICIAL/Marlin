@@ -16,6 +16,7 @@ namespace Marlin.ViewModels.Main
     {
         private string _title;
         private StackPanel panel = new StackPanel();
+        private GridLength _lengthAbout = new GridLength(0, GridUnitType.Pixel);
         public ICommand ToMainCommand { get; }
         public ICommand EditActionCommand { get; }
         public ICommand RunActionCommand { get; }
@@ -123,11 +124,18 @@ namespace Marlin.ViewModels.Main
                     {
                         if (Program.Authentication("Для открытия содержимого введите пароль"))
                         {
+                            LengthAbout = new GridLength(2, GridUnitType.Star);
                             OpenAction(textBox.Text);
                         }
                     }
                 }
             }
+        }
+
+        public GridLength LengthAbout
+        {
+            get => _lengthAbout;
+            set => Set(ref _lengthAbout, value);
         }
 
         private void OnToMainCommandExecuted(object p)
@@ -150,19 +158,20 @@ namespace Marlin.ViewModels.Main
 
         private void OnRunActionCommandExecuted(object p)
         {
+            Context.SelectedId = (int)p;
             if (Context.Action == ActionType.Command)
             {
-                var command = Context.Command.Commands[Context.SelectedId];
-                if (command.checkpuss)
+                var command = ProgramData.Commands[Context.SelectedId];
+                if (command.Checkpuss)
                 {
                     if (Program.Authentication("Для запуска комманды необходимо подтвердить пароль"))
                     {
-                        WinSystem.RunCmd(command.command);
+                        WinSystem.RunCmd(command.ResultCommand);
                     }
                 }
                 else
                 {
-                    WinSystem.RunCmd(command.command);
+                    WinSystem.RunCmd(command.ResultCommand);
                 }
             }
 
@@ -182,6 +191,7 @@ namespace Marlin.ViewModels.Main
             Context.SelectedId = -1;
             if (Context.Action == ActionType.Command)
             {
+
                 Program.SetPage(new CommandPage());
             }
             if (Context.Action == ActionType.Script)
@@ -194,7 +204,7 @@ namespace Marlin.ViewModels.Main
         {
             if (Context.Action == ActionType.Command)
             {
-                for (int i = 0; i < Context.Command.Commands.Count; i++)
+                foreach (var command in ProgramData.Commands)
                 {
                     Border border = new Border
                     {
@@ -212,6 +222,7 @@ namespace Marlin.ViewModels.Main
                     grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
                     grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
                     grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+                    grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
                     TextBlock textBlock = new TextBlock
                     {
                         FontSize = 15,
@@ -219,7 +230,21 @@ namespace Marlin.ViewModels.Main
                         Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.FontColor)),
                         VerticalAlignment = VerticalAlignment.Center,
                         HorizontalAlignment = HorizontalAlignment.Center,
-                        Text = Context.Command.Commands[i].title
+                        Padding = new Thickness(10,10,10,10),
+                        Text = command.Title
+                    };
+                    Button buttonDelete = new Button
+                    {
+                        Margin = new Thickness(0, 5, 5, 5),
+                        Padding = new Thickness(5, 0, 5, 4),
+                        Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.FontColor)), 
+                        BorderBrush = new SolidColorBrush(Colors.Transparent), 
+                        Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.PageColor)), 
+                        Height = 30,
+                        Command = RunActionCommand,
+                        CommandParameter = command.id,
+                        HorizontalAlignment = HorizontalAlignment.Right,
+                        Content = "Удалить"
                     };
                     Button buttonRun = new Button
                     {
@@ -230,7 +255,7 @@ namespace Marlin.ViewModels.Main
                         Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.PageColor)), // Установите нужный цвет фона кнопки
                         Height = 30,
                         Command = RunActionCommand,
-                        CommandParameter = Context.Command.Commands[i].id,
+                        CommandParameter = command.id,
                         HorizontalAlignment = HorizontalAlignment.Right,
                         Content = "Запустить"
                     };
@@ -240,7 +265,7 @@ namespace Marlin.ViewModels.Main
                         Padding = new Thickness(0, 0, 0, 4),
                         Width = 33,
                         Command = EditActionCommand,
-                        CommandParameter = Context.Command.Commands[i].id,
+                        CommandParameter = command.id,
                         Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.FontColor)), // Установите нужный цвет текста кнопки
                         BorderBrush = new SolidColorBrush(Colors.Transparent), // Установите нужный цвет границы кнопки
                         Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.PageColor)), // Установите нужный цвет фона кнопки
@@ -249,9 +274,11 @@ namespace Marlin.ViewModels.Main
                         Content = "✏️"
                     };
                     Grid.SetColumn(textBlock, 0);
-                    Grid.SetColumn(buttonRun, 1);
-                    Grid.SetColumn(buttonEdit, 2);
+                    Grid.SetColumn(buttonDelete, 1);
+                    Grid.SetColumn(buttonRun, 2);
+                    Grid.SetColumn(buttonEdit, 3);
                     grid.Children.Add(textBlock);
+                    grid.Children.Add(buttonDelete);
                     grid.Children.Add(buttonRun);
                     grid.Children.Add(buttonEdit);
                     border.Child = grid;

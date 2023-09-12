@@ -13,7 +13,9 @@ namespace Marlin.SystemFiles
 
         public static string[] Triggers = { "Фраза", "Время", "Запуск Marlin", "Запуск программы" };
 
-        public static string[] Objects = { "Фаил", "Папка", "Url"/*, "Другое"*/ };
+        public static string[] Objects = { "Фаил", "Папка", "Url", "Программа" };
+
+        public static string[] ObjectActions = { "Запустить", "Закрыть", "Удалить" };
 
         public static string[] Actions = { "Сделать свое действие", "Встроенные методы" };
 
@@ -52,7 +54,7 @@ namespace Marlin.SystemFiles
 
         public static bool Authentication(string message, string error = "Введен неправильный пароль")
         {
-            if (DateTime.Now - Context.LastCheckPassword > TimeSpan.FromSeconds(Context.Settings.TimeCheckPassword) || Context.Settings.NewPassword.Length > 0)
+            if (DateTime.Now - Context.LastCheckPassword > TimeSpan.FromSeconds(Context.CopySettings.TimeCheckPassword) || Context.Settings.NewPassword.Length > 0)
             {
                 Models.MessageBox.MakeMessage(message, MessageType.TextQuestion);
                 if (Context.MessageBox.Answer == Context.Settings.Password)
