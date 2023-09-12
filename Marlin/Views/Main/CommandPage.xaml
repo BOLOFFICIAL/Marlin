@@ -523,7 +523,8 @@
                                         <RowDefinition Height="auto"/>
                                     </Grid.RowDefinitions>
 
-                                    <StackPanel Grid.Row="0">
+                                    <StackPanel Grid.Row="0"
+                                                Margin="10">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="auto"/>
@@ -532,6 +533,7 @@
 
                                             <ComboBox Grid.Column="0"
                                                       FontSize="15"
+                                                      Margin="0,0,10,0"
                                                       SelectedValue="{Binding Path=SelectedTrigger,UpdateSourceTrigger=PropertyChanged}"
                                                       ItemsSource="{Binding Path=Triggers,UpdateSourceTrigger=PropertyChanged}"
                                                       VerticalAlignment="Top"
@@ -544,6 +546,7 @@
                                                 </Grid.RowDefinitions>
 
                                                 <TextBox Grid.Row="0"
+                                                         Margin="0,8,0,0"
                                                          MinWidth="100"
                                                          FontSize="15"
                                                          Padding="10,0"
@@ -558,6 +561,7 @@
 
                                                     <Button Grid.Column="0" 
                                                             FontSize="15"
+                                                            Margin="0,0,10,0"
                                                             VerticalAlignment="Center"
                                                             Foreground="{Binding Path=ExternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
                                                             Content="Выберите программу"/>
