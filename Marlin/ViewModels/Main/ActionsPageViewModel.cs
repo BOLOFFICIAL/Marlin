@@ -152,7 +152,7 @@ namespace Marlin.ViewModels.Main
         {
             if (Context.Action == ActionType.Command)
             {
-                var command = Command.Commands[Context.SelectedId];
+                var command = Context.Command.Commands[Context.SelectedId];
                 if (command.checkpuss)
                 {
                     if (Program.Authentication("Для запуска комманды необходимо подтвердить пароль"))
@@ -194,7 +194,7 @@ namespace Marlin.ViewModels.Main
         {
             if (Context.Action == ActionType.Command)
             {
-                for (int i = 0; i < Command.Commands.Count; i++)
+                for (int i = 0; i < Context.Command.Commands.Count; i++)
                 {
                     Border border = new Border
                     {
@@ -219,7 +219,7 @@ namespace Marlin.ViewModels.Main
                         Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.FontColor)),
                         VerticalAlignment = VerticalAlignment.Center,
                         HorizontalAlignment = HorizontalAlignment.Center,
-                        Text = Command.Commands[i].title
+                        Text = Context.Command.Commands[i].title
                     };
                     Button buttonRun = new Button
                     {
@@ -230,7 +230,7 @@ namespace Marlin.ViewModels.Main
                         Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.PageColor)), // Установите нужный цвет фона кнопки
                         Height = 30,
                         Command = RunActionCommand,
-                        CommandParameter = Command.Commands[i].id,
+                        CommandParameter = Context.Command.Commands[i].id,
                         HorizontalAlignment = HorizontalAlignment.Right,
                         Content = "Запустить"
                     };
@@ -240,7 +240,7 @@ namespace Marlin.ViewModels.Main
                         Padding = new Thickness(0, 0, 0, 4),
                         Width = 33,
                         Command = EditActionCommand,
-                        CommandParameter = Command.Commands[i].id,
+                        CommandParameter = Context.Command.Commands[i].id,
                         Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.FontColor)), // Установите нужный цвет текста кнопки
                         BorderBrush = new SolidColorBrush(Colors.Transparent), // Установите нужный цвет границы кнопки
                         Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.PageColor)), // Установите нужный цвет фона кнопки

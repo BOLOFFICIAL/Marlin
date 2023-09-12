@@ -6,7 +6,7 @@
       xmlns:vm="clr-namespace:Marlin.ViewModels.Main"
       xmlns:local="clr-namespace:Marlin.Views.Main"
       mc:Ignorable="d" 
-      d:Height="1450" 
+      d:Height="450" 
       d:Width="800"
       ShowsNavigationUI="False"
       Foreground="{Binding Path=FontColor}"

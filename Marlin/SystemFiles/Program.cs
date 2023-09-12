@@ -11,6 +11,14 @@ namespace Marlin.SystemFiles
     {
         public static string[] Genders = { "Мужской", "Женский" };
 
+        public static string[] Triggers = { "Фраза", "Время", "Запуск Marlin", "Запуск программы" };
+
+        public static string[] Objects = { "Фаил", "Папка", "Url"/*, "Другое"*/ };
+
+        public static string[] Actions = { "Сделать свое действие", "Встроенные методы" };
+
+        public static string[] EmbeddedActions = { "Озвучивание текста", "Нажатие клавиш", "Перемещение курсора" };
+
         public static int[] Speeds = Enumerable.Range(-5, 16).ToArray();
 
         public static async Task SetPage(Page page)
