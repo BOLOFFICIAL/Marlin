@@ -5,6 +5,7 @@ using Marlin.Views.Main;
 using Newtonsoft.Json;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -32,6 +33,7 @@ namespace Marlin.ViewModels.Main
             {
                 Context.Command = ProgramData.Commands[Context.SelectedId];
                 PageTitle = Context.Command.Title;
+                LoadTrigger();
             }
 
             Context.CopyCommand = JsonConvert.DeserializeObject<Models.Main.Command>(JsonConvert.SerializeObject(Context.Command));
@@ -39,10 +41,8 @@ namespace Marlin.ViewModels.Main
 
         public StackPanel StackPanel
         {
-            get
-            {
-                return panel;
-            }
+            get => panel;
+            set => Set(ref panel, value);
         }
 
         public string ButtonContent
@@ -491,89 +491,143 @@ namespace Marlin.ViewModels.Main
             }
             else
             {
-                Models.Main.Command.AddCommand(Context.Command);
+                var uniq = true;
+                var uniqname = true;
+                foreach (var command in ProgramData.Commands)
+                {
+                    if (command.Equals(Context.Command))
+                    {
+                        uniq = false;
+                    }
+                    if (command.Title== Context.Command.Title) // переделать на проверку и среди скриптов
+                    {
+                        uniqname = false;
+                    }
+                }
+                if (uniq && uniqname) 
+                {
+                    Program.AddCommand(Context.Command);
+                }
+                else if(!uniq)
+                {
+                    Models.MessageBox.MakeMessage("Такая команда уже существует", SystemFiles.Types.MessageType.Error);
+                    return;
+                }
+                else if (!uniqname)
+                {
+                    Models.MessageBox.MakeMessage("Команда с таким именем уже существует", SystemFiles.Types.MessageType.Error);
+                    return;
+                }
             }
             Program.SetPage(new ActionsPage());
         }
 
         private bool CanButtonActionCommandExecute(object p)
         {
-            return !Context.Command.Equals(Context.CopyCommand);
+            if (Context.SelectedId > -1)
+            {
+                return false;
+            }
+            else
+            { 
+                return !Context.Command.Equals(Context.CopyCommand);
+            }
         }
 
         private void OnAddTriggerCommandExecuted(object p)
         {
-            Models.Main.Command.AddTrigger("123", SystemFiles.Types.TriggerType.Phrase);
+            Context.Command.AddTrigger("", SystemFiles.Types.TriggerType.Phrase);
+            StackPanel.Children.Add(AddTrigger(Context.Command.Triggers[Context.Command.Triggers.Count - 1]));
+        }
+
+        private Grid AddTrigger(Marlin.Models.Main.Trigger trigger)
+        {
+            Grid mainGrid = new Grid();
+            mainGrid.Margin = new Thickness(0, 10, 0, 10);
+            mainGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+            mainGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+            mainGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+            ComboBox comboBox = new ComboBox
+            {
+                FontSize = 15,
+                Margin = new Thickness(0, 0, 10, 0),
+                VerticalAlignment = VerticalAlignment.Top,
+                SelectedIndex = (int)trigger.triggertype,
+                MinWidth = 50
+            };
+            comboBox.SelectionChanged += ComboBox_SelectionChanged;
+            comboBox.SetBinding(ComboBox.SelectedValueProperty, new System.Windows.Data.Binding("SelectedTrigger") { UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged });
+            comboBox.SetBinding(ComboBox.ItemsSourceProperty, new System.Windows.Data.Binding("Triggers") { UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged });
+            Grid.SetColumn(comboBox, 0);
+            Grid innerGrid = new Grid();
+            innerGrid.Margin = new Thickness(0, 0, 10, 0);
+            innerGrid.RowDefinitions.Add(new RowDefinition { Height = LengthTextTrigger });
+            innerGrid.RowDefinitions.Add(new RowDefinition { Height = LengthAppTrigger });
+            Grid.SetColumn(innerGrid, 1);
+            TextBox textBox = new TextBox
+            {
+                Margin = new Thickness(0, 8, 0, 0),
+                MinWidth = 100,
+                FontSize = 15,
+                Padding = new Thickness(10, 0, 0, 0),
+                HorizontalAlignment = HorizontalAlignment.Left,
+                HorizontalContentAlignment = HorizontalAlignment.Center,
+                Text = trigger.value
+            };
+            Grid.SetRow(textBox, 0);
+            Grid innerInnerGrid = new Grid();
+            innerInnerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+            innerInnerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+            Button button = new Button
+            {
+                FontSize = 15,
+                Margin = new Thickness(0, 0, 10, 0),
+                VerticalAlignment = VerticalAlignment.Center,
+                Content = "Выберите программу"
+            };
+            button.SetBinding(Button.ForegroundProperty, new System.Windows.Data.Binding("ExternalBackgroundColor") { UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged });
+            Grid.SetColumn(button, 0);
+            TextBox programTextBox = new TextBox
+            {
+                MinWidth = 100,
+                FontSize = 15,
+                Padding = new Thickness(10, 0, 0, 0),
+                IsReadOnly = true,
+                HorizontalContentAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center,
+                Text = trigger.value
+            };
+            Grid.SetColumn(programTextBox, 1);
+            innerInnerGrid.Children.Add(button);
+            innerInnerGrid.Children.Add(programTextBox);
+            Grid.SetRow(innerInnerGrid, 1);
+            innerGrid.Children.Add(textBox);
+            innerGrid.Children.Add(innerInnerGrid);
+            Grid.SetColumn(innerGrid, 1);
+            Button deleteButton = new Button { Content = "Удалить" };
+            Grid.SetColumn(deleteButton, 2);
+            mainGrid.Children.Add(comboBox);
+            mainGrid.Children.Add(innerGrid);
+            mainGrid.Children.Add(deleteButton);
+            return mainGrid;
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (sender is ComboBox comboBox)
+            {
+                if (comboBox.SelectedIndex >= 0)
+                {
+
+                }
+            }
         }
 
         private void LoadTrigger()
         {
-            foreach (var trigger in ProgramData.Commands[Context.SelectedId].Triggers)
+            foreach (var trigger in Context.Command.Triggers)
             {
-                Grid grid = new Grid();
-                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-                TextBlock textBlock = new TextBlock
-                {
-                    FontSize = 15,
-                    FontWeight = FontWeights.Bold,
-                    Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.FontColor)),
-                    VerticalAlignment = VerticalAlignment.Center,
-                    HorizontalAlignment = HorizontalAlignment.Center,
-                    Padding = new Thickness(10, 10, 10, 10),
-                    //Text = command.title
-                };
-                Button buttonDelete = new Button
-                {
-                    Margin = new Thickness(0, 5, 5, 5),
-                    Padding = new Thickness(5, 0, 5, 4),
-                    Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.FontColor)),
-                    BorderBrush = new SolidColorBrush(Colors.Transparent),
-                    Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.PageColor)),
-                    Height = 30,
-                    //Command = RunActionCommand,
-                    //CommandParameter = command.id,
-                    HorizontalAlignment = HorizontalAlignment.Right,
-                    Content = "Удалить"
-                };
-                Button buttonRun = new Button
-                {
-                    Margin = new Thickness(0, 5, 5, 5),
-                    Padding = new Thickness(5, 0, 5, 4),
-                    Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.FontColor)), // Установите нужный цвет текста кнопки
-                    BorderBrush = new SolidColorBrush(Colors.Transparent), // Установите нужный цвет границы кнопки
-                    Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.PageColor)), // Установите нужный цвет фона кнопки
-                    Height = 30,
-                    //Command = RunActionCommand,
-                    //CommandParameter = command.id,
-                    HorizontalAlignment = HorizontalAlignment.Right,
-                    Content = "Запустить"
-                };
-                Button buttonEdit = new Button
-                {
-                    Margin = new Thickness(0, 5, 20, 5),
-                    Padding = new Thickness(0, 0, 0, 4),
-                    Width = 33,
-                    //Command = EditActionCommand,
-                    //CommandParameter = command.id,
-                    Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.FontColor)), // Установите нужный цвет текста кнопки
-                    BorderBrush = new SolidColorBrush(Colors.Transparent), // Установите нужный цвет границы кнопки
-                    Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.PageColor)), // Установите нужный цвет фона кнопки
-                    Height = 30,
-                    HorizontalAlignment = HorizontalAlignment.Right,
-                    Content = "✏️"
-                };
-                Grid.SetColumn(textBlock, 0);
-                Grid.SetColumn(buttonDelete, 1);
-                Grid.SetColumn(buttonRun, 2);
-                Grid.SetColumn(buttonEdit, 3);
-                grid.Children.Add(textBlock);
-                grid.Children.Add(buttonDelete);
-                grid.Children.Add(buttonRun);
-                grid.Children.Add(buttonEdit);
-                panel.Children.Add(grid);
+                StackPanel.Children.Add(AddTrigger(trigger));
             }
         }
     }

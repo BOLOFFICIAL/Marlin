@@ -1,4 +1,8 @@
-﻿using Marlin.SystemFiles.Types;
+﻿using Marlin.SystemFiles;
+using Marlin.SystemFiles.Types;
+using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace Marlin.Models.Main
 {
@@ -7,5 +11,29 @@ namespace Marlin.Models.Main
         public int id;
         public string value;
         public TriggerType triggertype;
+
+        public bool Equals(Trigger otherTrigger)
+        {
+            if (otherTrigger is null)
+            {
+                return false;
+            }
+
+            string thistrigger = JsonConvert.SerializeObject(this);
+            string othertrigger = JsonConvert.SerializeObject(otherTrigger);
+
+            if (thistrigger.Length != othertrigger.Length)
+            {
+                return false;
+            }
+            for (int i = 0; i < thistrigger.Length; i++)
+            {
+                if (thistrigger[i] != othertrigger[i])
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 }

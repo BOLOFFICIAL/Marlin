@@ -1,4 +1,5 @@
-﻿using Marlin.SystemFiles.Types;
+﻿using Marlin.Models.Main;
+using Marlin.SystemFiles.Types;
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -77,6 +78,12 @@ namespace Marlin.SystemFiles
         public static void ChangePassword(string newpassword)
         {
             Context.Settings.Password = newpassword;
+        }
+
+        public static void AddCommand(Command command)
+        {
+            command.id = ProgramData.Commands.Count;
+            ProgramData.Commands.Add(command);
         }
     }
 }

@@ -44,20 +44,14 @@ namespace Marlin.Models.Main
         public GridLength LengthReadyCmdCommand = new GridLength(0, GridUnitType.Pixel);
         public GridLength LengthCommandConstructor = GridLength.Auto;
 
-        public static void AddCommand(Command command)
+        public void AddTrigger(string value, TriggerType triggertype)
         {
-            command.id = ProgramData.Commands.Count;
-            ProgramData.Commands.Add(command);
-        }
-
-        public static void AddTrigger(string value, TriggerType triggertype)
-        {
-            //ProgramData.Commands[Context.SelectedId].Triggers.Add(new Trigger
-            //{
-            //    id = Context.Command.Triggers.Count,
-            //    value = value,
-            //    triggertype = triggertype,
-            //});
+            Triggers.Add(new Trigger
+            {
+                id = Context.Command.Triggers.Count,
+                value = value,
+                triggertype = triggertype,
+            });
         }
 
         public bool Equals(Command otherCommand)
