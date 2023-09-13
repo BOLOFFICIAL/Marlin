@@ -1,12 +1,11 @@
 ﻿using Marlin.Commands;
+using Marlin.Models.Main;
 using Marlin.SystemFiles;
 using Marlin.ViewModels.Base;
 using Marlin.Views.Main;
 using Newtonsoft.Json;
-using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -32,12 +31,21 @@ namespace Marlin.ViewModels.Main
 
             if (Context.SelectedId > -1)
             {
-                Context.Command = ProgramData.Commands[Context.SelectedId];
+                Context.Command = Command.GetCommand(Context.SelectedId);
                 PageTitle = Context.Command.Title;
-                //LoadTrigger();
             }
-
             Context.CopyCommand = JsonConvert.DeserializeObject<Models.Main.Command>(JsonConvert.SerializeObject(Context.Command));
+            if (Context.SelectedId == -1)
+            {
+                if (ProgramData.Commands.Count > 0)
+                {
+                    Title = "Команда " + (ProgramData.Commands[ProgramData.Commands.Count - 1].id + 1).ToString();
+                }
+                else
+                {
+                    Title = "Команда " + Context.Command.id.ToString();
+                }
+            }
         }
 
         public StackPanel StackPanel
@@ -163,7 +171,17 @@ namespace Marlin.ViewModels.Main
         public bool Checkpuss
         {
             get => Context.Command.Checkpuss;
-            set => Set(ref Context.Command.Checkpuss, value);
+            set
+            {
+                if (!value)
+                {
+                    if (!Program.Authentication("Для снятия защиты подтвердте пароль", check: true))
+                    {
+                        return;
+                    }
+                }
+                Set(ref Context.Command.Checkpuss, value);
+            }
         }
 
         public string SelectedAction
@@ -240,18 +258,6 @@ namespace Marlin.ViewModels.Main
             set => Set(ref Context.Command.LengthMovingCursor, value);
         }
 
-        public GridLength LengthTextTrigger
-        {
-            get => Context.Command.Triggers[Context.SelectredIdTrigger].LengthTextTrigger;
-            set => Set(ref Context.Command.Triggers[Context.SelectredIdTrigger].LengthTextTrigger, value);
-        }
-
-        public GridLength LengthAppTrigger
-        {
-            get => Context.Command.Triggers[Context.SelectredIdTrigger].LengthAppTrigger;
-            set => Set(ref Context.Command.Triggers[Context.SelectredIdTrigger].LengthAppTrigger, value);
-        }
-
         public string[] Actions
         {
             get => Program.Actions;
@@ -283,7 +289,7 @@ namespace Marlin.ViewModels.Main
             set
             {
                 Set(ref Context.Command.SelectedObjectAction, value);
-                if (SelectedObjectAction == "Запустить" && SelectedObject != "Папка" && SelectedObject != "Программа")
+                if (SelectedObjectAction == "Открыть" && SelectedObject != "Папка" && SelectedObject != "Программа")
                 {
                     LengthChoseApp = GridLength.Auto;
                 }
@@ -293,37 +299,6 @@ namespace Marlin.ViewModels.Main
                 }
             }
         }
-
-        //public string SelectedTrigger
-        //{
-        //    get => Context.Command.Triggers[Context.SelectredIdTrigger].SelectedTrigger;
-        //    set
-        //    {
-        //        Set(ref Context.Command.Triggers[Context.SelectredIdTrigger].SelectedTrigger, value);
-        //        if (value == "Фраза")
-        //        {
-        //            LengthTextTrigger = GridLength.Auto;
-        //            LengthAppTrigger = new GridLength(0, GridUnitType.Pixel);
-        //        }
-        //        if (value == "Время")
-        //        {
-        //            LengthTextTrigger = GridLength.Auto;
-        //            LengthAppTrigger = new GridLength(0, GridUnitType.Pixel);
-        //        }
-        //        if (value == "Запуск Marlin")
-        //        {
-        //            LengthTextTrigger = new GridLength(0, GridUnitType.Pixel);
-        //            LengthAppTrigger = new GridLength(0, GridUnitType.Pixel);
-        //        }
-        //        if (value == "Запуск программы")
-        //        {
-        //            LengthTextTrigger = new GridLength(0, GridUnitType.Pixel);
-        //            LengthAppTrigger = GridLength.Auto;
-        //        }
-
-        //        var e = Context.Command.Triggers;
-        //    }
-        //}
 
         public string SelectedEmbeddedAction
         {
@@ -364,7 +339,7 @@ namespace Marlin.ViewModels.Main
                     LengthChoseObject = GridLength.Auto;
                     LengthInputUrl = new GridLength(0, GridUnitType.Pixel);
                     LengthObjectAction = GridLength.Auto;
-                    if (SelectedObjectAction == "Запустить")
+                    if (SelectedObjectAction == "Открыть")
                     {
                         LengthChoseApp = GridLength.Auto;
                     }
@@ -376,19 +351,20 @@ namespace Marlin.ViewModels.Main
 
                 if (SelectedObject == "Папка")
                 {
+                    SelectedObjectAction = Program.ObjectActions[0];
                     LengthChoseObject = GridLength.Auto;
                     LengthInputUrl = new GridLength(0, GridUnitType.Pixel);
-                    LengthObjectAction = GridLength.Auto;
-                    LengthChoseApp = new GridLength(0, GridUnitType.Pixel);
+                    LengthObjectAction = new GridLength(0, GridUnitType.Pixel);
+                    LengthChoseApp = new GridLength(0, GridUnitType.Pixel); 
                 }
 
                 if (SelectedObject == "Url")
                 {
-                    SelectedObjectAction = "Запустить";
+                    SelectedObjectAction = Program.ObjectActions[0];
                     LengthChoseObject = new GridLength(0, GridUnitType.Pixel);
                     LengthInputUrl = GridLength.Auto;
                     LengthObjectAction = new GridLength(0, GridUnitType.Pixel);
-                    if (SelectedObjectAction == "Запустить")
+                    if (SelectedObjectAction == Program.ObjectActions[0])
                     {
                         LengthChoseApp = GridLength.Auto;
                     }
@@ -483,15 +459,24 @@ namespace Marlin.ViewModels.Main
 
         private void OnToMainCommandExecuted(object p)
         {
-            ProgramData.Commands[Context.SelectedId] = JsonConvert.DeserializeObject<Marlin.Models.Main.Command>(JsonConvert.SerializeObject(Context.CopyCommand));
+            if (Context.SelectedId > -1) 
+            {
+                Context.Command = JsonConvert.DeserializeObject<Marlin.Models.Main.Command>(JsonConvert.SerializeObject(Context.CopyCommand));
+            }
             Program.SetPage(new ActionsPage());
         }
 
         private void OnButtonActionCommandExecuted(object p)
         {
+            if (Context.Command.Title.Length == 0)
+            {
+                Models.MessageBox.MakeMessage("Название команды не должно быть пустым");
+                return;
+            }
             if (Context.SelectedId > -1)
             {
-                ProgramData.Commands[Context.SelectedId] = Context.Command;
+                var command = Command.GetCommand(Context.SelectedId);
+                command = Context.Command;
             }
             else
             {
@@ -536,121 +521,7 @@ namespace Marlin.ViewModels.Main
             //Context.Command.AddTrigger("", SystemFiles.Types.TriggerType.Phrase);
             //StackPanel.Children.Add(AddTrigger(Context.Command.Triggers[Context.Command.Triggers.Count - 1]));
             //Реализовать переход на страницу на которой будет действие 
-            Models.MessageBox.MakeMessage("Странице не доступна",SystemFiles.Types.MessageType.Error);
+            Models.MessageBox.MakeMessage("Странице не доступна", SystemFiles.Types.MessageType.Error);
         }
-
-        //private Grid AddTrigger(Marlin.Models.Main.Trigger trigger)
-        //{
-        //    Context.SelectredIdTrigger = trigger.id;
-        //    Grid mainGrid = new Grid();
-        //    mainGrid.Margin = new Thickness(0, 10, 0, 10);
-        //    mainGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-        //    mainGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-        //    mainGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-        //    ComboBox comboBox = new ComboBox
-        //    {
-        //        FontSize = 15,
-        //        Margin = new Thickness(0, 0, 10, 0),
-        //        VerticalAlignment = VerticalAlignment.Top,
-        //        SelectedValue = Program.Triggers[(int)Context.Command.Triggers[Context.SelectredIdTrigger].triggertype],
-        //        MinWidth = 50
-        //    };
-
-        //    comboBox.SelectionChanged += ComboBox_SelectionChanged;
-        //    comboBox.DropDownOpened += ComboBox_DropDownOpened;
-
-        //    comboBox.SetBinding(ComboBox.SelectedValueProperty, new System.Windows.Data.Binding("SelectedTrigger") { UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged });
-        //    comboBox.SetBinding(ComboBox.ItemsSourceProperty, new System.Windows.Data.Binding("Triggers") { UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged });
-        //    Grid.SetColumn(comboBox, 0);
-        //    Grid innerGrid = new Grid();
-        //    innerGrid.Margin = new Thickness(0, 0, 10, 0);
-        //    innerGrid.RowDefinitions.Add(new RowDefinition { Height = Context.Command.Triggers[Context.SelectredIdTrigger].LengthTextTrigger });
-        //    innerGrid.RowDefinitions.Add(new RowDefinition { Height = Context.Command.Triggers[Context.SelectredIdTrigger].LengthAppTrigger });
-        //    Grid.SetColumn(innerGrid, 1);
-        //    TextBox textBox = new TextBox
-        //    {
-        //        Margin = new Thickness(0, 8, 0, 0),
-        //        MinWidth = 100,
-        //        FontSize = 15,
-        //        Padding = new Thickness(10, 0, 0, 0),
-        //        HorizontalAlignment = HorizontalAlignment.Left,
-        //        HorizontalContentAlignment = HorizontalAlignment.Center,
-        //        Text = Context.Command.Triggers[Context.SelectredIdTrigger].value
-        //    };
-        //    Grid.SetRow(textBox, 0);
-        //    Grid innerInnerGrid = new Grid();
-        //    innerInnerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-        //    innerInnerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-        //    Button button = new Button
-        //    {
-        //        FontSize = 15,
-        //        Margin = new Thickness(0, 0, 10, 0),
-        //        VerticalAlignment = VerticalAlignment.Center,
-        //        Content = "Выберите программу"
-        //    };
-        //    button.SetBinding(Button.ForegroundProperty, new System.Windows.Data.Binding("ExternalBackgroundColor") { UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged });
-        //    Grid.SetColumn(button, 0);
-        //    TextBox programTextBox = new TextBox
-        //    {
-        //        MinWidth = 100,
-        //        FontSize = 15,
-        //        Padding = new Thickness(10, 0, 0, 0),
-        //        IsReadOnly = true,
-        //        HorizontalContentAlignment = HorizontalAlignment.Center,
-        //        VerticalAlignment = VerticalAlignment.Center,
-        //        Text = Context.Command.Triggers[Context.SelectredIdTrigger].value
-        //    };
-        //    Grid.SetColumn(programTextBox, 1);
-        //    innerInnerGrid.Children.Add(button);
-        //    innerInnerGrid.Children.Add(programTextBox);
-        //    Grid.SetRow(innerInnerGrid, 1);
-        //    innerGrid.Children.Add(textBox);
-        //    innerGrid.Children.Add(innerInnerGrid);
-        //    Grid.SetColumn(innerGrid, 1);
-        //    Button deleteButton = new Button { Content = "Удалить" };
-        //    Grid.SetColumn(deleteButton, 2);
-        //    mainGrid.Children.Add(comboBox);
-        //    mainGrid.Children.Add(innerGrid);
-        //    mainGrid.Children.Add(deleteButton);
-        //    Context.Command.Triggers[Context.SelectredIdTrigger].comboBox = comboBox;
-        //    return mainGrid;
-        //}
-
-        //private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        //{
-        //    if (sender is ComboBox comboBox)
-        //    {
-        //        foreach (var trigger in Context.Command.Triggers)
-        //        {
-        //            if (ReferenceEquals(comboBox, trigger.comboBox))
-        //            {
-        //                //Models.MessageBox.MakeMessage($"Id Триггера {trigger.id}");
-        //            }
-        //        }
-        //    }
-        //}
-
-        //private void ComboBox_DropDownOpened(object sender, EventArgs e)
-        //{
-        //    if (sender is ComboBox comboBox)
-        //    {
-        //        foreach (var trigger in Context.Command.Triggers)
-        //        {
-        //            if (ReferenceEquals(comboBox, trigger.comboBox))
-        //            {
-        //                Context.SelectredIdTrigger = trigger.id;
-        //                //Models.MessageBox.MakeMessage($"Id Триггера {trigger.id}");
-        //            }
-        //        }
-        //    }
-        //}
-
-        //private void LoadTrigger()
-        //{
-        //    foreach (var trigger in Context.Command.Triggers)
-        //    {
-        //        StackPanel.Children.Add(AddTrigger(trigger));
-        //    }
-        //}
     }
 }

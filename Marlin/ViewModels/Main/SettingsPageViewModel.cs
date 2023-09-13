@@ -435,7 +435,8 @@ namespace Marlin.ViewModels.Main
                 if (Context.Settings.Password.Length > 0)
                 {
                     string oldpass = Context.Settings.NewPassword.Length > 0 ? " старый" : "";
-                    if (Program.Authentication($"Были изменены настройки администрирования.\nДля сохранения введите{oldpass} пароль администпратора."))
+                    if (Program.Authentication($"Были изменены настройки администрирования.\nДля сохранения введите{oldpass} пароль администпратора.", 
+                        check: (Context.Settings.NewPassword.Length > 0 || Context.Settings.TimeCheckPassword != Context.CopySettings.TimeCheckPassword)))
                     {
                         if (Context.Settings.NewPassword.Length > 0)
                         {

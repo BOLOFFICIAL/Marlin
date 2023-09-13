@@ -3,6 +3,7 @@ using Marlin.SystemFiles.Types;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Input;
 
 namespace Marlin.Models.Main
 {
@@ -19,7 +20,6 @@ namespace Marlin.Models.Main
         public string SelectedAction = Program.Actions[0];
         public string SelectedEmbeddedAction = Program.EmbeddedActions[0];
         public string SelectedObject = Program.Objects[0];
-        //public string SelectedTrigger = Program.Triggers[0];
         public string SelectedObjectAction = Program.ObjectActions[0];
         public string CmdCommand = "";
         public string PressingKeys = "";
@@ -29,8 +29,6 @@ namespace Marlin.Models.Main
         public string X = "";
         public string Y = "";
         public GridLength LengthObjectAction = GridLength.Auto;
-        //public GridLength LengthTextTrigger = GridLength.Auto;
-        //public GridLength LengthAppTrigger = new GridLength(0, GridUnitType.Pixel);
         public GridLength LengthMultiSymbol = new GridLength(0, GridUnitType.Pixel);
         public GridLength LengthSymbolCode = GridLength.Auto;
         public GridLength LengthTextToSpeech = GridLength.Auto;
@@ -52,6 +50,30 @@ namespace Marlin.Models.Main
                 value = value,
                 triggertype = triggertype,
             });
+        }
+
+        public static Command GetCommand(int Id) 
+        {
+            foreach (var command in ProgramData.Commands)
+            {
+                if (command.id == Id)
+                {
+                    return command;
+                }
+            }
+            return null;
+        }
+
+        public static Command GetCommand(string Title)
+        {
+            foreach (var command in ProgramData.Commands)
+            {
+                if (command.Title == Title)
+                {
+                    return command;
+                }
+            }
+            return null;
         }
 
         public bool Equals(Command otherCommand)

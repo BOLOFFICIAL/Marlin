@@ -16,7 +16,7 @@ namespace Marlin.SystemFiles
 
         public static string[] Objects = { "Фаил", "Папка", "Url", "Программа" };
 
-        public static string[] ObjectActions = { "Запустить", "Закрыть", "Удалить" };
+        public static string[] ObjectActions = { "Открыть", "Закрыть", "Удалить" };
 
         public static string[] Actions = { "Сделать свое действие", "Встроенные методы" };
 
@@ -53,9 +53,9 @@ namespace Marlin.SystemFiles
             WinSystem.RunCmd(command);
         }
 
-        public static bool Authentication(string message, string error = "Введен неправильный пароль")
+        public static bool Authentication(string message, string error = "Введен неправильный пароль",bool check = false)
         {
-            if (DateTime.Now - Context.LastCheckPassword > TimeSpan.FromSeconds(Context.CopySettings.TimeCheckPassword) || Context.Settings.NewPassword.Length > 0)
+            if (DateTime.Now - Context.LastCheckPassword > TimeSpan.FromSeconds(Context.Settings.TimeCheckPassword) || check)
             {
                 Models.MessageBox.MakeMessage(message, MessageType.TextQuestion);
                 if (Context.MessageBox.Answer == Context.Settings.Password)

@@ -21,6 +21,7 @@ namespace Marlin.ViewModels.Main
         public ICommand EditActionCommand { get; }
         public ICommand RunActionCommand { get; }
         public ICommand AddActionCommand { get; }
+        public ICommand DeleteActionCommand { get; }
 
         public ActionsPageViewModel()
         {
@@ -28,6 +29,7 @@ namespace Marlin.ViewModels.Main
             EditActionCommand = new LambdaCommand(OnEditActionCommandExecuted);
             RunActionCommand = new LambdaCommand(OnRunActionCommandExecuted);
             AddActionCommand = new LambdaCommand(OnAddActionCommandExecuted);
+            DeleteActionCommand = new LambdaCommand(OnDeleteActionCommandExecuted);
             LoadActions();
         }
 
@@ -122,11 +124,16 @@ namespace Marlin.ViewModels.Main
                     UIElement foundElement = grid.Children.OfType<UIElement>().FirstOrDefault(e => e.GetType() == typeof(TextBlock));
                     if (foundElement is not null && foundElement is TextBlock textBox)
                     {
-                        if (Program.Authentication("Для открытия содержимого введите пароль"))
+                        var command = Command.GetCommand(textBox.Text);
+                        if (command.Checkpuss)
                         {
-                            LengthAbout = new GridLength(2, GridUnitType.Star);
-                            OpenAction(textBox.Text);
+                            if (!Program.Authentication("Для открытия содержимого введите пароль"))
+                            {
+                                return;
+                            }
                         }
+                        OpenAction(command);
+                        LengthAbout = new GridLength(2, GridUnitType.Star);
                     }
                 }
             }
@@ -148,7 +155,45 @@ namespace Marlin.ViewModels.Main
             Context.SelectedId = (int)p;
             if (Context.Action == ActionType.Command)
             {
+                if (Command.GetCommand(Context.SelectedId).Checkpuss)
+                {
+                    if (!Program.Authentication("Для открытия содержимого введите пароль"))
+                    {
+                        return;
+                    }
+                }
                 Program.SetPage(new CommandPage());
+            }
+            if (Context.Action == ActionType.Script)
+            {
+                Program.SetPage(new ScriptPage());
+            }
+        }
+
+        private void OnDeleteActionCommandExecuted(object p)
+        {
+            Context.SelectedId = (int)p;
+            if (Context.Action == ActionType.Command)
+            {
+                var command = Command.GetCommand(Context.SelectedId);
+                var check = command.Checkpuss;
+                if (check)
+                {
+                    if (!Program.Authentication("Для удаления команды введите пароль", check: check))
+                    {
+                        return;
+                    }
+                }
+                else 
+                {
+                    Models.MessageBox.MakeMessage($"Вы действительно хотите удалить команду {command.Title}",MessageType.YesNoQuestion);
+                    if (Context.MessageBox.Answer == "No") 
+                    {
+                        return;
+                    }
+                }
+                ProgramData.Commands.Remove(Command.GetCommand(Context.SelectedId));
+                LoadActions();
             }
             if (Context.Action == ActionType.Script)
             {
@@ -181,9 +226,9 @@ namespace Marlin.ViewModels.Main
             }
         }
 
-        private void OpenAction(string titile)
+        private void OpenAction(Command command)
         {
-            TitleAbout = titile;
+            TitleAbout = command.Title;
         }
 
         private void OnAddActionCommandExecuted(object p)
@@ -201,6 +246,7 @@ namespace Marlin.ViewModels.Main
 
         private void LoadActions()
         {
+            StackPanel.Children.Clear();
             if (Context.Action == ActionType.Command)
             {
                 foreach (var command in ProgramData.Commands)
@@ -229,18 +275,18 @@ namespace Marlin.ViewModels.Main
                         Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.FontColor)),
                         VerticalAlignment = VerticalAlignment.Center,
                         HorizontalAlignment = HorizontalAlignment.Center,
-                        Padding = new Thickness(10,10,10,10),
+                        Padding = new Thickness(10, 10, 10, 10),
                         Text = command.Title
                     };
                     Button buttonDelete = new Button
                     {
                         Margin = new Thickness(0, 5, 5, 5),
                         Padding = new Thickness(5, 0, 5, 4),
-                        Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.FontColor)), 
-                        BorderBrush = new SolidColorBrush(Colors.Transparent), 
-                        Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.PageColor)), 
+                        Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.FontColor)),
+                        BorderBrush = new SolidColorBrush(Colors.Transparent),
+                        Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.PageColor)),
                         Height = 30,
-                        Command = RunActionCommand,
+                        Command = DeleteActionCommand,
                         CommandParameter = command.id,
                         HorizontalAlignment = HorizontalAlignment.Right,
                         Content = "Удалить"
