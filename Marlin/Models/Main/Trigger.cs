@@ -2,7 +2,8 @@
 using Marlin.SystemFiles.Types;
 using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Windows.Forms;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace Marlin.Models.Main
 {
@@ -11,6 +12,9 @@ namespace Marlin.Models.Main
         public int id;
         public string value;
         public TriggerType triggertype;
+        //public string SelectedTrigger = Program.Triggers[0];
+        public GridLength LengthTextTrigger = GridLength.Auto;
+        public GridLength LengthAppTrigger = new GridLength(0, GridUnitType.Pixel);
 
         public bool Equals(Trigger otherTrigger)
         {

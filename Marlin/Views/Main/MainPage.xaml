@@ -69,7 +69,7 @@
                             Background="{Binding Path=PageColor}"
                             Foreground="{Binding Path=ExternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
                             Content="Настройки"/>
-                    
+
                     <Button Grid.Column="1"
                             FontWeight="Bold"
                             FontSize="15"
@@ -82,7 +82,7 @@
                             CommandParameter="1"
                             Content="Команды"/>
                     
-                    <Button Grid.Column="2"
+                    <Button Grid.Column="3"
                             FontWeight="Bold"
                             FontSize="15"
                             Background="{Binding Path=PageColor}"

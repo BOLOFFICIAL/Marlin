@@ -191,7 +191,6 @@ namespace Marlin.ViewModels.Main
             Context.SelectedId = -1;
             if (Context.Action == ActionType.Command)
             {
-
                 Program.SetPage(new CommandPage());
             }
             if (Context.Action == ActionType.Script)

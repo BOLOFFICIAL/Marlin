@@ -19,7 +19,7 @@ namespace Marlin.Models.Main
         public string SelectedAction = Program.Actions[0];
         public string SelectedEmbeddedAction = Program.EmbeddedActions[0];
         public string SelectedObject = Program.Objects[0];
-        public string SelectedTrigger = Program.Triggers[0];
+        //public string SelectedTrigger = Program.Triggers[0];
         public string SelectedObjectAction = Program.ObjectActions[0];
         public string CmdCommand = "";
         public string PressingKeys = "";
@@ -29,8 +29,8 @@ namespace Marlin.Models.Main
         public string X = "";
         public string Y = "";
         public GridLength LengthObjectAction = GridLength.Auto;
-        public GridLength LengthTextTrigger = GridLength.Auto;
-        public GridLength LengthAppTrigger = new GridLength(0, GridUnitType.Pixel);
+        //public GridLength LengthTextTrigger = GridLength.Auto;
+        //public GridLength LengthAppTrigger = new GridLength(0, GridUnitType.Pixel);
         public GridLength LengthMultiSymbol = new GridLength(0, GridUnitType.Pixel);
         public GridLength LengthSymbolCode = GridLength.Auto;
         public GridLength LengthTextToSpeech = GridLength.Auto;

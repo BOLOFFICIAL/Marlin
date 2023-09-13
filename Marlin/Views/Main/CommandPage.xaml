@@ -541,78 +541,7 @@
                                               IsChecked="{Binding Path=Checkpuss,UpdateSourceTrigger=PropertyChanged}"/>
                                 </Grid>
 
-                                <Grid Grid.Row="1">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="auto"/>
-                                        <RowDefinition Height="auto"/>
-                                    </Grid.RowDefinitions>
-
-                                    <ScrollContentPresenter Margin="0,3"
-                                                            Content="{Binding Path=StackPanel}">
-                                        <!--<StackPanel Grid.Row="0"
-                                                    Margin="0,10">
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="auto"/>
-                                                    <ColumnDefinition Width="auto"/>
-                                                    <ColumnDefinition Width="auto"/>
-                                                </Grid.ColumnDefinitions>
-
-                                                <ComboBox Grid.Column="0"
-                                                      FontSize="15"
-                                                      Margin="0,0,10,0"
-                                                      SelectedValue="{Binding Path=SelectedTrigger,UpdateSourceTrigger=PropertyChanged}"
-                                                      ItemsSource="{Binding Path=Triggers,UpdateSourceTrigger=PropertyChanged}"
-                                                      VerticalAlignment="Top"
-                                                      MinWidth="50"/>
-
-                                                <Grid Grid.Column="1"
-                                                      Margin="0,0,10,0">
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition Height="{Binding Path=LengthTextTrigger}"/>
-                                                        <RowDefinition Height="{Binding Path=LengthAppTrigger}"/>
-                                                    </Grid.RowDefinitions>
-
-                                                    <TextBox Grid.Row="0"
-                                                         Margin="0,8,0,0"
-                                                         MinWidth="100"
-                                                         FontSize="15"
-                                                         Padding="10,0"
-                                                         HorizontalAlignment="Left"
-                                                         HorizontalContentAlignment="Center"
-                                                         Text="Фраза"/>
-
-                                                    <Grid Grid.Row="1">
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="auto"/>
-                                                            <ColumnDefinition Width="auto"/>
-                                                        </Grid.ColumnDefinitions>
-
-                                                        <Button Grid.Column="0" 
-                                                            FontSize="15"
-                                                            Margin="0,0,10,0"
-                                                            VerticalAlignment="Center"
-                                                            Foreground="{Binding Path=ExternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
-                                                            Content="Выберите программу"/>
-
-                                                        <TextBox Grid.Column="1"
-                                                             MinWidth="100"
-                                                             FontSize="15"
-                                                             Padding="10,0"
-                                                             IsReadOnly="True"
-                                                             HorizontalContentAlignment="Center"
-                                                             VerticalAlignment="Center"
-                                                             Text="Программа 1"/>
-                                                    </Grid>
-                                                </Grid>
-
-                                                <Button Grid.Column="2"
-                                                        Content="Удалить"/>
-                                            </Grid>
-                                        </StackPanel>-->
-                                    </ScrollContentPresenter>
-                                    
-                                    <Button Grid.Row="1"
+                                <Button Grid.Row="1"
                                             FontSize="15"
                                             Margin="0,10,0,0"
                                             Width="auto"
@@ -620,8 +549,6 @@
                                             Command="{Binding Path=AddTriggerCommand}"
                                             Foreground="{Binding Path=ExternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
                                             Content="Добавить триггер"/>
-                                    
-                                </Grid>
                             </Grid>
                         </Grid>
 
