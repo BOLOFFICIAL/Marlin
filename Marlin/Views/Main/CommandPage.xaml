@@ -161,7 +161,7 @@
                                                        Text="Готовая команда cmd"/>
 
                                         <CheckBox Grid.Column="1"
-                                                  IsChecked="{Binding Path=IsReadyCmdCommand}"
+                                                  IsChecked="{Binding Path=IsReadyCmdCommand,UpdateSourceTrigger=PropertyChanged}"
                                                   VerticalAlignment="Center"/>
                                     </Grid>
                                     <!--Готовая команда cmd-->
@@ -187,16 +187,16 @@
                                                  Padding="10,0"
                                                  HorizontalContentAlignment="Center"
                                                  VerticalAlignment="Center"
-                                                 Text="{Binding Path=CmdCommand}"/>
+                                                 Text="{Binding Path=CmdCommand,UpdateSourceTrigger=PropertyChanged}"/>
                                     </Grid>
                                     <!--Конструктор команд-->
                                     <Grid Grid.Row="2">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="auto"/>
-                                            <RowDefinition Height="{Binding Path=LengthChoseObject}"/>
-                                            <RowDefinition Height="{Binding Path=LengthInputUrl}"/>
-                                            <RowDefinition Height="{Binding Path=LengthObjectAction}"/>
-                                            <RowDefinition Height="{Binding Path=LengthChoseApp}"/>
+                                            <RowDefinition Height="{Binding Path=LengthChoseObject,UpdateSourceTrigger=PropertyChanged}"/>
+                                            <RowDefinition Height="{Binding Path=LengthInputUrl,UpdateSourceTrigger=PropertyChanged}"/>
+                                            <RowDefinition Height="{Binding Path=LengthObjectAction,UpdateSourceTrigger=PropertyChanged}"/>
+                                            <RowDefinition Height="{Binding Path=LengthChoseApp,UpdateSourceTrigger=PropertyChanged}"/>
                                         </Grid.RowDefinitions>
 
                                         <Grid Grid.Row="0">
@@ -229,6 +229,7 @@
                                                     FontSize="15"
                                                     Margin="0,0,10,0"
                                                     VerticalAlignment="Center"
+                                                    Command="{Binding Path=SelectFileCommand,UpdateSourceTrigger=PropertyChanged}"
                                                     Foreground="{Binding Path=ExternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
                                                     Content="Выберите объект"/>
 
@@ -239,7 +240,7 @@
                                                      IsReadOnly="True"
                                                      HorizontalContentAlignment="Center"
                                                      VerticalAlignment="Center"
-                                                     Text="{Binding Path=FilePath,UpdateSourceTrigger=PropertyChanged}"/>
+                                                     Text="{Binding Path=FileName,UpdateSourceTrigger=PropertyChanged}"/>
                                         </Grid> <!--Выбрать объект-->
 
                                         <Grid Grid.Row="2"
@@ -260,7 +261,6 @@
                                                      MinWidth="100"
                                                      FontSize="15"
                                                      Padding="10,0"
-                                                     IsReadOnly="True"
                                                      HorizontalContentAlignment="Center"
                                                      VerticalAlignment="Center"
                                                      Text="{Binding Path=Url,UpdateSourceTrigger=PropertyChanged}"/>
@@ -296,6 +296,7 @@
                                             <Button Grid.Column="0" 
                                                     FontSize="15"
                                                     Margin="0,0,10,0"
+                                                    Command="{Binding Path=SelectAppCommand,UpdateSourceTrigger=PropertyChanged}"
                                                     VerticalAlignment="Center"
                                                     Foreground="{Binding Path=ExternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
                                                     Content="Выберите программу для запуска"/>
@@ -307,7 +308,7 @@
                                                      IsReadOnly="True"
                                                      HorizontalContentAlignment="Center"
                                                      VerticalAlignment="Center"
-                                                     Text="{Binding Path=AppPuth,UpdateSourceTrigger=PropertyChanged}"/>
+                                                     Text="{Binding Path=AppName,UpdateSourceTrigger=PropertyChanged}"/>
                                         </Grid> <!--Выберите программу для запуска-->
                                     </Grid>
                                 </Grid>
@@ -342,9 +343,9 @@
 
                                     <Grid Grid.Row="1">
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="{Binding Path=LengthTextToSpeech}"/>
-                                            <RowDefinition Height="{Binding Path=LengthPressingKeys}"/>
-                                            <RowDefinition Height="{Binding Path=LengthMovingCursor}"/>
+                                            <RowDefinition Height="{Binding Path=LengthTextToSpeech,UpdateSourceTrigger=PropertyChanged}"/>
+                                            <RowDefinition Height="{Binding Path=LengthPressingKeys,UpdateSourceTrigger=PropertyChanged}"/>
+                                            <RowDefinition Height="{Binding Path=LengthMovingCursor,UpdateSourceTrigger=PropertyChanged}"/>
                                         </Grid.RowDefinitions>
 
                                         <!--Озвучивание файла-->
@@ -368,14 +369,14 @@
                                                      IsReadOnly="True"
                                                      HorizontalContentAlignment="Center"
                                                      VerticalAlignment="Center"
-                                                     Text="{Binding Path=FilePath,UpdateSourceTrigger=PropertyChanged}"/>
+                                                     Text="{Binding Path=FileName,UpdateSourceTrigger=PropertyChanged}"/>
                                         </Grid>
                                         <!--Нажатие клавиш-->
                                         <Grid Grid.Row="1">
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="auto"/>
-                                                <RowDefinition Height="{Binding Path=LengthSymbolCode}"/>
-                                                <RowDefinition Height="{Binding Path=LengthMultiSymbol}"/>
+                                                <RowDefinition Height="{Binding Path=LengthSymbolCode,UpdateSourceTrigger=PropertyChanged}"/>
+                                                <RowDefinition Height="{Binding Path=LengthMultiSymbol,UpdateSourceTrigger=PropertyChanged}"/>
                                             </Grid.RowDefinitions>
 
                                             <Grid Grid.Row="0"
@@ -394,7 +395,7 @@
                                                            Text="Ввод множества символов"/>
 
                                                 <CheckBox Grid.Column="1"
-                                                          IsChecked="{Binding Path=IsMultiSymbol}"
+                                                          IsChecked="{Binding Path=IsMultiSymbol,UpdateSourceTrigger=PropertyChanged}"
                                                           VerticalAlignment="Center"/>
                                             </Grid>
                                             

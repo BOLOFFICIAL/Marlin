@@ -3,7 +3,6 @@ using Marlin.SystemFiles.Types;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Input;
 
 namespace Marlin.Models.Main
 {
@@ -13,7 +12,9 @@ namespace Marlin.Models.Main
         public int id = 0;
         public string Title = "";
         public string Filepath = "";
-        public string Appputh = "";
+        public string FileName = "";
+        public string Apppath = "";
+        public string AppName = "";
         public string Url = "";
         public bool Checkpuss = false;
         public string ResultCommand = "";
@@ -52,7 +53,7 @@ namespace Marlin.Models.Main
             });
         }
 
-        public static Command GetCommand(int Id) 
+        public static Command GetCommand(int Id)
         {
             foreach (var command in ProgramData.Commands)
             {
@@ -74,6 +75,28 @@ namespace Marlin.Models.Main
                 }
             }
             return null;
+        }
+
+        public static void SetCommand(int id,Command newCommand) 
+        {
+            for (int i=0;i<ProgramData.Commands.Count;i++) 
+            {
+                if (ProgramData.Commands[i].id == id)
+                {
+                    ProgramData.Commands[i] = newCommand;
+                    return;
+                }
+            }
+        }
+
+        public static string MakeResultCommand(Command command)
+        {
+            string result = "";
+            if (command.IsReadyCmdCommand)
+            {
+                result = command.CmdCommand;
+            }
+            return result;
         }
 
         public bool Equals(Command otherCommand)

@@ -1,9 +1,12 @@
 ﻿using Marlin.Commands;
 using Marlin.Models.Main;
 using Marlin.SystemFiles;
+using Marlin.SystemFiles.Types;
 using Marlin.ViewModels.Base;
 using Marlin.Views.Main;
+using Microsoft.WindowsAPICodePack.Dialogs;
 using Newtonsoft.Json;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -17,6 +20,9 @@ namespace Marlin.ViewModels.Main
         public ICommand ButtonActionCommand { get; }
         public ICommand AddTriggerCommand { get; }
 
+        public ICommand SelectFileCommand { get; }
+        public ICommand SelectAppCommand { get; }
+
         private StackPanel panel = new StackPanel();
 
         private string _pagetitle = "Создание команды";
@@ -26,15 +32,19 @@ namespace Marlin.ViewModels.Main
             ToMainCommand = new LambdaCommand(OnToMainCommandExecuted);
             ButtonActionCommand = new LambdaCommand(OnButtonActionCommandExecuted, CanButtonActionCommandExecute);
             AddTriggerCommand = new LambdaCommand(OnAddTriggerCommandExecuted);
+            SelectFileCommand = new LambdaCommand(OnSelectFileCommandExecuted);
+            SelectAppCommand = new LambdaCommand(OnSelectAppCommandExecuted);
 
-            Context.Command = new Models.Main.Command();
+            Context.Command = new Command();
 
             if (Context.SelectedId > -1)
             {
-                Context.Command = Command.GetCommand(Context.SelectedId);
+                Context.Command = JsonConvert.DeserializeObject<Command>(JsonConvert.SerializeObject(Command.GetCommand(Context.SelectedId)));
                 PageTitle = Context.Command.Title;
             }
-            Context.CopyCommand = JsonConvert.DeserializeObject<Models.Main.Command>(JsonConvert.SerializeObject(Context.Command));
+
+            Context.CopyCommand = JsonConvert.DeserializeObject<Command>(JsonConvert.SerializeObject(Command.GetCommand(Context.SelectedId)));
+
             if (Context.SelectedId == -1)
             {
                 if (ProgramData.Commands.Count > 0)
@@ -120,6 +130,9 @@ namespace Marlin.ViewModels.Main
             get => Context.Settings.ViewportUnits;
         }
 
+
+
+
         public string PageTitle
         {
             get => _pagetitle;
@@ -132,16 +145,16 @@ namespace Marlin.ViewModels.Main
             set => Set(ref Context.Command.Title, value);
         }
 
-        public string FilePath
+        public string FileName
         {
-            get => Context.Command.Filepath;
-            set => Set(ref Context.Command.Filepath, value);
+            get => Context.Command.FileName;
+            set => Set(ref Context.Command.FileName, value);
         }
 
-        public string AppPuth
+        public string AppName
         {
-            get => Context.Command.Appputh;
-            set => Set(ref Context.Command.Appputh, value);
+            get => Context.Command.AppName;
+            set => Set(ref Context.Command.AppName, value);
         }
 
         public string Url
@@ -355,7 +368,7 @@ namespace Marlin.ViewModels.Main
                     LengthChoseObject = GridLength.Auto;
                     LengthInputUrl = new GridLength(0, GridUnitType.Pixel);
                     LengthObjectAction = new GridLength(0, GridUnitType.Pixel);
-                    LengthChoseApp = new GridLength(0, GridUnitType.Pixel); 
+                    LengthChoseApp = new GridLength(0, GridUnitType.Pixel);
                 }
 
                 if (SelectedObject == "Url")
@@ -459,15 +472,12 @@ namespace Marlin.ViewModels.Main
 
         private void OnToMainCommandExecuted(object p)
         {
-            if (Context.SelectedId > -1) 
-            {
-                Context.Command = JsonConvert.DeserializeObject<Marlin.Models.Main.Command>(JsonConvert.SerializeObject(Context.CopyCommand));
-            }
             Program.SetPage(new ActionsPage());
         }
 
         private void OnButtonActionCommandExecuted(object p)
         {
+            Context.Command.ResultCommand = Command.MakeResultCommand(Context.Command);
             if (Context.Command.Title.Length == 0)
             {
                 Models.MessageBox.MakeMessage("Название команды не должно быть пустым");
@@ -475,8 +485,7 @@ namespace Marlin.ViewModels.Main
             }
             if (Context.SelectedId > -1)
             {
-                var command = Command.GetCommand(Context.SelectedId);
-                command = Context.Command;
+                Command.SetCommand(Context.SelectedId, Context.Command);
             }
             else
             {
@@ -518,9 +527,68 @@ namespace Marlin.ViewModels.Main
 
         private void OnAddTriggerCommandExecuted(object p)
         {
-            //Context.Command.AddTrigger("", SystemFiles.Types.TriggerType.Phrase);
-            //StackPanel.Children.Add(AddTrigger(Context.Command.Triggers[Context.Command.Triggers.Count - 1]));
-            //Реализовать переход на страницу на которой будет действие 
+            Models.MessageBox.MakeMessage("Странице не доступна", SystemFiles.Types.MessageType.Error);
+        }
+
+        private void OnSelectFileCommandExecuted(object p)
+        {
+            if (SelectedObject == "Фаил")
+            {
+                Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
+                openFileDialog.Title = "Выбор файла";
+                openFileDialog.Filter = "Все файлы (*.*)|*.*";
+
+                bool? result = openFileDialog.ShowDialog();
+
+                if (result == true)
+                {
+                    string path = openFileDialog.FileName;
+                    Context.Command.Filepath = path;
+                    FileName = System.IO.Path.GetFileName(path);
+
+                    if (Path.GetExtension(path) == ".exe")
+                    {
+                        LengthChoseObject = GridLength.Auto;
+                        LengthInputUrl = new GridLength(0, GridUnitType.Pixel);
+                        LengthObjectAction = GridLength.Auto;
+                        LengthChoseApp = new GridLength(0, GridUnitType.Pixel);
+                    }
+                    else
+                    {
+                        SelectedObject = "Фаил";
+                    }
+                }
+            }
+            if (SelectedObject == "Папка")
+            {
+                CommonOpenFileDialog folderPicker = new CommonOpenFileDialog();
+
+                folderPicker.IsFolderPicker = true;
+                folderPicker.Title = "Выбор папки для хранения данных";
+
+                CommonFileDialogResult dialogResult = folderPicker.ShowDialog();
+
+                if (dialogResult == CommonFileDialogResult.Ok)
+                {
+                    string selectedFolderPath = folderPicker.FileName;
+
+                    if (selectedFolderPath == Context.Settings.MainFolderPath)
+                    {
+                        Models.MessageBox.MakeMessage("Вы уверены что хотите выбрать папку которая является папкой для хранения данных?", MessageType.YesNoQuestion);
+                        if (Context.MessageBox.Answer == "No")
+                        {
+                            return;
+                        }
+                    }
+
+                    Context.Command.Filepath = selectedFolderPath;
+                    FileName = System.IO.Path.GetFileName(selectedFolderPath);
+                }
+            }
+        }
+
+        private void OnSelectAppCommandExecuted(object p)
+        {
             Models.MessageBox.MakeMessage("Странице не доступна", SystemFiles.Types.MessageType.Error);
         }
     }

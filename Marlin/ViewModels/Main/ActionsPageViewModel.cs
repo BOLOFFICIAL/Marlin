@@ -209,15 +209,12 @@ namespace Marlin.ViewModels.Main
                 var command = ProgramData.Commands[Context.SelectedId];
                 if (command.Checkpuss)
                 {
-                    if (Program.Authentication("Для запуска комманды необходимо подтвердить пароль"))
+                    if (!Program.Authentication("Для запуска комманды необходимо подтвердить пароль"))
                     {
-                        WinSystem.RunCmd(command.ResultCommand);
+                        return;
                     }
                 }
-                else
-                {
-                    WinSystem.RunCmd(command.ResultCommand);
-                }
+                WinSystem.RunCmd(command.ResultCommand);
             }
 
             if (Context.Action == ActionType.Script)

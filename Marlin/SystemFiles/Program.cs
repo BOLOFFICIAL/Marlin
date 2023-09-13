@@ -14,7 +14,7 @@ namespace Marlin.SystemFiles
 
         public static string[] Triggers = { "Фраза", "Время", "Запуск Marlin", "Запуск программы" };
 
-        public static string[] Objects = { "Фаил", "Папка", "Url", "Программа" };
+        public static string[] Objects = { "Фаил", "Папка", "Url"};
 
         public static string[] ObjectActions = { "Открыть", "Закрыть", "Удалить" };
 
