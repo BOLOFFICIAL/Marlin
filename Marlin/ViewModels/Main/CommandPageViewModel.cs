@@ -39,14 +39,16 @@ namespace Marlin.ViewModels.Main
             SelectAppCommand = new LambdaCommand(OnSelectAppCommandExecuted);
 
             Context.Command = new Command();
+            Context.CopyCommand = JsonConvert.DeserializeObject<Command>(JsonConvert.SerializeObject(Context.Command));
 
             if (Context.SelectedId > -1)
             {
                 Context.Command = JsonConvert.DeserializeObject<Command>(JsonConvert.SerializeObject(Command.GetCommand(Context.SelectedId)));
                 PageTitle = Context.Command.Title;
+                Context.CopyCommand = JsonConvert.DeserializeObject<Command>(JsonConvert.SerializeObject(Command.GetCommand(Context.SelectedId)));
             }
 
-            Context.CopyCommand = JsonConvert.DeserializeObject<Command>(JsonConvert.SerializeObject(Command.GetCommand(Context.SelectedId)));
+            
 
             if (Context.SelectedId == -1)
             {
@@ -502,7 +504,7 @@ namespace Marlin.ViewModels.Main
                 return;
             }
 
-            if (isDuplicateName)
+            if (isDuplicateName && Context.Command.Title!=Context.CopyCommand.Title)
             {
                 Models.MessageBox.MakeMessage("Команда с таким именем уже существует", SystemFiles.Types.MessageType.Error);
                 return;
