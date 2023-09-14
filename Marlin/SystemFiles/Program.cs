@@ -81,11 +81,5 @@ namespace Marlin.SystemFiles
         {
             Context.Settings.Password = newpassword;
         }
-
-        public static void AddCommand(Command command)
-        {
-            command.id = ProgramData.Commands.Count;
-            ProgramData.Commands.Add(command);
-        }
     }
 }

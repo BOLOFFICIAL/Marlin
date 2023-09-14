@@ -193,6 +193,7 @@ namespace Marlin.ViewModels.Main
                     }
                 }
                 ProgramData.Commands.Remove(Command.GetCommand(Context.SelectedId));
+                ProgramData.SaveData();
                 LoadActions();
             }
             if (Context.Action == ActionType.Script)
@@ -206,7 +207,7 @@ namespace Marlin.ViewModels.Main
             Context.SelectedId = (int)p;
             if (Context.Action == ActionType.Command)
             {
-                var command = ProgramData.Commands[Context.SelectedId];
+                var command = Command.GetCommand(Context.SelectedId);
                 if (command.Checkpuss)
                 {
                     if (!Program.Authentication("Для запуска комманды необходимо подтвердить пароль"))

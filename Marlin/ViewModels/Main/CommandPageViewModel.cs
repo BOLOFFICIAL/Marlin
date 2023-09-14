@@ -489,7 +489,7 @@ namespace Marlin.ViewModels.Main
 
             if (string.IsNullOrWhiteSpace(Context.Command.Title))
             {
-                Models.MessageBox.MakeMessage("Название команды не должно быть пустым");
+                Models.MessageBox.MakeMessage("Название команды не должно быть пустым", SystemFiles.Types.MessageType.Error);
                 return;
             }
 
@@ -515,7 +515,7 @@ namespace Marlin.ViewModels.Main
 
             else
             {
-                Program.AddCommand(Context.Command);
+                Command.AddCommand(Context.Command);
             }
 
             ProgramData.SaveData();

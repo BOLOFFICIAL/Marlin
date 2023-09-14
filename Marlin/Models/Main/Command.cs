@@ -144,6 +144,12 @@ namespace Marlin.Models.Main
             return result;
         }
 
+        public static void AddCommand(Command command)
+        {
+            command.id = ProgramData.Commands.Count;
+            ProgramData.Commands.Add(command);
+        }
+
         public bool Equals(Command otherCommand)
         {
             if (otherCommand is null)
