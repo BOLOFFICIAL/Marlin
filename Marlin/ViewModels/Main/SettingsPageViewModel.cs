@@ -450,7 +450,14 @@ namespace Marlin.ViewModels.Main
                         {
                             Program.RemoveAutorun();
                         }
+
+                        if (Context.CopySettings.MainFolderPath != Context.Settings.MainFolderPath)
+                        {
+                            ProgramData.MoveData(Context.CopySettings.MainFolderPath, Context.Settings.MainFolderPath);
+                        }
+
                         Settings.SaveSettings(Context.CopySettings.Theme.PageColor != Context.Settings.Theme.PageColor);
+
                     }
                     else
                     {

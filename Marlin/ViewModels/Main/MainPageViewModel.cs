@@ -120,14 +120,18 @@ namespace Marlin.ViewModels.Main
             var command = Models.Main.Command.GetCommand(Command);
             if (command != null)
             {
-                if (command.Checkpuss)
+                if (command.Filepath.Length > 0)
                 {
-                    if (!Program.Authentication("Для запуска комманды необходимо подтвердить пароль"))
+                    if (command.Checkpuss)
                     {
-                        return;
+                        if (!Program.Authentication("Для запуска комманды необходимо подтвердить пароль"))
+                        {
+                            return;
+                        }
                     }
+                    WinSystem.RunCmd(command.ResultCommand);
                 }
-                WinSystem.RunCmd(command.ResultCommand);
+                Command = "";
             }
             else
             {

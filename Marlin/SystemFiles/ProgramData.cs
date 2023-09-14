@@ -60,5 +60,28 @@ namespace Marlin.SystemFiles
                 Commands = new List<Command>();
             }
         }
+
+        public static void MoveData(string oldFolderPath, string newFolderPath)
+        {
+            try
+            {
+                string fileName = "MarlinProgramData.json";
+                string sourcePath = Path.Combine(oldFolderPath, fileName);
+                string destinationPath = Path.Combine(newFolderPath, fileName);
+
+                if (File.Exists(sourcePath))
+                {
+                    Task.Run(() => File.Move(sourcePath, destinationPath));
+                }
+                else
+                {
+                    Models.MessageBox.MakeMessage("Не удалось найти фаил", MessageType.Error);
+                }
+            }
+            catch
+            {
+                Models.MessageBox.MakeMessage("Возникла ошибка при перемещении", MessageType.Error);
+            }
+        }
     }
 }

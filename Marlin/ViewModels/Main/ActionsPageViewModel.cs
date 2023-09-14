@@ -192,6 +192,7 @@ namespace Marlin.ViewModels.Main
                         return;
                     }
                 }
+                LengthAbout = new GridLength(0, GridUnitType.Star);
                 ProgramData.Commands.Remove(Command.GetCommand(Context.SelectedId));
                 ProgramData.SaveData();
                 LoadActions();
@@ -208,14 +209,17 @@ namespace Marlin.ViewModels.Main
             if (Context.Action == ActionType.Command)
             {
                 var command = Command.GetCommand(Context.SelectedId);
-                if (command.Checkpuss)
+                if (command.Filepath.Length > 0)
                 {
-                    if (!Program.Authentication("Для запуска комманды необходимо подтвердить пароль"))
+                    if (command.Checkpuss)
                     {
-                        return;
+                        if (!Program.Authentication("Для запуска комманды необходимо подтвердить пароль"))
+                        {
+                            return;
+                        }
                     }
+                    WinSystem.RunCmd(command.ResultCommand);
                 }
-                WinSystem.RunCmd(command.ResultCommand);
             }
 
             if (Context.Action == ActionType.Script)
