@@ -18,6 +18,8 @@ namespace Marlin.SystemFiles
 
         public static string[] ObjectActions = { "Открыть", "Закрыть", "Удалить" };
 
+        public static string[] ObjectActionsSimple = { "Открыть", "Удалить" };
+
         public static string[] Actions = { "Сделать свое действие", "Встроенные методы" };
 
         public static string[] EmbeddedActions = { "Озвучивание текста", "Нажатие клавиш", "Перемещение курсора" };

@@ -77,9 +77,9 @@ namespace Marlin.Models.Main
             return null;
         }
 
-        public static void SetCommand(int id,Command newCommand) 
+        public static void SetCommand(int id, Command newCommand)
         {
-            for (int i=0;i<ProgramData.Commands.Count;i++) 
+            for (int i = 0; i < ProgramData.Commands.Count; i++)
             {
                 if (ProgramData.Commands[i].id == id)
                 {
@@ -92,7 +92,7 @@ namespace Marlin.Models.Main
         public static string MakeResultCommand(Command command)
         {
             string result = "";
-            if (command.SelectedAction== "Сделать свое действие") 
+            if (command.SelectedAction == "Сделать свое действие")
             {
                 if (command.IsReadyCmdCommand)
                 {
@@ -102,21 +102,44 @@ namespace Marlin.Models.Main
                 {
                     if (command.SelectedObject == "Фаил")
                     {
-                        result = $"Start \"\" {command.Apppath} {command.Filepath}";
+                        switch (command.SelectedObjectAction)
+                        {
+                            case "Открыть":
+                                result = $"Start \"\" \"{command.Apppath}\" {command.Filepath}";
+                                break;
+                            case "Закрыть":
+                                MessageBox.MakeMessage("Команда не доступна");
+                                break;
+                            case "Удалить":
+                                MessageBox.MakeMessage("Команда не доступна");
+                                break;
+                        }
+                        
                     }
                     if (command.SelectedObject == "Папка")
                     {
-                        result = $"Start {command.Filepath}";
+                        switch (command.SelectedObjectAction)
+                        {
+                            case "Открыть":
+                                result = $"Start {command.Filepath}";
+                                break;
+                        }
+                        
                     }
                     if (command.SelectedObject == "Url")
                     {
-                        result = $"\"{command.Apppath}\" {command.Filepath}";
+                        switch (command.SelectedObjectAction)
+                        {
+                            case "Открыть":
+                                result = $"\"{command.Apppath}\" {command.Filepath}";
+                                break;
+                        }
                     }
                 }
             }
-            if (Context.Command.SelectedAction == "Встроенные методы") 
+            if (Context.Command.SelectedAction == "Встроенные методы")
             {
-                
+
             }
             return result;
         }

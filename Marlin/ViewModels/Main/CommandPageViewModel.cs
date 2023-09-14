@@ -7,6 +7,7 @@ using Marlin.Views.Main;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Newtonsoft.Json;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -24,6 +25,8 @@ namespace Marlin.ViewModels.Main
         public ICommand SelectAppCommand { get; }
 
         private StackPanel panel = new StackPanel();
+
+        private string[] _objectActions = Program.ObjectActions;
 
         private string _pagetitle = "Создание команды";
 
@@ -160,11 +163,11 @@ namespace Marlin.ViewModels.Main
         public string Url
         {
             get => Context.Command.Url;
-            set 
+            set
             {
                 Set(ref Context.Command.Url, value);
                 Context.Command.Filepath = Url;
-            } 
+            }
         }
 
         public string PressingKeys
@@ -282,7 +285,8 @@ namespace Marlin.ViewModels.Main
 
         public string[] ObjectActions
         {
-            get => Program.ObjectActions;
+            get => _objectActions;
+            set => Set(ref _objectActions, value);
         }
 
         public string[] EmbeddedActions
@@ -482,45 +486,40 @@ namespace Marlin.ViewModels.Main
         private void OnButtonActionCommandExecuted(object p)
         {
             Context.Command.ResultCommand = Command.MakeResultCommand(Context.Command);
-            if (Context.Command.Title.Length == 0)
+
+            if (string.IsNullOrWhiteSpace(Context.Command.Title))
             {
                 Models.MessageBox.MakeMessage("Название команды не должно быть пустым");
                 return;
             }
+
+            bool isDuplicate = ProgramData.Commands.Any(command => command.Equals(Context.Command));
+            bool isDuplicateName = ProgramData.Commands.Any(command => command.Title == Context.Command.Title);
+
+            if (isDuplicate)
+            {
+                Models.MessageBox.MakeMessage("Такая команда уже существует", SystemFiles.Types.MessageType.Error);
+                return;
+            }
+
+            if (isDuplicateName)
+            {
+                Models.MessageBox.MakeMessage("Команда с таким именем уже существует", SystemFiles.Types.MessageType.Error);
+                return;
+            }
+
             if (Context.SelectedId > -1)
             {
                 Command.SetCommand(Context.SelectedId, Context.Command);
             }
+
             else
             {
-                var uniq = true;
-                var uniqname = true;
-                foreach (var command in ProgramData.Commands)
-                {
-                    if (command.Equals(Context.Command))
-                    {
-                        uniq = false;
-                    }
-                    if (command.Title == Context.Command.Title) // переделать на проверку и среди скриптов
-                    {
-                        uniqname = false;
-                    }
-                }
-                if (uniq && uniqname)
-                {
-                    Program.AddCommand(Context.Command);
-                }
-                else if (!uniq)
-                {
-                    Models.MessageBox.MakeMessage("Такая команда уже существует", SystemFiles.Types.MessageType.Error);
-                    return;
-                }
-                else if (!uniqname)
-                {
-                    Models.MessageBox.MakeMessage("Команда с таким именем уже существует", SystemFiles.Types.MessageType.Error);
-                    return;
-                }
+                Program.AddCommand(Context.Command);
             }
+
+            ProgramData.SaveData();
+
             Program.SetPage(new ActionsPage());
         }
 
@@ -556,10 +555,14 @@ namespace Marlin.ViewModels.Main
                         LengthInputUrl = new GridLength(0, GridUnitType.Pixel);
                         LengthObjectAction = GridLength.Auto;
                         LengthChoseApp = new GridLength(0, GridUnitType.Pixel);
+
+                        ObjectActions = Program.ObjectActions;
                     }
                     else
                     {
                         SelectedObject = "Фаил";
+                        ObjectActions = Program.ObjectActionsSimple;
+
                     }
                 }
             }
