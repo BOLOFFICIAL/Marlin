@@ -28,17 +28,17 @@ namespace Marlin.SystemFiles
 
         public static async Task SetPage(Page page)
         {
-            for (double i = 1; i > 0; i -= 0.1)
-            {
-                Context.MainWindow.Opacity = i;
-                await Task.Delay(1);
-            }
+            //for (double i = 1; i > 0; i -= 0.2)
+            //{
+            //    Context.MainWindow.Opacity = i;
+            //    await Task.Delay(1);
+            //}
             Context.MainWindow.Content = page;
-            for (double i = 0.1; i <= 1; i += 0.1)
-            {
-                Context.MainWindow.Opacity = i;
-                await Task.Delay(1);
-            }
+            //for (double i = 0.1; i <= 1; i += 0.2)
+            //{
+            //    Context.MainWindow.Opacity = i;
+            //    await Task.Delay(1);
+            //}
         }
 
         public static void AddAutorun()

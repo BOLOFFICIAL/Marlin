@@ -26,6 +26,7 @@ namespace Marlin.Models.Main
         public string PressingKeys = "";
         public bool IsReadyCmdCommand = false;
         public bool IsMultiSymbol = false;
+        public bool IsExe = false;
         public string Comment = "";
         public string X = "";
         public string Y = "";
@@ -105,7 +106,12 @@ namespace Marlin.Models.Main
                         switch (command.SelectedObjectAction)
                         {
                             case "Открыть":
-                                result = $"Start \"\" \"{command.Apppath}\" {command.Filepath}";
+                                result = $"Start \"\" ";
+                                if (command.Apppath.Length > 0) 
+                                {
+                                    result += $"\"{command.Apppath}\" ";
+                                }
+                                result += $"\"{command.Filepath}\"";
                                 break;
                             case "Закрыть":
                                 MessageBox.MakeMessage("Команда не доступна");

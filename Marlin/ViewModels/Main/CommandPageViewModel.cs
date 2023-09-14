@@ -553,6 +553,7 @@ namespace Marlin.ViewModels.Main
 
                     if (Path.GetExtension(path) == ".exe")
                     {
+                        Context.Command.IsExe = true;
                         LengthChoseObject = GridLength.Auto;
                         LengthInputUrl = new GridLength(0, GridUnitType.Pixel);
                         LengthObjectAction = GridLength.Auto;
@@ -562,6 +563,7 @@ namespace Marlin.ViewModels.Main
                     }
                     else
                     {
+                        Context.Command.IsExe = false;
                         SelectedObject = "Фаил";
                         ObjectActions = Program.ObjectActionsSimple;
 

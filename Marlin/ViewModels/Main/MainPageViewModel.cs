@@ -117,8 +117,22 @@ namespace Marlin.ViewModels.Main
 
         private void OnSendCommandExecute(object parameter)
         {
-            WinSystem.RunCmd(Command);
-            Command = "";
+            var command = Models.Main.Command.GetCommand(Command);
+            if (command != null)
+            {
+                if (command.Checkpuss)
+                {
+                    if (!Program.Authentication("Для запуска комманды необходимо подтвердить пароль"))
+                    {
+                        return;
+                    }
+                }
+                WinSystem.RunCmd(command.ResultCommand);
+            }
+            else 
+            {
+                Models.MessageBox.MakeMessage("Не удалось найти команду", MessageType.Error);
+            }
         }
 
         private void OnMenuCommandExecute(object parameter)
