@@ -92,9 +92,31 @@ namespace Marlin.Models.Main
         public static string MakeResultCommand(Command command)
         {
             string result = "";
-            if (command.IsReadyCmdCommand)
+            if (command.SelectedAction== "Сделать свое действие") 
             {
-                result = command.CmdCommand;
+                if (command.IsReadyCmdCommand)
+                {
+                    result = command.CmdCommand;
+                }
+                else
+                {
+                    if (command.SelectedObject == "Фаил")
+                    {
+                        result = $"Start \"\" {command.Apppath} {command.Filepath}";
+                    }
+                    if (command.SelectedObject == "Папка")
+                    {
+                        result = $"Start {command.Filepath}";
+                    }
+                    if (command.SelectedObject == "Url")
+                    {
+                        result = $"\"{command.Apppath}\" {command.Url}";
+                    }
+                }
+            }
+            if (Context.Command.SelectedAction == "Встроенные методы") 
+            {
+                
             }
             return result;
         }

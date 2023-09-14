@@ -589,7 +589,18 @@ namespace Marlin.ViewModels.Main
 
         private void OnSelectAppCommandExecuted(object p)
         {
-            Models.MessageBox.MakeMessage("Странице не доступна", SystemFiles.Types.MessageType.Error);
+            Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
+            openFileDialog.Title = "Выбор программы для запуска объекта";
+            openFileDialog.Filter = "Программы (*.exe)|*.exe";
+
+            bool? result = openFileDialog.ShowDialog();
+
+            if (result == true)
+            {
+                string path = openFileDialog.FileName;
+                Context.Command.Apppath = path;
+                AppName = System.IO.Path.GetFileName(path);
+            }
         }
     }
 }
