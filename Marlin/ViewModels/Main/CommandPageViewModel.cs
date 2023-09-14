@@ -160,7 +160,11 @@ namespace Marlin.ViewModels.Main
         public string Url
         {
             get => Context.Command.Url;
-            set => Set(ref Context.Command.Url, value);
+            set 
+            {
+                Set(ref Context.Command.Url, value);
+                Context.Command.Filepath = Url;
+            } 
         }
 
         public string PressingKeys

@@ -110,7 +110,7 @@ namespace Marlin.Models.Main
                     }
                     if (command.SelectedObject == "Url")
                     {
-                        result = $"\"{command.Apppath}\" {command.Url}";
+                        result = $"\"{command.Apppath}\" {command.Filepath}";
                     }
                 }
             }
