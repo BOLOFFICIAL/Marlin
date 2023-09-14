@@ -1,9 +1,6 @@
-﻿using Marlin.SystemFiles;
-using Marlin.SystemFiles.Types;
+﻿using Marlin.SystemFiles.Types;
 using Newtonsoft.Json;
-using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace Marlin.Models.Main
 {

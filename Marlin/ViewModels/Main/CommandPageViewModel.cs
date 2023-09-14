@@ -48,7 +48,7 @@ namespace Marlin.ViewModels.Main
                 Context.CopyCommand = JsonConvert.DeserializeObject<Command>(JsonConvert.SerializeObject(Command.GetCommand(Context.SelectedId)));
             }
 
-            
+
 
             if (Context.SelectedId == -1)
             {
@@ -504,7 +504,7 @@ namespace Marlin.ViewModels.Main
                 return;
             }
 
-            if (isDuplicateName && Context.Command.Title!=Context.CopyCommand.Title)
+            if (isDuplicateName && Context.Command.Title != Context.CopyCommand.Title)
             {
                 Models.MessageBox.MakeMessage("Команда с таким именем уже существует", SystemFiles.Types.MessageType.Error);
                 return;

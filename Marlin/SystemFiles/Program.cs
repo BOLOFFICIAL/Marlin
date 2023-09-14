@@ -1,5 +1,4 @@
-﻿using Marlin.Models.Main;
-using Marlin.SystemFiles.Types;
+﻿using Marlin.SystemFiles.Types;
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -14,7 +13,7 @@ namespace Marlin.SystemFiles
 
         public static string[] Triggers = { "Фраза", "Время", "Запуск Marlin", "Запуск программы" };
 
-        public static string[] Objects = { "Фаил", "Папка", "Url"};
+        public static string[] Objects = { "Фаил", "Папка", "Url" };
 
         public static string[] ObjectActions = { "Открыть", "Закрыть", "Удалить" };
 
@@ -55,7 +54,7 @@ namespace Marlin.SystemFiles
             WinSystem.RunCmd(command);
         }
 
-        public static bool Authentication(string message, string error = "Введен неправильный пароль",bool check = false)
+        public static bool Authentication(string message, string error = "Введен неправильный пароль", bool check = false)
         {
             if (DateTime.Now - Context.LastCheckPassword > TimeSpan.FromSeconds(Context.Settings.TimeCheckPassword) || check)
             {

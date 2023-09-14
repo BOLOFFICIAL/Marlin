@@ -107,7 +107,7 @@ namespace Marlin.Models.Main
                         {
                             case "Открыть":
                                 result = $"Start \"\" ";
-                                if (command.Apppath.Length > 0) 
+                                if (command.Apppath.Length > 0)
                                 {
                                     result += $"\"{command.Apppath}\" ";
                                 }
@@ -120,7 +120,7 @@ namespace Marlin.Models.Main
                                 MessageBox.MakeMessage("Команда не доступна");
                                 break;
                         }
-                        
+
                     }
                     if (command.SelectedObject == "Папка")
                     {
@@ -130,7 +130,7 @@ namespace Marlin.Models.Main
                                 result = $"Start {command.Filepath}";
                                 break;
                         }
-                        
+
                     }
                     if (command.SelectedObject == "Url")
                     {

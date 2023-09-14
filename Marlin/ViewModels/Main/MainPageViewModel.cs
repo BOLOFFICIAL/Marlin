@@ -129,7 +129,7 @@ namespace Marlin.ViewModels.Main
                 }
                 WinSystem.RunCmd(command.ResultCommand);
             }
-            else 
+            else
             {
                 Models.MessageBox.MakeMessage("Не удалось найти команду", MessageType.Error);
             }

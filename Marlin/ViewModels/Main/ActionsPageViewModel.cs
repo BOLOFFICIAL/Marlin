@@ -184,10 +184,10 @@ namespace Marlin.ViewModels.Main
                         return;
                     }
                 }
-                else 
+                else
                 {
-                    Models.MessageBox.MakeMessage($"Вы действительно хотите удалить команду {command.Title}",MessageType.YesNoQuestion);
-                    if (Context.MessageBox.Answer == "No") 
+                    Models.MessageBox.MakeMessage($"Вы действительно хотите удалить команду {command.Title}", MessageType.YesNoQuestion);
+                    if (Context.MessageBox.Answer == "No")
                     {
                         return;
                     }

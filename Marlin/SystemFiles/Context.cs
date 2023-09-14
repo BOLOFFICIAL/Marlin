@@ -2,7 +2,6 @@
 using Marlin.Models.Main;
 using Marlin.SystemFiles.Types;
 using System;
-using System.Diagnostics;
 using System.Windows;
 
 namespace Marlin.SystemFiles
