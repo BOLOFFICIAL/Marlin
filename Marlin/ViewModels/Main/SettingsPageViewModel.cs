@@ -444,11 +444,11 @@ namespace Marlin.ViewModels.Main
                         }
                         if (Context.Settings.IsАutorun)
                         {
-                            Program.AddAutorun();
+                            Program.AddToStartup();
                         }
                         else
                         {
-                            Program.RemoveAutorun();
+                            Program.RemoveFromStartup();
                         }
 
                         if (Context.CopySettings.MainFolderPath != Context.Settings.MainFolderPath)

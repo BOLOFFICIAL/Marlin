@@ -1,4 +1,5 @@
 ﻿using Marlin.SystemFiles.Types;
+using Microsoft.Win32;
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -40,18 +41,61 @@ namespace Marlin.SystemFiles
             //}
         }
 
-        public static void AddAutorun()
+        public static void AddToStartup()
         {
-            string path = Process.GetCurrentProcess().MainModule.FileName;
-            string command = "reg add \"HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run\" /v Marlin /t REG_SZ /d " + $"{path}";
+            string appPath = Process.GetCurrentProcess().MainModule.FileName;
+            string appName = "Marlin";
+            try
+            {
+                RegistryKey startupKey = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
 
-            WinSystem.RunCmd(command);
+                if (startupKey != null)
+                {
+                    startupKey.SetValue(appName, appPath);
+                    startupKey.Close();
+                    Console.WriteLine("Программа успешно добавлена в автозапуск.");
+                }
+                else
+                {
+                    Console.WriteLine("Не удалось открыть ключ реестра.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Произошла ошибка: " + ex.Message);
+            }
         }
 
-        public static void RemoveAutorun()
+        public static void RemoveFromStartup()
         {
-            string command = $"reg delete \"HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run\" /v Marlin /f";
-            WinSystem.RunCmd(command);
+            string appName = "Marlin";
+            try
+            {
+                RegistryKey startupKey = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+
+                if (startupKey != null)
+                {
+                    if (startupKey.GetValue(appName) != null)
+                    {
+                        startupKey.DeleteValue(appName, false);
+                        Console.WriteLine("Программа успешно удалена из автозапуска.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Программа не найдена в автозапуске.");
+                    }
+
+                    startupKey.Close();
+                }
+                else
+                {
+                    Console.WriteLine("Не удалось открыть ключ реестра.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Произошла ошибка: " + ex.Message);
+            }
         }
 
         public static bool Authentication(string message, string error = "Введен неправильный пароль", bool check = false)

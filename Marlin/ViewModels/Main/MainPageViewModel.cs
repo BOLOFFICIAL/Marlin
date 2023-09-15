@@ -129,7 +129,7 @@ namespace Marlin.ViewModels.Main
                             return;
                         }
                     }
-                    WinSystem.RunCmd(command.ResultCommand);
+                    Marlin.Models.Main.Command.ExecuteCommand(command);
                 }
                 Command = "";
             }

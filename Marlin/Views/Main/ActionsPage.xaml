@@ -64,7 +64,8 @@
                         </ScrollViewer>
                     </Border>
 
-                    <Grid Grid.Row="1">
+                    <Grid Grid.Row="1"
+                          Margin="25,0,0,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto"/>
                             <ColumnDefinition Width="auto"/>

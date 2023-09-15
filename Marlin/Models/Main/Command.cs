@@ -1,14 +1,13 @@
 ﻿using Marlin.SystemFiles;
-using Marlin.SystemFiles.Types;
 using Newtonsoft.Json;
-using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Windows;
 
 namespace Marlin.Models.Main
 {
     public class Command
     {
-        public List<Trigger> Triggers = new List<Trigger>();
         public int id = 0;
         public string Title = "";
         public string Filepath = "";
@@ -32,6 +31,8 @@ namespace Marlin.Models.Main
         public string Y = "";
         public GridLength LengthObjectAction = GridLength.Auto;
         public GridLength LengthMultiSymbol = new GridLength(0, GridUnitType.Pixel);
+        public GridLength LengthFileName = new GridLength(0, GridUnitType.Pixel);
+        public GridLength LengthAppName = new GridLength(0, GridUnitType.Pixel);
         public GridLength LengthSymbolCode = GridLength.Auto;
         public GridLength LengthTextToSpeech = GridLength.Auto;
         public GridLength LengthPressingKeys = new GridLength(0, GridUnitType.Pixel);
@@ -43,16 +44,6 @@ namespace Marlin.Models.Main
         public GridLength LengthOwnActions = GridLength.Auto;
         public GridLength LengthReadyCmdCommand = new GridLength(0, GridUnitType.Pixel);
         public GridLength LengthCommandConstructor = GridLength.Auto;
-
-        public void AddTrigger(string value, TriggerType triggertype)
-        {
-            Triggers.Add(new Trigger
-            {
-                id = Context.Command.Triggers.Count,
-                value = value,
-                triggertype = triggertype,
-            });
-        }
 
         public static Command GetCommand(int Id)
         {
@@ -90,70 +81,103 @@ namespace Marlin.Models.Main
             }
         }
 
-        public static string MakeResultCommand(Command command)
-        {
-            string result = "";
-            if (command.SelectedAction == "Сделать свое действие")
-            {
-                if (command.IsReadyCmdCommand)
-                {
-                    result = command.CmdCommand;
-                }
-                else
-                {
-                    if (command.SelectedObject == "Фаил")
-                    {
-                        switch (command.SelectedObjectAction)
-                        {
-                            case "Открыть":
-                                result = $"Start \"\" ";
-                                if (command.Apppath.Length > 0)
-                                {
-                                    result += $"\"{command.Apppath}\" ";
-                                }
-                                result += $"\"{command.Filepath}\"";
-                                break;
-                            case "Закрыть":
-                                MessageBox.MakeMessage("Команда не доступна");
-                                break;
-                            case "Удалить":
-                                MessageBox.MakeMessage("Команда не доступна");
-                                break;
-                        }
+        //public static string MakeResultCommand(Command command)
+        //{
+        //    string result = "";
+        //    if (command.SelectedAction == "Сделать свое действие")
+        //    {
+        //        if (command.IsReadyCmdCommand)
+        //        {
+        //            result = command.CmdCommand;
+        //        }
+        //        else
+        //        {
+        //            if (command.SelectedObject == "Фаил")
+        //            {
+        //                switch (command.SelectedObjectAction)
+        //                {
+        //                    case "Открыть":
+        //                        result = $"Start \"\" ";
+        //                        if (command.Apppath.Length > 0)
+        //                        {
+        //                            result += $"\"{command.Apppath}\" ";
+        //                        }
+        //                        result += $"\"{command.Filepath}\"";
+        //                        break;
+        //                    case "Закрыть":
 
-                    }
-                    if (command.SelectedObject == "Папка")
-                    {
-                        switch (command.SelectedObjectAction)
-                        {
-                            case "Открыть":
-                                result = $"Start {command.Filepath}";
-                                break;
-                        }
+        //                        break;
+        //                    case "Удалить":
 
-                    }
-                    if (command.SelectedObject == "Url")
-                    {
-                        switch (command.SelectedObjectAction)
-                        {
-                            case "Открыть":
-                                result = $"\"{command.Apppath}\" {command.Filepath}";
-                                break;
-                        }
-                    }
-                }
-            }
-            if (Context.Command.SelectedAction == "Встроенные методы")
-            {
+        //                        break;
+        //                }
 
-            }
-            return result;
-        }
+        //            }
+        //            if (command.SelectedObject == "Папка")
+        //            {
+        //                switch (command.SelectedObjectAction)
+        //                {
+        //                    case "Открыть":
+        //                        result = $"Start {command.Filepath}";
+        //                        break;
+        //                }
+
+        //            }
+        //            if (command.SelectedObject == "Url")
+        //            {
+        //                switch (command.SelectedObjectAction)
+        //                {
+        //                    case "Открыть":
+        //                        result = $"\"{command.Apppath}\" {command.Filepath}";
+        //                        break;
+        //                }
+        //            }
+        //        }
+        //    }
+        //    if (Context.Command.SelectedAction == "Встроенные методы")
+        //    {
+
+        //    }
+        //    return result;
+        //}
 
         public static void AddCommand(Command command)
         {
             command.id = ProgramData.Commands.Count;
             ProgramData.Commands.Add(command);
+        }
+
+        public static void ExecuteCommand(Command command)
+        {
+            if (command.SelectedAction == "Сделать свое действие")
+            {
+                if (command.IsReadyCmdCommand)
+                {
+                    WinSystem.RunCmd(command.CmdCommand);
+                }
+                else
+                {
+                    if (command.SelectedObjectAction == "Открыть")
+                    {
+                        if (command.Apppath.Length > 0)
+                        {
+                            Process.Start(command.Apppath, command.Filepath);
+                        }
+                        else
+                        {
+                            Process.Start("explorer.exe", command.Filepath);
+                        }
+                    }
+                    if (command.SelectedObjectAction == "Закрыть")
+                    {
+
+                    }
+                    if (command.SelectedObjectAction == "Удалить")
+                    {
+                        File.Delete(command.Filepath);
+                    }
+                }
+            }
         }
 
         public bool Equals(Command otherCommand)

@@ -82,11 +82,11 @@ namespace Marlin.ViewModels.Window
         {
             if (Аutorun)
             {
-                Program.AddAutorun();
+                Program.AddToStartup();
             }
             else
             {
-                Program.RemoveAutorun();
+                Program.RemoveFromStartup();
             }
             Context.Settings.Password = Context.Settings.NewPassword;
             Context.Settings.NewPassword = "";

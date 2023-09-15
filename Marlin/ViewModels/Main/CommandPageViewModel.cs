@@ -23,12 +23,13 @@ namespace Marlin.ViewModels.Main
 
         public ICommand SelectFileCommand { get; }
         public ICommand SelectAppCommand { get; }
+        public ICommand DeleteAppCommand { get; }
 
         private StackPanel panel = new StackPanel();
 
         private string[] _objectActions = Program.ObjectActions;
 
-        private string _pagetitle = "Создание команды";
+        private string _pagetitle = "Новая команда";
 
         public CommandPageViewModel()
         {
@@ -37,6 +38,7 @@ namespace Marlin.ViewModels.Main
             AddTriggerCommand = new LambdaCommand(OnAddTriggerCommandExecuted);
             SelectFileCommand = new LambdaCommand(OnSelectFileCommandExecuted);
             SelectAppCommand = new LambdaCommand(OnSelectAppCommandExecuted);
+            DeleteAppCommand = new LambdaCommand(OnDeleteAppCommandExecuted);
 
             Context.Command = new Command();
             Context.CopyCommand = JsonConvert.DeserializeObject<Command>(JsonConvert.SerializeObject(Context.Command));
@@ -153,13 +155,35 @@ namespace Marlin.ViewModels.Main
         public string FileName
         {
             get => Context.Command.FileName;
-            set => Set(ref Context.Command.FileName, value);
+            set
+            {
+                Set(ref Context.Command.FileName, value);
+                if (FileName.Length == 0)
+                {
+                    LengthFileName = new GridLength(0, GridUnitType.Pixel);
+                }
+                else
+                {
+                    LengthFileName = GridLength.Auto;
+                }
+            }
         }
 
         public string AppName
         {
             get => Context.Command.AppName;
-            set => Set(ref Context.Command.AppName, value);
+            set
+            {
+                Set(ref Context.Command.AppName, value);
+                if (AppName.Length == 0)
+                {
+                    LengthAppName = new GridLength(0, GridUnitType.Pixel);
+                }
+                else
+                {
+                    LengthAppName = GridLength.Auto;
+                }
+            }
         }
 
         public string Url
@@ -355,10 +379,15 @@ namespace Marlin.ViewModels.Main
             get => Context.Command.SelectedObject;
             set
             {
-                Set(ref Context.Command.SelectedObject, value);
+                if (Set(ref Context.Command.SelectedObject, value))
+                {
+                    Context.Command.Filepath = "";
+                    FileName = "";
+                }
 
                 if (SelectedObject == "Фаил")
                 {
+                    ObjectActions = Program.ObjectActions;
                     LengthChoseObject = GridLength.Auto;
                     LengthInputUrl = new GridLength(0, GridUnitType.Pixel);
                     LengthObjectAction = GridLength.Auto;
@@ -374,15 +403,17 @@ namespace Marlin.ViewModels.Main
 
                 if (SelectedObject == "Папка")
                 {
+                    ObjectActions = Program.ObjectActionsSimple;
                     SelectedObjectAction = Program.ObjectActions[0];
                     LengthChoseObject = GridLength.Auto;
                     LengthInputUrl = new GridLength(0, GridUnitType.Pixel);
-                    LengthObjectAction = new GridLength(0, GridUnitType.Pixel);
+                    LengthObjectAction = GridLength.Auto;
                     LengthChoseApp = new GridLength(0, GridUnitType.Pixel);
                 }
 
                 if (SelectedObject == "Url")
                 {
+                    ObjectActions = Program.ObjectActions;
                     SelectedObjectAction = Program.ObjectActions[0];
                     LengthChoseObject = new GridLength(0, GridUnitType.Pixel);
                     LengthInputUrl = GridLength.Auto;
@@ -438,6 +469,18 @@ namespace Marlin.ViewModels.Main
             set => Set(ref Context.Command.LengthMultiSymbol, value);
         }
 
+        public GridLength LengthAppName
+        {
+            get => Context.Command.LengthAppName;
+            set => Set(ref Context.Command.LengthAppName, value);
+        }
+
+        public GridLength LengthFileName
+        {
+            get => Context.Command.LengthFileName;
+            set => Set(ref Context.Command.LengthFileName, value);
+        }
+
         public GridLength LengthSymbolCode
         {
             get => Context.Command.LengthSymbolCode;
@@ -487,12 +530,30 @@ namespace Marlin.ViewModels.Main
 
         private void OnButtonActionCommandExecuted(object p)
         {
-            Context.Command.ResultCommand = Command.MakeResultCommand(Context.Command);
+            if (ValidationCommand())
+            {
+                if (Context.SelectedId > -1)
+                {
+                    Command.SetCommand(Context.SelectedId, Context.Command);
+                }
 
+                else
+                {
+                    Command.AddCommand(Context.Command);
+                }
+
+                ProgramData.SaveData();
+
+                Program.SetPage(new ActionsPage());
+            }
+        }
+
+        private bool ValidationCommand()
+        {
             if (string.IsNullOrWhiteSpace(Context.Command.Title))
             {
                 Models.MessageBox.MakeMessage("Название команды не должно быть пустым", SystemFiles.Types.MessageType.Error);
-                return;
+                return false;
             }
 
             bool isDuplicate = ProgramData.Commands.Any(command => command.Equals(Context.Command));
@@ -501,28 +562,16 @@ namespace Marlin.ViewModels.Main
             if (isDuplicate)
             {
                 Models.MessageBox.MakeMessage("Такая команда уже существует", SystemFiles.Types.MessageType.Error);
-                return;
+                return false;
             }
 
             if (isDuplicateName && Context.Command.Title != Context.CopyCommand.Title)
             {
                 Models.MessageBox.MakeMessage("Команда с таким именем уже существует", SystemFiles.Types.MessageType.Error);
-                return;
+                return false;
             }
 
-            if (Context.SelectedId > -1)
-            {
-                Command.SetCommand(Context.SelectedId, Context.Command);
-            }
-
-            else
-            {
-                Command.AddCommand(Context.Command);
-            }
-
-            ProgramData.SaveData();
-
-            Program.SetPage(new ActionsPage());
+            return true;
         }
 
         private bool CanButtonActionCommandExecute(object p)
@@ -553,6 +602,8 @@ namespace Marlin.ViewModels.Main
 
                     if (Path.GetExtension(path) == ".exe")
                     {
+                        Context.Command.AppName = "";
+                        Context.Command.Apppath = "";
                         Context.Command.IsExe = true;
                         LengthChoseObject = GridLength.Auto;
                         LengthInputUrl = new GridLength(0, GridUnitType.Pixel);
@@ -573,6 +624,8 @@ namespace Marlin.ViewModels.Main
             if (SelectedObject == "Папка")
             {
                 CommonOpenFileDialog folderPicker = new CommonOpenFileDialog();
+
+                ObjectActions = Program.ObjectActionsSimple;
 
                 folderPicker.IsFolderPicker = true;
                 folderPicker.Title = "Выбор папки для хранения данных";
@@ -612,6 +665,12 @@ namespace Marlin.ViewModels.Main
                 Context.Command.Apppath = path;
                 AppName = System.IO.Path.GetFileName(path);
             }
+        }
+
+        public void OnDeleteAppCommandExecuted(object p)
+        {
+            AppName = "";
+            Context.Command.Apppath = "";
         }
     }
 }

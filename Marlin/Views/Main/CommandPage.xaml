@@ -54,7 +54,8 @@
                             <RowDefinition Height ="auto"/>
                         </Grid.RowDefinitions>
 
-                        <Grid Grid.Row="0">
+                        <Grid Grid.Row="0"
+                              Margin="0,0,0,10">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto"/>
                                 <ColumnDefinition Width="*"/>
@@ -95,7 +96,7 @@
                         </Grid>
 
                         <Grid Grid.Row="1"
-                              Margin="0,10,0,0">
+                              Margin="0,10">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto"/>
                                 <ColumnDefinition Width="auto"/>
@@ -110,14 +111,15 @@
                                        Text="Действие:"/>
 
                             <Grid Grid.Column="1"
-                                  Margin="0,1,0,0">
+                                  Margin="0,0,0,0">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*"/>
                                     <RowDefinition Height="{Binding Path=LengthOwnActions,UpdateSourceTrigger=PropertyChanged}"/>
                                     <RowDefinition Height="{Binding Path=LengthEmbeddedActions,UpdateSourceTrigger=PropertyChanged}"/>
                                 </Grid.RowDefinitions>
 
-                                <Grid Grid.Row="0">
+                                <Grid Grid.Row="0"
+                                      Margin="0,1,0,0">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="auto"/>
                                         <ColumnDefinition Width="auto"/>
@@ -127,7 +129,6 @@
                                                Margin="0,0,10,0"
                                                FontSize="15"
                                                VerticalAlignment="Center"
-                                               FontWeight="Bold"
                                                Foreground="{Binding Path=FontColor,UpdateSourceTrigger=PropertyChanged}"
                                                Text="Выберите действие"/> <!--создать свое действие\использовать встроенные методы--> 
 
@@ -146,43 +147,42 @@
 
                                     <!--Выбор моздавать или нет команду-->
                                     <Grid Grid.Row="0"
-                                          Margin="0,10">
+                                          Margin="0,5,0,10">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="auto"/>
                                             <ColumnDefinition Width="auto"/>
                                         </Grid.ColumnDefinitions>
 
                                         <TextBlock Grid.Column="0" 
-                                                       Margin="0,0,10,0"
+                                                       Margin="0,10,10,0"
                                                        FontSize="15"
                                                        VerticalAlignment="Center"
-                                                       FontWeight="Bold"
                                                        Foreground="{Binding Path=FontColor,UpdateSourceTrigger=PropertyChanged}"
                                                        Text="Готовая команда cmd"/>
 
                                         <CheckBox Grid.Column="1"
+                                                  Margin="0,10,0,0"
                                                   IsChecked="{Binding Path=IsReadyCmdCommand,UpdateSourceTrigger=PropertyChanged}"
                                                   VerticalAlignment="Center"/>
                                     </Grid>
                                     <!--Готовая команда cmd-->
                                     <Grid Grid.Row="1"
-                                          Margin="0,4,0,10">
+                                          Margin="0,4,0,5">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="auto"/>
                                             <ColumnDefinition Width="auto"/>
                                         </Grid.ColumnDefinitions>
 
                                         <TextBlock Grid.Column="0"  
-                                                   Margin="0,0,10,0"
+                                                   Margin="0,5,10,0"
                                                    FontSize="15"
                                                    VerticalAlignment="Center"
-                                                   FontWeight="Bold"
                                                    Foreground="{Binding Path=FontColor,UpdateSourceTrigger=PropertyChanged}"
                                                    Text="Введите команду cmd"/>
 
                                         <TextBox Grid.Column="1"
                                                  MinWidth="100"
-                                                 Margin="0,0,10,0"
+                                                 Margin="0,5,10,0"
                                                  FontSize="15"
                                                  Padding="10,0"
                                                  HorizontalContentAlignment="Center"
@@ -207,27 +207,28 @@
                                             
                                             <TextBlock Grid.Column="0" 
                                                        FontSize="15"
-                                                       Margin="0,0,10,0"
+                                                       Margin="0,5,10,0"
                                                        VerticalAlignment="Center"
                                                        Foreground="{Binding Path=FontColor,UpdateSourceTrigger=PropertyChanged}"
                                                        Text="Выберите тип объекта"/>
 
                                             <ComboBox Grid.Column="1"
                                                       FontSize="15"
+                                                      Padding="10,10,10,5"
                                                       SelectedValue="{Binding Path=SelectedObject,UpdateSourceTrigger=PropertyChanged}"
                                                       ItemsSource="{Binding Path=Objects,UpdateSourceTrigger=PropertyChanged}"/>
                                         </Grid>
 
                                         <Grid Grid.Row="1"
-                                              Margin="0,10,0,5">
+                                              Margin="0,5,0,5">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="auto"/>
-                                                <ColumnDefinition Width="auto"/>
+                                                <ColumnDefinition Width="{Binding Path=LengthFileName}"/>
                                             </Grid.ColumnDefinitions>
 
                                             <Button Grid.Column="0" 
                                                     FontSize="15"
-                                                    Margin="0,0,10,0"
+                                                    Margin="0,10,10,0"
                                                     VerticalAlignment="Center"
                                                     Command="{Binding Path=SelectFileCommand,UpdateSourceTrigger=PropertyChanged}"
                                                     Foreground="{Binding Path=ExternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
@@ -236,7 +237,8 @@
                                             <TextBox Grid.Column="1"
                                                      MinWidth="100"
                                                      FontSize="15"
-                                                     Padding="10,0"
+                                                     MaxWidth="250"
+                                                     Padding="10,15,10,5"
                                                      IsReadOnly="True"
                                                      HorizontalContentAlignment="Center"
                                                      VerticalAlignment="Center"
@@ -252,7 +254,7 @@
 
                                             <TextBlock Grid.Column="0" 
                                                        FontSize="15"
-                                                       Margin="0,0,10,0"
+                                                       Margin="0,5,10,5"
                                                        VerticalAlignment="Center"
                                                        Foreground="{Binding Path=FontColor,UpdateSourceTrigger=PropertyChanged}"
                                                        Text="Введите URL"/>
@@ -267,7 +269,7 @@
                                         </Grid> <!--Введите URL-->
 
                                         <Grid Grid.Row="3"
-                                              Margin="0,5,0,10">
+                                              Margin="0,0,0,5">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="auto"/>
                                                 <ColumnDefinition Width="auto"/>
@@ -275,13 +277,14 @@
 
                                             <TextBlock Grid.Column="0" 
                                                            FontSize="15"
-                                                           Margin="0,0,10,0"
+                                                           Margin="0,10,10,0"
                                                            VerticalAlignment="Center"
                                                            Foreground="{Binding Path=FontColor,UpdateSourceTrigger=PropertyChanged}"
                                                            Text="Действие с объектом"/>
 
                                             <ComboBox Grid.Column="1"
                                                       FontSize="15"
+                                                      Padding="10,15,10,5"
                                                       SelectedValue="{Binding Path=SelectedObjectAction,UpdateSourceTrigger=PropertyChanged}"
                                                       ItemsSource="{Binding Path=ObjectActions,UpdateSourceTrigger=PropertyChanged}"/>
                                         </Grid> <!--Действие с объектом-->
@@ -290,12 +293,13 @@
                                               Margin="0,0,0,10">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="auto"/>
-                                                <ColumnDefinition Width="auto"/>
+                                                <ColumnDefinition Width="{Binding Path=LengthAppName}"/>
+                                                <ColumnDefinition Width="{Binding Path=LengthAppName}"/>
                                             </Grid.ColumnDefinitions>
 
                                             <Button Grid.Column="0" 
                                                     FontSize="15"
-                                                    Margin="0,0,10,0"
+                                                    Margin="0,10,10,0"
                                                     Command="{Binding Path=SelectAppCommand,UpdateSourceTrigger=PropertyChanged}"
                                                     VerticalAlignment="Center"
                                                     Foreground="{Binding Path=ExternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
@@ -304,11 +308,25 @@
                                             <TextBox Grid.Column="1"
                                                      MinWidth="100"
                                                      FontSize="15"
-                                                     Padding="10,0"
+                                                     MaxWidth="250"
+                                                     Margin="0,0,5,0"
+                                                     Padding="10,15,10,5"
                                                      IsReadOnly="True"
                                                      HorizontalContentAlignment="Center"
                                                      VerticalAlignment="Center"
                                                      Text="{Binding Path=AppName,UpdateSourceTrigger=PropertyChanged}"/>
+
+                                            <Button Grid.Column="2"
+                                                    BorderThickness="0"
+                                                    FontSize="15"
+                                                    Margin="0,10,0,0"
+                                                    Padding="0"
+                                                    FontWeight="Bold"
+                                                    BorderBrush="Transparent"
+                                                    Foreground="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
+                                                    Background="Transparent"
+                                                    Command="{Binding Path=DeleteAppCommand}"
+                                                    Content="✖"/>
                                         </Grid> <!--Выберите программу для запуска-->
                                     </Grid>
                                 </Grid>
@@ -512,14 +530,14 @@
 
                             <TextBlock Grid.Column="0"
                                        FontSize="20"
-                                       Margin="10,0"
+                                       Margin="10,5,10,0"
                                        VerticalAlignment="Top"
                                        FontWeight="Bold"
                                        Foreground="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                                        Text="Взаимодействие:"/>
 
                             <Grid Grid.Column="1"
-                                  Margin="0,5">
+                                  Margin="0,10,0,10">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="auto"/>
                                     <ColumnDefinition Width="auto"/>
@@ -528,7 +546,6 @@
                                 <TextBlock Grid.Column="0"  
                                                FontSize="15"
                                                Margin="0,0,10,0"
-                                               FontWeight="Bold"
                                                Foreground="{Binding Path=FontColor,UpdateSourceTrigger=PropertyChanged}"
                                                Text="Защитить паролем"/>
 
@@ -537,8 +554,7 @@
                             </Grid>
                         </Grid>
 
-                        <Grid Grid.Row="3"
-                              Margin="0,10">
+                        <Grid Grid.Row="3">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto"/>
                                 <ColumnDefinition Width="*"/>
@@ -546,7 +562,7 @@
 
                             <TextBlock Grid.Column="0"
                                        FontSize="20"
-                                       Margin="10,0"
+                                       Margin="10"
                                        VerticalAlignment="Top"
                                        FontWeight="Bold"
                                        Foreground="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
@@ -555,7 +571,7 @@
                             <TextBox Grid.Column="1"
                                      FontSize="15"
                                      MinWidth="100"
-                                     Padding="10,5"
+                                     Padding="10,15,10,5"
                                      TextWrapping="Wrap"
                                      Text="{Binding Path=Comment,UpdateSourceTrigger=PropertyChanged}"/>
                         </Grid>
@@ -563,7 +579,8 @@
                 </ScrollViewer>
             </Border>
 
-            <Grid Grid.Row="2">
+            <Grid Grid.Row="2"
+                  Margin="25,0,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="auto"/>
