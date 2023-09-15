@@ -599,6 +599,7 @@ namespace Marlin.ViewModels.Main
                     string path = openFileDialog.FileName;
                     Context.Command.Filepath = path;
                     FileName = System.IO.Path.GetFileName(path);
+                    SelectedObjectAction = Program.ObjectActions[0];
 
                     if (Path.GetExtension(path) == ".exe")
                     {
@@ -617,7 +618,6 @@ namespace Marlin.ViewModels.Main
                         Context.Command.IsExe = false;
                         SelectedObject = "Фаил";
                         ObjectActions = Program.ObjectActionsSimple;
-
                     }
                 }
             }
