@@ -56,11 +56,11 @@ namespace Marlin.ViewModels.Main
             {
                 if (ProgramData.Commands.Count > 0)
                 {
-                    Title = "Команда " + (ProgramData.Commands[ProgramData.Commands.Count - 1].id + 1).ToString();
+                    Title = "Команда" + (ProgramData.Commands[ProgramData.Commands.Count - 1].id + 1).ToString(); //lоделать чтоб он ориентировлся на id последнего а не на колличество
                 }
                 else
                 {
-                    Title = "Команда " + Context.Command.id.ToString();
+                    Title = "Команда" + Context.Command.id.ToString();
                 }
             }
         }

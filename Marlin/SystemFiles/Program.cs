@@ -53,16 +53,15 @@ namespace Marlin.SystemFiles
                 {
                     startupKey.SetValue(appName, appPath);
                     startupKey.Close();
-                    Console.WriteLine("Программа успешно добавлена в автозапуск.");
                 }
                 else
                 {
-                    Console.WriteLine("Не удалось открыть ключ реестра.");
+                    Models.MessageBox.MakeMessage("Не удалось открыть ключ реестра.", MessageType.Error);
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Произошла ошибка: " + ex.Message);
+                Models.MessageBox.MakeMessage("Произошла ошибка добавления Marlin в автозагрузку",MessageType.Error);
             }
         }
 
@@ -78,23 +77,17 @@ namespace Marlin.SystemFiles
                     if (startupKey.GetValue(appName) != null)
                     {
                         startupKey.DeleteValue(appName, false);
-                        Console.WriteLine("Программа успешно удалена из автозапуска.");
                     }
-                    else
-                    {
-                        Console.WriteLine("Программа не найдена в автозапуске.");
-                    }
-
                     startupKey.Close();
                 }
                 else
                 {
-                    Console.WriteLine("Не удалось открыть ключ реестра.");
+                    Models.MessageBox.MakeMessage("Не удалось открыть ключ реестра.", MessageType.Error);
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Произошла ошибка: " + ex.Message);
+                Models.MessageBox.MakeMessage("Произошла ошибка добавления Marlin в автозагрузку", MessageType.Error);
             }
         }
 
@@ -120,9 +113,9 @@ namespace Marlin.SystemFiles
             }
         }
 
-        public static void ChangePassword(string newpassword)
+        public static void ChangePassword()
         {
-            Context.Settings.Password = newpassword;
+            Context.Settings.Password = Context.Settings.NewPassword;
         }
     }
 }

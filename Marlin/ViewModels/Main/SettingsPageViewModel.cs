@@ -440,7 +440,7 @@ namespace Marlin.ViewModels.Main
                     {
                         if (Context.Settings.NewPassword.Length > 0)
                         {
-                            Program.ChangePassword(Context.Settings.NewPassword);
+                            Program.ChangePassword();
                         }
                         if (Context.Settings.IsАutorun)
                         {
@@ -466,7 +466,7 @@ namespace Marlin.ViewModels.Main
                 }
                 else
                 {
-                    Program.ChangePassword(Context.Settings.NewPassword);
+                    Program.ChangePassword();
                     Settings.SaveSettings(Context.CopySettings.Theme.PageColor != Context.Settings.Theme.PageColor);
                 }
             }
