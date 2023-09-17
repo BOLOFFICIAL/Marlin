@@ -88,7 +88,7 @@ namespace Marlin.Models.Main
             {
                 command.id = ProgramData.Commands[ProgramData.Commands.Count - 1].id + 1;
             }
-            else 
+            else
             {
                 command.id = 1;
             }

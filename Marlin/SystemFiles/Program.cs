@@ -61,7 +61,7 @@ namespace Marlin.SystemFiles
             }
             catch (Exception ex)
             {
-                Models.MessageBox.MakeMessage("Произошла ошибка добавления Marlin в автозагрузку",MessageType.Error);
+                Models.MessageBox.MakeMessage("Произошла ошибка добавления Marlin в автозагрузку", MessageType.Error);
             }
         }
 

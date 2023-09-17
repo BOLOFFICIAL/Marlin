@@ -355,7 +355,7 @@ namespace Marlin.ViewModels.Main
 
             if (Context.Action == ActionType.Script)
             {
-                
+
             }
 
         }

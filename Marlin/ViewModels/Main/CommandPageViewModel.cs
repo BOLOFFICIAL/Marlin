@@ -47,8 +47,8 @@ namespace Marlin.ViewModels.Main
             {
                 Context.Command = JsonConvert.DeserializeObject<Command>(JsonConvert.SerializeObject(Command.GetCommand(Context.SelectedId)));
                 PageTitle = Context.Command.Title;
-                Context.CopyCommand = JsonConvert.DeserializeObject<Command>(JsonConvert.SerializeObject(Command.GetCommand(Context.SelectedId)));
                 SelectedObject = Context.Command.SelectedObject;
+                Context.CopyCommand = JsonConvert.DeserializeObject<Command>(JsonConvert.SerializeObject(Command.GetCommand(Context.SelectedId)));
             }
 
             if (Context.SelectedId == -1)
