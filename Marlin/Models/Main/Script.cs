@@ -1,9 +1,7 @@
 ﻿using Marlin.SystemFiles;
 using Newtonsoft.Json;
-using System.Diagnostics;
-using System.IO;
-using System;
-using System.Windows.Controls;
+using System.Collections.Generic;
+using System.Windows;
 
 namespace Marlin.Models.Main
 {
@@ -13,6 +11,8 @@ namespace Marlin.Models.Main
         public string Title = "";
         public bool Checkpuss = false;
         public string Comment = "";
+        public List<string> Commands = new();
+        public GridLength LengthPanel = new GridLength(0, GridUnitType.Pixel);
 
         public static Script GetScript(int Id)
         {

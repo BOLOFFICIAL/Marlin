@@ -133,7 +133,7 @@ namespace Marlin.ViewModels.Main
                         TitleAbout = textBox.Text;
                         if (Context.Action == ActionType.Command)
                         {
-                            var command = Command.GetCommand(textBox.Text);
+                            var command = Models.Main.Command.GetCommand(textBox.Text);
                             if (command.Comment.Length > 0)
                             {
                                 if (command.Checkpuss)
@@ -193,7 +193,7 @@ namespace Marlin.ViewModels.Main
             Context.SelectedId = (int)p;
             if (Context.Action == ActionType.Command)
             {
-                if (Command.GetCommand(Context.SelectedId).Checkpuss)
+                if (Models.Main.Command.GetCommand(Context.SelectedId).Checkpuss)
                 {
                     if (!Program.Authentication("Для открытия содержимого введите пароль"))
                     {
@@ -220,7 +220,7 @@ namespace Marlin.ViewModels.Main
             Context.SelectedId = (int)p;
             if (Context.Action == ActionType.Command)
             {
-                var command = Command.GetCommand(Context.SelectedId);
+                var command = Models.Main.Command.GetCommand(Context.SelectedId);
                 var check = command.Checkpuss;
                 if (check)
                 {
@@ -238,7 +238,7 @@ namespace Marlin.ViewModels.Main
                     }
                 }
                 LengthAbout = new GridLength(0, GridUnitType.Star);
-                Context.ProgramData.Commands.Remove(Command.GetCommand(Context.SelectedId));
+                Context.ProgramData.Commands.Remove(Models.Main.Command.GetCommand(Context.SelectedId));
                 ProgramData.SaveData();
                 LoadActions();
             }
@@ -273,7 +273,7 @@ namespace Marlin.ViewModels.Main
             Context.SelectedId = (int)p;
             if (Context.Action == ActionType.Command)
             {
-                var command = Command.GetCommand(Context.SelectedId);
+                var command = Models.Main.Command.GetCommand(Context.SelectedId);
                 if (command.Checkpuss)
                 {
                     if (!Program.Authentication("Для запуска комманды необходимо подтвердить пароль"))
@@ -319,81 +319,12 @@ namespace Marlin.ViewModels.Main
             {
                 foreach (var command in Context.ProgramData.Commands)
                 {
-                    Border border = new Border
-                    {
-                        Margin = new Thickness(6, 3, 6, 3),
-                        Padding = new Thickness(0),
-                        BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.PageColor)),
-                        Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.ExternalBackgroundColor)),
-                        BorderThickness = new Thickness(2),
-                        CornerRadius = new CornerRadius(20)
-                    };
-
-                    border.MouseLeftButtonDown += Border_MouseLeftButtonDown;
-
-                    Grid grid = new Grid();
-                    grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-                    grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-                    grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-                    grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-                    TextBlock textBlock = new TextBlock
-                    {
-                        FontSize = 15,
-                        FontWeight = FontWeights.Bold,
-                        Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.FontColor)),
-                        VerticalAlignment = VerticalAlignment.Center,
-                        HorizontalAlignment = HorizontalAlignment.Center,
-                        Padding = new Thickness(10, 10, 10, 10),
-                        Text = command.Title
-                    };
-                    Button buttonDelete = new Button
-                    {
-                        Margin = new Thickness(0, 5, 5, 5),
-                        Padding = new Thickness(5, 0, 5, 4),
-                        Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.FontColor)),
-                        BorderBrush = new SolidColorBrush(Colors.Transparent),
-                        Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.PageColor)),
-                        Height = 30,
-                        Command = DeleteActionCommand,
-                        CommandParameter = command.id,
-                        HorizontalAlignment = HorizontalAlignment.Right,
-                        Content = "Удалить"
-                    };
-                    Button buttonRun = new Button
-                    {
-                        Margin = new Thickness(0, 5, 5, 5),
-                        Padding = new Thickness(5, 0, 5, 4),
-                        Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.FontColor)), // Установите нужный цвет текста кнопки
-                        BorderBrush = new SolidColorBrush(Colors.Transparent), // Установите нужный цвет границы кнопки
-                        Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.PageColor)), // Установите нужный цвет фона кнопки
-                        Height = 30,
-                        Command = RunActionCommand,
-                        CommandParameter = command.id,
-                        HorizontalAlignment = HorizontalAlignment.Right,
-                        Content = "Запустить"
-                    };
-                    Button buttonEdit = new Button
-                    {
-                        Margin = new Thickness(0, 5, 20, 5),
-                        Padding = new Thickness(0, 0, 0, 4),
-                        Width = 33,
-                        Command = EditActionCommand,
-                        CommandParameter = command.id,
-                        Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.FontColor)), // Установите нужный цвет текста кнопки
-                        BorderBrush = new SolidColorBrush(Colors.Transparent), // Установите нужный цвет границы кнопки
-                        Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.PageColor)), // Установите нужный цвет фона кнопки
-                        Height = 30,
-                        HorizontalAlignment = HorizontalAlignment.Right,
-                        Content = "✏️"
-                    };
-                    Grid.SetColumn(textBlock, 0);
-                    Grid.SetColumn(buttonDelete, 1);
-                    Grid.SetColumn(buttonRun, 2);
-                    Grid.SetColumn(buttonEdit, 3);
-                    grid.Children.Add(textBlock);
-                    grid.Children.Add(buttonDelete);
-                    grid.Children.Add(buttonRun);
-                    grid.Children.Add(buttonEdit);
+                    var border = CreateBorder();
+                    var textBlock = CreateTextBlock(command.Title);
+                    var buttonDelete = CreateButton(DeleteActionCommand, command.id, "Удалить");
+                    var buttonRun = CreateButton(RunActionCommand, command.id, "Запустить");
+                    var buttonEdit = CreateButton(EditActionCommand, command.id, "✏️");
+                    var grid = CreateGrid(textBlock, buttonDelete, buttonRun, buttonEdit);
                     border.Child = grid;
                     panel.Children.Add(border);
                 }
@@ -403,84 +334,87 @@ namespace Marlin.ViewModels.Main
             {
                 foreach (var script in Context.ProgramData.Scripts)
                 {
-                    Border border = new Border
-                    {
-                        Margin = new Thickness(6, 3, 6, 3),
-                        Padding = new Thickness(0),
-                        BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.PageColor)),
-                        Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.ExternalBackgroundColor)),
-                        BorderThickness = new Thickness(2),
-                        CornerRadius = new CornerRadius(20)
-                    };
-
-                    border.MouseLeftButtonDown += Border_MouseLeftButtonDown;
-
-                    Grid grid = new Grid();
-                    grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-                    grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-                    grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-                    grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-                    TextBlock textBlock = new TextBlock
-                    {
-                        FontSize = 15,
-                        FontWeight = FontWeights.Bold,
-                        Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.FontColor)),
-                        VerticalAlignment = VerticalAlignment.Center,
-                        HorizontalAlignment = HorizontalAlignment.Center,
-                        Padding = new Thickness(10, 10, 10, 10),
-                        Text = script.Title
-                    };
-                    Button buttonDelete = new Button
-                    {
-                        Margin = new Thickness(0, 5, 5, 5),
-                        Padding = new Thickness(5, 0, 5, 4),
-                        Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.FontColor)),
-                        BorderBrush = new SolidColorBrush(Colors.Transparent),
-                        Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.PageColor)),
-                        Height = 30,
-                        Command = DeleteActionCommand,
-                        CommandParameter = script.id,
-                        HorizontalAlignment = HorizontalAlignment.Right,
-                        Content = "Удалить"
-                    };
-                    Button buttonRun = new Button
-                    {
-                        Margin = new Thickness(0, 5, 5, 5),
-                        Padding = new Thickness(5, 0, 5, 4),
-                        Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.FontColor)), // Установите нужный цвет текста кнопки
-                        BorderBrush = new SolidColorBrush(Colors.Transparent), // Установите нужный цвет границы кнопки
-                        Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.PageColor)), // Установите нужный цвет фона кнопки
-                        Height = 30,
-                        Command = RunActionCommand,
-                        CommandParameter = script.id,
-                        HorizontalAlignment = HorizontalAlignment.Right,
-                        Content = "Запустить"
-                    };
-                    Button buttonEdit = new Button
-                    {
-                        Margin = new Thickness(0, 5, 20, 5),
-                        Padding = new Thickness(0, 0, 0, 4),
-                        Width = 33,
-                        Command = EditActionCommand,
-                        CommandParameter = script.id,
-                        Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.FontColor)), // Установите нужный цвет текста кнопки
-                        BorderBrush = new SolidColorBrush(Colors.Transparent), // Установите нужный цвет границы кнопки
-                        Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.PageColor)), // Установите нужный цвет фона кнопки
-                        Height = 30,
-                        HorizontalAlignment = HorizontalAlignment.Right,
-                        Content = "✏️"
-                    };
-                    Grid.SetColumn(textBlock, 0);
-                    Grid.SetColumn(buttonDelete, 1);
-                    Grid.SetColumn(buttonRun, 2);
-                    Grid.SetColumn(buttonEdit, 3);
-                    grid.Children.Add(textBlock);
-                    grid.Children.Add(buttonDelete);
-                    grid.Children.Add(buttonRun);
-                    grid.Children.Add(buttonEdit);
+                    var border = CreateBorder();
+                    var textBlock = CreateTextBlock(script.Title);
+                    var buttonDelete = CreateButton(DeleteActionCommand, script.id, "Удалить");
+                    var buttonRun = CreateButton(RunActionCommand, script.id, "Запустить");
+                    var buttonEdit = CreateButton(EditActionCommand, script.id, "✏️");
+                    var grid = CreateGrid(textBlock, buttonDelete, buttonRun, buttonEdit);
                     border.Child = grid;
                     panel.Children.Add(border);
                 }
+            }
+
+            Border CreateBorder()
+            {
+                Border border = new Border
+                {
+                    Margin = new Thickness(6, 3, 6, 3),
+                    Padding = new Thickness(0, 0, 10, 0),
+                    BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.PageColor)),
+                    Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.ExternalBackgroundColor)),
+                    BorderThickness = new Thickness(2),
+                    CornerRadius = new CornerRadius(20)
+                };
+
+                border.MouseLeftButtonDown += Border_MouseLeftButtonDown;
+
+                return border;
+            }
+
+            Grid CreateGrid(TextBlock textBlock, Button buttonDelete, Button buttonRun, Button buttonEdit)
+            {
+                Grid.SetColumn(textBlock, 0);
+                Grid.SetColumn(buttonDelete, 1);
+                Grid.SetColumn(buttonRun, 2);
+                Grid.SetColumn(buttonEdit, 3);
+
+                Grid grid = new Grid();
+                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+                grid.Children.Add(textBlock);
+                grid.Children.Add(buttonDelete);
+                grid.Children.Add(buttonRun);
+                grid.Children.Add(buttonEdit);
+
+                return grid;
+            }
+
+            TextBlock CreateTextBlock(string title)
+            {
+                TextBlock textBlock = new TextBlock
+                {
+                    FontSize = 15,
+                    FontWeight = FontWeights.Bold,
+                    Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.FontColor)),
+                    VerticalAlignment = VerticalAlignment.Center,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    Padding = new Thickness(10, 10, 10, 10),
+                    Text = title
+                };
+
+                return textBlock;
+            }
+
+            Button CreateButton(ICommand command, int id, string content)
+            {
+                Button button = new Button
+                {
+                    Margin = new Thickness(0, 5, 5, 5),
+                    Padding = new Thickness(5, 0, 5, 4),
+                    Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.ExternalBackgroundColor)),
+                    BorderBrush = new SolidColorBrush(Colors.Transparent),
+                    Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.PageColor)),
+                    Height = 30,
+                    Command = command,
+                    CommandParameter = id,
+                    HorizontalAlignment = HorizontalAlignment.Right,
+                    Content = content
+                };
+
+                return button;
             }
         }
     }

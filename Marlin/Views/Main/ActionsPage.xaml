@@ -125,7 +125,7 @@
                                            FontSize="15"
                                            Padding="10"
                                            HorizontalAlignment="Stretch"
-                                           TextWrapping="WrapWithOverflow"/>
+                                           TextWrapping="Wrap"/>
                             </ScrollViewer>
                         </Grid>
                     </Border>

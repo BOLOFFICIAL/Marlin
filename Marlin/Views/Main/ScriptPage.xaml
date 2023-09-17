@@ -109,7 +109,26 @@
                                        Foreground="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                                        Text="Действие:"/>
 
+                            <Grid Grid.Column="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height ="{Binding Path=LengthPanel}"/>
+                                    <RowDefinition Height ="auto"/>
+                                </Grid.RowDefinitions>
+
+                                <ScrollViewer Grid.Row="0"
+                                              HorizontalAlignment="Left"
+                                              VerticalScrollBarVisibility="Hidden"
+                                              Margin="0,0,0,10"
+                                              Content="{Binding Path=StackPanel,UpdateSourceTrigger=PropertyChanged}"/>
                             
+                                <Button Grid.Row="1"
+                                        BorderThickness="0"
+                                        BorderBrush="Transparent"
+                                        Command="{Binding Path=AddActionCommand}"
+                                        Foreground="{Binding Path=ExternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
+                                        Background="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
+                                        Content="Добавить действие"/>
+                            </Grid>
                         </Grid>
 
                         <Grid Grid.Row="2"

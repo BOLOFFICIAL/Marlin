@@ -173,5 +173,10 @@ namespace Marlin.Models.Main
             }
             return true;
         }
+
+        public override string ToString()
+        {
+            return Title;
+        }
     }
 }
