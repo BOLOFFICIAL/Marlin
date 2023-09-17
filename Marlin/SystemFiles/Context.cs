@@ -16,13 +16,16 @@ namespace Marlin.SystemFiles
         public static Command CopyCommand = new();
         public static Command Command = new();
 
+        public static Script CopyScript = new();
+        public static Script Script = new();
+
         public static Window Window = new();
         public static Window MainWindow = new();
 
         public static ActionType Action;
         public static int SelectedId = -1;
 
-        public static int SelectredIdTrigger = -1;
+        public static ProgramData ProgramData = new();
 
         public static DateTime LastCheckPassword = DateTime.MinValue;
     }

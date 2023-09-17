@@ -48,7 +48,7 @@ namespace Marlin.Models.Main
 
         public static Command GetCommand(int Id)
         {
-            foreach (var command in ProgramData.Commands)
+            foreach (var command in Context.ProgramData.Commands)
             {
                 if (command.id == Id)
                 {
@@ -60,7 +60,7 @@ namespace Marlin.Models.Main
 
         public static Command GetCommand(string Title)
         {
-            foreach (var command in ProgramData.Commands)
+            foreach (var command in Context.ProgramData.Commands)
             {
                 if (command.Title == Title)
                 {
@@ -72,11 +72,11 @@ namespace Marlin.Models.Main
 
         public static void SetCommand(int id, Command newCommand)
         {
-            for (int i = 0; i < ProgramData.Commands.Count; i++)
+            for (int i = 0; i < Context.ProgramData.Commands.Count; i++)
             {
-                if (ProgramData.Commands[i].id == id)
+                if (Context.ProgramData.Commands[i].id == id)
                 {
-                    ProgramData.Commands[i] = newCommand;
+                    Context.ProgramData.Commands[i] = newCommand;
                     return;
                 }
             }
@@ -84,15 +84,15 @@ namespace Marlin.Models.Main
 
         public static void AddCommand(Command command)
         {
-            if (ProgramData.Commands.Count > 0)
+            if (Context.ProgramData.Commands.Count > 0)
             {
-                command.id = ProgramData.Commands[ProgramData.Commands.Count - 1].id + 1;
+                command.id = Context.ProgramData.Commands[Context.ProgramData.Commands.Count - 1].id + 1;
             }
             else
             {
                 command.id = 1;
             }
-            ProgramData.Commands.Add(command);
+            Context.ProgramData.Commands.Add(command);
         }
 
         public static void ExecuteCommand(Command command)

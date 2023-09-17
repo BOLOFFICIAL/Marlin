@@ -11,13 +11,13 @@ namespace Marlin.SystemFiles
 {
     public class ProgramData
     {
-        public static List<Command> Commands = new();
-        public static List<Script> Scripts = new();
+        public List<Command> Commands = new();
+        public List<Script> Scripts = new();
 
         public static async Task SaveData()
         {
             string filepath = System.IO.Path.Combine(Context.Settings.MainFolderPath, "MarlinProgramData.json");
-            string programdata = JsonConvert.SerializeObject(Commands);
+            string programdata = JsonConvert.SerializeObject(Context.ProgramData);
             try
             {
                 using (var sw = new StreamWriter(filepath))
@@ -49,7 +49,7 @@ namespace Marlin.SystemFiles
                     {
                         return;
                     }
-                    ProgramData.Commands = JsonConvert.DeserializeObject<List<Command>>(programdata);
+                    Context.ProgramData = JsonConvert.DeserializeObject<ProgramData>(programdata);
                 }
                 catch (Exception)
                 {
@@ -58,7 +58,7 @@ namespace Marlin.SystemFiles
             }
             else
             {
-                Commands = new List<Command>();
+                Context.ProgramData = new();
             }
         }
 

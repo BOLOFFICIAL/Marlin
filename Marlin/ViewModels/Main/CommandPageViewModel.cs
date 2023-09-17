@@ -51,11 +51,11 @@ namespace Marlin.ViewModels.Main
                 Context.CopyCommand = JsonConvert.DeserializeObject<Command>(JsonConvert.SerializeObject(Command.GetCommand(Context.SelectedId)));
             }
 
-            if (Context.SelectedId == -1)
+            else
             {
-                if (ProgramData.Commands.Count > 0)
+                if (Context.ProgramData.Commands.Count > 0)
                 {
-                    Title = "Команда" + (ProgramData.Commands[ProgramData.Commands.Count - 1].id + 1).ToString(); //lоделать чтоб он ориентировлся на id последнего а не на колличество
+                    Title = "Команда" + (Context.ProgramData.Commands[Context.ProgramData.Commands.Count - 1].id + 1).ToString(); //lоделать чтоб он ориентировлся на id последнего а не на колличество
                 }
                 else
                 {
@@ -555,8 +555,8 @@ namespace Marlin.ViewModels.Main
                 return false;
             }
 
-            bool isDuplicate = ProgramData.Commands.Any(command => command.Equals(Context.Command));
-            bool isDuplicateName = ProgramData.Commands.Any(command => command.Title == Context.Command.Title);
+            bool isDuplicate = Context.ProgramData.Commands.Any(command => command.Equals(Context.Command));
+            bool isDuplicateName = Context.ProgramData.Commands.Any(command => command.Title == Context.Command.Title);
 
             if (isDuplicate)
             {

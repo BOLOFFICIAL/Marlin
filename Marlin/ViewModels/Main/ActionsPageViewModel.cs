@@ -19,6 +19,7 @@ namespace Marlin.ViewModels.Main
         private GridLength _lengthAbout = new GridLength(0, GridUnitType.Pixel);
         private string _description = "";
         public ICommand ToMainCommand { get; }
+
         public ICommand EditActionCommand { get; }
         public ICommand RunActionCommand { get; }
         public ICommand AddActionCommand { get; }
@@ -128,6 +129,8 @@ namespace Marlin.ViewModels.Main
                     UIElement foundElement = grid.Children.OfType<UIElement>().FirstOrDefault(e => e.GetType() == typeof(TextBlock));
                     if (foundElement is not null && foundElement is TextBlock textBox)
                     {
+                        LengthAbout = new GridLength(0, GridUnitType.Star);
+                        TitleAbout = textBox.Text;
                         if (Context.Action == ActionType.Command)
                         {
                             var command = Command.GetCommand(textBox.Text);
@@ -142,14 +145,26 @@ namespace Marlin.ViewModels.Main
                                 }
 
                                 Description = command.Comment;
-                                TitleAbout = textBox.Text;
                                 LengthAbout = new GridLength(1, GridUnitType.Star);
                             }
 
                         }
                         if (Context.Action == ActionType.Script)
                         {
+                            var script = Script.GetScript(textBox.Text);
+                            if (script.Comment.Length > 0)
+                            {
+                                if (script.Checkpuss)
+                                {
+                                    if (!Program.Authentication("Для открытия содержимого введите пароль"))
+                                    {
+                                        return;
+                                    }
+                                }
 
+                                Description = script.Comment;
+                                LengthAbout = new GridLength(1, GridUnitType.Star);
+                            }
                         }
                     }
                 }
@@ -189,6 +204,13 @@ namespace Marlin.ViewModels.Main
             }
             if (Context.Action == ActionType.Script)
             {
+                if (Script.GetScript(Context.SelectedId).Checkpuss)
+                {
+                    if (!Program.Authentication("Для открытия содержимого введите пароль"))
+                    {
+                        return;
+                    }
+                }
                 Program.SetPage(new ScriptPage());
             }
         }
@@ -216,13 +238,33 @@ namespace Marlin.ViewModels.Main
                     }
                 }
                 LengthAbout = new GridLength(0, GridUnitType.Star);
-                ProgramData.Commands.Remove(Command.GetCommand(Context.SelectedId));
+                Context.ProgramData.Commands.Remove(Command.GetCommand(Context.SelectedId));
                 ProgramData.SaveData();
                 LoadActions();
             }
             if (Context.Action == ActionType.Script)
             {
-                Program.SetPage(new ScriptPage());
+                var script = Script.GetScript(Context.SelectedId);
+                var check = script.Checkpuss;
+                if (check)
+                {
+                    if (!Program.Authentication("Для удаления скрипта введите пароль", check: check))
+                    {
+                        return;
+                    }
+                }
+                else
+                {
+                    Models.MessageBox.MakeMessage($"Вы действительно хотите удалить команду {script.Title}", MessageType.YesNoQuestion);
+                    if (Context.MessageBox.Answer == "No")
+                    {
+                        return;
+                    }
+                }
+                LengthAbout = new GridLength(0, GridUnitType.Star);
+                Context.ProgramData.Scripts.Remove(Script.GetScript(Context.SelectedId));
+                ProgramData.SaveData();
+                LoadActions();
             }
         }
 
@@ -232,22 +274,27 @@ namespace Marlin.ViewModels.Main
             if (Context.Action == ActionType.Command)
             {
                 var command = Command.GetCommand(Context.SelectedId);
-                if (command.Filepath.Length > 0)
+                if (command.Checkpuss)
                 {
-                    if (command.Checkpuss)
+                    if (!Program.Authentication("Для запуска комманды необходимо подтвердить пароль"))
                     {
-                        if (!Program.Authentication("Для запуска комманды необходимо подтвердить пароль"))
-                        {
-                            return;
-                        }
+                        return;
                     }
-                    Models.Main.Command.ExecuteCommand(command);
                 }
+                Models.Main.Command.ExecuteCommand(command);
             }
 
             if (Context.Action == ActionType.Script)
             {
-
+                var script = Script.GetScript(Context.SelectedId);
+                if (script.Checkpuss)
+                {
+                    if (!Program.Authentication("Для запуска скрипта необходимо подтвердить пароль"))
+                    {
+                        return;
+                    }
+                }
+                Models.Main.Script.ExecuteScript(script);
             }
         }
 
@@ -268,10 +315,9 @@ namespace Marlin.ViewModels.Main
         {
             StackPanel.Children.Clear();
 
-
             if (Context.Action == ActionType.Command)
             {
-                foreach (var command in ProgramData.Commands)
+                foreach (var command in Context.ProgramData.Commands)
                 {
                     Border border = new Border
                     {
@@ -355,9 +401,87 @@ namespace Marlin.ViewModels.Main
 
             if (Context.Action == ActionType.Script)
             {
+                foreach (var script in Context.ProgramData.Scripts)
+                {
+                    Border border = new Border
+                    {
+                        Margin = new Thickness(6, 3, 6, 3),
+                        Padding = new Thickness(0),
+                        BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.PageColor)),
+                        Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.ExternalBackgroundColor)),
+                        BorderThickness = new Thickness(2),
+                        CornerRadius = new CornerRadius(20)
+                    };
 
+                    border.MouseLeftButtonDown += Border_MouseLeftButtonDown;
+
+                    Grid grid = new Grid();
+                    grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+                    grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+                    grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+                    grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+                    TextBlock textBlock = new TextBlock
+                    {
+                        FontSize = 15,
+                        FontWeight = FontWeights.Bold,
+                        Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.FontColor)),
+                        VerticalAlignment = VerticalAlignment.Center,
+                        HorizontalAlignment = HorizontalAlignment.Center,
+                        Padding = new Thickness(10, 10, 10, 10),
+                        Text = script.Title
+                    };
+                    Button buttonDelete = new Button
+                    {
+                        Margin = new Thickness(0, 5, 5, 5),
+                        Padding = new Thickness(5, 0, 5, 4),
+                        Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.FontColor)),
+                        BorderBrush = new SolidColorBrush(Colors.Transparent),
+                        Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.PageColor)),
+                        Height = 30,
+                        Command = DeleteActionCommand,
+                        CommandParameter = script.id,
+                        HorizontalAlignment = HorizontalAlignment.Right,
+                        Content = "Удалить"
+                    };
+                    Button buttonRun = new Button
+                    {
+                        Margin = new Thickness(0, 5, 5, 5),
+                        Padding = new Thickness(5, 0, 5, 4),
+                        Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.FontColor)), // Установите нужный цвет текста кнопки
+                        BorderBrush = new SolidColorBrush(Colors.Transparent), // Установите нужный цвет границы кнопки
+                        Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.PageColor)), // Установите нужный цвет фона кнопки
+                        Height = 30,
+                        Command = RunActionCommand,
+                        CommandParameter = script.id,
+                        HorizontalAlignment = HorizontalAlignment.Right,
+                        Content = "Запустить"
+                    };
+                    Button buttonEdit = new Button
+                    {
+                        Margin = new Thickness(0, 5, 20, 5),
+                        Padding = new Thickness(0, 0, 0, 4),
+                        Width = 33,
+                        Command = EditActionCommand,
+                        CommandParameter = script.id,
+                        Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.FontColor)), // Установите нужный цвет текста кнопки
+                        BorderBrush = new SolidColorBrush(Colors.Transparent), // Установите нужный цвет границы кнопки
+                        Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.PageColor)), // Установите нужный цвет фона кнопки
+                        Height = 30,
+                        HorizontalAlignment = HorizontalAlignment.Right,
+                        Content = "✏️"
+                    };
+                    Grid.SetColumn(textBlock, 0);
+                    Grid.SetColumn(buttonDelete, 1);
+                    Grid.SetColumn(buttonRun, 2);
+                    Grid.SetColumn(buttonEdit, 3);
+                    grid.Children.Add(textBlock);
+                    grid.Children.Add(buttonDelete);
+                    grid.Children.Add(buttonRun);
+                    grid.Children.Add(buttonEdit);
+                    border.Child = grid;
+                    panel.Children.Add(border);
+                }
             }
-
         }
     }
 }
