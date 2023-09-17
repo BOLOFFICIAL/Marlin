@@ -17,6 +17,7 @@ namespace Marlin.ViewModels.Main
         private string _title;
         private StackPanel panel = new StackPanel();
         private GridLength _lengthAbout = new GridLength(0, GridUnitType.Pixel);
+        private string _description = "";
         public ICommand ToMainCommand { get; }
         public ICommand EditActionCommand { get; }
         public ICommand RunActionCommand { get; }
@@ -41,10 +42,13 @@ namespace Marlin.ViewModels.Main
                 {
                     case ActionType.Settings:
                         return "Настройки";
+
                     case ActionType.Command:
                         return "Команды";
+
                     case ActionType.Script:
                         return "Скрипты";
+
                     default:
                         return "ErrorAction";
                 }
@@ -124,16 +128,29 @@ namespace Marlin.ViewModels.Main
                     UIElement foundElement = grid.Children.OfType<UIElement>().FirstOrDefault(e => e.GetType() == typeof(TextBlock));
                     if (foundElement is not null && foundElement is TextBlock textBox)
                     {
-                        var command = Command.GetCommand(textBox.Text);
-                        if (command.Checkpuss)
+                        if (Context.Action == ActionType.Command)
                         {
-                            if (!Program.Authentication("Для открытия содержимого введите пароль"))
+                            var command = Command.GetCommand(textBox.Text);
+                            if (command.Comment.Length > 0)
                             {
-                                return;
+                                if (command.Checkpuss)
+                                {
+                                    if (!Program.Authentication("Для открытия содержимого введите пароль"))
+                                    {
+                                        return;
+                                    }
+                                }
+
+                                Description = command.Comment;
+                                TitleAbout = textBox.Text;
+                                LengthAbout = new GridLength(1, GridUnitType.Star);
                             }
+
                         }
-                        OpenAction(command);
-                        LengthAbout = new GridLength(2, GridUnitType.Star);
+                        if (Context.Action == ActionType.Script)
+                        {
+
+                        }
                     }
                 }
             }
@@ -143,6 +160,12 @@ namespace Marlin.ViewModels.Main
         {
             get => _lengthAbout;
             set => Set(ref _lengthAbout, value);
+        }
+
+        public string Description
+        {
+            get => _description;
+            set => Set(ref _description, value);
         }
 
         private void OnToMainCommandExecuted(object p)
@@ -228,11 +251,6 @@ namespace Marlin.ViewModels.Main
             }
         }
 
-        private void OpenAction(Command command)
-        {
-            TitleAbout = command.Title;
-        }
-
         private void OnAddActionCommandExecuted(object p)
         {
             Context.SelectedId = -1;
@@ -249,6 +267,8 @@ namespace Marlin.ViewModels.Main
         private void LoadActions()
         {
             StackPanel.Children.Clear();
+
+
             if (Context.Action == ActionType.Command)
             {
                 foreach (var command in ProgramData.Commands)
@@ -332,10 +352,12 @@ namespace Marlin.ViewModels.Main
                     panel.Children.Add(border);
                 }
             }
+
             if (Context.Action == ActionType.Script)
             {
-                panel = Script.panel;
+                
             }
+
         }
     }
 }

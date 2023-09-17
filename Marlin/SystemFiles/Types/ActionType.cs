@@ -4,6 +4,7 @@
     {
         Settings,
         Command,
-        Script
+        Script,
+        Trigger
     }
 }

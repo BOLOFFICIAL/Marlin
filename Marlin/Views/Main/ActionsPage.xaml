@@ -97,6 +97,7 @@
                 <Grid Grid.Column="1">
                     <Border Grid.Row="0"
                             Margin="10,0,0,0"
+                            Padding="0,0,0,10"
                             CornerRadius="25"
                             Background="{Binding Path=InternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
                             BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
@@ -107,8 +108,8 @@
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
 
-                            <TextBlock Background="Transparent"
-                                       Grid.Row="0"
+                            <TextBlock Grid.Row="0"
+                                       Background="Transparent"
                                        Margin="5"
                                        Foreground="{Binding Path=PageColor}"
                                        HorizontalAlignment="Center"
@@ -118,12 +119,13 @@
                                        Padding="30,0"
                                        Text="{Binding Path=TitleAbout,UpdateSourceTrigger=PropertyChanged}"/>
 
-                            <ScrollViewer Grid.Row="1" 
-                                          Margin="5,0,5,5"
+                            <ScrollViewer Grid.Row="1"
                                           VerticalScrollBarVisibility="Hidden">
-                                <Grid>
-
-                                </Grid>
+                                <TextBlock Text="{Binding Path=Description,UpdateSourceTrigger=PropertyChanged}"
+                                           FontSize="15"
+                                           Padding="10"
+                                           HorizontalAlignment="Stretch"
+                                           TextWrapping="WrapWithOverflow"/>
                             </ScrollViewer>
                         </Grid>
                     </Border>

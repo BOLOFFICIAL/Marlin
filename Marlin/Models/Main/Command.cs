@@ -1,5 +1,6 @@
 ﻿using Marlin.SystemFiles;
 using Newtonsoft.Json;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
@@ -8,7 +9,7 @@ namespace Marlin.Models.Main
 {
     public class Command
     {
-        public int id = 0;
+        public int id = 1;
         public string Title = "";
         public string Filepath = "";
         public string FileName = "";
@@ -81,69 +82,16 @@ namespace Marlin.Models.Main
             }
         }
 
-        //public static string MakeResultCommand(Command command)
-        //{
-        //    string result = "";
-        //    if (command.SelectedAction == "Сделать свое действие")
-        //    {
-        //        if (command.IsReadyCmdCommand)
-        //        {
-        //            result = command.CmdCommand;
-        //        }
-        //        else
-        //        {
-        //            if (command.SelectedObject == "Фаил")
-        //            {
-        //                switch (command.SelectedObjectAction)
-        //                {
-        //                    case "Открыть":
-        //                        result = $"Start \"\" ";
-        //                        if (command.Apppath.Length > 0)
-        //                        {
-        //                            result += $"\"{command.Apppath}\" ";
-        //                        }
-        //                        result += $"\"{command.Filepath}\"";
-        //                        break;
-        //                    case "Закрыть":
-
-        //                        break;
-        //                    case "Удалить":
-
-        //                        break;
-        //                }
-
-        //            }
-        //            if (command.SelectedObject == "Папка")
-        //            {
-        //                switch (command.SelectedObjectAction)
-        //                {
-        //                    case "Открыть":
-        //                        result = $"Start {command.Filepath}";
-        //                        break;
-        //                }
-
-        //            }
-        //            if (command.SelectedObject == "Url")
-        //            {
-        //                switch (command.SelectedObjectAction)
-        //                {
-        //                    case "Открыть":
-        //                        result = $"\"{command.Apppath}\" {command.Filepath}";
-        //                        break;
-        //                }
-        //            }
-        //        }
-        //    }
-        //    if (Context.Command.SelectedAction == "Встроенные методы")
-        //    {
-
-        //    }
-        //    return result;
-        //}
-
         public static void AddCommand(Command command)
         {
-            command.id = ProgramData.Commands.Count;
+            if (ProgramData.Commands.Count > 0)
+            {
+                command.id = ProgramData.Commands[ProgramData.Commands.Count - 1].id + 1;
+            }
+            else 
+            {
+                command.id = 1;
+            }
             ProgramData.Commands.Add(command);
         }
 
@@ -174,8 +122,30 @@ namespace Marlin.Models.Main
                     }
                     if (command.SelectedObjectAction == "Удалить")
                     {
-                        File.Delete(command.Filepath);
+                        if (command.SelectedObject == "Файл")
+                        {
+                            if (File.Exists(command.Filepath))
+                            {
+                                File.Delete(command.Filepath);
+                            }
+                            else
+                            {
+                                Console.WriteLine("Файл не существует.");
+                            }
+                        }
+                        else if (command.SelectedObject == "Папка")
+                        {
+                            if (Directory.Exists(command.Filepath))
+                            {
+                                Directory.Delete(command.Filepath, true);
+                            }
+                            else
+                            {
+                                Console.WriteLine("Папка не существует.");
+                            }
+                        }
                     }
+
                 }
             }
         }

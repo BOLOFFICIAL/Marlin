@@ -48,9 +48,8 @@ namespace Marlin.ViewModels.Main
                 Context.Command = JsonConvert.DeserializeObject<Command>(JsonConvert.SerializeObject(Command.GetCommand(Context.SelectedId)));
                 PageTitle = Context.Command.Title;
                 Context.CopyCommand = JsonConvert.DeserializeObject<Command>(JsonConvert.SerializeObject(Command.GetCommand(Context.SelectedId)));
+                SelectedObject = Context.Command.SelectedObject;
             }
-
-
 
             if (Context.SelectedId == -1)
             {
@@ -571,6 +570,12 @@ namespace Marlin.ViewModels.Main
                 return false;
             }
 
+            if (!HasAction())
+            {
+                Models.MessageBox.MakeMessage("Команда ничего не выполняет", SystemFiles.Types.MessageType.Error);
+                return false;
+            }
+
             return true;
         }
 
@@ -671,6 +676,37 @@ namespace Marlin.ViewModels.Main
         {
             AppName = "";
             Context.Command.Apppath = "";
+        }
+
+        private bool HasAction()
+        {
+            if (SelectedAction == "Сделать свое действие")
+            {
+                if (Context.Command.IsReadyCmdCommand)
+                {
+                    return Context.Command.CmdCommand.Length > 0;
+                }
+                else
+                {
+                    if (SelectedObject == "Фаил")
+                    {
+                        return Context.Command.Filepath.Length > 0;
+                    }
+                    if (SelectedObject == "Папка")
+                    {
+                        return Context.Command.Filepath.Length > 0;
+                    }
+                    if (SelectedObject == "Url")
+                    {
+                        return Context.Command.Url.Length > 0;
+                    }
+                }
+            }
+            if (SelectedAction == "Встроенные методы")
+            {
+                return false;
+            }
+            return false;
         }
     }
 }

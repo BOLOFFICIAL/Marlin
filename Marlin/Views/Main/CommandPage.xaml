@@ -566,7 +566,7 @@
                                        VerticalAlignment="Top"
                                        FontWeight="Bold"
                                        Foreground="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
-                                       Text="Комментарий:"/>
+                                       Text="Описание:"/>
                             
                             <TextBox Grid.Column="1"
                                      FontSize="15"
