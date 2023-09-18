@@ -4,9 +4,10 @@ using Marlin.SystemFiles;
 using Marlin.ViewModels.Base;
 using Marlin.Views.Main;
 using Newtonsoft.Json;
-using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -17,9 +18,10 @@ namespace Marlin.ViewModels.Main
         public ICommand ToMainCommand { get; }
         public ICommand ButtonActionCommand { get; }
         public ICommand AddActionCommand { get; }
+        public ICommand RemoveActionCommand { get; }
 
         private StackPanel panel = new StackPanel();
-
+        private Command _selectedCommand = new();
         private string _pagetitle = "Новый скрипт";
 
         public ScriptPageViewModel()
@@ -27,13 +29,14 @@ namespace Marlin.ViewModels.Main
             ToMainCommand = new LambdaCommand(OnToMainCommandExecuted);
             ButtonActionCommand = new LambdaCommand(OnButtonActionCommandExecuted, CanButtonActionCommandExecute);
             AddActionCommand = new LambdaCommand(OnAddActionCommandExecuted, CanAddActionCommandExecute);
+            RemoveActionCommand = new LambdaCommand(OnRemoveActionCommandExecuted);
 
             Context.Script = new Models.Main.Script();
             Context.CopyScript = JsonConvert.DeserializeObject<Script>(JsonConvert.SerializeObject(Context.Script));
 
             if (Context.SelectedId > -1)
             {
-                
+
                 Context.Script = JsonConvert.DeserializeObject<Script>(JsonConvert.SerializeObject(Script.GetScript(Context.SelectedId)));
                 LoadCommands();
                 PageTitle = Context.Script.Title;
@@ -127,6 +130,17 @@ namespace Marlin.ViewModels.Main
             set => Set(ref Context.Script.Comment, value);
         }
 
+        public List<Command> Commands
+        {
+            get => Context.ProgramData.Commands;
+        }
+
+        public Command SelectedCommand
+        {
+            get => _selectedCommand;
+            set => Set(ref _selectedCommand, value);
+        }
+
         public string PageTitle
         {
             get => _pagetitle;
@@ -149,34 +163,20 @@ namespace Marlin.ViewModels.Main
             }
         }
 
-        public GridLength LengthPanel 
-        {
-            get => Context.Script.LengthPanel;
-            set => Set(ref Context.Script.LengthPanel, value);
-        }
-
         private void OnButtonActionCommandExecuted(object p)
         {
             if (ValidationCommand())
             {
-                Context.Script.Commands = new();
-                foreach (ComboBox e in panel.Children) 
-                {
-                    Context.Script.Commands.Add(e.SelectedValue.ToString());
-                }
-
                 if (Context.SelectedId > -1)
                 {
                     Script.SetScript(Context.SelectedId, Context.Script);
                 }
-
                 else
                 {
                     Script.AddScript(Context.Script);
                 }
 
                 ProgramData.SaveData();
-
                 Program.SetPage(new ActionsPage());
             }
         }
@@ -198,13 +198,17 @@ namespace Marlin.ViewModels.Main
 
         private void OnAddActionCommandExecuted(object p)
         {
-            var box = CreateComboBox();
+            var command = CreateCommand(SelectedCommand.ToString(), Context.Script.Commands.Count);
 
-            LengthPanel = GridLength.Auto;
+            StackPanel.Children.Add(command);
 
-            StackPanel.Children.Add(box);
+            Context.Script.Commands.Add(SelectedCommand.id);
+        }
 
-            Context.Script.Commands.Add(box.SelectedValue.ToString());
+        private void OnRemoveActionCommandExecuted(object p)
+        {
+            Context.Script.Commands.RemoveAt((int)p);
+            LoadCommands();
         }
 
         private bool ValidationCommand()
@@ -212,25 +216,81 @@ namespace Marlin.ViewModels.Main
             return true;
         }
 
-        private void LoadCommands() 
+        private void LoadCommands()
         {
-            foreach (var e in Context.Script.Commands) 
+            panel.Children.Clear();
+            for (int i = 0; i < Context.Script.Commands.Count; i++)
             {
-                panel.Children.Add(CreateComboBox(e));
+                panel.Children.Add(CreateCommand(Command.GetCommand(Context.Script.Commands[i]).Title, i));
             }
         }
 
-        private ComboBox CreateComboBox(string command = "")
+        private Border CreateCommand(string command,int number)
         {
-            if (command == "") 
+            var border = new Border
             {
-                command = Context.ProgramData.Commands[0].ToString();
-            }
-            ComboBox comboBox = new ComboBox();
-            comboBox.FontSize = 15;
-            comboBox.SelectedValue = command;
-            comboBox.ItemsSource = Context.ProgramData.Commands;
-            return comboBox;
+                Margin = new Thickness(0, 10, 0, 0),
+                CornerRadius = new CornerRadius(25),
+                HorizontalAlignment = HorizontalAlignment.Left,
+                BorderThickness = new Thickness(2),
+            };
+
+            BindingOperations.SetBinding(border, Border.BackgroundProperty, new Binding("InternalBackgroundColor")
+            {
+                UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
+            });
+
+            BindingOperations.SetBinding(border, Border.BorderBrushProperty, new Binding("PageColor")
+            {
+                UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
+            });
+
+            var grid = new Grid();
+
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+
+            var textBlock = new TextBlock
+            {
+                FontSize = 15,
+                FontWeight = FontWeights.Bold,
+                VerticalAlignment = VerticalAlignment.Center,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                Margin = new Thickness(15, 5, 0, 5),
+                Text = command
+            };
+
+            Grid.SetRow(textBlock, 0);
+            Grid.SetColumn(textBlock, 0);
+
+            var button = new Button
+            {
+                Content = "✖",
+                Padding = new Thickness(0),
+                VerticalAlignment = VerticalAlignment.Center,
+                FontWeight = FontWeights.Bold,
+                Command = RemoveActionCommand,
+                CommandParameter = number,
+                Background = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0)),
+                BorderBrush = Brushes.Transparent,
+                Margin = new Thickness(10, 5, 10, 5)
+            };
+
+            Grid.SetRow(button, 0);
+            Grid.SetColumn(button, 1);
+
+            BindingOperations.SetBinding(button, Button.ForegroundProperty, new Binding("PageColor")
+            {
+                UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
+            });
+
+            grid.Children.Add(textBlock);
+            grid.Children.Add(button);
+
+            border.Child = grid;
+
+            return border;
         }
+
     }
 }

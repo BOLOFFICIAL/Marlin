@@ -95,7 +95,7 @@
                         </Grid>
 
                         <Grid Grid.Row="1"
-                              Margin="0,10">
+                              Margin="0,10,0,5">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto"/>
                                 <ColumnDefinition Width="auto"/>
@@ -111,23 +111,37 @@
 
                             <Grid Grid.Column="1">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height ="{Binding Path=LengthPanel}"/>
+                                    <RowDefinition Height ="auto"/>
                                     <RowDefinition Height ="auto"/>
                                 </Grid.RowDefinitions>
 
-                                <ScrollViewer Grid.Row="0"
-                                              HorizontalAlignment="Left"
-                                              VerticalScrollBarVisibility="Hidden"
-                                              Margin="0,0,0,10"
-                                              Content="{Binding Path=StackPanel,UpdateSourceTrigger=PropertyChanged}"/>
-                            
-                                <Button Grid.Row="1"
-                                        BorderThickness="0"
-                                        BorderBrush="Transparent"
-                                        Command="{Binding Path=AddActionCommand}"
-                                        Foreground="{Binding Path=ExternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
-                                        Background="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
-                                        Content="Добавить действие"/>
+                                <Grid Grid.Row="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <ComboBox Grid.Column="0"
+                                              FontSize="15"
+                                              SelectedIndex="0"
+                                              Margin="0,0,10,0"
+                                              SelectedValue="{Binding Path=SelectedCommand,UpdateSourceTrigger=PropertyChanged}"
+                                              ItemsSource="{Binding Path=Commands,UpdateSourceTrigger=PropertyChanged}"
+                                              HorizontalContentAlignment="Center"/>
+
+                                    <Button Grid.Column="1"
+                                            Content="Добавить"
+                                            Command="{Binding Path=AddActionCommand}"
+                                            BorderThickness="0"
+                                            BorderBrush="Transparent"
+                                            Foreground="{Binding Path=ExternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
+                                            Background="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"/>
+                                </Grid>
+
+                                <ScrollContentPresenter Grid.Row="1"
+                                                        HorizontalAlignment="Left"
+                                                        Margin="0,0,0,10"
+                                                        Content="{Binding Path=StackPanel,UpdateSourceTrigger=PropertyChanged}"/>
                             </Grid>
                         </Grid>
 

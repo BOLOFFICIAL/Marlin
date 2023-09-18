@@ -11,8 +11,7 @@ namespace Marlin.Models.Main
         public string Title = "";
         public bool Checkpuss = false;
         public string Comment = "";
-        public List<string> Commands = new();
-        public GridLength LengthPanel = new GridLength(0, GridUnitType.Pixel);
+        public List<int> Commands = new();
 
         public static Script GetScript(int Id)
         {
