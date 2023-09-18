@@ -123,6 +123,7 @@
 
                                     <ComboBox Grid.Column="0"
                                               FontSize="15"
+                                              MaxWidth="400"
                                               SelectedIndex="0"
                                               Margin="0,0,10,0"
                                               SelectedValue="{Binding Path=SelectedCommand,UpdateSourceTrigger=PropertyChanged}"

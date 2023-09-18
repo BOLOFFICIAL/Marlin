@@ -5,6 +5,7 @@ using Marlin.ViewModels.Base;
 using Marlin.Views.Main;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -183,7 +184,7 @@ namespace Marlin.ViewModels.Main
 
         private bool CanButtonActionCommandExecute(object p)
         {
-            return !Context.Script.Equals(Context.CopyScript);
+            return !Context.Script.Equals(Context.CopyScript) && Context.Script.Commands.Count > 0;
         }
 
         private void OnToMainCommandExecuted(object p)
@@ -198,6 +199,14 @@ namespace Marlin.ViewModels.Main
 
         private void OnAddActionCommandExecuted(object p)
         {
+            if (Context.Script.Commands.Contains(Command.GetCommand(SelectedCommand.ToString()).id))
+            {
+                Models.MessageBox.MakeMessage("В этом скрипте уже присутствует такая команда.\nДобавить команду повторно?", SystemFiles.Types.MessageType.YesNoQuestion);
+                if (Context.MessageBox.Answer == "No") 
+                {
+                    return;
+                }
+            }
             var command = CreateCommand(SelectedCommand.ToString(), Context.Script.Commands.Count);
 
             StackPanel.Children.Add(command);
@@ -221,7 +230,11 @@ namespace Marlin.ViewModels.Main
             panel.Children.Clear();
             for (int i = 0; i < Context.Script.Commands.Count; i++)
             {
-                panel.Children.Add(CreateCommand(Command.GetCommand(Context.Script.Commands[i]).Title, i));
+                var command = Command.GetCommand(Context.Script.Commands[i]);
+                if (command != null) 
+                {
+                    panel.Children.Add(CreateCommand(command.Title, i));
+                }
             }
         }
 
