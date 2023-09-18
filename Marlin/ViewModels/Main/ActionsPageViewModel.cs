@@ -136,13 +136,7 @@ namespace Marlin.ViewModels.Main
                             var command = Models.Main.Command.GetCommand(textBox.Text);
                             if (command.Comment.Length > 0)
                             {
-                                if (command.Checkpuss)
-                                {
-                                    if (!Program.Authentication("Для открытия содержимого введите пароль"))
-                                    {
-                                        return;
-                                    }
-                                }
+                                
 
                                 Description = command.Comment;
                                 LengthAbout = new GridLength(1, GridUnitType.Star);
@@ -154,13 +148,7 @@ namespace Marlin.ViewModels.Main
                             var script = Script.GetScript(textBox.Text);
                             if (script.Comment.Length > 0)
                             {
-                                if (script.Checkpuss)
-                                {
-                                    if (!Program.Authentication("Для открытия содержимого введите пароль"))
-                                    {
-                                        return;
-                                    }
-                                }
+                                
 
                                 Description = script.Comment;
                                 LengthAbout = new GridLength(1, GridUnitType.Star);
