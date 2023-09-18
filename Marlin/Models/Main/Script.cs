@@ -1,7 +1,6 @@
 ﻿using Marlin.SystemFiles;
 using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Windows;
 
 namespace Marlin.Models.Main
 {
@@ -62,9 +61,16 @@ namespace Marlin.Models.Main
             Context.ProgramData.Scripts.Add(script);
         }
 
-        public static void ExecuteScript(Script script)
+        public void ExecuteScript()
         {
-            Models.MessageBox.MakeMessage($"Выполнение скрипта {script.Title}");
+            foreach (var commandindex in Commands)
+            {
+                var command = Context.ProgramData.Commands[commandindex - 1];
+                if (command != null)
+                {
+                    command.ExecuteCommand();
+                }
+            }
         }
 
         public bool Equals(Script otherScript)

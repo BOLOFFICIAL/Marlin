@@ -127,7 +127,7 @@ namespace Marlin.ViewModels.Main
                         return;
                     }
                 }
-                Marlin.Models.Main.Command.ExecuteCommand(command);
+                command.ExecuteCommand();
                 Command = "";
             }
             else

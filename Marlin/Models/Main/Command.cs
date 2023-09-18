@@ -95,49 +95,49 @@ namespace Marlin.Models.Main
             Context.ProgramData.Commands.Add(command);
         }
 
-        public static void ExecuteCommand(Command command)
+        public void ExecuteCommand()
         {
-            if (command.SelectedAction == "Сделать свое действие")
+            if (SelectedAction == "Сделать свое действие")
             {
-                if (command.IsReadyCmdCommand)
+                if (IsReadyCmdCommand)
                 {
-                    WinSystem.RunCmd(command.CmdCommand);
+                    WinSystem.RunCmd(CmdCommand);
                 }
                 else
                 {
-                    if (command.SelectedObjectAction == "Открыть")
+                    if (SelectedObjectAction == "Открыть")
                     {
-                        if (command.Apppath.Length > 0)
+                        if (Apppath.Length > 0)
                         {
-                            Process.Start(command.Apppath, command.Filepath);
+                            Process.Start(Apppath, Filepath);
                         }
                         else
                         {
-                            Process.Start("explorer.exe", command.Filepath);
+                            Process.Start("explorer.exe", Filepath);
                         }
                     }
-                    if (command.SelectedObjectAction == "Закрыть")
+                    if (SelectedObjectAction == "Закрыть")
                     {
 
                     }
-                    if (command.SelectedObjectAction == "Удалить")
+                    if (SelectedObjectAction == "Удалить")
                     {
-                        if (command.SelectedObject == "Файл")
+                        if (SelectedObject == "Файл")
                         {
-                            if (File.Exists(command.Filepath))
+                            if (File.Exists(Filepath))
                             {
-                                File.Delete(command.Filepath);
+                                File.Delete(Filepath);
                             }
                             else
                             {
                                 Console.WriteLine("Файл не существует.");
                             }
                         }
-                        else if (command.SelectedObject == "Папка")
+                        else if (SelectedObject == "Папка")
                         {
-                            if (Directory.Exists(command.Filepath))
+                            if (Directory.Exists(Filepath))
                             {
-                                Directory.Delete(command.Filepath, true);
+                                Directory.Delete(Filepath, true);
                             }
                             else
                             {

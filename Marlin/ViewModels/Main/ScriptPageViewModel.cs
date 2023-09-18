@@ -5,7 +5,6 @@ using Marlin.ViewModels.Base;
 using Marlin.Views.Main;
 using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -48,11 +47,11 @@ namespace Marlin.ViewModels.Main
             {
                 if (Context.ProgramData.Scripts.Count > 0)
                 {
-                    Title = "Скипт" + (Context.ProgramData.Scripts[Context.ProgramData.Scripts.Count - 1].id + 1).ToString();
+                    Title = "Скрипт" + (Context.ProgramData.Scripts[Context.ProgramData.Scripts.Count - 1].id + 1).ToString();
                 }
                 else
                 {
-                    Title = "Скипт" + Context.Script.id.ToString();
+                    Title = "Скрипт" + Context.Script.id.ToString();
                 }
             }
         }
@@ -184,7 +183,7 @@ namespace Marlin.ViewModels.Main
 
         private bool CanButtonActionCommandExecute(object p)
         {
-            return !Context.Script.Equals(Context.CopyScript) && Context.Script.Commands.Count > 0;
+            return !Context.Script.Equals(Context.CopyScript) && Context.Script.Commands.Count > 1;
         }
 
         private void OnToMainCommandExecuted(object p)
@@ -202,7 +201,7 @@ namespace Marlin.ViewModels.Main
             if (Context.Script.Commands.Contains(Command.GetCommand(SelectedCommand.ToString()).id))
             {
                 Models.MessageBox.MakeMessage("В этом скрипте уже присутствует такая команда.\nДобавить команду повторно?", SystemFiles.Types.MessageType.YesNoQuestion);
-                if (Context.MessageBox.Answer == "No") 
+                if (Context.MessageBox.Answer == "No")
                 {
                     return;
                 }
@@ -231,14 +230,14 @@ namespace Marlin.ViewModels.Main
             for (int i = 0; i < Context.Script.Commands.Count; i++)
             {
                 var command = Command.GetCommand(Context.Script.Commands[i]);
-                if (command != null) 
+                if (command != null)
                 {
                     panel.Children.Add(CreateCommand(command.Title, i));
                 }
             }
         }
 
-        private Border CreateCommand(string command,int number)
+        private Border CreateCommand(string command, int number)
         {
             var border = new Border
             {

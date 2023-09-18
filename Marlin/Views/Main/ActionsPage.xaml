@@ -96,7 +96,7 @@
 
                 <Grid Grid.Column="1">
                     <Border Grid.Row="0"
-                            Margin="10,0,0,0"
+                            Margin="10,0,0,40"
                             Padding="0,0,0,10"
                             CornerRadius="25"
                             Background="{Binding Path=InternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"

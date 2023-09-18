@@ -136,20 +136,15 @@ namespace Marlin.ViewModels.Main
                             var command = Models.Main.Command.GetCommand(textBox.Text);
                             if (command.Comment.Length > 0)
                             {
-                                
-
                                 Description = command.Comment;
                                 LengthAbout = new GridLength(1, GridUnitType.Star);
                             }
-
                         }
                         if (Context.Action == ActionType.Script)
                         {
                             var script = Script.GetScript(textBox.Text);
                             if (script.Comment.Length > 0)
                             {
-                                
-
                                 Description = script.Comment;
                                 LengthAbout = new GridLength(1, GridUnitType.Star);
                             }
@@ -178,82 +173,38 @@ namespace Marlin.ViewModels.Main
 
         private void OnEditActionCommandExecuted(object p)
         {
-            Context.SelectedId = (int)p;
-            if (Context.Action == ActionType.Command)
+            if (Program.Authentication("Для изменения элемента подтвердите пароль"))
             {
-                if (Models.Main.Command.GetCommand(Context.SelectedId).Checkpuss)
+                Context.SelectedId = (int)p;
+                if (Context.Action == ActionType.Command)
                 {
-                    if (!Program.Authentication("Для открытия содержимого введите пароль"))
-                    {
-                        return;
-                    }
+                    Program.SetPage(new CommandPage());
                 }
-                Program.SetPage(new CommandPage());
-            }
-            if (Context.Action == ActionType.Script)
-            {
-                if (Script.GetScript(Context.SelectedId).Checkpuss)
+                if (Context.Action == ActionType.Script)
                 {
-                    if (!Program.Authentication("Для открытия содержимого введите пароль"))
-                    {
-                        return;
-                    }
+                    Program.SetPage(new ScriptPage());
                 }
-                Program.SetPage(new ScriptPage());
             }
         }
 
         private void OnDeleteActionCommandExecuted(object p)
         {
-            Context.SelectedId = (int)p;
-            if (Context.Action == ActionType.Command)
+            LengthAbout = new GridLength(0, GridUnitType.Star);
+            if (Program.Authentication("Для удаления элемента подтвердите пароль"))
             {
-                var command = Models.Main.Command.GetCommand(Context.SelectedId);
-                var check = command.Checkpuss;
-                if (check)
+                Context.SelectedId = (int)p;
+                if (Context.Action == ActionType.Command)
                 {
-                    if (!Program.Authentication("Для удаления команды введите пароль", check: check))
-                    {
-                        return;
-                    }
+                    Context.ProgramData.Commands.Remove(Models.Main.Command.GetCommand(Context.SelectedId));
                 }
-                else
+                if (Context.Action == ActionType.Script)
                 {
-                    Models.MessageBox.MakeMessage($"Вы действительно хотите удалить команду {command.Title}", MessageType.YesNoQuestion);
-                    if (Context.MessageBox.Answer == "No")
-                    {
-                        return;
-                    }
+                    Context.ProgramData.Scripts.Remove(Script.GetScript(Context.SelectedId));
                 }
-                LengthAbout = new GridLength(0, GridUnitType.Star);
-                Context.ProgramData.Commands.Remove(Models.Main.Command.GetCommand(Context.SelectedId));
                 ProgramData.SaveData();
                 LoadActions();
             }
-            if (Context.Action == ActionType.Script)
-            {
-                var script = Script.GetScript(Context.SelectedId);
-                var check = script.Checkpuss;
-                if (check)
-                {
-                    if (!Program.Authentication("Для удаления скрипта введите пароль", check: check))
-                    {
-                        return;
-                    }
-                }
-                else
-                {
-                    Models.MessageBox.MakeMessage($"Вы действительно хотите удалить команду {script.Title}", MessageType.YesNoQuestion);
-                    if (Context.MessageBox.Answer == "No")
-                    {
-                        return;
-                    }
-                }
-                LengthAbout = new GridLength(0, GridUnitType.Star);
-                Context.ProgramData.Scripts.Remove(Script.GetScript(Context.SelectedId));
-                ProgramData.SaveData();
-                LoadActions();
-            }
+
         }
 
         private void OnRunActionCommandExecuted(object p)
@@ -261,7 +212,7 @@ namespace Marlin.ViewModels.Main
             Context.SelectedId = (int)p;
             if (Context.Action == ActionType.Command)
             {
-                var command = Models.Main.Command.GetCommand(Context.SelectedId);
+                var command = Command.GetCommand(Context.SelectedId);
                 if (command.Checkpuss)
                 {
                     if (!Program.Authentication("Для запуска комманды необходимо подтвердить пароль"))
@@ -269,7 +220,7 @@ namespace Marlin.ViewModels.Main
                         return;
                     }
                 }
-                Models.Main.Command.ExecuteCommand(command);
+                command.ExecuteCommand();
             }
 
             if (Context.Action == ActionType.Script)
@@ -282,20 +233,23 @@ namespace Marlin.ViewModels.Main
                         return;
                     }
                 }
-                Models.Main.Script.ExecuteScript(script);
+                script.ExecuteScript();
             }
         }
 
         private void OnAddActionCommandExecuted(object p)
         {
-            Context.SelectedId = -1;
-            if (Context.Action == ActionType.Command)
+            if (Program.Authentication("Для добавления элемента подтвердите пароль"))
             {
-                Program.SetPage(new CommandPage());
-            }
-            if (Context.Action == ActionType.Script)
-            {
-                Program.SetPage(new ScriptPage());
+                Context.SelectedId = -1;
+                if (Context.Action == ActionType.Command)
+                {
+                    Program.SetPage(new CommandPage());
+                }
+                if (Context.Action == ActionType.Script)
+                {
+                    Program.SetPage(new ScriptPage());
+                }
             }
         }
 
