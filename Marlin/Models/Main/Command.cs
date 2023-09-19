@@ -1,6 +1,7 @@
 ﻿using Marlin.SystemFiles;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
@@ -30,6 +31,7 @@ namespace Marlin.Models.Main
         public string Comment = "";
         public string X = "";
         public string Y = "";
+        public List<Trigger> Triggers = new List<Trigger>();
         public GridLength LengthObjectAction = GridLength.Auto;
         public GridLength LengthMultiSymbol = new GridLength(0, GridUnitType.Pixel);
         public GridLength LengthFileName = new GridLength(0, GridUnitType.Pixel);
