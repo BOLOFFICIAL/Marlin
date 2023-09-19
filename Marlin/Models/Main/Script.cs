@@ -11,6 +11,7 @@ namespace Marlin.Models.Main
         public bool Checkpuss = false;
         public string Comment = "";
         public List<int> Commands = new();
+        public List<Trigger> Triggers = new List<Trigger>();
 
         public static Script GetScript(int Id)
         {

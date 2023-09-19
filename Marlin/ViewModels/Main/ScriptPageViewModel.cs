@@ -1,6 +1,7 @@
 ﻿using Marlin.Commands;
 using Marlin.Models.Main;
 using Marlin.SystemFiles;
+using Marlin.SystemFiles.Types;
 using Marlin.ViewModels.Base;
 using Marlin.Views.Main;
 using Newtonsoft.Json;
@@ -19,10 +20,21 @@ namespace Marlin.ViewModels.Main
         public ICommand ButtonActionCommand { get; }
         public ICommand AddActionCommand { get; }
         public ICommand RemoveActionCommand { get; }
+        public ICommand AppTriggerCommand { get; }
+        public ICommand AddTriggerCommand { get; }
+        public ICommand RemoveTriggerCommand { get; }
 
         private StackPanel panel = new StackPanel();
+        private StackPanel triggerpanel = new StackPanel();
+        private string selectedtrigger;
         private Command _selectedCommand = new();
         private string _pagetitle = "Новый скрипт";
+        private string triggervalue;
+        private string apptrigger;
+
+        private GridLength texttriggerlength = new GridLength(0, GridUnitType.Pixel);
+        private GridLength marlintriggerlength = GridLength.Auto;
+        private GridLength apptriggerlength = new GridLength(0, GridUnitType.Pixel);
 
         public ScriptPageViewModel()
         {
@@ -30,6 +42,10 @@ namespace Marlin.ViewModels.Main
             ButtonActionCommand = new LambdaCommand(OnButtonActionCommandExecuted, CanButtonActionCommandExecute);
             AddActionCommand = new LambdaCommand(OnAddActionCommandExecuted, CanAddActionCommandExecute);
             RemoveActionCommand = new LambdaCommand(OnRemoveActionCommandExecuted);
+            AppTriggerCommand = new LambdaCommand(OnAppTriggerCommandExecuted);
+            RemoveTriggerCommand = new LambdaCommand(OnRemoveTriggerCommandExecuted);
+            AddTriggerCommand = new LambdaCommand(OnAddTriggerCommandExecuted, CanAddTriggerCommandExecute);
+            SelectedTrigger = Program.Triggers[0];
 
             Context.Script = new Models.Main.Script();
             Context.CopyScript = JsonConvert.DeserializeObject<Script>(JsonConvert.SerializeObject(Context.Script));
@@ -41,6 +57,7 @@ namespace Marlin.ViewModels.Main
                 LoadCommands();
                 PageTitle = Context.Script.Title;
                 Context.CopyScript = JsonConvert.DeserializeObject<Script>(JsonConvert.SerializeObject(Script.GetScript(Context.SelectedId)));
+                LoadTrigger();
             }
 
             else
@@ -112,6 +129,12 @@ namespace Marlin.ViewModels.Main
             set => Set(ref panel, value);
         }
 
+        public StackPanel TriggerPanel
+        {
+            get => triggerpanel;
+            set => Set(ref triggerpanel, value);
+        }
+
         public string Title
         {
             get => Context.Script.Title;
@@ -145,6 +168,70 @@ namespace Marlin.ViewModels.Main
         {
             get => _pagetitle;
             set => Set(ref _pagetitle, value);
+        }
+
+        public GridLength TextTriggerLength
+        {
+            get => texttriggerlength;
+            set => Set(ref texttriggerlength, value);
+        }
+
+        public GridLength AppTriggerLength
+        {
+            get => apptriggerlength;
+            set => Set(ref apptriggerlength, value);
+        }
+
+        public GridLength MarlinTrigger
+        {
+            get => marlintriggerlength;
+            set => Set(ref marlintriggerlength, value);
+        }
+
+        public string TextTrigger
+        {
+            get => triggervalue;
+            set => Set(ref triggervalue, value);
+        }
+
+        public string AppTrigger
+        {
+            get => apptrigger;
+            set => Set(ref apptrigger, value);
+        }
+
+        public string SelectedTrigger
+        {
+            get => selectedtrigger;
+            set
+            {
+                if (Set(ref selectedtrigger, value))
+                {
+                    TextTrigger = "";
+                    AppTrigger = "";
+                    if (SelectedTrigger == "Фраза" || SelectedTrigger == "Время")
+                    {
+                        TextTriggerLength = GridLength.Auto;
+                        MarlinTrigger = GridLength.Auto;
+                        AppTriggerLength = new GridLength(0, GridUnitType.Pixel);
+                    }
+                    if (SelectedTrigger == "Запуск Marlin")
+                    {
+                        MarlinTrigger = new GridLength(0, GridUnitType.Pixel);
+                    }
+                    if (SelectedTrigger == "Запуск программы")
+                    {
+                        TextTriggerLength = new GridLength(0, GridUnitType.Pixel);
+                        AppTriggerLength = GridLength.Auto;
+                        MarlinTrigger = GridLength.Auto;
+                    }
+                }
+            }
+        }
+
+        public string[] Triggers
+        {
+            get => Program.Triggers;
         }
 
         public string ButtonContent
@@ -206,7 +293,7 @@ namespace Marlin.ViewModels.Main
                     return;
                 }
             }
-            var command = CreateCommand(SelectedCommand.ToString(), Context.Script.Commands.Count);
+            var command = CreateCommand(RemoveActionCommand, SelectedCommand.ToString(), Context.Script.Commands.Count);
 
             StackPanel.Children.Add(command);
 
@@ -219,9 +306,105 @@ namespace Marlin.ViewModels.Main
             LoadCommands();
         }
 
+        private void OnRemoveTriggerCommandExecuted(object p)
+        {
+            Context.Script.Triggers.RemoveAt((int)p);
+            LoadTrigger();
+        }
+
+        public void OnAppTriggerCommandExecuted(object p)
+        {
+            Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
+            openFileDialog.Title = "Выбор программы для триггера";
+            openFileDialog.Filter = "Программы (*.exe)|*.exe";
+
+            bool? result = openFileDialog.ShowDialog();
+
+            if (result == true)
+            {
+                TextTrigger = openFileDialog.FileName;
+                AppTrigger = System.IO.Path.GetFileName(TextTrigger);
+            }
+        }
+
+        private bool CanAddTriggerCommandExecute(object p)
+        {
+            if (SelectedTrigger == "Запуск Marlin")
+            {
+                return true;
+            }
+            return TextTrigger.Length > 0;
+        }
+
+        private void OnAddTriggerCommandExecuted(object p)
+        {
+            var trigger = new Models.Main.Trigger();
+            string value = "";
+            if (SelectedTrigger == "Фраза")
+            {
+                trigger.textvalue = TextTrigger;
+                trigger.triggertype = TriggerType.Phrase;
+                trigger.appvalue = "";
+                value += "Фраза: " + TextTrigger;
+            }
+            if (SelectedTrigger == "Время")
+            {
+                trigger.textvalue = TextTrigger;
+                trigger.triggertype = TriggerType.Time;
+                trigger.appvalue = "";
+                value += "Время: " + TextTrigger;
+            }
+            if (SelectedTrigger == "Запуск Marlin")
+            {
+                trigger.textvalue = "";
+                trigger.triggertype = TriggerType.StartMarlin;
+                trigger.appvalue = "";
+                value += "Запуск Marlin";
+            }
+            if (SelectedTrigger == "Запуск программы")
+            {
+                trigger.textvalue = TextTrigger;
+                trigger.triggertype = TriggerType.StartApp;
+                trigger.appvalue = AppTrigger;
+                value += "Программа: " + AppTrigger;
+            }
+            Context.Script.Triggers.Add(trigger);
+
+            TriggerPanel.Children.Add(CreateCommand(RemoveTriggerCommand, value, Context.Script.Triggers.Count));
+
+            TextTrigger = "";
+            AppTrigger = "";
+        }
+
         private bool ValidationCommand()
         {
             return true;
+        }
+
+        private void LoadTrigger()
+        {
+            TriggerPanel.Children.Clear();
+            for (int i = 0; i < Context.Script.Triggers.Count; i++)
+            {
+                string value = "";
+                if (Context.Script.Triggers[i].triggertype == TriggerType.Phrase)
+                {
+                    value += "Фраза: " + Context.Script.Triggers[i].textvalue;
+                }
+                if (Context.Script.Triggers[i].triggertype == TriggerType.Time)
+                {
+                    value += "Время: " + Context.Script.Triggers[i].textvalue;
+                }
+                if (Context.Script.Triggers[i].triggertype == TriggerType.StartMarlin)
+                {
+                    value += "Запуск Marlin";
+                }
+                if (Context.Script.Triggers[i].triggertype == TriggerType.StartApp)
+                {
+                    value += "Программа: " + Context.Script.Triggers[i].appvalue;
+                }
+                TriggerPanel.Children.Add(CreateCommand(RemoveTriggerCommand, value, i));
+            }
         }
 
         private void LoadCommands()
@@ -232,12 +415,12 @@ namespace Marlin.ViewModels.Main
                 var command = Command.GetCommand(Context.Script.Commands[i]);
                 if (command != null)
                 {
-                    panel.Children.Add(CreateCommand(command.Title, i));
+                    panel.Children.Add(CreateCommand(RemoveActionCommand, command.Title, i));
                 }
             }
         }
 
-        private Border CreateCommand(string command, int number)
+        private Border CreateCommand(ICommand command, string commandname, int number)
         {
             var border = new Border
             {
@@ -269,7 +452,7 @@ namespace Marlin.ViewModels.Main
                 VerticalAlignment = VerticalAlignment.Center,
                 HorizontalAlignment = HorizontalAlignment.Center,
                 Margin = new Thickness(15, 5, 0, 5),
-                Text = command
+                Text = commandname
             };
 
             Grid.SetRow(textBlock, 0);
@@ -281,7 +464,7 @@ namespace Marlin.ViewModels.Main
                 Padding = new Thickness(0),
                 VerticalAlignment = VerticalAlignment.Center,
                 FontWeight = FontWeights.Bold,
-                Command = RemoveActionCommand,
+                Command = command,
                 CommandParameter = number,
                 Background = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0)),
                 BorderBrush = Brushes.Transparent,

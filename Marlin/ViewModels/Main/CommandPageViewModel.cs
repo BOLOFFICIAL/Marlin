@@ -53,9 +53,10 @@ namespace Marlin.ViewModels.Main
             SelectAppCommand = new LambdaCommand(OnSelectAppCommandExecuted);
             DeleteAppCommand = new LambdaCommand(OnDeleteAppCommandExecuted);
             AppTriggerCommand = new LambdaCommand(OnAppTriggerCommandExecuted);
+            RemoveTriggerCommand = new LambdaCommand(OnRemoveTriggerCommandExecuted);
             SelectedTrigger = Program.Triggers[0];
 
-            RemoveTriggerCommand = new LambdaCommand(OnRemoveTriggerCommandExecuted);
+            
 
             Context.Command = new Command();
             Context.CopyCommand = JsonConvert.DeserializeObject<Command>(JsonConvert.SerializeObject(Context.Command));
@@ -153,9 +154,6 @@ namespace Marlin.ViewModels.Main
         {
             get => Context.Settings.ViewportUnits;
         }
-
-
-
 
         public string PageTitle
         {
