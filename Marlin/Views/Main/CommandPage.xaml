@@ -129,7 +129,8 @@
                                                FontSize="15"
                                                VerticalAlignment="Center"
                                                Foreground="{Binding Path=FontColor,UpdateSourceTrigger=PropertyChanged}"
-                                               Text="Выберите действие"/> <!--создать свое действие\использовать встроенные методы--> 
+                                               Text="Выберите действие"/>
+                                    <!--создать свое действие\использовать встроенные методы-->
 
                                     <ComboBox Grid.Column="1"
                                               FontSize="15"
@@ -203,7 +204,7 @@
                                                 <ColumnDefinition Width="auto"/>
                                                 <ColumnDefinition Width="auto"/>
                                             </Grid.ColumnDefinitions>
-                                            
+
                                             <TextBlock Grid.Column="0" 
                                                        FontSize="15"
                                                        Margin="0,5,10,0"
@@ -242,7 +243,8 @@
                                                      HorizontalContentAlignment="Center"
                                                      VerticalAlignment="Center"
                                                      Text="{Binding Path=FileName,UpdateSourceTrigger=PropertyChanged}"/>
-                                        </Grid> <!--Выбрать объект-->
+                                        </Grid>
+                                        <!--Выбрать объект-->
 
                                         <Grid Grid.Row="2"
                                               Margin="0,10">
@@ -265,7 +267,8 @@
                                                      HorizontalContentAlignment="Center"
                                                      VerticalAlignment="Center"
                                                      Text="{Binding Path=Url,UpdateSourceTrigger=PropertyChanged}"/>
-                                        </Grid> <!--Введите URL-->
+                                        </Grid>
+                                        <!--Введите URL-->
 
                                         <Grid Grid.Row="3"
                                               Margin="0,0,0,5">
@@ -286,7 +289,8 @@
                                                       Padding="10,15,10,5"
                                                       SelectedValue="{Binding Path=SelectedObjectAction,UpdateSourceTrigger=PropertyChanged}"
                                                       ItemsSource="{Binding Path=ObjectActions,UpdateSourceTrigger=PropertyChanged}"/>
-                                        </Grid> <!--Действие с объектом-->
+                                        </Grid>
+                                        <!--Действие с объектом-->
 
                                         <Grid Grid.Row="4"
                                               Margin="0,0,0,10">
@@ -326,10 +330,11 @@
                                                     Background="Transparent"
                                                     Command="{Binding Path=DeleteAppCommand}"
                                                     Content="✖"/>
-                                        </Grid> <!--Выберите программу для запуска-->
+                                        </Grid>
+                                        <!--Выберите программу для запуска-->
                                     </Grid>
                                 </Grid>
-                                
+
                                 <!--Использование встроенных методов-->
                                 <Grid Grid.Row="2">
                                     <Grid.RowDefinitions>
@@ -415,7 +420,7 @@
                                                           IsChecked="{Binding Path=IsMultiSymbol,UpdateSourceTrigger=PropertyChanged}"
                                                           VerticalAlignment="Center"/>
                                             </Grid>
-                                            
+
                                             <Grid Grid.Row="1"
                                                   Margin="0,0,0,10">
                                                 <Grid.ColumnDefinitions>
@@ -439,7 +444,7 @@
                                                          VerticalAlignment="Center"
                                                          Text="{Binding Path=PressingKeys,UpdateSourceTrigger=PropertyChanged}"/>
                                             </Grid>
-                                            
+
                                             <Grid Grid.Row="2"
                                                   Margin="0,0,0,10">
                                                 <Grid.ColumnDefinitions>
@@ -519,7 +524,7 @@
                                 </Grid>
                             </Grid>
                         </Grid>
-
+                        
                         <Grid Grid.Row="2"
                               Margin="0,10">
                             <Grid.ColumnDefinitions>
@@ -537,22 +542,69 @@
 
                             <Grid Grid.Column="1"
                                   Margin="0,10,0,5">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="auto"/>
-                                    <ColumnDefinition Width="auto"/>
-                                </Grid.ColumnDefinitions>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
 
-                                <TextBlock Grid.Column="0"  
+                                    <Grid Grid.Row="0"
+                                          Margin="0,0,0,10">
+                                        
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto"/>
+                                            <ColumnDefinition Width="auto"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock Grid.Column="0"  
                                                FontSize="15"
                                                Margin="0,0,10,0"
                                                Foreground="{Binding Path=FontColor,UpdateSourceTrigger=PropertyChanged}"
                                                Text="Защитить паролем"/>
 
-                                <CheckBox Grid.Column="1"
+                                        <CheckBox Grid.Column="1"
                                               IsChecked="{Binding Path=Checkpuss,UpdateSourceTrigger=PropertyChanged}"/>
+                                    </Grid>
+
+                                    <Grid Grid.Row="1">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height ="auto"/>
+                                            <RowDefinition Height ="auto"/>
+                                        </Grid.RowDefinitions>
+
+                                        <Grid Grid.Row="0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="auto"/>
+                                                <ColumnDefinition Width="auto"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <ComboBox Grid.Column="0"
+                                                      FontSize="15"
+                                                      MaxWidth="400"
+                                                      SelectedIndex="0"
+                                                      Margin="0,0,10,0"
+                                                      SelectedValue="{Binding Path=SelectedTrigger,UpdateSourceTrigger=PropertyChanged}"
+                                                      ItemsSource="{Binding Path=Triggers,UpdateSourceTrigger=PropertyChanged}"
+                                                      HorizontalContentAlignment="Center"/>
+
+                                            <Button Grid.Column="1"
+                                                    Content="Добавить"
+                                                    Command="{Binding Path=AddTriggerCommand}"
+                                                    BorderThickness="0"
+                                                    BorderBrush="Transparent"
+                                                    Foreground="{Binding Path=ExternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
+                                                    Background="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"/>
+                                        </Grid>
+
+                                        <ScrollContentPresenter Grid.Row="1"
+                                                                HorizontalAlignment="Left"
+                                                                Margin="0,0,0,10"
+                                                                Content="{Binding Path=TriggerStackPanel,UpdateSourceTrigger=PropertyChanged}"/>
+                                    </Grid>
+                                </Grid>
                             </Grid>
                         </Grid>
-
+                        
                         <Grid Grid.Row="3">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto"/>
