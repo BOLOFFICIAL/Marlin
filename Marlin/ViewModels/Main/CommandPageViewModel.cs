@@ -6,6 +6,7 @@ using Marlin.ViewModels.Base;
 using Marlin.Views.Main;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Newtonsoft.Json;
+using System;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -699,12 +700,40 @@ namespace Marlin.ViewModels.Main
                 trigger.appvalue = AppTrigger;
                 value += "Программа: " + AppTrigger;
             }
-            
-            TriggerPanel.Children.Add(CreateCommand(value, Context.Command.Triggers.Count));
-            Context.Command.Triggers.Add(trigger);
+            if (ValidationTrigger(trigger))
+            {
+                TriggerPanel.Children.Add(CreateCommand(value, Context.Command.Triggers.Count));
+                Context.Command.Triggers.Add(trigger);
 
-            TextTrigger = "";
-            AppTrigger = "";
+                TextTrigger = "";
+                AppTrigger = "";
+            }
+        }
+
+        private bool ValidationTrigger(Models.Main.Trigger trigger)
+        {
+            foreach (var trg in Context.Command.Triggers)
+            {
+                if (trg.Equals(trigger))
+                {
+                    Models.MessageBox.MakeMessage("У элемента уже присутствует такой триггер", MessageType.Error);
+                    return false;
+                }
+            }
+            if (trigger.triggertype == TriggerType.Time)
+            {
+                if (!trigger.textvalue.Contains(".") && !trigger.textvalue.Contains(":"))
+                {
+                    Models.MessageBox.MakeMessage("Некорректная запись времени", MessageType.Error);
+                    return false;
+                }
+                if (!DateTime.TryParse(trigger.textvalue, out DateTime time))
+                {
+                    Models.MessageBox.MakeMessage("Некорректная запись времени", MessageType.Error);
+                    return false;
+                }
+            }
+            return true;
         }
 
         private void OnRemoveTriggerCommandExecuted(object p)

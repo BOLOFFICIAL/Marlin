@@ -9,6 +9,9 @@ namespace Marlin.Models.Main
         public int id = 1;
         public string Title = "";
         public bool Checkpuss = false;
+        public bool Async = false;
+        public int TimeDeley = 0;
+        public bool Loop = false;
         public string Comment = "";
         public List<int> Commands = new();
         public List<Trigger> Triggers = new List<Trigger>();

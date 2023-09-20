@@ -246,9 +246,9 @@ namespace Marlin.ViewModels.Main
             }
         }
 
-        private bool CanAddActionCommandExecute(object p) 
+        private bool CanAddActionCommandExecute(object p)
         {
-            if (Context.Action == ActionType.Script) 
+            if (Context.Action == ActionType.Script)
             {
                 return Context.ProgramData.Commands.Count > 0;
             }
@@ -281,8 +281,8 @@ namespace Marlin.ViewModels.Main
                 {
                     var border = CreateBorder();
                     var textBlock = CreateTextBlock(command.Title);
-                    var buttonDelete = CreateButton(DeleteActionCommand, command.id, "✖", 15);
-                    var buttonRun = CreateButton(RunActionCommand, command.id, "▶", 20);
+                    var buttonDelete = CreateButton(DeleteActionCommand, command.id, "⨉", 20);
+                    var buttonRun = CreateButton(RunActionCommand, command.id, "▷", 20);
                     var buttonEdit = CreateButton(EditActionCommand, command.id, "✎", 15);
                     var grid = CreateGrid(textBlock, buttonDelete, buttonRun, buttonEdit);
                     border.Child = grid;
@@ -296,8 +296,8 @@ namespace Marlin.ViewModels.Main
                 {
                     var border = CreateBorder();
                     var textBlock = CreateTextBlock(script.Title);
-                    var buttonDelete = CreateButton(DeleteActionCommand, script.id, "✖",15);
-                    var buttonRun = CreateButton(RunActionCommand, script.id, "▶", 20);
+                    var buttonDelete = CreateButton(DeleteActionCommand, script.id, "⨉", 20);
+                    var buttonRun = CreateButton(RunActionCommand, script.id, "▷", 20);
                     var buttonEdit = CreateButton(EditActionCommand, script.id, "✎", 15);
                     var grid = CreateGrid(textBlock, buttonDelete, buttonRun, buttonEdit);
                     border.Child = grid;
@@ -358,7 +358,7 @@ namespace Marlin.ViewModels.Main
                 return textBlock;
             }
 
-            Button CreateButton(ICommand command, int id, string content,int size)
+            Button CreateButton(ICommand command, int id, string content, int size)
             {
                 Button button = new Button
                 {
@@ -370,9 +370,9 @@ namespace Marlin.ViewModels.Main
                     Height = 30,
                     Width = 30,
                     FontSize = size,
-                    FontWeight = FontWeights.Bold,
                     Command = command,
                     CommandParameter = id,
+                    FontWeight = FontWeights.Black,
                     HorizontalAlignment = HorizontalAlignment.Right,
                     Content = content
                 };

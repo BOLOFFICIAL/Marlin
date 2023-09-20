@@ -5,6 +5,7 @@ using Marlin.SystemFiles.Types;
 using Marlin.ViewModels.Base;
 using Marlin.Views.Main;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
@@ -35,6 +36,7 @@ namespace Marlin.ViewModels.Main
         private GridLength texttriggerlength = new GridLength(0, GridUnitType.Pixel);
         private GridLength marlintriggerlength = GridLength.Auto;
         private GridLength apptriggerlength = new GridLength(0, GridUnitType.Pixel);
+        private GridLength lengthasync = GridLength.Auto;
 
         public ScriptPageViewModel()
         {
@@ -147,6 +149,43 @@ namespace Marlin.ViewModels.Main
             set => Set(ref Context.Script.Checkpuss, value);
         }
 
+        public int TimeDeley
+        {
+            get => Context.Script.TimeDeley;
+            set => Set(ref Context.Script.TimeDeley, value);
+        }
+
+        public bool Async
+        {
+            get => Context.Script.Async;
+            set 
+            { 
+                Set(ref Context.Script.Async, value);
+                if (value)
+                {
+                    LengthAsync = new GridLength(0, GridUnitType.Pixel);
+                    Loop = !value;
+                }
+                else 
+                {
+                    LengthAsync = GridLength.Auto;
+                }
+            }
+        }
+
+        public bool Loop
+        {
+            get => Context.Script.Loop;
+            set
+            {
+                Set(ref Context.Script.Loop, value);
+                if (value) 
+                {
+                    Async = !value;
+                }
+            }
+        }
+
         public string Comment
         {
             get => Context.Script.Comment;
@@ -186,6 +225,12 @@ namespace Marlin.ViewModels.Main
         {
             get => marlintriggerlength;
             set => Set(ref marlintriggerlength, value);
+        }
+
+        public GridLength LengthAsync
+        {
+            get => lengthasync;
+            set => Set(ref lengthasync, value);
         }
 
         public string TextTrigger
@@ -368,12 +413,41 @@ namespace Marlin.ViewModels.Main
                 trigger.appvalue = AppTrigger;
                 value += "Программа: " + AppTrigger;
             }
+            if (ValidationTrigger(trigger))
+            {
+                TriggerPanel.Children.Add(CreateCommand(RemoveTriggerCommand, value, Context.Script.Triggers.Count));
+                Context.Script.Triggers.Add(trigger);
 
-            TriggerPanel.Children.Add(CreateCommand(RemoveTriggerCommand, value, Context.Script.Triggers.Count));
-            Context.Script.Triggers.Add(trigger);
+                TextTrigger = "";
+                AppTrigger = "";
+            }
 
-            TextTrigger = "";
-            AppTrigger = "";
+        }
+
+        private bool ValidationTrigger(Models.Main.Trigger trigger)
+        {
+            foreach (var trg in Context.Command.Triggers)
+            {
+                if (trg.Equals(trigger))
+                {
+                    Models.MessageBox.MakeMessage("У элемента уже присутствует такой триггер", MessageType.Error);
+                    return false;
+                }
+            }
+            if (trigger.triggertype == TriggerType.Time)
+            {
+                if (!trigger.textvalue.Contains(".") && !trigger.textvalue.Contains(":"))
+                {
+                    Models.MessageBox.MakeMessage("Некорректная запись времени", MessageType.Error);
+                    return false;
+                }
+                if (!DateTime.TryParse(trigger.textvalue, out DateTime time))
+                {
+                    Models.MessageBox.MakeMessage("Некорректная запись времени", MessageType.Error);
+                    return false;
+                }
+            }
+            return true;
         }
 
         private bool ValidationCommand()
