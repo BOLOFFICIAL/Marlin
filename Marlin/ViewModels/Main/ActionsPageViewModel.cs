@@ -33,7 +33,7 @@ namespace Marlin.ViewModels.Main
             ToMainCommand = new LambdaCommand(OnToMainCommandExecuted);
             EditActionCommand = new LambdaCommand(OnEditActionCommandExecuted);
             RunActionCommand = new LambdaCommand(OnRunActionCommandExecuted);
-            AddActionCommand = new LambdaCommand(OnAddActionCommandExecuted);
+            AddActionCommand = new LambdaCommand(OnAddActionCommandExecuted, CanAddActionCommandExecute);
             DeleteActionCommand = new LambdaCommand(OnDeleteActionCommandExecuted);
             LoadActions();
         }
@@ -244,6 +244,15 @@ namespace Marlin.ViewModels.Main
                 }
                 script.ExecuteScript();
             }
+        }
+
+        private bool CanAddActionCommandExecute(object p) 
+        {
+            if (Context.Action == ActionType.Script) 
+            {
+                return Context.ProgramData.Commands.Count > 0;
+            }
+            return true;
         }
 
         private void OnAddActionCommandExecuted(object p)
