@@ -122,7 +122,7 @@ namespace Marlin.ViewModels.Main
             {
                 if (command.Checkpuss)
                 {
-                    if (!Program.Authentication("Для запуска комманды необходимо подтвердить пароль"))
+                    if (!Program.Authentication("Для запуска комманды подтвердите пароль"))
                     {
                         return;
                     }

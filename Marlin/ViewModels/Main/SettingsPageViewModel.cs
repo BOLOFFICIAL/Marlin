@@ -342,7 +342,7 @@ namespace Marlin.ViewModels.Main
                     SelectImage();
                     break;
                 case "Папка для данных":
-                    if (Program.Authentication("Введите пароль администратора"))
+                    if (Program.Authentication("Для смены папки для данных подтвердите пароль"))
                     {
                         SelectFolder();
                     }
@@ -435,6 +435,7 @@ namespace Marlin.ViewModels.Main
                 if (Context.Settings.Password.Length > 0)
                 {
                     string oldpass = Context.Settings.NewPassword.Length > 0 ? " старый" : "";
+
                     if (Program.Authentication($"Были изменены настройки администрирования.\nДля сохранения введите{oldpass} пароль администпратора.",
                         check: (Context.Settings.NewPassword.Length > 0 || Context.Settings.TimeCheckPassword != Context.CopySettings.TimeCheckPassword)))
                     {
@@ -442,6 +443,7 @@ namespace Marlin.ViewModels.Main
                         {
                             Program.ChangePassword();
                         }
+
                         if (Context.Settings.IsАutorun)
                         {
                             Program.AddToStartup();

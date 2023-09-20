@@ -1,5 +1,4 @@
 ﻿using Marlin.Commands;
-using Marlin.Commands.Base;
 using Marlin.Models.Main;
 using Marlin.SystemFiles;
 using Marlin.SystemFiles.Types;
@@ -200,7 +199,7 @@ namespace Marlin.ViewModels.Main
         private void OnDeleteActionCommandExecuted(object p)
         {
             LengthAbout = new GridLength(0, GridUnitType.Star);
-            if (Program.Authentication("Для удаления элемента подтвердите пароль"))
+            if (Program.Authentication("Для удаления элемента подтвердите пароль", check: true))
             {
                 Context.SelectedId = (int)p;
                 if (Context.Action == ActionType.Command)
@@ -225,7 +224,7 @@ namespace Marlin.ViewModels.Main
                 var command = Models.Main.Command.GetCommand(Context.SelectedId);
                 if (command.Checkpuss)
                 {
-                    if (!Program.Authentication("Для запуска комманды необходимо подтвердить пароль"))
+                    if (!Program.Authentication("Для запуска комманды подтвердите пароль"))
                     {
                         return;
                     }
@@ -273,9 +272,9 @@ namespace Marlin.ViewModels.Main
                 {
                     var border = CreateBorder();
                     var textBlock = CreateTextBlock(command.Title);
-                    var buttonDelete = CreateButton(DeleteActionCommand, command.id, "Удалить");
-                    var buttonRun = CreateButton(RunActionCommand, command.id, "Запустить");
-                    var buttonEdit = CreateButton(EditActionCommand, command.id, "✏️");
+                    var buttonDelete = CreateButton(DeleteActionCommand, command.id, "✖", 15);
+                    var buttonRun = CreateButton(RunActionCommand, command.id, "▶", 20);
+                    var buttonEdit = CreateButton(EditActionCommand, command.id, "✎", 15);
                     var grid = CreateGrid(textBlock, buttonDelete, buttonRun, buttonEdit);
                     border.Child = grid;
                     panel.Children.Add(border);
@@ -288,9 +287,9 @@ namespace Marlin.ViewModels.Main
                 {
                     var border = CreateBorder();
                     var textBlock = CreateTextBlock(script.Title);
-                    var buttonDelete = CreateButton(DeleteActionCommand, script.id, "Удалить");
-                    var buttonRun = CreateButton(RunActionCommand, script.id, "Запустить");
-                    var buttonEdit = CreateButton(EditActionCommand, script.id, "✏️");
+                    var buttonDelete = CreateButton(DeleteActionCommand, script.id, "✖",15);
+                    var buttonRun = CreateButton(RunActionCommand, script.id, "▶", 20);
+                    var buttonEdit = CreateButton(EditActionCommand, script.id, "✎", 15);
                     var grid = CreateGrid(textBlock, buttonDelete, buttonRun, buttonEdit);
                     border.Child = grid;
                     panel.Children.Add(border);
@@ -350,7 +349,7 @@ namespace Marlin.ViewModels.Main
                 return textBlock;
             }
 
-            Button CreateButton(ICommand command, int id, string content)
+            Button CreateButton(ICommand command, int id, string content,int size)
             {
                 Button button = new Button
                 {
@@ -360,6 +359,9 @@ namespace Marlin.ViewModels.Main
                     BorderBrush = new SolidColorBrush(Colors.Transparent),
                     Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.PageColor)),
                     Height = 30,
+                    Width = 30,
+                    FontSize = size,
+                    FontWeight = FontWeights.Bold,
                     Command = command,
                     CommandParameter = id,
                     HorizontalAlignment = HorizontalAlignment.Right,
@@ -401,7 +403,7 @@ namespace Marlin.ViewModels.Main
             var border = new Border
             {
                 Margin = new Thickness(10, 10, 10, 0),
-                CornerRadius = new CornerRadius(20),
+                CornerRadius = new CornerRadius(15),
                 HorizontalAlignment = HorizontalAlignment.Stretch,
                 BorderThickness = new Thickness(2),
                 ToolTip = trigger,

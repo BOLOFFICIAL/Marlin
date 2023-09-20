@@ -42,7 +42,7 @@
             <Grid Grid.Row="1"
                   Margin="50,0,50,10">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="2*"/>
                     <ColumnDefinition Width="{Binding Path=LengthAbout}"/>
                 </Grid.ColumnDefinitions>
 
@@ -97,8 +97,8 @@
                 <Grid Grid.Column="1">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
-                        <RowDefinition Height="*"/>
                         <RowDefinition Height="2*"/>
+                        <RowDefinition Height="3*"/>
                     </Grid.RowDefinitions>
 
                     <Border Grid.Row="0"
@@ -127,6 +127,7 @@
                         <ScrollViewer VerticalScrollBarVisibility="Hidden">
                             <TextBlock Text="{Binding Path=Description,UpdateSourceTrigger=PropertyChanged}"
                                        FontSize="15"
+                                       Margin="10,5"
                                        Padding="10"
                                        HorizontalAlignment="Stretch"
                                        TextWrapping="Wrap"/>
