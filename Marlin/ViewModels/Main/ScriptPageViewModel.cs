@@ -368,9 +368,9 @@ namespace Marlin.ViewModels.Main
                 trigger.appvalue = AppTrigger;
                 value += "Программа: " + AppTrigger;
             }
-            Context.Script.Triggers.Add(trigger);
 
             TriggerPanel.Children.Add(CreateCommand(RemoveTriggerCommand, value, Context.Script.Triggers.Count));
+            Context.Script.Triggers.Add(trigger);
 
             TextTrigger = "";
             AppTrigger = "";
