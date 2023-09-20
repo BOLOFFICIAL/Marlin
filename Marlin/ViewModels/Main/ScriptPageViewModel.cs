@@ -430,7 +430,7 @@ namespace Marlin.ViewModels.Main
                 BorderThickness = new Thickness(2),
             };
 
-            BindingOperations.SetBinding(border, Border.BackgroundProperty, new Binding("InternalBackgroundColor")
+            BindingOperations.SetBinding(border, Border.BackgroundProperty, new Binding("ExternalBackgroundColor")
             {
                 UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
             });

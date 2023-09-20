@@ -95,39 +95,54 @@
                 </Grid>
 
                 <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="2*"/>
+                    </Grid.RowDefinitions>
+
                     <Border Grid.Row="0"
-                            Margin="10,0,0,40"
-                            Padding="0,0,0,10"
+                            Margin="10,0,0,10"
                             CornerRadius="25"
                             Background="{Binding Path=InternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
                             BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                             BorderThickness="2">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
+                        <TextBlock Background="Transparent"
+                                   Margin="5"
+                                   Foreground="{Binding Path=PageColor}"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   FontSize="20"
+                                   FontWeight="Bold"
+                                   Padding="30,0"
+                                   Text="{Binding Path=TitleAbout,UpdateSourceTrigger=PropertyChanged}"/>
+                    </Border>
 
-                            <TextBlock Grid.Row="0"
-                                       Background="Transparent"
-                                       Margin="5"
-                                       Foreground="{Binding Path=PageColor}"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       FontSize="20"
-                                       FontWeight="Bold"
-                                       Padding="30,0"
-                                       Text="{Binding Path=TitleAbout,UpdateSourceTrigger=PropertyChanged}"/>
+                    <Border Grid.Row="1"
+                            Margin="10,0,0,10"
+                            CornerRadius="25"
+                            Background="{Binding Path=InternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
+                            BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
+                            BorderThickness="2">
+                        <ScrollViewer VerticalScrollBarVisibility="Hidden">
+                            <TextBlock Text="{Binding Path=Description,UpdateSourceTrigger=PropertyChanged}"
+                                       FontSize="15"
+                                       Padding="10"
+                                       HorizontalAlignment="Stretch"
+                                       TextWrapping="Wrap"/>
+                        </ScrollViewer>
+                    </Border>
 
-                            <ScrollViewer Grid.Row="1"
-                                          VerticalScrollBarVisibility="Hidden">
-                                <TextBlock Text="{Binding Path=Description,UpdateSourceTrigger=PropertyChanged}"
-                                           FontSize="15"
-                                           Padding="10"
-                                           HorizontalAlignment="Stretch"
-                                           TextWrapping="Wrap"/>
-                            </ScrollViewer>
-                        </Grid>
+                    <Border Grid.Row="2"
+                            Margin="10,0,0,40"
+                            CornerRadius="25"
+                            Background="{Binding Path=InternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
+                            BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
+                            BorderThickness="2">
+                        <ScrollViewer Margin="0,0,0,10"
+                                      VerticalScrollBarVisibility="Hidden"
+                                      HorizontalAlignment="Stretch"
+                                      Content="{Binding Path=TriggerPanel,UpdateSourceTrigger=PropertyChanged}"/>
                     </Border>
                 </Grid>
             </Grid>

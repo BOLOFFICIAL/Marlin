@@ -4,9 +4,11 @@ using Marlin.SystemFiles;
 using Marlin.SystemFiles.Types;
 using Marlin.ViewModels.Base;
 using Marlin.Views.Main;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -16,6 +18,7 @@ namespace Marlin.ViewModels.Main
     {
         private string _title;
         private StackPanel panel = new StackPanel();
+        private StackPanel triggers = new StackPanel();
         private GridLength _lengthAbout = new GridLength(0, GridUnitType.Pixel);
         private string _description = "";
         public ICommand ToMainCommand { get; }
@@ -114,10 +117,14 @@ namespace Marlin.ViewModels.Main
 
         public StackPanel StackPanel
         {
-            get
-            {
-                return panel;
-            }
+            get => panel;
+            set => Set(ref panel, value);
+        }
+
+        public StackPanel TriggerPanel
+        {
+            get => triggers;
+            set => Set(ref triggers, value);
         }
 
         void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -137,6 +144,7 @@ namespace Marlin.ViewModels.Main
                             if (command.Comment.Length > 0)
                             {
                                 Description = command.Comment;
+                                LoadTrigger(command.Triggers);
                                 LengthAbout = new GridLength(1, GridUnitType.Star);
                             }
                         }
@@ -146,6 +154,7 @@ namespace Marlin.ViewModels.Main
                             if (script.Comment.Length > 0)
                             {
                                 Description = script.Comment;
+                                LoadTrigger(script.Triggers);
                                 LengthAbout = new GridLength(1, GridUnitType.Star);
                             }
                         }
@@ -358,6 +367,77 @@ namespace Marlin.ViewModels.Main
 
                 return button;
             }
+        }
+
+        private void LoadTrigger(List<Models.Main.Trigger> triggers)
+        {
+            TriggerPanel.Children.Clear();
+            foreach (var trigger in triggers)
+            {
+                string value = "";
+                if (trigger.triggertype == TriggerType.Phrase)
+                {
+                    value += "Фраза: " + trigger.textvalue;
+                }
+                if (trigger.triggertype == TriggerType.Time)
+                {
+                    value += "Время: " + trigger.textvalue;
+                }
+                if (trigger.triggertype == TriggerType.StartMarlin)
+                {
+                    value += "Запуск Marlin";
+                }
+                if (trigger.triggertype == TriggerType.StartApp)
+                {
+                    value += "Программа: " + trigger.appvalue;
+                }
+                TriggerPanel.Children.Add(CreateTrigger(value));
+            }
+        }
+
+        private Border CreateTrigger(string trigger)
+        {
+            var border = new Border
+            {
+                Margin = new Thickness(10, 10, 10, 0),
+                CornerRadius = new CornerRadius(20),
+                HorizontalAlignment = HorizontalAlignment.Stretch,
+                BorderThickness = new Thickness(2),
+                ToolTip = trigger,
+            };
+
+            BindingOperations.SetBinding(border, Border.BackgroundProperty, new Binding("ExternalBackgroundColor")
+            {
+                UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
+            });
+
+            BindingOperations.SetBinding(border, Border.BorderBrushProperty, new Binding("PageColor")
+            {
+                UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
+            });
+
+            var grid = new Grid();
+
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+
+            var textBlock = new TextBlock
+            {
+                FontSize = 15,
+                FontWeight = FontWeights.Bold,
+                VerticalAlignment = VerticalAlignment.Center,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                Margin = new Thickness(15, 3, 15, 5),
+                Text = trigger
+            };
+
+            Grid.SetRow(textBlock, 0);
+            Grid.SetColumn(textBlock, 0);
+
+            grid.Children.Add(textBlock);
+
+            border.Child = grid;
+
+            return border;
         }
     }
 }
