@@ -8,7 +8,6 @@ using Microsoft.WindowsAPICodePack.Dialogs;
 using Newtonsoft.Json;
 using System.IO;
 using System.Linq;
-using System.Net.Http.Headers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -56,7 +55,7 @@ namespace Marlin.ViewModels.Main
             RemoveTriggerCommand = new LambdaCommand(OnRemoveTriggerCommandExecuted);
             SelectedTrigger = Program.Triggers[0];
 
-            
+
 
             Context.Command = new Command();
             Context.CopyCommand = JsonConvert.DeserializeObject<Command>(JsonConvert.SerializeObject(Context.Command));
@@ -708,7 +707,7 @@ namespace Marlin.ViewModels.Main
             AppTrigger = "";
         }
 
-        private void OnRemoveTriggerCommandExecuted(object p) 
+        private void OnRemoveTriggerCommandExecuted(object p)
         {
             Context.Command.Triggers.RemoveAt((int)p);
             LoadTrigger();

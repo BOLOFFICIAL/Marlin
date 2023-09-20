@@ -1,4 +1,5 @@
 ﻿using Marlin.Commands;
+using Marlin.Commands.Base;
 using Marlin.Models.Main;
 using Marlin.SystemFiles;
 using Marlin.SystemFiles.Types;
@@ -141,7 +142,7 @@ namespace Marlin.ViewModels.Main
                         if (Context.Action == ActionType.Command)
                         {
                             var command = Models.Main.Command.GetCommand(textBox.Text);
-                            if (command.Comment.Length > 0)
+                            if (command.Comment.Length > 0 || command.Triggers.Count > 0)
                             {
                                 Description = command.Comment;
                                 LoadTrigger(command.Triggers);
@@ -151,7 +152,7 @@ namespace Marlin.ViewModels.Main
                         if (Context.Action == ActionType.Script)
                         {
                             var script = Script.GetScript(textBox.Text);
-                            if (script.Comment.Length > 0)
+                            if (script.Comment.Length > 0 || script.Triggers.Count > 0)
                             {
                                 Description = script.Comment;
                                 LoadTrigger(script.Triggers);
