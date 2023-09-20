@@ -11,7 +11,6 @@ namespace Marlin.Models.Main
         public int id = 1;
         public string Title = "";
         public bool Checkpuss = false;
-        public bool Async = false;
         public int TimeDelay = 0;
         public string Comment = "";
         public List<int> Commands = new();
@@ -66,9 +65,10 @@ namespace Marlin.Models.Main
             Context.ProgramData.Scripts.Add(script);
         }
 
-        private void ExeAllCommand()
+        public void ExecuteScript()
         {
             int delay = TimeDelay == 0 ? 5 : TimeDelay * 10;
+
             Task.Run(() =>
             {
                 foreach (var commandindex in Commands)
@@ -81,28 +81,6 @@ namespace Marlin.Models.Main
                     }
                 }
             });
-        }
-
-        public void ExecuteScript()
-        {
-            if (Async)
-            {
-                foreach (var commandindex in Commands)
-                {
-                    var command = Context.ProgramData.Commands[commandindex - 1];
-                    if (command != null)
-                    {
-                        Task.Run(() =>
-                        {
-                            command.ExecuteCommand();
-                        });
-                    }
-                }
-            }
-            else
-            {
-                ExeAllCommand();
-            }
         }
 
         public bool Equals(Script otherScript)

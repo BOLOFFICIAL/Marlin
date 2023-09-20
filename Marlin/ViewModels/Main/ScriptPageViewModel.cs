@@ -36,7 +36,6 @@ namespace Marlin.ViewModels.Main
         private GridLength texttriggerlength = new GridLength(0, GridUnitType.Pixel);
         private GridLength marlintriggerlength = GridLength.Auto;
         private GridLength apptriggerlength = new GridLength(0, GridUnitType.Pixel);
-        private GridLength lengthasync = GridLength.Auto;
 
         public ScriptPageViewModel()
         {
@@ -155,23 +154,6 @@ namespace Marlin.ViewModels.Main
             set => Set(ref Context.Script.TimeDelay, value);
         }
 
-        public bool Async
-        {
-            get => Context.Script.Async;
-            set
-            {
-                Set(ref Context.Script.Async, value);
-                if (value)
-                {
-                    LengthAsync = new GridLength(0, GridUnitType.Pixel);
-                }
-                else
-                {
-                    LengthAsync = GridLength.Auto;
-                }
-            }
-        }
-
         public string Comment
         {
             get => Context.Script.Comment;
@@ -211,12 +193,6 @@ namespace Marlin.ViewModels.Main
         {
             get => marlintriggerlength;
             set => Set(ref marlintriggerlength, value);
-        }
-
-        public GridLength LengthAsync
-        {
-            get => lengthasync;
-            set => Set(ref lengthasync, value);
         }
 
         public string TextTrigger
