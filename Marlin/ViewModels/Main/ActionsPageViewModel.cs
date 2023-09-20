@@ -222,7 +222,7 @@ namespace Marlin.ViewModels.Main
             Context.SelectedId = (int)p;
             if (Context.Action == ActionType.Command)
             {
-                var command = Command.GetCommand(Context.SelectedId);
+                var command = Models.Main.Command.GetCommand(Context.SelectedId);
                 if (command.Checkpuss)
                 {
                     if (!Program.Authentication("Для запуска комманды необходимо подтвердить пароль"))
