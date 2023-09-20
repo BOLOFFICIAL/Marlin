@@ -1,6 +1,7 @@
 ﻿using Marlin.SystemFiles;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Marlin.Models.Main
@@ -12,8 +13,6 @@ namespace Marlin.Models.Main
         public bool Checkpuss = false;
         public bool Async = false;
         public int TimeDelay = 0;
-        public int Iteration = 0;
-        public bool Loop = false;
         public string Comment = "";
         public List<int> Commands = new();
         public List<Trigger> Triggers = new List<Trigger>();
@@ -67,6 +66,23 @@ namespace Marlin.Models.Main
             Context.ProgramData.Scripts.Add(script);
         }
 
+        private void ExeAllCommand()
+        {
+            int delay = TimeDelay == 0 ? 5 : TimeDelay * 10;
+            Task.Run(() =>
+            {
+                foreach (var commandindex in Commands)
+                {
+                    var command = Context.ProgramData.Commands[commandindex - 1];
+                    if (command != null)
+                    {
+                        command.ExecuteCommand();
+                        Thread.Sleep(delay * 100);
+                    }
+                }
+            });
+        }
+
         public void ExecuteScript()
         {
             if (Async)
@@ -76,27 +92,16 @@ namespace Marlin.Models.Main
                     var command = Context.ProgramData.Commands[commandindex - 1];
                     if (command != null)
                     {
-                        Task.Run(() => 
+                        Task.Run(() =>
                         {
                             command.ExecuteCommand();
                         });
                     }
                 }
             }
-            else 
+            else
             {
-                Task.Run(() =>
-                {
-                    foreach (var commandindex in Commands)
-                    {
-                        var command = Context.ProgramData.Commands[commandindex - 1];
-                        if (command != null)
-                        {
-                            command.ExecuteCommand();
-                            Task.Delay(TimeDelay * 1000);
-                        }
-                    }
-                });
+                ExeAllCommand();
             }
         }
 

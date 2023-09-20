@@ -37,7 +37,6 @@ namespace Marlin.ViewModels.Main
         private GridLength marlintriggerlength = GridLength.Auto;
         private GridLength apptriggerlength = new GridLength(0, GridUnitType.Pixel);
         private GridLength lengthasync = GridLength.Auto;
-        private GridLength lengthloop = GridLength.Auto;
 
         public ScriptPageViewModel()
         {
@@ -156,12 +155,6 @@ namespace Marlin.ViewModels.Main
             set => Set(ref Context.Script.TimeDelay, value);
         }
 
-        public int Iteration
-        {
-            get => Context.Script.Iteration;
-            set => Set(ref Context.Script.Iteration, value);
-        }
-
         public bool Async
         {
             get => Context.Script.Async;
@@ -171,29 +164,10 @@ namespace Marlin.ViewModels.Main
                 if (value)
                 {
                     LengthAsync = new GridLength(0, GridUnitType.Pixel);
-                    Loop = !value;
                 }
                 else
                 {
                     LengthAsync = GridLength.Auto;
-                }
-            }
-        }
-
-        public bool Loop
-        {
-            get => Context.Script.Loop;
-            set
-            {
-                Set(ref Context.Script.Loop, value);
-                if (value)
-                {
-                    LengthLoop = GridLength.Auto;
-                    Async = !value;
-                }
-                else 
-                {
-                    LengthLoop = GridLength.Auto;
                 }
             }
         }
@@ -243,12 +217,6 @@ namespace Marlin.ViewModels.Main
         {
             get => lengthasync;
             set => Set(ref lengthasync, value);
-        }
-
-        public GridLength LengthLoop
-        {
-            get => lengthloop;
-            set => Set(ref lengthloop, value);
         }
 
         public string TextTrigger
@@ -333,7 +301,7 @@ namespace Marlin.ViewModels.Main
 
         private bool CanButtonActionCommandExecute(object p)
         {
-            return !Context.Script.Equals(Context.CopyScript) && Context.Script.Commands.Count > 1;
+            return !Context.Script.Equals(Context.CopyScript) && Context.Script.Commands.Count > 0;
         }
 
         private void OnToMainCommandExecuted(object p)
