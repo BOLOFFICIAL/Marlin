@@ -37,6 +37,7 @@ namespace Marlin.ViewModels.Main
         private GridLength marlintriggerlength = GridLength.Auto;
         private GridLength apptriggerlength = new GridLength(0, GridUnitType.Pixel);
         private GridLength lengthasync = GridLength.Auto;
+        private GridLength lengthloop = GridLength.Auto;
 
         public ScriptPageViewModel()
         {
@@ -149,24 +150,30 @@ namespace Marlin.ViewModels.Main
             set => Set(ref Context.Script.Checkpuss, value);
         }
 
-        public int TimeDeley
+        public int TimeDelay
         {
-            get => Context.Script.TimeDeley;
-            set => Set(ref Context.Script.TimeDeley, value);
+            get => Context.Script.TimeDelay;
+            set => Set(ref Context.Script.TimeDelay, value);
+        }
+
+        public int Iteration
+        {
+            get => Context.Script.Iteration;
+            set => Set(ref Context.Script.Iteration, value);
         }
 
         public bool Async
         {
             get => Context.Script.Async;
-            set 
-            { 
+            set
+            {
                 Set(ref Context.Script.Async, value);
                 if (value)
                 {
                     LengthAsync = new GridLength(0, GridUnitType.Pixel);
                     Loop = !value;
                 }
-                else 
+                else
                 {
                     LengthAsync = GridLength.Auto;
                 }
@@ -179,9 +186,14 @@ namespace Marlin.ViewModels.Main
             set
             {
                 Set(ref Context.Script.Loop, value);
-                if (value) 
+                if (value)
                 {
+                    LengthLoop = GridLength.Auto;
                     Async = !value;
+                }
+                else 
+                {
+                    LengthLoop = GridLength.Auto;
                 }
             }
         }
@@ -231,6 +243,12 @@ namespace Marlin.ViewModels.Main
         {
             get => lengthasync;
             set => Set(ref lengthasync, value);
+        }
+
+        public GridLength LengthLoop
+        {
+            get => lengthloop;
+            set => Set(ref lengthloop, value);
         }
 
         public string TextTrigger

@@ -1,6 +1,7 @@
 ﻿using Marlin.SystemFiles;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Marlin.Models.Main
 {
@@ -10,7 +11,8 @@ namespace Marlin.Models.Main
         public string Title = "";
         public bool Checkpuss = false;
         public bool Async = false;
-        public int TimeDeley = 0;
+        public int TimeDelay = 0;
+        public int Iteration = 0;
         public bool Loop = false;
         public string Comment = "";
         public List<int> Commands = new();
@@ -67,13 +69,34 @@ namespace Marlin.Models.Main
 
         public void ExecuteScript()
         {
-            foreach (var commandindex in Commands)
+            if (Async)
             {
-                var command = Context.ProgramData.Commands[commandindex - 1];
-                if (command != null)
+                foreach (var commandindex in Commands)
                 {
-                    command.ExecuteCommand();
+                    var command = Context.ProgramData.Commands[commandindex - 1];
+                    if (command != null)
+                    {
+                        Task.Run(() => 
+                        {
+                            command.ExecuteCommand();
+                        });
+                    }
                 }
+            }
+            else 
+            {
+                Task.Run(() =>
+                {
+                    foreach (var commandindex in Commands)
+                    {
+                        var command = Context.ProgramData.Commands[commandindex - 1];
+                        if (command != null)
+                        {
+                            command.ExecuteCommand();
+                            Task.Delay(TimeDelay * 1000);
+                        }
+                    }
+                });
             }
         }
 
