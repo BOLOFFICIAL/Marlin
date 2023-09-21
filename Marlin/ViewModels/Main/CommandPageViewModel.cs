@@ -741,10 +741,13 @@ namespace Marlin.ViewModels.Main
             {
                 foreach (var trg in command.Triggers)
                 {
-                    if (trg.Equals(trigger))
+                    if (trg.triggertype == TriggerType.Phrase)
                     {
-                        Models.MessageBox.MakeMessage("У одной из команд есть такой триггер.\nПродолжить добавление триггера?", MessageType.Error);
-                        return false;
+                        if (trg.Equals(trigger))
+                        {
+                            Models.MessageBox.MakeMessage("У одной из команд есть такой триггер.", MessageType.Error);
+                            return false;
+                        }
                     }
                 }
             }
@@ -752,10 +755,13 @@ namespace Marlin.ViewModels.Main
             {
                 foreach (var trg in script.Triggers)
                 {
-                    if (trg.Equals(trigger))
+                    if (trg.triggertype == TriggerType.Phrase)
                     {
-                        Models.MessageBox.MakeMessage("У одного из скриптов есть такой триггер.\nПродолжить добавление триггера?", MessageType.Error);
-                        return false;
+                        if (trg.Equals(trigger))
+                        {
+                            Models.MessageBox.MakeMessage("У одного из скриптов есть такой триггер.", MessageType.Error);
+                            return false;
+                        }
                     }
                 }
             }
