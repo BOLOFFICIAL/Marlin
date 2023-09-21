@@ -126,6 +126,13 @@ namespace Marlin.ViewModels.Main
 
             if (matchingCommand != null)
             {
+                if (matchingCommand.Checkpuss)
+                {
+                    if (!Program.Authentication("Для запуска комманды подтвердите пароль"))
+                    {
+                        return;
+                    }
+                }
                 matchingCommand.ExecuteCommand();
             }
 
@@ -137,6 +144,32 @@ namespace Marlin.ViewModels.Main
 
             if (matchingScript != null)
             {
+                if (matchingScript.Checkpuss)
+                {
+                    if (!Program.Authentication("Для запуска скрипта подтвердите пароль"))
+                    {
+                        return;
+                    }
+                }
+                else 
+                {
+                    var checkpuss = false;
+                    foreach (var command in matchingScript.Commands) 
+                    {
+                        if (Context.ProgramData.Commands[command].Checkpuss) 
+                        {
+                            checkpuss = true;
+                            break;
+                        }
+                    }
+                    if (checkpuss) 
+                    {
+                        if (!Program.Authentication("Одна или несколько команд защищены паролем.\nДля запуска скрипта подтвердите пароль"))
+                        {
+                            return;
+                        }
+                    }
+                }
                 matchingScript.ExecuteScript();
             }
             Command = "";

@@ -244,14 +244,7 @@ namespace Marlin.ViewModels.Main
                     Context.ProgramData.Commands.Remove(Models.Main.Command.GetCommand(Context.SelectedId));
                     foreach (var script in Context.ProgramData.Scripts)
                     {
-                        foreach (var commamd in script.Commands)
-                        {
-                            if (commamd == Context.SelectedId)
-                            {
-                                script.Commands.Remove(commamd);
-                                break;
-                            }
-                        }
+                        script.Commands.RemoveAll(id => id == Context.SelectedId);
                     }
                 }
                 if (Context.Action == ActionType.Script)
