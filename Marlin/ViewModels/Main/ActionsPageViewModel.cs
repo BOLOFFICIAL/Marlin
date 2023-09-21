@@ -19,7 +19,9 @@ namespace Marlin.ViewModels.Main
         private string _title;
         private StackPanel panel = new StackPanel();
         private StackPanel triggers = new StackPanel();
+        private StackPanel scriptcommand = new StackPanel();
         private GridLength _lengthAbout = new GridLength(0, GridUnitType.Pixel);
+        private GridLength _lengthScriptCommand = new GridLength(0, GridUnitType.Pixel);
         private GridLength _lengthDescription = new GridLength(0, GridUnitType.Pixel);
         private GridLength _lengthTrigger = new GridLength(0, GridUnitType.Pixel);
         private string _description = "";
@@ -123,6 +125,12 @@ namespace Marlin.ViewModels.Main
             set => Set(ref panel, value);
         }
 
+        public StackPanel ScriptCommandPanel
+        {
+            get => scriptcommand;
+            set => Set(ref scriptcommand, value);
+        }
+
         public StackPanel TriggerPanel
         {
             get => triggers;
@@ -139,6 +147,7 @@ namespace Marlin.ViewModels.Main
                     if (foundElement is not null && foundElement is TextBlock textBox)
                     {
                         LengthAbout = new GridLength(0, GridUnitType.Star);
+                        LengthScriptCommand = new GridLength(0, GridUnitType.Star);
                         LengthDescription = new GridLength(0, GridUnitType.Star);
                         LengthTrigger = new GridLength(0, GridUnitType.Star);
                         TitleAbout = textBox.Text;
@@ -152,29 +161,34 @@ namespace Marlin.ViewModels.Main
                                 LengthAbout = new GridLength(1, GridUnitType.Star);
                                 if (command.Comment.Length > 0)
                                 {
-                                    LengthDescription = new GridLength(2, GridUnitType.Star);
+                                    LengthDescription = new GridLength(1, GridUnitType.Star);
                                 }
                                 if (command.Triggers.Count > 0)
                                 {
-                                    LengthTrigger = new GridLength(3, GridUnitType.Star);
+                                    LengthTrigger = new GridLength(1, GridUnitType.Star);
                                 }
                             }
                         }
                         if (Context.Action == ActionType.Script)
                         {
                             var script = Script.GetScript(textBox.Text);
-                            if (script.Comment.Length > 0 || script.Triggers.Count > 0)
+                            if (script.Comment.Length > 0 || script.Triggers.Count > 0 || script.Commands.Count > 0)
                             {
                                 Description = script.Comment;
                                 LoadTrigger(script.Triggers);
+                                LoadScriptCommand(script);
                                 LengthAbout = new GridLength(1, GridUnitType.Star);
                                 if (script.Comment.Length > 0)
                                 {
-                                    LengthDescription = new GridLength(2, GridUnitType.Star);
+                                    LengthDescription = new GridLength(1, GridUnitType.Star);
                                 }
                                 if (script.Triggers.Count > 0)
                                 {
-                                    LengthTrigger = new GridLength(3, GridUnitType.Star);
+                                    LengthTrigger = new GridLength(1, GridUnitType.Star);
+                                }
+                                if (script.Commands.Count > 0) 
+                                {
+                                    LengthScriptCommand = new GridLength(1, GridUnitType.Star);
                                 }
                             }
                         }
@@ -190,6 +204,12 @@ namespace Marlin.ViewModels.Main
             {
                 Set(ref _lengthAbout, value);
             }
+        }
+
+        public GridLength LengthScriptCommand
+        {
+            get => _lengthScriptCommand;
+            set => Set(ref _lengthScriptCommand, value);
         }
 
         public GridLength LengthDescription
@@ -445,11 +465,20 @@ namespace Marlin.ViewModels.Main
                 {
                     value += "Программа: " + trigger.appvalue;
                 }
-                TriggerPanel.Children.Add(CreateTrigger(value));
+                TriggerPanel.Children.Add(CreateElement(value));
             }
         }
 
-        private Border CreateTrigger(string trigger)
+        private void LoadScriptCommand(Models.Main.Script script) 
+        {
+            ScriptCommandPanel.Children.Clear();
+            foreach (var command in script.Commands)
+            {
+                ScriptCommandPanel.Children.Add(CreateElement(Command.GetCommand(command).ToString()));
+            }
+        }
+
+        private Border CreateElement(string trigger)
         {
             var border = new Border
             {

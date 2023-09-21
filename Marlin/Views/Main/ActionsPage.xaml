@@ -98,6 +98,7 @@
                       Margin="0,0,0,30">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
+                        <RowDefinition Height="{Binding Path=LengthScriptCommand}"/>
                         <RowDefinition Height="{Binding Path=LengthDescription}"/>
                         <RowDefinition Height="{Binding Path=LengthTrigger}"/>
                     </Grid.RowDefinitions>
@@ -125,14 +126,26 @@
                             Background="{Binding Path=InternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
                             BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                             BorderThickness="2">
-                        <ScrollViewer VerticalScrollBarVisibility="Hidden">
-                            <TextBlock Text="{Binding Path=Description,UpdateSourceTrigger=PropertyChanged}"
-                                       FontSize="15"
-                                       Margin="10,5"
-                                       Padding="10"
-                                       HorizontalAlignment="Stretch"
-                                       TextWrapping="Wrap"/>
-                        </ScrollViewer>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Row="0"
+                                       FontSize="20"
+                                       Margin="15,10,0,0"
+                                       Foreground="{Binding Path=PageColor}"
+                                       HorizontalAlignment="Left"
+                                       FontWeight="Bold"
+                                       Text="Команды:"/>
+
+                            <ScrollViewer Grid.Row="1" 
+                                          Margin="0,0,0,10"
+                                          VerticalScrollBarVisibility="Hidden"
+                                          HorizontalAlignment="Stretch"
+                                          Content="{Binding Path=ScriptCommandPanel,UpdateSourceTrigger=PropertyChanged}"/>
+                        </Grid>
                     </Border>
 
                     <Border Grid.Row="2"
@@ -141,10 +154,58 @@
                             Background="{Binding Path=InternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
                             BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                             BorderThickness="2">
-                        <ScrollViewer Margin="0,0,0,10"
-                                      VerticalScrollBarVisibility="Hidden"
-                                      HorizontalAlignment="Stretch"
-                                      Content="{Binding Path=TriggerPanel,UpdateSourceTrigger=PropertyChanged}"/>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Row="0"
+                                       FontSize="20"
+                                       Margin="15,10,0,0"
+                                       Foreground="{Binding Path=PageColor}"
+                                       HorizontalAlignment="Left"
+                                       FontWeight="Bold"
+                                       Text="Комментарий:"/>
+
+                            <ScrollViewer Grid.Row="1"
+                                          VerticalScrollBarVisibility="Hidden">
+                                <TextBlock Text="{Binding Path=Description,UpdateSourceTrigger=PropertyChanged}"
+                                       FontSize="15"
+                                       Margin="10,5"
+                                       Padding="10"
+                                       HorizontalAlignment="Stretch"
+                                       TextWrapping="Wrap"/>
+                            </ScrollViewer>
+                        </Grid>
+                    </Border>
+
+                    <Border Grid.Row="3"
+                            Margin="10,0,0,10"
+                            CornerRadius="25"
+                            Background="{Binding Path=InternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
+                            BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
+                            BorderThickness="2">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Row="0"
+                                       FontSize="20"
+                                       Margin="15,10,0,0"
+                                       Foreground="{Binding Path=PageColor}"
+                                       HorizontalAlignment="Left"
+                                       FontWeight="Bold"
+                                       Text="Триггеры:"/>
+
+                            <ScrollViewer Grid.Row="1"
+                                          Margin="0,0,0,10"
+                                          VerticalScrollBarVisibility="Hidden"
+                                          HorizontalAlignment="Stretch"
+                                          Content="{Binding Path=TriggerPanel,UpdateSourceTrigger=PropertyChanged}"/>
+                        </Grid>
                     </Border>
                 </Grid>
             </Grid>
