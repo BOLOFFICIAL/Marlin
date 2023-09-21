@@ -6,6 +6,7 @@ using Marlin.ViewModels.Base;
 using Marlin.Views.Main;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -117,25 +118,28 @@ namespace Marlin.ViewModels.Main
 
         private void OnSendCommandExecute(object parameter)
         {
-            var command = Models.Main.Command.GetCommand(Command);
-            var script = Models.Main.Script.GetScript(Command);
-            //var command = Models.Main.Command.GetCommand(Command);
-            //if (command != null)
-            //{
-            //    if (command.Checkpuss)
-            //    {
-            //        if (!Program.Authentication("Для запуска комманды подтвердите пароль"))
-            //        {
-            //            return;
-            //        }
-            //    }
-            //    command.ExecuteCommand();
-            //    Command = "";
-            //}
-            //else
-            //{
-            //    Models.MessageBox.MakeMessage("Не удалось найти команду", MessageType.Error);
-            //}
+            var matchingCommand = Context.ProgramData.Commands.FirstOrDefault(
+                command => command.Title.ToUpper() == Command.ToUpper() ||
+                command.Triggers.Any(
+                    trigger => trigger.triggertype == TriggerType.Phrase &&
+                    trigger.textvalue.ToUpper() == Command.ToUpper()));
+
+            if (matchingCommand != null)
+            {
+                matchingCommand.ExecuteCommand();
+            }
+
+            var matchingScript = Context.ProgramData.Scripts.FirstOrDefault(
+                script => script.Title.ToUpper() == Command.ToUpper() ||
+                script.Triggers.Any(
+                    trigger => trigger.triggertype == TriggerType.Phrase &&
+                    trigger.textvalue.ToUpper() == Command.ToUpper()));
+
+            if (matchingScript != null)
+            {
+                matchingScript.ExecuteScript();
+            }
+            Command = "";
         }
 
         private void OnMenuCommandExecute(object parameter)

@@ -20,6 +20,8 @@ namespace Marlin.ViewModels.Main
         private StackPanel panel = new StackPanel();
         private StackPanel triggers = new StackPanel();
         private GridLength _lengthAbout = new GridLength(0, GridUnitType.Pixel);
+        private GridLength _lengthDescription = new GridLength(0, GridUnitType.Pixel);
+        private GridLength _lengthTrigger = new GridLength(0, GridUnitType.Pixel);
         private string _description = "";
         public ICommand ToMainCommand { get; }
 
@@ -137,6 +139,8 @@ namespace Marlin.ViewModels.Main
                     if (foundElement is not null && foundElement is TextBlock textBox)
                     {
                         LengthAbout = new GridLength(0, GridUnitType.Star);
+                        LengthDescription = new GridLength(0, GridUnitType.Star);
+                        LengthTrigger = new GridLength(0, GridUnitType.Star);
                         TitleAbout = textBox.Text;
                         if (Context.Action == ActionType.Command)
                         {
@@ -146,6 +150,14 @@ namespace Marlin.ViewModels.Main
                                 Description = command.Comment;
                                 LoadTrigger(command.Triggers);
                                 LengthAbout = new GridLength(1, GridUnitType.Star);
+                                if (command.Comment.Length > 0)
+                                {
+                                    LengthDescription = new GridLength(2, GridUnitType.Star);
+                                }
+                                if (command.Triggers.Count > 0)
+                                {
+                                    LengthTrigger = new GridLength(3, GridUnitType.Star);
+                                }
                             }
                         }
                         if (Context.Action == ActionType.Script)
@@ -156,6 +168,14 @@ namespace Marlin.ViewModels.Main
                                 Description = script.Comment;
                                 LoadTrigger(script.Triggers);
                                 LengthAbout = new GridLength(1, GridUnitType.Star);
+                                if (script.Comment.Length > 0)
+                                {
+                                    LengthDescription = new GridLength(2, GridUnitType.Star);
+                                }
+                                if (script.Triggers.Count > 0)
+                                {
+                                    LengthTrigger = new GridLength(3, GridUnitType.Star);
+                                }
                             }
                         }
                     }
@@ -166,7 +186,22 @@ namespace Marlin.ViewModels.Main
         public GridLength LengthAbout
         {
             get => _lengthAbout;
-            set => Set(ref _lengthAbout, value);
+            set
+            {
+                Set(ref _lengthAbout, value);
+            }
+        }
+
+        public GridLength LengthDescription
+        {
+            get => _lengthDescription;
+            set => Set(ref _lengthDescription, value);
+        }
+
+        public GridLength LengthTrigger
+        {
+            get => _lengthTrigger;
+            set => Set(ref _lengthTrigger, value);
         }
 
         public string Description
@@ -199,12 +234,25 @@ namespace Marlin.ViewModels.Main
         private void OnDeleteActionCommandExecuted(object p)
         {
             LengthAbout = new GridLength(0, GridUnitType.Star);
+            LengthDescription = new GridLength(0, GridUnitType.Star);
+            LengthTrigger = new GridLength(0, GridUnitType.Star);
             if (Program.Authentication("Для удаления элемента подтвердите пароль", check: true))
             {
                 Context.SelectedId = (int)p;
                 if (Context.Action == ActionType.Command)
                 {
                     Context.ProgramData.Commands.Remove(Models.Main.Command.GetCommand(Context.SelectedId));
+                    foreach (var script in Context.ProgramData.Scripts)
+                    {
+                        foreach (var commamd in script.Commands)
+                        {
+                            if (commamd == Context.SelectedId)
+                            {
+                                script.Commands.Remove(commamd);
+                                break;
+                            }
+                        }
+                    }
                 }
                 if (Context.Action == ActionType.Script)
                 {
@@ -273,6 +321,7 @@ namespace Marlin.ViewModels.Main
 
         private void LoadActions()
         {
+            Context.ProgramData.Scripts.RemoveAll(scrpt => scrpt.Commands.Count == 0);
             StackPanel.Children.Clear();
 
             if (Context.Action == ActionType.Command)

@@ -94,11 +94,12 @@
                     </Grid>
                 </Grid>
 
-                <Grid Grid.Column="1">
+                <Grid Grid.Column="1"
+                      Margin="0,0,0,30">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
-                        <RowDefinition Height="2*"/>
-                        <RowDefinition Height="3*"/>
+                        <RowDefinition Height="{Binding Path=LengthDescription}"/>
+                        <RowDefinition Height="{Binding Path=LengthTrigger}"/>
                     </Grid.RowDefinitions>
 
                     <Border Grid.Row="0"
@@ -135,7 +136,7 @@
                     </Border>
 
                     <Border Grid.Row="2"
-                            Margin="10,0,0,40"
+                            Margin="10,0,0,10"
                             CornerRadius="25"
                             Background="{Binding Path=InternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
                             BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"

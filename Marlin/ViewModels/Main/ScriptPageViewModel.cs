@@ -349,10 +349,10 @@ namespace Marlin.ViewModels.Main
             string value = "";
             if (SelectedTrigger == "Фраза")
             {
-                trigger.textvalue = TextTrigger;
+                trigger.textvalue = TextTrigger.ToUpper();
                 trigger.triggertype = TriggerType.Phrase;
                 trigger.appvalue = "";
-                value += "Фраза: " + TextTrigger;
+                value += "Фраза: " + trigger.textvalue;
             }
             if (SelectedTrigger == "Время")
             {
@@ -388,14 +388,6 @@ namespace Marlin.ViewModels.Main
 
         private bool ValidationTrigger(Models.Main.Trigger trigger)
         {
-            foreach (var trg in Context.Command.Triggers)
-            {
-                if (trg.Equals(trigger))
-                {
-                    Models.MessageBox.MakeMessage("У элемента уже присутствует такой триггер", MessageType.Error);
-                    return false;
-                }
-            }
             if (trigger.triggertype == TriggerType.Time)
             {
                 if (!trigger.textvalue.Contains(".") && !trigger.textvalue.Contains(":"))
@@ -409,22 +401,54 @@ namespace Marlin.ViewModels.Main
                     return false;
                 }
             }
+            foreach (var trg in Context.Script.Triggers)
+            {
+                if (trg.Equals(trigger))
+                {
+                    Models.MessageBox.MakeMessage("У элемента уже присутствует такой триггер", MessageType.Error);
+                    return false;
+                }
+            }
+            foreach (var command in Context.ProgramData.Commands)
+            {
+                foreach (var trg in command.Triggers)
+                {
+                    if (trg.Equals(trigger))
+                    {
+                        Models.MessageBox.MakeMessage("У одной из команд есть такой триггер.", MessageType.Error);
+                        return false;
+                    }
+                }
+            }
+            foreach (var script in Context.ProgramData.Scripts)
+            {
+                foreach (var trg in script.Triggers)
+                {
+                    if (trg.Equals(trigger))
+                    {
+                        Models.MessageBox.MakeMessage("У одного из скриптов есть такой триггер.", MessageType.Error);
+                        return false;
+                    }
+                }
+            }
             return true;
         }
 
         private bool ValidationCommand()
         {
-            foreach (var command in Context.ProgramData.Commands) 
+            foreach (var command in Context.ProgramData.Commands)
             {
-                if (command.Title == Context.Script.Title) 
+                if (command.Title == Context.Script.Title && Context.Script.Title != Context.CopyScript.Title)
                 {
+                    Models.MessageBox.MakeMessage("Команда с таким именем уже существует", MessageType.Error);
                     return false;
                 }
             }
             foreach (var scrpt in Context.ProgramData.Scripts)
             {
-                if (scrpt.Title == Context.Script.Title)
+                if (scrpt.Title == Context.Script.Title && Context.Script.Title != Context.CopyScript.Title)
                 {
+                    Models.MessageBox.MakeMessage("Скрипт с таким именем уже существует", MessageType.Error);
                     return false;
                 }
             }
