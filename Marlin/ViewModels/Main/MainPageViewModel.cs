@@ -118,7 +118,6 @@ namespace Marlin.ViewModels.Main
 
         private void OnSendCommandExecute(object parameter)
         {
-            var find = false;
             var matchingCommand = Context.ProgramData.Commands.FirstOrDefault(
                 command => command.Title.ToUpper() == Command.ToUpper() ||
                 command.Triggers.Any(
@@ -136,10 +135,6 @@ namespace Marlin.ViewModels.Main
                 }
                 matchingCommand.ExecuteCommand();
             }
-            else 
-            {
-                find = find || false;
-            }
 
             var matchingScript = Context.ProgramData.Scripts.FirstOrDefault(
                 script => script.Title.ToUpper() == Command.ToUpper() ||
@@ -156,18 +151,18 @@ namespace Marlin.ViewModels.Main
                         return;
                     }
                 }
-                else 
+                else
                 {
                     var checkpuss = false;
-                    foreach (var command in matchingScript.Commands) 
+                    foreach (var command in matchingScript.Commands)
                     {
-                        if (Context.ProgramData.Commands[command].Checkpuss) 
+                        if (Context.ProgramData.Commands[command].Checkpuss)
                         {
                             checkpuss = true;
                             break;
                         }
                     }
-                    if (checkpuss) 
+                    if (checkpuss)
                     {
                         if (!Program.Authentication("Одна или несколько команд защищены паролем.\nДля запуска скрипта подтвердите пароль"))
                         {
@@ -176,14 +171,6 @@ namespace Marlin.ViewModels.Main
                     }
                 }
                 matchingScript.ExecuteScript();
-            }
-            else
-            {
-                find = find || false;
-            }
-            if (!find) 
-            {
-                Models.MessageBox.MakeMessage("Я не нашла что мне делать"); 
             }
             Command = "";
         }
