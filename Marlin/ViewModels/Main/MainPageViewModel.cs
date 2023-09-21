@@ -156,7 +156,7 @@ namespace Marlin.ViewModels.Main
                     var checkpuss = false;
                     foreach (var command in matchingScript.Commands)
                     {
-                        if (Context.ProgramData.Commands[command].Checkpuss)
+                        if (Context.ProgramData.Commands[command - 1].Checkpuss)
                         {
                             checkpuss = true;
                             break;

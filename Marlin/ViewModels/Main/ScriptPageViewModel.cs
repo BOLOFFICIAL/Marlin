@@ -292,7 +292,7 @@ namespace Marlin.ViewModels.Main
 
         private void OnAddActionCommandExecuted(object p)
         {
-            if (Context.Script.Commands.Contains(Command.GetCommand(SelectedCommand.ToString()).id))
+            if (Context.Script.Commands.Contains(SelectedCommand.id))
             {
                 Models.MessageBox.MakeMessage("В этом скрипте уже присутствует такая команда.\nДобавить команду повторно?", SystemFiles.Types.MessageType.YesNoQuestion);
                 if (Context.MessageBox.Answer == "No")
