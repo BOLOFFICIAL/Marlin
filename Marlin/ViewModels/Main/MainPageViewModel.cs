@@ -118,22 +118,24 @@ namespace Marlin.ViewModels.Main
         private void OnSendCommandExecute(object parameter)
         {
             var command = Models.Main.Command.GetCommand(Command);
-            if (command != null)
-            {
-                if (command.Checkpuss)
-                {
-                    if (!Program.Authentication("Для запуска комманды подтвердите пароль"))
-                    {
-                        return;
-                    }
-                }
-                command.ExecuteCommand();
-                Command = "";
-            }
-            else
-            {
-                Models.MessageBox.MakeMessage("Не удалось найти команду", MessageType.Error);
-            }
+            var script = Models.Main.Script.GetScript(Command);
+            //var command = Models.Main.Command.GetCommand(Command);
+            //if (command != null)
+            //{
+            //    if (command.Checkpuss)
+            //    {
+            //        if (!Program.Authentication("Для запуска комманды подтвердите пароль"))
+            //        {
+            //            return;
+            //        }
+            //    }
+            //    command.ExecuteCommand();
+            //    Command = "";
+            //}
+            //else
+            //{
+            //    Models.MessageBox.MakeMessage("Не удалось найти команду", MessageType.Error);
+            //}
         }
 
         private void OnMenuCommandExecute(object parameter)

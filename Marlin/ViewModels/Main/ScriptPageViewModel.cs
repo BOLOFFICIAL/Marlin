@@ -277,7 +277,7 @@ namespace Marlin.ViewModels.Main
 
         private bool CanButtonActionCommandExecute(object p)
         {
-            return !Context.Script.Equals(Context.CopyScript) && Context.Script.Commands.Count > 0;
+            return !Context.Script.Equals(Context.CopyScript) && Context.Script.Commands.Count > 1;
         }
 
         private void OnToMainCommandExecuted(object p)
@@ -414,7 +414,21 @@ namespace Marlin.ViewModels.Main
 
         private bool ValidationCommand()
         {
-            return true;
+            foreach (var command in Context.ProgramData.Commands) 
+            {
+                if (command.Title == Context.Script.Title) 
+                {
+                    return false;
+                }
+            }
+            foreach (var scrpt in Context.ProgramData.Scripts)
+            {
+                if (scrpt.Title == Context.Script.Title)
+                {
+                    return false;
+                }
+            }
+            return true;//проверка уникальности имени скрипта среди команд и скриптов.
         }
 
         private void LoadTrigger()

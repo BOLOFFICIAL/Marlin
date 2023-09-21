@@ -631,7 +631,6 @@ namespace Marlin.ViewModels.Main
             }
 
             bool isDuplicate = Context.ProgramData.Commands.Any(command => command.Equals(Context.Command));
-            bool isDuplicateName = Context.ProgramData.Commands.Any(command => command.Title == Context.Command.Title);
 
             if (isDuplicate)
             {
@@ -639,16 +638,21 @@ namespace Marlin.ViewModels.Main
                 return false;
             }
 
-            if (isDuplicateName && Context.Command.Title != Context.CopyCommand.Title)
+            foreach (var command in Context.ProgramData.Commands)
             {
-                Models.MessageBox.MakeMessage("Команда с таким именем уже существует", SystemFiles.Types.MessageType.Error);
-                return false;
+                if (command.Title == Context.Command.Title && Context.Command.Title != Context.CopyCommand.Title)
+                {
+                    Models.MessageBox.MakeMessage("Команда с таким именем уже существует", SystemFiles.Types.MessageType.Error);
+                    return false;
+                }
             }
-
-            if (!HasAction())
+            foreach (var scrpt in Context.ProgramData.Scripts)
             {
-                Models.MessageBox.MakeMessage("Команда ничего не выполняет", SystemFiles.Types.MessageType.Error);
-                return false;
+                if (scrpt.Title == Context.Command.Title && Context.Command.Title != Context.CopyCommand.Title)
+                {
+                    Models.MessageBox.MakeMessage("Скрипт с таким именем уже существует", SystemFiles.Types.MessageType.Error);
+                    return false;
+                }
             }
 
             return true;
@@ -656,7 +660,7 @@ namespace Marlin.ViewModels.Main
 
         private bool CanButtonActionCommandExecute(object p)
         {
-            return !Context.Command.Equals(Context.CopyCommand);
+            return !Context.Command.Equals(Context.CopyCommand) && HasAction();
         }
 
         private bool CanAddTriggerCommandExecute(object p)
