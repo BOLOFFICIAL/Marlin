@@ -37,7 +37,7 @@ namespace Marlin.ViewModels.Main
             ToMainCommand = new LambdaCommand(OnToMainCommandExecuted);
             EditActionCommand = new LambdaCommand(OnEditActionCommandExecuted);
             RunActionCommand = new LambdaCommand(OnRunActionCommandExecuted);
-            AddActionCommand = new LambdaCommand(OnAddActionCommandExecuted, CanAddActionCommandExecute);
+            AddActionCommand = new LambdaCommand(OnAddActionCommandExecuted);
             DeleteActionCommand = new LambdaCommand(OnDeleteActionCommandExecuted);
             LoadActions();
         }
@@ -261,15 +261,11 @@ namespace Marlin.ViewModels.Main
                 Context.SelectedId = (int)p;
                 if (Context.Action == ActionType.Command)
                 {
-                    Context.ProgramData.Commands.Remove(Models.Main.Command.GetCommand(Context.SelectedId));
-                    foreach (var script in Context.ProgramData.Scripts)
-                    {
-                        script.Commands.RemoveAll(id => id == Context.SelectedId);
-                    }
+                    Command.RemoveCommand(Context.SelectedId);
                 }
                 if (Context.Action == ActionType.Script)
                 {
-                    Context.ProgramData.Scripts.Remove(Script.GetScript(Context.SelectedId));
+                    Script.RemoveScript(Context.SelectedId);
                 }
                 ProgramData.SaveData();
                 LoadActions();
@@ -307,15 +303,6 @@ namespace Marlin.ViewModels.Main
             }
         }
 
-        private bool CanAddActionCommandExecute(object p)
-        {
-            if (Context.Action == ActionType.Script)
-            {
-                return Context.ProgramData.Commands.Count > 0;
-            }
-            return true;
-        }
-
         private void OnAddActionCommandExecuted(object p)
         {
             if (Program.Authentication("Для добавления элемента подтвердите пароль"))
@@ -339,6 +326,7 @@ namespace Marlin.ViewModels.Main
 
             if (Context.Action == ActionType.Command)
             {
+                Command.CheckCommands();
                 foreach (var command in Context.ProgramData.Commands)
                 {
                     var border = CreateBorder();

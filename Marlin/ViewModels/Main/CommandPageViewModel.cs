@@ -630,7 +630,7 @@ namespace Marlin.ViewModels.Main
                 return false;
             }
 
-            bool isDuplicate = Context.ProgramData.Commands.Any(command => command.Equals(Context.Command));
+            bool isDuplicate = Context.ProgramData.Commands.Any(command => Program.Equals(command,Context.Command));
 
             if (isDuplicate)
             {
@@ -660,7 +660,7 @@ namespace Marlin.ViewModels.Main
 
         private bool CanButtonActionCommandExecute(object p)
         {
-            return !Context.Command.Equals(Context.CopyCommand) && HasAction();
+            return !Program.Equals(Context.Command,Context.CopyCommand) && HasAction();
         }
 
         private bool CanAddTriggerCommandExecute(object p)
@@ -731,7 +731,7 @@ namespace Marlin.ViewModels.Main
             }
             foreach (var trg in Context.Command.Triggers)
             {
-                if (trg.Equals(trigger))
+                if (Program.Equals(trg,trigger))
                 {
                     Models.MessageBox.MakeMessage("У элемента уже присутствует такой триггер", MessageType.Error);
                     return false;
@@ -743,7 +743,7 @@ namespace Marlin.ViewModels.Main
                 {
                     if (trg.triggertype == TriggerType.Phrase)
                     {
-                        if (trg.Equals(trigger))
+                        if (Program.Equals(trg, trigger))
                         {
                             Models.MessageBox.MakeMessage("У одной из команд есть такой триггер.", MessageType.Error);
                             return false;
@@ -757,7 +757,7 @@ namespace Marlin.ViewModels.Main
                 {
                     if (trg.triggertype == TriggerType.Phrase)
                     {
-                        if (trg.Equals(trigger))
+                        if (Program.Equals(trg, trigger))
                         {
                             Models.MessageBox.MakeMessage("У одного из скриптов есть такой триггер.", MessageType.Error);
                             return false;

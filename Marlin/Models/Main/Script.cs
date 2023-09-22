@@ -65,6 +65,11 @@ namespace Marlin.Models.Main
             Context.ProgramData.Scripts.Add(script);
         }
 
+        public static void RemoveScript(int selectedid)
+        {
+            Context.ProgramData.Scripts.Remove(Script.GetScript(selectedid));
+        }
+
         public void ExecuteScript()
         {
             int delay = TimeDelay == 0 ? 5 : TimeDelay * 10;
@@ -81,30 +86,6 @@ namespace Marlin.Models.Main
                     }
                 }
             });
-        }
-
-        public bool Equals(Script otherScript)
-        {
-            if (otherScript is null)
-            {
-                return false;
-            }
-
-            string thisscript = JsonConvert.SerializeObject(this);
-            string otherscript = JsonConvert.SerializeObject(otherScript);
-
-            if (thisscript.Length != otherscript.Length)
-            {
-                return false;
-            }
-            for (int i = 0; i < thisscript.Length; i++)
-            {
-                if (thisscript[i] != otherscript[i])
-                {
-                    return false;
-                }
-            }
-            return true;
         }
     }
 }

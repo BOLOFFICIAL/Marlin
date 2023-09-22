@@ -18,6 +18,7 @@ namespace Marlin.ViewModels.Main
     {
         private bool _openmenu = false;
         private GridLength _length = new GridLength(0, GridUnitType.Pixel);
+        private GridLength _lengthscript = new GridLength(0, GridUnitType.Pixel);
         private string _command = "";
         private List<Grid> _message = new List<Grid>();
         public ICommand ToSettingsCommand { get; }
@@ -84,6 +85,12 @@ namespace Marlin.ViewModels.Main
         {
             get => _length;
             set => Set(ref _length, value);
+        }
+
+        public GridLength LengthScript
+        {
+            get => _lengthscript;
+            set => Set(ref _lengthscript, value);
         }
 
         public Stretch Stretch
@@ -198,10 +205,15 @@ namespace Marlin.ViewModels.Main
             if (_openmenu)
             {
                 Length = new GridLength(0, GridUnitType.Pixel);
+                LengthScript = new GridLength(0, GridUnitType.Pixel);
             }
             else
             {
                 Length = GridLength.Auto;
+                if (Context.ProgramData.Commands.Count > 0) 
+                {
+                    LengthScript = GridLength.Auto;
+                }
             }
             _openmenu = !_openmenu;
         }

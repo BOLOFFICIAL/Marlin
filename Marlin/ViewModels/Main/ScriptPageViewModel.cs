@@ -277,7 +277,7 @@ namespace Marlin.ViewModels.Main
 
         private bool CanButtonActionCommandExecute(object p)
         {
-            return !Context.Script.Equals(Context.CopyScript) && Context.Script.Commands.Count > 1;
+            return !Program.Equals(Context.Script,Context.CopyScript) && Context.Script.Commands.Count > 1;
         }
 
         private void OnToMainCommandExecuted(object p)
@@ -403,7 +403,7 @@ namespace Marlin.ViewModels.Main
             }
             foreach (var trg in Context.Script.Triggers)
             {
-                if (trg.Equals(trigger))
+                if (Program.Equals(trg, trigger))
                 {
                     Models.MessageBox.MakeMessage("У элемента уже присутствует такой триггер", MessageType.Error);
                     return false;
@@ -413,10 +413,13 @@ namespace Marlin.ViewModels.Main
             {
                 foreach (var trg in command.Triggers)
                 {
-                    if (trg.Equals(trigger))
+                    if (trg.triggertype == TriggerType.Phrase)
                     {
-                        Models.MessageBox.MakeMessage("У одной из команд есть такой триггер.", MessageType.Error);
-                        return false;
+                        if (Program.Equals(trg, trigger))
+                        {
+                            Models.MessageBox.MakeMessage("У одной из команд есть такой триггер.", MessageType.Error);
+                            return false;
+                        }
                     }
                 }
             }
@@ -424,10 +427,13 @@ namespace Marlin.ViewModels.Main
             {
                 foreach (var trg in script.Triggers)
                 {
-                    if (trg.Equals(trigger))
+                    if (trg.triggertype == TriggerType.Phrase)
                     {
-                        Models.MessageBox.MakeMessage("У одного из скриптов есть такой триггер.", MessageType.Error);
-                        return false;
+                        if (Program.Equals(trg, trigger))
+                        {
+                            Models.MessageBox.MakeMessage("У одного из скриптов есть такой триггер.", MessageType.Error);
+                            return false;
+                        }
                     }
                 }
             }

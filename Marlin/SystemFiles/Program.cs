@@ -1,8 +1,12 @@
 ﻿using Marlin.SystemFiles.Types;
 using Microsoft.Win32;
+using Newtonsoft.Json;
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
@@ -39,6 +43,29 @@ namespace Marlin.SystemFiles
             //    Context.MainWindow.Opacity = i;
             //    await Task.Delay(1);
             //}
+        }
+        public static bool Equals<T>(T first, T second)
+        {
+            if (second is null)
+            {
+                return false;
+            }
+
+            string firstelement = JsonConvert.SerializeObject(first);
+            string secondelement = JsonConvert.SerializeObject(second);
+
+            if (firstelement.Length != secondelement.Length)
+            {
+                return false;
+            }
+            for (int i = 0; i < firstelement.Length; i++)
+            {
+                if (firstelement[i] != secondelement[i])
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         public static void AddToStartup()
@@ -116,6 +143,51 @@ namespace Marlin.SystemFiles
         public static void ChangePassword()
         {
             Context.Settings.Password = Context.Settings.NewPassword;
+        }
+
+        public static string EncryptText(string text)
+        {
+            using (Aes aesAlg = Aes.Create())
+            {
+                aesAlg.Key = Encoding.UTF8.GetBytes(Math.PI.ToString("F14"));
+                aesAlg.IV = new byte[16]; // Инициализационный вектор
+
+                ICryptoTransform encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
+
+                using (MemoryStream msEncrypt = new MemoryStream())
+                {
+                    using (CryptoStream csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
+                    {
+                        using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
+                        {
+                            swEncrypt.Write(text);
+                        }
+                    }
+                    return Convert.ToBase64String(msEncrypt.ToArray());
+                }
+            }
+        }
+
+        public static string DecryptText(string cipherText)
+        {
+            using (Aes aesAlg = Aes.Create())
+            {
+                aesAlg.Key = Encoding.UTF8.GetBytes(Math.PI.ToString("F14"));
+                aesAlg.IV = new byte[16]; // Инициализационный вектор
+
+                ICryptoTransform decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
+
+                using (MemoryStream msDecrypt = new MemoryStream(Convert.FromBase64String(cipherText)))
+                {
+                    using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
+                    {
+                        using (StreamReader srDecrypt = new StreamReader(csDecrypt))
+                        {
+                            return srDecrypt.ReadToEnd();
+                        }
+                    }
+                }
+            }
         }
     }
 }

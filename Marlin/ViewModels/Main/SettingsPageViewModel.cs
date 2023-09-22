@@ -397,12 +397,12 @@ namespace Marlin.ViewModels.Main
 
         private bool CanSaveSettingsCommandExecute(object p)
         {
-            return !Context.CopySettings.Equals(Context.Settings);
+            return !Program.Equals(Context.CopySettings,Context.Settings);
         }
 
         private void OnSaveSettingsCommandExecuted(object p)
         {
-            if (Context.CopySettings.Equals(Context.Settings))
+            if (Program.Equals(Context.CopySettings,Context.Settings))
             {
                 Models.MessageBox.MakeMessage("Не обнаружено  изменений в настройках");
                 return;

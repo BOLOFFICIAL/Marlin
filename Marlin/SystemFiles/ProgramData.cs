@@ -17,12 +17,13 @@ namespace Marlin.SystemFiles
         public static async Task SaveData()
         {
             string filepath = System.IO.Path.Combine(Context.Settings.MainFolderPath, "MarlinProgramData.json");
-            string programdata = JsonConvert.SerializeObject(Context.ProgramData);
+            string Decryptprogramdata = JsonConvert.SerializeObject(Context.ProgramData);
+            string Encryptprogramdata = Program.EncryptText(Decryptprogramdata);
             try
             {
                 using (var sw = new StreamWriter(filepath))
                 {
-                    await sw.WriteAsync(programdata);
+                    await sw.WriteAsync(Encryptprogramdata);
                     await sw.FlushAsync();
                 }
                 Sound.PlaySoundAsync(MessageType.Info);
@@ -36,20 +37,22 @@ namespace Marlin.SystemFiles
         public static void LoadData()
         {
             string filepath = System.IO.Path.Combine(Context.Settings.MainFolderPath, "MarlinProgramData.json");
-            string programdata;
+            string Encryptprogramdata;
+            string Decryptprogramdata;
             if (File.Exists(filepath))
             {
                 try
                 {
                     using (var sr = new StreamReader(filepath))
                     {
-                        programdata = sr.ReadLine();
+                        Encryptprogramdata = sr.ReadLine();
                     }
-                    if (programdata is null || programdata.Length == 0)
+                    if (Encryptprogramdata is null || Encryptprogramdata.Length == 0)
                     {
                         return;
                     }
-                    Context.ProgramData = JsonConvert.DeserializeObject<ProgramData>(programdata);
+                    Decryptprogramdata = Program.DecryptText(Encryptprogramdata);
+                    Context.ProgramData = JsonConvert.DeserializeObject<ProgramData>(Decryptprogramdata);
                 }
                 catch (Exception)
                 {

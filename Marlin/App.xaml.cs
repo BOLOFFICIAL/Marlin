@@ -1,4 +1,5 @@
 ﻿using Marlin.Models;
+using Marlin.Models.Main;
 using Marlin.SystemFiles;
 using System.Threading;
 using System.Windows;
@@ -21,6 +22,27 @@ namespace Marlin
             if (Context.Settings.Password.Length > 0)
             {
                 Voix.SpeakAsync($"С возвращением {Context.Settings.Login}");
+                Command.CheckCommands();
+                foreach (var command in Context.ProgramData.Commands)
+                {
+                    foreach (var trigger in command.Triggers)
+                    {
+                        if (trigger.triggertype == SystemFiles.Types.TriggerType.StartMarlin)
+                        {
+                            command.ExecuteCommand();
+                        }
+                    }
+                }
+                foreach (var script in Context.ProgramData.Scripts)
+                {
+                    foreach (var trigger in script.Triggers)
+                    {
+                        if (trigger.triggertype == SystemFiles.Types.TriggerType.StartMarlin)
+                        {
+                            script.ExecuteScript();
+                        }
+                    }
+                }
             }
 
             ResourceDictionary applicationResources = this.Resources;

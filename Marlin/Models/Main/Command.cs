@@ -1,9 +1,9 @@
 ﻿using Marlin.SystemFiles;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Windows;
 
 namespace Marlin.Models.Main
@@ -115,12 +115,23 @@ namespace Marlin.Models.Main
                         }
                         else
                         {
-                            Process.Start("explorer.exe", Filepath);
+                            if (SelectedObject == "Url")
+                            {
+                                Process.Start(new ProcessStartInfo
+                                {
+                                    FileName = Url,
+                                    UseShellExecute = true
+                                });
+                            }
+                            else
+                            {
+                                Process.Start("explorer.exe", Filepath);
+                            }
                         }
                     }
                     if (SelectedObjectAction == "Закрыть")
                     {
-
+                        Models.MessageBox.MakeMessage("В разработке");
                     }
                     if (SelectedObjectAction == "Удалить")
                     {
@@ -150,35 +161,41 @@ namespace Marlin.Models.Main
 
                 }
             }
-        }
-
-        public bool Equals(Command otherCommand)
-        {
-            if (otherCommand is null)
+            else
             {
-                return false;
+                Models.MessageBox.MakeMessage("В разработке");
             }
-
-            string thiscommand = JsonConvert.SerializeObject(this);
-            string othercommand = JsonConvert.SerializeObject(otherCommand);
-
-            if (thiscommand.Length != othercommand.Length)
-            {
-                return false;
-            }
-            for (int i = 0; i < thiscommand.Length; i++)
-            {
-                if (thiscommand[i] != othercommand[i])
-                {
-                    return false;
-                }
-            }
-            return true;
         }
 
         public override string ToString()
         {
             return Title;
+        }
+
+        public static void RemoveCommand(int selectedid)
+        {
+            Context.ProgramData.Commands.Remove(Models.Main.Command.GetCommand(selectedid));
+            foreach (var script in Context.ProgramData.Scripts)
+            {
+                script.Commands.RemoveAll(id => id == selectedid);
+            }
+        }
+
+        public static void CheckCommands()
+        {
+            var filteredCommands = Context.ProgramData.Commands
+                .Where(command =>
+                command.SelectedAction == "Сделать свое действие" &&
+                !command.IsReadyCmdCommand &&
+                (command.SelectedObject == "Фаил" || command.SelectedObject == "Папка") &&
+                !File.Exists(command.Filepath))
+                .Select(command => command.id)
+                .ToList();
+
+            foreach (var id in filteredCommands)
+            {
+                RemoveCommand(id);
+            }
         }
     }
 }

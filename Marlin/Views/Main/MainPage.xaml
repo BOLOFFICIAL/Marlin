@@ -54,7 +54,7 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="{Binding Path=LengthScript,UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid.ColumnDefinitions>
 
                     <Button Grid.Column="0"

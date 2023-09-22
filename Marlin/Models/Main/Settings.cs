@@ -40,12 +40,13 @@ namespace Marlin.Models
         {
             string exePath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
             string filepath = System.IO.Path.Combine(exePath, "Settings.json");
-            string settings = JsonConvert.SerializeObject(Context.Settings);
+            string Decryptsettings = JsonConvert.SerializeObject(Context.Settings);
+            string Encryptsettings = Program.EncryptText(Decryptsettings);
             try
             {
                 using (var sw = new StreamWriter(filepath))
                 {
-                    await sw.WriteAsync(settings);
+                    await sw.WriteAsync(Encryptsettings);
                     await sw.FlushAsync();
                 }
                 if (restart)
@@ -73,20 +74,22 @@ namespace Marlin.Models
         {
             string exePath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
             string filepath = System.IO.Path.Combine(exePath, "Settings.json");
-            string settings;
+            string Encryptsettings;
+            string Decryptsettings;
             if (File.Exists(filepath))
             {
                 try
                 {
                     using (var sr = new StreamReader(filepath))
                     {
-                        settings = sr.ReadLine();
+                        Encryptsettings = sr.ReadLine();
                     }
-                    if (settings is null || settings.Length == 0)
+                    if (Encryptsettings is null || Encryptsettings.Length == 0)
                     {
                         return;
                     }
-                    Context.Settings = JsonConvert.DeserializeObject<Settings>(settings);
+                    Decryptsettings = Program.DecryptText(Encryptsettings);
+                    Context.Settings = JsonConvert.DeserializeObject<Settings>(Decryptsettings);
                 }
                 catch (Exception)
                 {
@@ -97,30 +100,6 @@ namespace Marlin.Models
             {
                 Context.Settings = new Settings();
             }
-        }
-
-        public bool Equals(Settings otherSettings)
-        {
-            if (otherSettings is null)
-            {
-                return false;
-            }
-
-            string thissettings = JsonConvert.SerializeObject(this);
-            string othersettings = JsonConvert.SerializeObject(otherSettings);
-
-            if (thissettings.Length != othersettings.Length)
-            {
-                return false;
-            }
-            for (int i = 0; i < thissettings.Length; i++)
-            {
-                if (thissettings[i] != othersettings[i])
-                {
-                    return false;
-                }
-            }
-            return true;
         }
     }
 }
