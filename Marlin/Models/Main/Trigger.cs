@@ -8,6 +8,6 @@ namespace Marlin.Models.Main
         public int id;
         public string textvalue;
         public string appvalue;
-        public TriggerType triggertype;
+        public TriggersType triggertype;
     }
 }

@@ -14,36 +14,37 @@ namespace Marlin.SystemFiles
 {
     public class Program
     {
-        public static string[] Genders = { "Мужской", "Женский" };
+        public readonly static string[] Genders = { "Мужской", "Женский" };
 
-        public static string[] Triggers = { "Фраза", "Время", "Запуск Marlin", "Запуск программы" };
+        public readonly static string[] Triggers = { "Фраза", "Время", "Запуск Marlin", "Запуск программы" };
 
-        public static string[] Objects = { "Фаил", "Папка", "Url" };
+        public readonly static string[] Objects = { "Фаил", "Папка", "Url" };
 
-        public static string[] ObjectActions = { "Открыть", "Закрыть", "Удалить" };
+        public readonly static string[] ObjectActions = { "Открыть", "Закрыть", "Удалить" };
 
-        public static string[] ObjectActionsSimple = { "Открыть", "Удалить" };
+        public readonly static string[] ObjectActionsSimple = { "Открыть", "Удалить" };
 
-        public static string[] Actions = { "Сделать свое действие", "Встроенные методы" };
+        public readonly static string[] Actions = { "Сделать свое действие", "Встроенные методы" };
 
-        public static string[] EmbeddedActions = { "Озвучивание текста", "Нажатие клавиш", "Перемещение курсора" };
+        public readonly static string[] EmbeddedActions = { "Озвучивание текста", "Нажатие клавиш", "Перемещение курсора" };
 
-        public static int[] Speeds = Enumerable.Range(-5, 16).ToArray();
+        public readonly static int[] Speeds = Enumerable.Range(-5, 16).ToArray();
 
         public static async Task SetPage(Page page)
         {
-            //for (double i = 1; i > 0; i -= 0.2)
-            //{
-            //    Context.MainWindow.Opacity = i;
-            //    await Task.Delay(1);
-            //}
+            for (double i = 1; i > 0; i -= 0.2)
+            {
+                Context.MainWindow.Opacity = i;
+                await Task.Delay(1);
+            }
             Context.MainWindow.Content = page;
-            //for (double i = 0.1; i <= 1; i += 0.2)
-            //{
-            //    Context.MainWindow.Opacity = i;
-            //    await Task.Delay(1);
-            //}
+            for (double i = 0.2; i <= 1; i += 0.2)
+            {
+                Context.MainWindow.Opacity = i;
+                await Task.Delay(1);
+            }
         }
+
         public static bool Equals<T>(T first, T second)
         {
             if (second is null)

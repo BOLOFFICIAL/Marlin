@@ -1,6 +1,6 @@
 ﻿namespace Marlin.SystemFiles.Types
 {
-    public enum TriggerType
+    public enum TriggersType
     {
         Phrase,
         Time,

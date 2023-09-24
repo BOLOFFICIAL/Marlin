@@ -437,19 +437,19 @@ namespace Marlin.ViewModels.Main
             foreach (var trigger in triggers)
             {
                 string value = "";
-                if (trigger.triggertype == TriggerType.Phrase)
+                if (trigger.triggertype == TriggersType.Phrase)
                 {
                     value += "Фраза: " + trigger.textvalue;
                 }
-                if (trigger.triggertype == TriggerType.Time)
+                if (trigger.triggertype == TriggersType.Time)
                 {
                     value += "Время: " + trigger.textvalue;
                 }
-                if (trigger.triggertype == TriggerType.StartMarlin)
+                if (trigger.triggertype == TriggersType.StartMarlin)
                 {
                     value += "Запуск Marlin";
                 }
-                if (trigger.triggertype == TriggerType.StartApp)
+                if (trigger.triggertype == TriggersType.StartApp)
                 {
                     value += "Программа: " + trigger.appvalue;
                 }

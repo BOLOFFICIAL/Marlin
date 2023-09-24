@@ -74,7 +74,7 @@ namespace Marlin.ViewModels.Main
             {
                 if (Context.ProgramData.Commands.Count > 0)
                 {
-                    Title = "Команда" + (Context.ProgramData.Commands[Context.ProgramData.Commands.Count - 1].id + 1).ToString(); //lоделать чтоб он ориентировлся на id последнего а не на колличество
+                    Title = "Команда" + (Context.ProgramData.Commands[Context.ProgramData.Commands.Count - 1].id + 1).ToString();
                 }
                 else
                 {
@@ -251,12 +251,12 @@ namespace Marlin.ViewModels.Main
             set
             {
                 Set(ref Context.Command.SelectedAction, value);
-                if (Context.Command.SelectedAction == "Сделать свое действие")
+                if (Context.Command.SelectedAction == Program.Actions[(int)ActionsType.ownaction])
                 {
                     LengthOwnActions = GridLength.Auto;
                     LengthEmbeddedActions = new GridLength(0, GridUnitType.Pixel);
                 }
-                if (Context.Command.SelectedAction == "Встроенные методы")
+                if (Context.Command.SelectedAction == Program.Actions[(int)ActionsType.builtinmethods])
                 {
                     LengthEmbeddedActions = GridLength.Auto;
                     LengthOwnActions = new GridLength(0, GridUnitType.Pixel);
@@ -384,17 +384,17 @@ namespace Marlin.ViewModels.Main
                 {
                     TextTrigger = "";
                     AppTrigger = "";
-                    if (SelectedTrigger == "Фраза" || SelectedTrigger == "Время")
+                    if (SelectedTrigger == Program.Triggers[(int)TriggersType.Phrase] || SelectedTrigger == Program.Triggers[(int)TriggersType.Time])
                     {
                         TextTriggerLength = GridLength.Auto;
                         MarlinTrigger = GridLength.Auto;
                         AppTriggerLength = new GridLength(0, GridUnitType.Pixel);
                     }
-                    if (SelectedTrigger == "Запуск Marlin")
+                    if (SelectedTrigger == Program.Triggers[(int)TriggersType.StartMarlin])
                     {
                         MarlinTrigger = new GridLength(0, GridUnitType.Pixel);
                     }
-                    if (SelectedTrigger == "Запуск программы")
+                    if (SelectedTrigger == Program.Triggers[(int)TriggersType.StartApp])
                     {
                         TextTriggerLength = new GridLength(0, GridUnitType.Pixel);
                         AppTriggerLength = GridLength.Auto;
@@ -410,7 +410,7 @@ namespace Marlin.ViewModels.Main
             set
             {
                 Set(ref Context.Command.SelectedObjectAction, value);
-                if (SelectedObjectAction == "Открыть" && SelectedObject != "Папка" && SelectedObject != "Программа")
+                if (SelectedObjectAction == Program.Objects[(int)ObjectsType.File] && SelectedObject != Program.Objects[(int)ObjectsType.Folder])
                 {
                     LengthChoseApp = GridLength.Auto;
                 }
@@ -426,23 +426,22 @@ namespace Marlin.ViewModels.Main
             get => Context.Command.SelectedEmbeddedAction;
             set
             {
+                LengthTextToSpeech = new GridLength(0, GridUnitType.Pixel);
+                LengthPressingKeys = new GridLength(0, GridUnitType.Pixel);
+                LengthMovingCursor = new GridLength(0, GridUnitType.Pixel);
+
                 Set(ref Context.Command.SelectedEmbeddedAction, value);
-                if (SelectedEmbeddedAction == "Озвучивание текста")
+
+                if (SelectedEmbeddedAction == Program.EmbeddedActions[(int)EmbeddedActionsType.textspeech])
                 {
                     LengthTextToSpeech = GridLength.Auto;
-                    LengthPressingKeys = new GridLength(0, GridUnitType.Pixel);
-                    LengthMovingCursor = new GridLength(0, GridUnitType.Pixel);
                 }
-                if (SelectedEmbeddedAction == "Нажатие клавиш")
+                if (SelectedEmbeddedAction == Program.EmbeddedActions[(int)EmbeddedActionsType.pressingkeys])
                 {
-                    LengthTextToSpeech = new GridLength(0, GridUnitType.Pixel);
                     LengthPressingKeys = GridLength.Auto;
-                    LengthMovingCursor = new GridLength(0, GridUnitType.Pixel);
                 }
-                if (SelectedEmbeddedAction == "Перемещение курсора")
+                if (SelectedEmbeddedAction == Program.EmbeddedActions[(int)EmbeddedActionsType.movingcursor])
                 {
-                    LengthTextToSpeech = new GridLength(0, GridUnitType.Pixel);
-                    LengthPressingKeys = new GridLength(0, GridUnitType.Pixel);
                     LengthMovingCursor = GridLength.Auto;
                 }
             }
@@ -459,13 +458,13 @@ namespace Marlin.ViewModels.Main
                     FileName = "";
                 }
 
-                if (SelectedObject == "Фаил")
+                if (SelectedObject == Program.Objects[(int)ObjectsType.File])
                 {
                     ObjectActions = Program.ObjectActions;
                     LengthChoseObject = GridLength.Auto;
                     LengthInputUrl = new GridLength(0, GridUnitType.Pixel);
                     LengthObjectAction = GridLength.Auto;
-                    if (SelectedObjectAction == "Открыть")
+                    if (SelectedObjectAction == Program.ObjectActions[(int)ObjectActionsType.Open])
                     {
                         LengthChoseApp = GridLength.Auto;
                     }
@@ -475,7 +474,7 @@ namespace Marlin.ViewModels.Main
                     }
                 }
 
-                if (SelectedObject == "Папка")
+                if (SelectedObject == Program.Objects[(int)ObjectsType.Folder])
                 {
                     ObjectActions = Program.ObjectActionsSimple;
                     SelectedObjectAction = Program.ObjectActions[0];
@@ -485,7 +484,7 @@ namespace Marlin.ViewModels.Main
                     LengthChoseApp = new GridLength(0, GridUnitType.Pixel);
                 }
 
-                if (SelectedObject == "Url")
+                if (SelectedObject == Program.Objects[(int)ObjectsType.Url])
                 {
                     ObjectActions = Program.ObjectActions;
                     SelectedObjectAction = Program.ObjectActions[0];
@@ -500,14 +499,6 @@ namespace Marlin.ViewModels.Main
                     {
                         LengthChoseApp = new GridLength(0, GridUnitType.Pixel);
                     }
-                }
-
-                if (SelectedObject == "Программа")
-                {
-                    LengthChoseObject = GridLength.Auto;
-                    LengthInputUrl = new GridLength(0, GridUnitType.Pixel);
-                    LengthObjectAction = GridLength.Auto;
-                    LengthChoseApp = new GridLength(0, GridUnitType.Pixel);
                 }
             }
         }
@@ -630,7 +621,7 @@ namespace Marlin.ViewModels.Main
                 return false;
             }
 
-            bool isDuplicate = Context.ProgramData.Commands.Any(command => Program.Equals(command,Context.Command));
+            bool isDuplicate = Context.ProgramData.Commands.Any(command => Program.Equals(command, Context.Command));
 
             if (isDuplicate)
             {
@@ -660,12 +651,12 @@ namespace Marlin.ViewModels.Main
 
         private bool CanButtonActionCommandExecute(object p)
         {
-            return !Program.Equals(Context.Command,Context.CopyCommand) && HasAction();
+            return !Program.Equals(Context.Command, Context.CopyCommand) && HasAction();
         }
 
         private bool CanAddTriggerCommandExecute(object p)
         {
-            if (SelectedTrigger == "Запуск Marlin")
+            if (SelectedTrigger == Program.Triggers[(int)TriggersType.StartMarlin])
             {
                 return true;
             }
@@ -676,31 +667,31 @@ namespace Marlin.ViewModels.Main
         {
             var trigger = new Models.Main.Trigger();
             string value = "";
-            if (SelectedTrigger == "Фраза")
+            if (SelectedTrigger == Program.Triggers[(int)TriggersType.Phrase])
             {
                 trigger.textvalue = TextTrigger.ToUpper();
-                trigger.triggertype = TriggerType.Phrase;
+                trigger.triggertype = TriggersType.Phrase;
                 trigger.appvalue = "";
                 value += "Фраза: " + trigger.textvalue;
             }
-            if (SelectedTrigger == "Время")
+            if (SelectedTrigger == Program.Triggers[(int)TriggersType.Time])
             {
                 trigger.textvalue = TextTrigger;
-                trigger.triggertype = TriggerType.Time;
+                trigger.triggertype = TriggersType.Time;
                 trigger.appvalue = "";
                 value += "Время: " + TextTrigger;
             }
-            if (SelectedTrigger == "Запуск Marlin")
+            if (SelectedTrigger == Program.Triggers[(int)TriggersType.StartMarlin])
             {
                 trigger.textvalue = "";
-                trigger.triggertype = TriggerType.StartMarlin;
+                trigger.triggertype = TriggersType.StartMarlin;
                 trigger.appvalue = "";
                 value += "Запуск Marlin";
             }
-            if (SelectedTrigger == "Запуск программы")
+            if (SelectedTrigger == Program.Triggers[(int)TriggersType.StartApp])
             {
                 trigger.textvalue = TextTrigger;
-                trigger.triggertype = TriggerType.StartApp;
+                trigger.triggertype = TriggersType.StartApp;
                 trigger.appvalue = AppTrigger;
                 value += "Программа: " + AppTrigger;
             }
@@ -716,7 +707,7 @@ namespace Marlin.ViewModels.Main
 
         private bool ValidationTrigger(Models.Main.Trigger trigger)
         {
-            if (trigger.triggertype == TriggerType.Time)
+            if (trigger.triggertype == TriggersType.Time)
             {
                 if (!trigger.textvalue.Contains(".") && !trigger.textvalue.Contains(":"))
                 {
@@ -731,7 +722,7 @@ namespace Marlin.ViewModels.Main
             }
             foreach (var trg in Context.Command.Triggers)
             {
-                if (Program.Equals(trg,trigger))
+                if (Program.Equals(trg, trigger))
                 {
                     Models.MessageBox.MakeMessage("У элемента уже присутствует такой триггер", MessageType.Error);
                     return false;
@@ -741,7 +732,7 @@ namespace Marlin.ViewModels.Main
             {
                 foreach (var trg in command.Triggers)
                 {
-                    if (trg.triggertype == TriggerType.Phrase)
+                    if (trg.triggertype == TriggersType.Phrase)
                     {
                         if (Program.Equals(trg, trigger))
                         {
@@ -755,7 +746,7 @@ namespace Marlin.ViewModels.Main
             {
                 foreach (var trg in script.Triggers)
                 {
-                    if (trg.triggertype == TriggerType.Phrase)
+                    if (trg.triggertype == TriggersType.Phrase)
                     {
                         if (Program.Equals(trg, trigger))
                         {
@@ -776,7 +767,7 @@ namespace Marlin.ViewModels.Main
 
         private void OnSelectFileCommandExecuted(object p)
         {
-            if (SelectedObject == "Фаил")
+            if (SelectedObject == Program.Objects[(int)ObjectsType.File])
             {
                 Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
                 openFileDialog.Title = "Выбор файла";
@@ -811,7 +802,7 @@ namespace Marlin.ViewModels.Main
                     }
                 }
             }
-            if (SelectedObject == "Папка")
+            if (SelectedObject == Program.Objects[(int)ObjectsType.Folder])
             {
                 CommonOpenFileDialog folderPicker = new CommonOpenFileDialog();
 
@@ -880,7 +871,7 @@ namespace Marlin.ViewModels.Main
 
         private bool HasAction()
         {
-            if (SelectedAction == "Сделать свое действие")
+            if (SelectedAction == Program.Actions[(int)ActionsType.ownaction])
             {
                 if (Context.Command.IsReadyCmdCommand)
                 {
@@ -888,21 +879,21 @@ namespace Marlin.ViewModels.Main
                 }
                 else
                 {
-                    if (SelectedObject == "Фаил")
+                    if (SelectedObject == Program.Objects[(int)ObjectsType.File])
                     {
                         return Context.Command.Filepath.Length > 0;
                     }
-                    if (SelectedObject == "Папка")
+                    if (SelectedObject == Program.Objects[(int)ObjectsType.Folder])
                     {
                         return Context.Command.Filepath.Length > 0;
                     }
-                    if (SelectedObject == "Url")
+                    if (SelectedObject == Program.Objects[(int)ObjectsType.Url])
                     {
                         return Context.Command.Url.Length > 0;
                     }
                 }
             }
-            if (SelectedAction == "Встроенные методы")
+            if (SelectedAction == Program.Actions[(int)ActionsType.builtinmethods])
             {
                 return false;
             }
@@ -915,19 +906,19 @@ namespace Marlin.ViewModels.Main
             for (int i = 0; i < Context.Command.Triggers.Count; i++)
             {
                 string value = "";
-                if (Context.Command.Triggers[i].triggertype == TriggerType.Phrase)
+                if (Context.Command.Triggers[i].triggertype == TriggersType.Phrase)
                 {
                     value += "Фраза: " + Context.Command.Triggers[i].textvalue;
                 }
-                if (Context.Command.Triggers[i].triggertype == TriggerType.Time)
+                if (Context.Command.Triggers[i].triggertype == TriggersType.Time)
                 {
                     value += "Время: " + Context.Command.Triggers[i].textvalue;
                 }
-                if (Context.Command.Triggers[i].triggertype == TriggerType.StartMarlin)
+                if (Context.Command.Triggers[i].triggertype == TriggersType.StartMarlin)
                 {
                     value += "Запуск Marlin";
                 }
-                if (Context.Command.Triggers[i].triggertype == TriggerType.StartApp)
+                if (Context.Command.Triggers[i].triggertype == TriggersType.StartApp)
                 {
                     value += "Программа: " + Context.Command.Triggers[i].appvalue;
                 }

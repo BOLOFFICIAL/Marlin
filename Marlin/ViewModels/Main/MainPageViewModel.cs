@@ -128,7 +128,7 @@ namespace Marlin.ViewModels.Main
             var matchingCommand = Context.ProgramData.Commands.FirstOrDefault(
                 command => command.Title.ToUpper() == Command.ToUpper() ||
                 command.Triggers.Any(
-                    trigger => trigger.triggertype == TriggerType.Phrase &&
+                    trigger => trigger.triggertype == TriggersType.Phrase &&
                     trigger.textvalue.ToUpper() == Command.ToUpper()));
 
             if (matchingCommand != null)
@@ -146,7 +146,7 @@ namespace Marlin.ViewModels.Main
             var matchingScript = Context.ProgramData.Scripts.FirstOrDefault(
                 script => script.Title.ToUpper() == Command.ToUpper() ||
                 script.Triggers.Any(
-                    trigger => trigger.triggertype == TriggerType.Phrase &&
+                    trigger => trigger.triggertype == TriggersType.Phrase &&
                     trigger.textvalue.ToUpper() == Command.ToUpper()));
 
             if (matchingScript != null)

@@ -27,7 +27,7 @@ namespace Marlin
                 {
                     foreach (var trigger in command.Triggers)
                     {
-                        if (trigger.triggertype == SystemFiles.Types.TriggerType.StartMarlin)
+                        if (trigger.triggertype == SystemFiles.Types.TriggersType.StartMarlin)
                         {
                             command.ExecuteCommand();
                         }
@@ -37,7 +37,7 @@ namespace Marlin
                 {
                     foreach (var trigger in script.Triggers)
                     {
-                        if (trigger.triggertype == SystemFiles.Types.TriggerType.StartMarlin)
+                        if (trigger.triggertype == SystemFiles.Types.TriggersType.StartMarlin)
                         {
                             script.ExecuteScript();
                         }

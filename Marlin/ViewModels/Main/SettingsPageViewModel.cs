@@ -502,5 +502,7 @@ namespace Marlin.ViewModels.Main
         {
             return BackgraundImagePath.Length > 0;
         }
+
+        
     }
 }

@@ -216,17 +216,17 @@ namespace Marlin.ViewModels.Main
                 {
                     TextTrigger = "";
                     AppTrigger = "";
-                    if (SelectedTrigger == "Фраза" || SelectedTrigger == "Время")
+                    if (SelectedTrigger == Program.Triggers[(int)TriggersType.Phrase] || SelectedTrigger == Program.Triggers[(int)TriggersType.Time])
                     {
                         TextTriggerLength = GridLength.Auto;
                         MarlinTrigger = GridLength.Auto;
                         AppTriggerLength = new GridLength(0, GridUnitType.Pixel);
                     }
-                    if (SelectedTrigger == "Запуск Marlin")
+                    if (SelectedTrigger == Program.Triggers[(int)TriggersType.StartMarlin])
                     {
                         MarlinTrigger = new GridLength(0, GridUnitType.Pixel);
                     }
-                    if (SelectedTrigger == "Запуск программы")
+                    if (SelectedTrigger == Program.Triggers[(int)TriggersType.StartApp])
                     {
                         TextTriggerLength = new GridLength(0, GridUnitType.Pixel);
                         AppTriggerLength = GridLength.Auto;
@@ -336,7 +336,7 @@ namespace Marlin.ViewModels.Main
 
         private bool CanAddTriggerCommandExecute(object p)
         {
-            if (SelectedTrigger == "Запуск Marlin")
+            if (SelectedTrigger == Program.Triggers[(int)TriggersType.StartMarlin])
             {
                 return true;
             }
@@ -347,31 +347,31 @@ namespace Marlin.ViewModels.Main
         {
             var trigger = new Models.Main.Trigger();
             string value = "";
-            if (SelectedTrigger == "Фраза")
+            if (SelectedTrigger == Program.Triggers[(int)TriggersType.Phrase])
             {
                 trigger.textvalue = TextTrigger.ToUpper();
-                trigger.triggertype = TriggerType.Phrase;
+                trigger.triggertype = TriggersType.Phrase;
                 trigger.appvalue = "";
                 value += "Фраза: " + trigger.textvalue;
             }
-            if (SelectedTrigger == "Время")
+            if (SelectedTrigger == Program.Triggers[(int)TriggersType.Time])
             {
                 trigger.textvalue = TextTrigger;
-                trigger.triggertype = TriggerType.Time;
+                trigger.triggertype = TriggersType.Time;
                 trigger.appvalue = "";
                 value += "Время: " + TextTrigger;
             }
-            if (SelectedTrigger == "Запуск Marlin")
+            if (SelectedTrigger == Program.Triggers[(int)TriggersType.StartMarlin])
             {
                 trigger.textvalue = "";
-                trigger.triggertype = TriggerType.StartMarlin;
+                trigger.triggertype = TriggersType.StartMarlin;
                 trigger.appvalue = "";
                 value += "Запуск Marlin";
             }
-            if (SelectedTrigger == "Запуск программы")
+            if (SelectedTrigger == Program.Triggers[(int)TriggersType.StartApp])
             {
                 trigger.textvalue = TextTrigger;
-                trigger.triggertype = TriggerType.StartApp;
+                trigger.triggertype = TriggersType.StartApp;
                 trigger.appvalue = AppTrigger;
                 value += "Программа: " + AppTrigger;
             }
@@ -388,7 +388,7 @@ namespace Marlin.ViewModels.Main
 
         private bool ValidationTrigger(Models.Main.Trigger trigger)
         {
-            if (trigger.triggertype == TriggerType.Time)
+            if (trigger.triggertype == TriggersType.Time)
             {
                 if (!trigger.textvalue.Contains(".") && !trigger.textvalue.Contains(":"))
                 {
@@ -413,7 +413,7 @@ namespace Marlin.ViewModels.Main
             {
                 foreach (var trg in command.Triggers)
                 {
-                    if (trg.triggertype == TriggerType.Phrase)
+                    if (trg.triggertype == TriggersType.Phrase)
                     {
                         if (Program.Equals(trg, trigger))
                         {
@@ -427,7 +427,7 @@ namespace Marlin.ViewModels.Main
             {
                 foreach (var trg in script.Triggers)
                 {
-                    if (trg.triggertype == TriggerType.Phrase)
+                    if (trg.triggertype == TriggersType.Phrase)
                     {
                         if (Program.Equals(trg, trigger))
                         {
@@ -458,7 +458,7 @@ namespace Marlin.ViewModels.Main
                     return false;
                 }
             }
-            return true;//проверка уникальности имени скрипта среди команд и скриптов.
+            return true;
         }
 
         private void LoadTrigger()
@@ -467,19 +467,19 @@ namespace Marlin.ViewModels.Main
             for (int i = 0; i < Context.Script.Triggers.Count; i++)
             {
                 string value = "";
-                if (Context.Script.Triggers[i].triggertype == TriggerType.Phrase)
+                if (Context.Script.Triggers[i].triggertype == TriggersType.Phrase)
                 {
                     value += "Фраза: " + Context.Script.Triggers[i].textvalue;
                 }
-                if (Context.Script.Triggers[i].triggertype == TriggerType.Time)
+                if (Context.Script.Triggers[i].triggertype == TriggersType.Time)
                 {
                     value += "Время: " + Context.Script.Triggers[i].textvalue;
                 }
-                if (Context.Script.Triggers[i].triggertype == TriggerType.StartMarlin)
+                if (Context.Script.Triggers[i].triggertype == TriggersType.StartMarlin)
                 {
                     value += "Запуск Marlin";
                 }
-                if (Context.Script.Triggers[i].triggertype == TriggerType.StartApp)
+                if (Context.Script.Triggers[i].triggertype == TriggersType.StartApp)
                 {
                     value += "Программа: " + Context.Script.Triggers[i].appvalue;
                 }
