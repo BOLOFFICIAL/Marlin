@@ -12,6 +12,8 @@ namespace Marlin.Models.Main
         public bool Checkpuss = false;
         public int TimeDelay = 0;
         public string Comment = "";
+        public bool execute = true;
+        public bool isrun = false;
         public List<int> Commands = new();
         public List<Trigger> Triggers = new List<Trigger>();
 
@@ -67,24 +69,38 @@ namespace Marlin.Models.Main
         public static void RemoveScript(int selectedid)
         {
             Context.ProgramData.Scripts.Remove(Script.GetScript(selectedid));
+            ProgramData.SaveData();
         }
 
         public void ExecuteScript()
         {
-            int delay = TimeDelay == 0 ? 5 : TimeDelay * 10;
-
-            Task.Run(() =>
+            if (!isrun)
             {
-                foreach (var commandindex in Commands)
+                isrun = true;
+
+                int delay = TimeDelay == 0 ? 5 : TimeDelay * 10;
+
+                Task.Run(() =>
                 {
-                    var command = Command.GetCommand(commandindex);
-                    if (command != null)
+                    foreach (var commandindex in Commands)
                     {
-                        command.ExecuteCommand();
-                        Thread.Sleep(delay * 100);
+                        var command = Command.GetCommand(commandindex);
+                        if (command != null)
+                        {
+                            if (execute)
+                            {
+                                command.ExecuteCommand();
+                                Thread.Sleep(delay * 100);
+                            }
+                            else
+                            {
+                                return;
+                            }
+                        }
                     }
-                }
-            });
+                    isrun = false;
+                });
+            }
         }
     }
 }

@@ -17,6 +17,7 @@ namespace Marlin.Models.Main
         public string Apppath = "";
         public string AppName = "";
         public string Url = "";
+        public bool isrun = false;
         public bool Checkpuss = false;
         public string ResultCommand = "";
         public string SelectedAction = Program.Actions[0];
@@ -99,71 +100,76 @@ namespace Marlin.Models.Main
 
         public void ExecuteCommand()
         {
-            if (SelectedAction == "Сделать свое действие")
+            if (!isrun)
             {
-                if (IsReadyCmdCommand)
+                isrun = true;
+                if (SelectedAction == "Сделать свое действие")
                 {
-                    WinSystem.RunCmd(CmdCommand);
+                    if (IsReadyCmdCommand)
+                    {
+                        WinSystem.RunCmd(CmdCommand);
+                    }
+                    else
+                    {
+                        if (SelectedObjectAction == "Открыть")
+                        {
+                            if (Apppath.Length > 0)
+                            {
+                                Process.Start(Apppath, Filepath);
+                            }
+                            else
+                            {
+                                if (SelectedObject == "Url")
+                                {
+                                    Process.Start(new ProcessStartInfo
+                                    {
+                                        FileName = Url,
+                                        UseShellExecute = true
+                                    });
+                                }
+                                else
+                                {
+                                    Process.Start("explorer.exe", Filepath);
+                                }
+                            }
+                        }
+                        if (SelectedObjectAction == "Закрыть")
+                        {
+                            Models.MessageBox.MakeMessage("В разработке");
+                        }
+                        if (SelectedObjectAction == "Удалить")
+                        {
+                            if (SelectedObject == "Файл")
+                            {
+                                if (File.Exists(Filepath))
+                                {
+                                    File.Delete(Filepath);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Файл не существует.");
+                                }
+                            }
+                            else if (SelectedObject == "Папка")
+                            {
+                                if (Directory.Exists(Filepath))
+                                {
+                                    Directory.Delete(Filepath, true);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Папка не существует.");
+                                }
+                            }
+                        }
+
+                    }
                 }
                 else
                 {
-                    if (SelectedObjectAction == "Открыть")
-                    {
-                        if (Apppath.Length > 0)
-                        {
-                            Process.Start(Apppath, Filepath);
-                        }
-                        else
-                        {
-                            if (SelectedObject == "Url")
-                            {
-                                Process.Start(new ProcessStartInfo
-                                {
-                                    FileName = Url,
-                                    UseShellExecute = true
-                                });
-                            }
-                            else
-                            {
-                                Process.Start("explorer.exe", Filepath);
-                            }
-                        }
-                    }
-                    if (SelectedObjectAction == "Закрыть")
-                    {
-                        Models.MessageBox.MakeMessage("В разработке");
-                    }
-                    if (SelectedObjectAction == "Удалить")
-                    {
-                        if (SelectedObject == "Файл")
-                        {
-                            if (File.Exists(Filepath))
-                            {
-                                File.Delete(Filepath);
-                            }
-                            else
-                            {
-                                Console.WriteLine("Файл не существует.");
-                            }
-                        }
-                        else if (SelectedObject == "Папка")
-                        {
-                            if (Directory.Exists(Filepath))
-                            {
-                                Directory.Delete(Filepath, true);
-                            }
-                            else
-                            {
-                                Console.WriteLine("Папка не существует.");
-                            }
-                        }
-                    }
-
+                    Models.MessageBox.MakeMessage("В разработке");
                 }
-            }
-            else
-            {
-                Models.MessageBox.MakeMessage("В разработке");
+                isrun = false;
             }
         }
 
@@ -179,22 +185,35 @@ namespace Marlin.Models.Main
             {
                 script.Commands.RemoveAll(id => id == selectedid);
             }
+            ProgramData.SaveData();
         }
 
         public static void CheckCommands()
         {
-            var filteredCommands =
-                Context.ProgramData.Commands
-                .Where(command => command.SelectedAction == "Сделать свое действие" &&
+            var filteredCommandsFile = Context.ProgramData.Commands
+                .Where(command =>
+                command.SelectedAction == Program.Actions[(int)SystemFiles.Types.ActionsType.ownaction] &&
                 !command.IsReadyCmdCommand &&
-                ((command.SelectedObject == "Файл" &&
-                !File.Exists(command.Filepath)) ||
-                (command.SelectedObject == "Папка" &&
-                !Directory.Exists(command.Filepath))))
+                (command.SelectedObject == Program.Objects[(int)SystemFiles.Types.ObjectsType.File]) &&
+                !File.Exists(command.Filepath))
                 .Select(command => command.id)
                 .ToList();
 
-            foreach (var id in filteredCommands)
+            var filteredCommandsFolder = Context.ProgramData.Commands
+                .Where(command =>
+                command.SelectedAction == Program.Actions[(int)SystemFiles.Types.ActionsType.ownaction] &&
+                !command.IsReadyCmdCommand &&
+                (command.SelectedObject == Program.Objects[(int)SystemFiles.Types.ObjectsType.Folder]) &&
+                !Directory.Exists(command.Filepath))
+                .Select(command => command.id)
+                .ToList();
+
+            foreach (var id in filteredCommandsFile)
+            {
+                RemoveCommand(id);
+            }
+
+            foreach (var id in filteredCommandsFolder)
             {
                 RemoveCommand(id);
             }

@@ -8,7 +8,7 @@ namespace Marlin
 {
     public partial class App : Application
     {
-        
+
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -20,10 +20,12 @@ namespace Marlin
             Thread.Sleep(1000);
             WinSystem.CheckRunProcess();
 
+            Models.Main.Command.CheckCommands();
+
             Program.StartActions(SystemFiles.Types.TriggersType.StartMarlin);
 
             Voix.SpeakAsync($"С возвращением {Context.Settings.Login}");
-            Models.Main.Command.CheckCommands();
+
             BackgroundService.StartServise();
 
             ResourceDictionary applicationResources = this.Resources;

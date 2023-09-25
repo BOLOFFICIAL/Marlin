@@ -39,6 +39,7 @@ namespace Marlin.ViewModels.Main
             RunActionCommand = new LambdaCommand(OnRunActionCommandExecuted);
             AddActionCommand = new LambdaCommand(OnAddActionCommandExecuted);
             DeleteActionCommand = new LambdaCommand(OnDeleteActionCommandExecuted);
+            Models.Main.Command.CheckCommands();
             LoadActions();
         }
 
