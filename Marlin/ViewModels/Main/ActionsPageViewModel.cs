@@ -186,7 +186,7 @@ namespace Marlin.ViewModels.Main
                                 {
                                     LengthTrigger = new GridLength(1, GridUnitType.Star);
                                 }
-                                if (script.Commands.Count > 0) 
+                                if (script.Commands.Count > 0)
                                 {
                                     LengthScriptCommand = new GridLength(1, GridUnitType.Star);
                                 }
@@ -457,7 +457,7 @@ namespace Marlin.ViewModels.Main
             }
         }
 
-        private void LoadScriptCommand(Models.Main.Script script) 
+        private void LoadScriptCommand(Models.Main.Script script)
         {
             ScriptCommandPanel.Children.Clear();
             foreach (var command in script.Commands)

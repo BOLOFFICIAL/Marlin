@@ -277,7 +277,7 @@ namespace Marlin.ViewModels.Main
 
         private bool CanButtonActionCommandExecute(object p)
         {
-            return !Program.Equals(Context.Script,Context.CopyScript) && Context.Script.Commands.Count > 1;
+            return !Program.Equals(Context.Script, Context.CopyScript) && Context.Script.Commands.Count > 1;
         }
 
         private void OnToMainCommandExecuted(object p)

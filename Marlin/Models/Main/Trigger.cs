@@ -1,5 +1,4 @@
 ﻿using Marlin.SystemFiles.Types;
-using Newtonsoft.Json;
 
 namespace Marlin.Models.Main
 {

@@ -28,7 +28,10 @@ namespace Marlin.Views.Main
             {
                 Environment.Exit(0);
             }
+
             InitializeComponent();
         }
+
+
     }
 }

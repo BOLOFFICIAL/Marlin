@@ -397,12 +397,12 @@ namespace Marlin.ViewModels.Main
 
         private bool CanSaveSettingsCommandExecute(object p)
         {
-            return !Program.Equals(Context.CopySettings,Context.Settings);
+            return !Program.Equals(Context.CopySettings, Context.Settings);
         }
 
         private void OnSaveSettingsCommandExecuted(object p)
         {
-            if (Program.Equals(Context.CopySettings,Context.Settings))
+            if (Program.Equals(Context.CopySettings, Context.Settings))
             {
                 Models.MessageBox.MakeMessage("Не обнаружено  изменений в настройках");
                 return;
@@ -503,6 +503,6 @@ namespace Marlin.ViewModels.Main
             return BackgraundImagePath.Length > 0;
         }
 
-        
+
     }
 }

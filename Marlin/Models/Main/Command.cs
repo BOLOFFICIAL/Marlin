@@ -183,12 +183,14 @@ namespace Marlin.Models.Main
 
         public static void CheckCommands()
         {
-            var filteredCommands = Context.ProgramData.Commands
-                .Where(command =>
-                command.SelectedAction == "Сделать свое действие" &&
+            var filteredCommands =
+                Context.ProgramData.Commands
+                .Where(command => command.SelectedAction == "Сделать свое действие" &&
                 !command.IsReadyCmdCommand &&
-                (command.SelectedObject == "Фаил" || command.SelectedObject == "Папка") &&
-                !File.Exists(command.Filepath))
+                ((command.SelectedObject == "Файл" &&
+                !File.Exists(command.Filepath)) ||
+                (command.SelectedObject == "Папка" &&
+                !Directory.Exists(command.Filepath))))
                 .Select(command => command.id)
                 .ToList();
 

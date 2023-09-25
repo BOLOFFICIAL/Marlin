@@ -210,7 +210,7 @@ namespace Marlin.ViewModels.Main
             else
             {
                 Length = GridLength.Auto;
-                if (Context.ProgramData.Commands.Count > 0) 
+                if (Context.ProgramData.Commands.Count > 0)
                 {
                     LengthScript = GridLength.Auto;
                 }
