@@ -268,7 +268,7 @@ namespace Marlin.ViewModels.Main
                 {
                     Script.RemoveScript(Context.SelectedId);
                 }
-                ProgramData.SaveData();
+                //ProgramData.SaveData();
                 LoadActions();
             }
 
