@@ -8,62 +8,7 @@ namespace Marlin
 {
     public partial class App : Application
     {
-        private void StartMarlin()
-        {
-            var checkpass = false;
-            var failauthentication = false;
-            foreach (var command in Context.ProgramData.Commands)
-            {
-                foreach (var trigger in command.Triggers)
-                {
-                    if (trigger.triggertype == SystemFiles.Types.TriggersType.StartMarlin)
-                    {
-                        if (command.Checkpuss && failauthentication)
-                        {
-                            continue;
-                        }
-                        if (command.Checkpuss && !checkpass)
-                        {
-                            if (Program.Authentication("Для запуска действий подтвердите пароль"))
-                            {
-                                checkpass = true;
-                            }
-                            else
-                            {
-                                failauthentication = true;
-                                continue;
-                            }
-                        }
-                        command.ExecuteCommand();
-                    }
-                }
-            }
-            foreach (var script in Context.ProgramData.Scripts)
-            {
-                foreach (var trigger in script.Triggers)
-                {
-                    if (trigger.triggertype == SystemFiles.Types.TriggersType.StartMarlin)
-                    {
-                        if (script.Checkpuss && failauthentication)
-                        {
-                            continue;
-                        }
-                        if (script.Checkpuss && !checkpass)
-                        {
-                            if (Program.Authentication("Для запуска действий подтвердите пароль"))
-                            {
-                                checkpass = true;
-                            }
-                            else
-                            {
-                                return;
-                            }
-                        }
-                        script.ExecuteScript();
-                    }
-                }
-            }
-        }
+        
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -75,9 +20,11 @@ namespace Marlin
             Thread.Sleep(1000);
             WinSystem.CheckRunProcess();
 
-            StartMarlin();
+            Program.StartActions(SystemFiles.Types.TriggersType.StartMarlin);
+
             Voix.SpeakAsync($"С возвращением {Context.Settings.Login}");
             Models.Main.Command.CheckCommands();
+            BackgroundService.StartServise();
 
             ResourceDictionary applicationResources = this.Resources;
 

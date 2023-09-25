@@ -190,5 +190,62 @@ namespace Marlin.SystemFiles
                 }
             }
         }
+
+        public static void StartActions(TriggersType triggerstype)
+        {
+            var checkpass = false;
+            var failauthentication = false;
+            foreach (var command in Context.ProgramData.Commands)
+            {
+                foreach (var trigger in command.Triggers)
+                {
+                    if (trigger.triggertype == triggerstype)
+                    {
+                        if (command.Checkpuss && failauthentication)
+                        {
+                            continue;
+                        }
+                        if (command.Checkpuss && !checkpass)
+                        {
+                            if (Program.Authentication("Для запуска действий подтвердите пароль"))
+                            {
+                                checkpass = true;
+                            }
+                            else
+                            {
+                                failauthentication = true;
+                                continue;
+                            }
+                        }
+                        command.ExecuteCommand();
+                    }
+                }
+            }
+            foreach (var script in Context.ProgramData.Scripts)
+            {
+                foreach (var trigger in script.Triggers)
+                {
+                    if (trigger.triggertype == triggerstype)
+                    {
+                        if (script.Checkpuss && failauthentication)
+                        {
+                            continue;
+                        }
+                        if (script.Checkpuss && !checkpass)
+                        {
+                            if (Program.Authentication("Для запуска действий подтвердите пароль"))
+                            {
+                                checkpass = true;
+                            }
+                            else
+                            {
+                                return;
+                            }
+                        }
+                        script.ExecuteScript();
+                    }
+                }
+            }
+        }
     }
 }
