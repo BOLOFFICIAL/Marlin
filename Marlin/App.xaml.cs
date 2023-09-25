@@ -24,7 +24,7 @@ namespace Marlin
                         }
                         if (command.Checkpuss && !checkpass)
                         {
-                            if (Program.Authentication("Для запуска команды подтвердите пароль"))
+                            if (Program.Authentication("Для запуска действий подтвердите пароль"))
                             {
                                 checkpass = true;
                             }
@@ -50,7 +50,7 @@ namespace Marlin
                         }
                         if (script.Checkpuss && !checkpass)
                         {
-                            if (Program.Authentication("Для запуска скрипта подтвердите пароль"))
+                            if (Program.Authentication("Для запуска действий подтвердите пароль"))
                             {
                                 checkpass = true;
                             }

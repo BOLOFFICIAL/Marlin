@@ -31,7 +31,5 @@ namespace Marlin.Views.Main
 
             InitializeComponent();
         }
-
-
     }
 }

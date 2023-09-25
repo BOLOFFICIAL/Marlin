@@ -77,7 +77,7 @@ namespace Marlin.Models.Main
             {
                 foreach (var commandindex in Commands)
                 {
-                    var command = Context.ProgramData.Commands[commandindex - 1];
+                    var command = Command.GetCommand(commandindex);
                     if (command != null)
                     {
                         command.ExecuteCommand();
