@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Threading;
+using System.Windows.Forms;
 
 namespace Marlin.SystemFiles
 {
@@ -29,13 +30,7 @@ namespace Marlin.SystemFiles
 
         public static void PressingKeys(string text)
         {
-            foreach (char c in text)
-            {
-                byte keyCode = (byte)char.ToUpper(c);
-                keybd_event(keyCode, 0, KEYEVENTF_KEYDOWN, UIntPtr.Zero);
-                Thread.Sleep(10);
-                keybd_event(keyCode, 0, KEYEVENTF_KEYUP, UIntPtr.Zero);
-            }
+            SendKeys.SendWait(text);
         }
 
         public static void PressingKeys(params int[] keyCodes)
