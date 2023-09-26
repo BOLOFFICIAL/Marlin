@@ -30,6 +30,7 @@ namespace Marlin.SystemFiles
 
         public static void PressingKeys(string text)
         {
+            Thread.Sleep(100);
             SendKeys.SendWait(text);
         }
 
