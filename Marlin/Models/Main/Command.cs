@@ -1,4 +1,5 @@
 ﻿using Marlin.SystemFiles;
+using Marlin.SystemFiles.Types;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -103,7 +104,7 @@ namespace Marlin.Models.Main
             if (!isrun)
             {
                 isrun = true;
-                if (SelectedAction == "Сделать свое действие")
+                if (SelectedAction == Program.Actions[(int)ActionsType.ownaction])
                 {
                     if (IsReadyCmdCommand)
                     {
@@ -165,9 +166,48 @@ namespace Marlin.Models.Main
 
                     }
                 }
-                else
+                if (SelectedAction == Program.Actions[(int)ActionsType.builtinmethods])
                 {
-                    Models.MessageBox.MakeMessage("В разработке");
+                    if (SelectedEmbeddedAction == Program.EmbeddedActions[(int)EmbeddedActionsType.movingcursor]) 
+                    {
+                        if (int.TryParse(X, out int x)&& int.TryParse(Y, out int y)) 
+                        {
+                            BuiltinMethod.MovingCursor(x, y);
+                        }
+                    }
+                    if (SelectedEmbeddedAction == Program.EmbeddedActions[(int)EmbeddedActionsType.pressingkeys]) 
+                    {
+                        if (IsMultiSymbol)
+                        {
+                            BuiltinMethod.PressingKeys(PressingKeys);
+                        }
+                        else 
+                        {
+                            if (PressingKeys.Contains(','))
+                            {
+                                var stringkeys = PressingKeys.Split(",");
+                                List<int> intkeys = new List<int>();
+                                foreach (var key in stringkeys)
+                                {
+                                    if (int.TryParse(key,out int k)) 
+                                    {
+                                        intkeys.Add(k);
+                                    }
+                                }
+                                if (intkeys.Count>0) 
+                                {
+                                    BuiltinMethod.PressingKeys(intkeys.ToArray());
+                                }
+                            }
+                            else 
+                            {
+                                if (int.TryParse(PressingKeys,out int key)) 
+                                {
+                                    BuiltinMethod.PressingKeys(key);
+                                }
+                            }
+                        }
+                    }
                 }
                 isrun = false;
             }

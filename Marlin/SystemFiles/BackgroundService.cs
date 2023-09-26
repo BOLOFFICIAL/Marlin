@@ -55,7 +55,6 @@ namespace Marlin.SystemFiles
 
                     if (executed)
                     {
-                        // Если команда была выполнена, переходим к следующей команде
                         continue;
                     }
                 }

@@ -7,6 +7,7 @@ using Marlin.Views.Main;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -895,7 +896,50 @@ namespace Marlin.ViewModels.Main
             }
             if (SelectedAction == Program.Actions[(int)ActionsType.builtinmethods])
             {
-                return false;
+                if (SelectedEmbeddedAction == Program.EmbeddedActions[(int)EmbeddedActionsType.movingcursor])
+                {
+                    if (int.TryParse(X, out int x) && int.TryParse(Y, out int y))
+                    {
+                        return true;
+                    }
+                }
+                if (SelectedEmbeddedAction == Program.EmbeddedActions[(int)EmbeddedActionsType.pressingkeys])
+                {
+                    if (IsMultiSymbol)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        if (PressingKeys.Contains(','))
+                        {
+                            var stringkeys = PressingKeys.Split(",");
+                            List<int> intkeys = new List<int>();
+                            foreach (var key in stringkeys)
+                            {
+                                if (int.TryParse(key, out int k))
+                                {
+                                    intkeys.Add(k);
+                                }
+                            }
+                            if (intkeys.Count > 0)
+                            {
+                                return true;
+                            }
+                        }
+                        else
+                        {
+                            if (int.TryParse(PressingKeys, out int key))
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                }
+                else 
+                {
+                    return false;
+                }
             }
             return false;
         }

@@ -517,9 +517,11 @@
                                                      MinWidth="50"
                                                      FontSize="15"
                                                      Padding="10,0"
+                                                     Margin="0,0,10,0"
                                                      HorizontalContentAlignment="Center"
                                                      VerticalAlignment="Center"
                                                      Text="{Binding Path=Y,UpdateSourceTrigger=PropertyChanged}"/>
+
                                         </Grid>
                                     </Grid>
                                 </Grid>
