@@ -6,6 +6,7 @@ using Marlin.ViewModels.Base;
 using Marlin.Views.Main;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -125,61 +126,62 @@ namespace Marlin.ViewModels.Main
 
         private void OnSendCommandExecute(object parameter)
         {
+            var tmpcommand = Command;
+            Command = "";
             var matchingCommand = Context.ProgramData.Commands.FirstOrDefault(
-                command => command.Title.ToUpper() == Command.ToUpper() ||
+                command => command.Title.ToUpper() == tmpcommand.ToUpper() ||
                 command.Triggers.Any(
                     trigger => trigger.triggertype == TriggersType.Phrase &&
-                    trigger.textvalue.ToUpper() == Command.ToUpper()));
+                    trigger.textvalue.ToUpper() == tmpcommand.ToUpper()));
 
             if (matchingCommand != null)
             {
                 if (matchingCommand.Checkpuss)
                 {
-                    if (!Program.Authentication("Для запуска комманды подтвердите пароль"))
+                    if (!SystemFiles.Program.Authentication("Для запуска комманды подтвердите пароль"))
                     {
                         return;
                     }
                 }
                 matchingCommand.ExecuteCommand();
+                return;
             }
 
             var matchingScript = Context.ProgramData.Scripts.FirstOrDefault(
-                script => script.Title.ToUpper() == Command.ToUpper() ||
+                script => script.Title.ToUpper() == tmpcommand.ToUpper() ||
                 script.Triggers.Any(
                     trigger => trigger.triggertype == TriggersType.Phrase &&
-                    trigger.textvalue.ToUpper() == Command.ToUpper()));
+                    trigger.textvalue.ToUpper() == tmpcommand.ToUpper()));
 
             if (matchingScript != null)
             {
                 if (matchingScript.Checkpuss)
                 {
-                    if (!Program.Authentication("Для запуска скрипта подтвердите пароль"))
+                    if (!SystemFiles.Program.Authentication("Для запуска скрипта подтвердите пароль"))
                     {
                         return;
                     }
                 }
                 else
                 {
-                    var checkpuss = false;
-                    foreach (var command in matchingScript.Commands)
-                    {
-                        if (Context.ProgramData.Commands[command - 1].Checkpuss)
-                        {
-                            checkpuss = true;
-                            break;
-                        }
-                    }
+                    var checkpuss = matchingScript.Commands.Any(command => Context.ProgramData.Commands[command - 1].Checkpuss);
+
                     if (checkpuss)
                     {
-                        if (!Program.Authentication("Одна или несколько команд защищены паролем.\nДля запуска скрипта подтвердите пароль"))
+                        if (!SystemFiles.Program.Authentication("Одна или несколько команд защищены паролем.\nДля запуска скрипта подтвердите пароль"))
                         {
                             return;
                         }
                     }
                 }
                 matchingScript.ExecuteScript();
+                return;
             }
-            Command = "";
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = $"https://yandex.ru/search/?text=" + tmpcommand,
+                UseShellExecute = true
+            });
         }
 
         private void OnMenuCommandExecute(object parameter)
@@ -189,9 +191,9 @@ namespace Marlin.ViewModels.Main
                 Context.Action = (ActionType)int.Parse(parameter.ToString());
                 switch (Context.Action)
                 {
-                    case ActionType.Settings: Program.SetPage(new SettingsPage()); break;
-                    case ActionType.Command: Program.SetPage(new ActionsPage()); break;
-                    case ActionType.Script: Program.SetPage(new ActionsPage()); break;
+                    case ActionType.Settings: SystemFiles.Program.SetPage(new SettingsPage()); break;
+                    case ActionType.Command: SystemFiles.Program.SetPage(new ActionsPage()); break;
+                    case ActionType.Script: SystemFiles.Program.SetPage(new ActionsPage()); break;
                 }
             }
             catch

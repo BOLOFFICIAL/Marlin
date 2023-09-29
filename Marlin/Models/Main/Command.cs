@@ -112,7 +112,7 @@ namespace Marlin.Models.Main
                     }
                     else
                     {
-                        if (SelectedObjectAction == "Открыть")
+                        if (SelectedObjectAction == Program.ObjectActions[(int)ObjectActionsType.Open])
                         {
                             if (Apppath.Length > 0)
                             {
@@ -120,7 +120,7 @@ namespace Marlin.Models.Main
                             }
                             else
                             {
-                                if (SelectedObject == "Url")
+                                if (SelectedObject == Program.Objects[(int)ObjectsType.Url])
                                 {
                                     Process.Start(new ProcessStartInfo
                                     {
@@ -134,13 +134,13 @@ namespace Marlin.Models.Main
                                 }
                             }
                         }
-                        if (SelectedObjectAction == "Закрыть")
+                        if (SelectedObjectAction == Program.ObjectActions[(int)ObjectActionsType.Close])
                         {
                             Models.MessageBox.MakeMessage("В разработке");
                         }
-                        if (SelectedObjectAction == "Удалить")
+                        if (SelectedObjectAction == Program.ObjectActions[(int)ObjectActionsType.Delete])
                         {
-                            if (SelectedObject == "Файл")
+                            if (SelectedObject == Program.Objects[(int)ObjectsType.File])
                             {
                                 if (File.Exists(Filepath))
                                 {
@@ -151,7 +151,7 @@ namespace Marlin.Models.Main
                                     Console.WriteLine("Файл не существует.");
                                 }
                             }
-                            else if (SelectedObject == "Папка")
+                            else if (SelectedObject == Program.Objects[(int)ObjectsType.Folder])
                             {
                                 if (Directory.Exists(Filepath))
                                 {
