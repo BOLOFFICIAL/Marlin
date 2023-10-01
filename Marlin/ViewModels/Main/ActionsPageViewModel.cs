@@ -268,10 +268,8 @@ namespace Marlin.ViewModels.Main
                 {
                     Script.RemoveScript(Context.SelectedId);
                 }
-                //ProgramData.SaveData();
                 LoadActions();
             }
-
         }
 
         private void OnRunActionCommandExecuted(object p)
@@ -287,6 +285,7 @@ namespace Marlin.ViewModels.Main
                         return;
                     }
                 }
+                Sound.PlaySoundAsync(MessageType.Info);
                 command.ExecuteCommand();
             }
 
