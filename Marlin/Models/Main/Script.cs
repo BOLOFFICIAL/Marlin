@@ -1,5 +1,8 @@
 ﻿using Marlin.SystemFiles;
+using Marlin.SystemFiles.Types;
+using System;
 using System.Collections.Generic;
+using System.Reflection.Metadata;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -90,7 +93,10 @@ namespace Marlin.Models.Main
                             if (execute)
                             {
                                 command.ExecuteCommand();
-                                Thread.Sleep(delay * 100);
+                                if (!(command.SelectedAction == Program.Actions[(int)SystemFiles.Types.ActionsType.builtinmethods] && command.SelectedEmbeddedAction == Program.EmbeddedActions[(int)EmbeddedActionsType.textspeech]) )
+                                {
+                                    Thread.Sleep(delay * 100);
+                                } 
                             }
                             else
                             {

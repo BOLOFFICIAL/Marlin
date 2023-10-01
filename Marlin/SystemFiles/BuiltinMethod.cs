@@ -34,6 +34,11 @@ namespace Marlin.SystemFiles
             SendKeys.SendWait(text);
         }
 
+        public static void TextSpeech(string text) 
+        {
+            Voix.Speak(text);
+        }
+
         public static void PressingKeys(params int[] keyCodes)
         {
             foreach (byte keyCode in keyCodes)

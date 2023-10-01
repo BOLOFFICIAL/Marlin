@@ -371,25 +371,25 @@
                                             <RowDefinition Height="{Binding Path=LengthMovingCursor,UpdateSourceTrigger=PropertyChanged}"/>
                                         </Grid.RowDefinitions>
 
-                                        <!--Озвучивание файла-->
+                                        <!--Озвучивание текста-->
                                         <Grid Grid.Row="0">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="auto"/>
                                                 <ColumnDefinition Width="auto"/>
                                             </Grid.ColumnDefinitions>
 
-                                            <Button Grid.Column="0" 
-                                                    FontSize="15"
-                                                    Margin="0,0,10,0"
-                                                    VerticalAlignment="Center"
-                                                    Foreground="{Binding Path=ExternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
-                                                    Content="Выберите фаил"/>
+                                            <TextBlock Grid.Column="0"
+                                                       FontSize="15"
+                                                       Margin="0,0,10,0"
+                                                       VerticalAlignment="Center"
+                                                       FontWeight="Bold"
+                                                       Foreground="{Binding Path=FontColor,UpdateSourceTrigger=PropertyChanged}"
+                                                       Text="Введите текст"/>
 
                                             <TextBox Grid.Column="1"
                                                      MinWidth="100"
                                                      FontSize="15"
                                                      Padding="10,0"
-                                                     IsReadOnly="True"
                                                      HorizontalContentAlignment="Center"
                                                      VerticalAlignment="Center"
                                                      Text="{Binding Path=FileName,UpdateSourceTrigger=PropertyChanged}"/>

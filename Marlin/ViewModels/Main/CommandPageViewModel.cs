@@ -936,7 +936,11 @@ namespace Marlin.ViewModels.Main
                         }
                     }
                 }
-                else 
+                if(SelectedEmbeddedAction == Program.EmbeddedActions[(int)EmbeddedActionsType.textspeech]) 
+                {
+                    return FileName.Length > 0;
+                }
+                else
                 {
                     return false;
                 }

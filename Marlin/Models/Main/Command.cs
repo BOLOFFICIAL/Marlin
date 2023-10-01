@@ -208,6 +208,10 @@ namespace Marlin.Models.Main
                             }
                         }
                     }
+                    if (SelectedEmbeddedAction == Program.EmbeddedActions[(int)EmbeddedActionsType.textspeech]) 
+                    {
+                        BuiltinMethod.TextSpeech(FileName);
+                    }
                 }
                 isrun = false;
             }
