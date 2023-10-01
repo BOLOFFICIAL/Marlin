@@ -34,7 +34,7 @@ namespace Marlin.SystemFiles
             SendKeys.SendWait(text);
         }
 
-        public static void TextSpeech(string text) 
+        public static void TextSpeech(string text)
         {
             Voix.Speak(text);
         }

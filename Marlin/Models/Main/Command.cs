@@ -168,20 +168,20 @@ namespace Marlin.Models.Main
                 }
                 if (SelectedAction == Program.Actions[(int)ActionsType.builtinmethods])
                 {
-                    if (SelectedEmbeddedAction == Program.EmbeddedActions[(int)EmbeddedActionsType.movingcursor]) 
+                    if (SelectedEmbeddedAction == Program.EmbeddedActions[(int)EmbeddedActionsType.movingcursor])
                     {
-                        if (int.TryParse(X, out int x)&& int.TryParse(Y, out int y)) 
+                        if (int.TryParse(X, out int x) && int.TryParse(Y, out int y))
                         {
                             BuiltinMethod.MovingCursor(x, y);
                         }
                     }
-                    if (SelectedEmbeddedAction == Program.EmbeddedActions[(int)EmbeddedActionsType.pressingkeys]) 
+                    if (SelectedEmbeddedAction == Program.EmbeddedActions[(int)EmbeddedActionsType.pressingkeys])
                     {
                         if (IsMultiSymbol)
                         {
                             BuiltinMethod.PressingKeys(PressingKeys);
                         }
-                        else 
+                        else
                         {
                             if (PressingKeys.Contains(','))
                             {
@@ -189,26 +189,26 @@ namespace Marlin.Models.Main
                                 List<int> intkeys = new List<int>();
                                 foreach (var key in stringkeys)
                                 {
-                                    if (int.TryParse(key,out int k)) 
+                                    if (int.TryParse(key, out int k))
                                     {
                                         intkeys.Add(k);
                                     }
                                 }
-                                if (intkeys.Count>0) 
+                                if (intkeys.Count > 0)
                                 {
                                     BuiltinMethod.PressingKeys(intkeys.ToArray());
                                 }
                             }
-                            else 
+                            else
                             {
-                                if (int.TryParse(PressingKeys,out int key)) 
+                                if (int.TryParse(PressingKeys, out int key))
                                 {
                                     BuiltinMethod.PressingKeys(key);
                                 }
                             }
                         }
                     }
-                    if (SelectedEmbeddedAction == Program.EmbeddedActions[(int)EmbeddedActionsType.textspeech]) 
+                    if (SelectedEmbeddedAction == Program.EmbeddedActions[(int)EmbeddedActionsType.textspeech])
                     {
                         BuiltinMethod.TextSpeech(FileName);
                     }
