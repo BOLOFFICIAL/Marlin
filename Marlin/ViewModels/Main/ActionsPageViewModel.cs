@@ -1,4 +1,5 @@
 ﻿using Marlin.Commands;
+using Marlin.Commands.Base;
 using Marlin.Models.Main;
 using Marlin.SystemFiles;
 using Marlin.SystemFiles.Types;
@@ -254,15 +255,26 @@ namespace Marlin.ViewModels.Main
 
         private void OnDeleteActionCommandExecuted(object p)
         {
+            Context.SelectedId = (int)p;
             LengthAbout = new GridLength(0, GridUnitType.Star);
             LengthDescription = new GridLength(0, GridUnitType.Star);
             LengthTrigger = new GridLength(0, GridUnitType.Star);
-            if (Program.Authentication("Для удаления элемента подтвердите пароль", check: true))
+            string delete = "";
+            if (Context.Action == ActionType.Command) 
             {
-                Context.SelectedId = (int)p;
+                var command = Models.Main.Command.GetCommand(Context.SelectedId);
+                delete = "команды " + command.Title;
+            }
+            if (Context.Action == ActionType.Script) 
+            {
+                var script = Script.GetScript(Context.SelectedId);
+                delete = "скрипта " + script.Title;
+            }
+            if (Program.Authentication($"Для удаления {delete} подтвердите пароль", check: true))
+            {
                 if (Context.Action == ActionType.Command)
                 {
-                    Command.RemoveCommand(Context.SelectedId);
+                    Models.Main.Command.RemoveCommand(Context.SelectedId);
                 }
                 if (Context.Action == ActionType.Script)
                 {
@@ -299,6 +311,7 @@ namespace Marlin.ViewModels.Main
                         return;
                     }
                 }
+                Sound.PlaySoundAsync(MessageType.Info);
                 script.ExecuteScript();
             }
         }
@@ -326,7 +339,7 @@ namespace Marlin.ViewModels.Main
 
             if (Context.Action == ActionType.Command)
             {
-                Command.CheckCommands();
+                Models.Main.Command.CheckCommands();
                 foreach (var command in Context.ProgramData.Commands)
                 {
                     var border = CreateBorder();
@@ -462,7 +475,7 @@ namespace Marlin.ViewModels.Main
             ScriptCommandPanel.Children.Clear();
             foreach (var command in script.Commands)
             {
-                ScriptCommandPanel.Children.Add(CreateElement(Command.GetCommand(command).ToString()));
+                ScriptCommandPanel.Children.Add(CreateElement(Models.Main.Command.GetCommand(command).ToString()));
             }
         }
 
