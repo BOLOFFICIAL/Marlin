@@ -7,6 +7,7 @@ using Marlin.Views.Main;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -292,7 +293,7 @@ namespace Marlin.ViewModels.Main
 
         private void OnAddActionCommandExecuted(object p)
         {
-            if (Context.Script.Commands.Contains(SelectedCommand.id))
+            if (Context.Script.Commands.Count(cmd => cmd == SelectedCommand.id) == 1)
             {
                 Models.MessageBox.MakeMessage("В этом скрипте уже присутствует такая команда.\nДобавить команду повторно?", SystemFiles.Types.MessageType.YesNoQuestion);
                 if (Context.MessageBox.Answer == "No")

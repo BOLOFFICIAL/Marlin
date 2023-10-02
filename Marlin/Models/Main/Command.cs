@@ -6,7 +6,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows;
-using System.Windows.Shapes;
 
 namespace Marlin.Models.Main
 {
@@ -19,7 +18,7 @@ namespace Marlin.Models.Main
         public string Apppath = "";
         public string AppName = "";
         public string Url = "";
-        public bool isrun = false;
+        public bool isRun = false;
         public bool Checkpuss = false;
         public string ResultCommand = "";
         public string SelectedAction = Program.Actions[0];
@@ -102,123 +101,131 @@ namespace Marlin.Models.Main
 
         public void ExecuteCommand()
         {
-            if (!isrun)
+            if (!isRun)
             {
-                isrun = true;
-                if (SelectedAction == Program.Actions[(int)ActionsType.ownaction])
+                try
                 {
-                    if (IsReadyCmdCommand)
+                    isRun = true;
+                    if (SelectedAction == Program.Actions[(int)ActionsType.ownaction])
                     {
-                        WinSystem.RunCmd(CmdCommand);
-                    }
-                    else
-                    {
-                        if (SelectedObjectAction == Program.ObjectActions[(int)ObjectActionsType.Open])
+                        if (IsReadyCmdCommand)
                         {
-                            if (Apppath.Length > 0)
-                            {
-                                Process.Start(Apppath, Filepath);
-                            }
-                            else
-                            {
-                                if (SelectedObject == Program.Objects[(int)ObjectsType.Url])
-                                {
-                                    Process.Start(new ProcessStartInfo
-                                    {
-                                        FileName = Url,
-                                        UseShellExecute = true
-                                    });
-                                }
-                                else
-                                {
-                                    Process.Start("explorer.exe", Filepath);
-                                    if (System.IO.Path.GetExtension(Filepath) == ".exe")
-                                    {
-                                        WinSystem.RunProcess(Filepath);
-                                    }
-                                }
-                            }
-                        }
-                        if (SelectedObjectAction == Program.ObjectActions[(int)ObjectActionsType.Close])
-                        {
-                            Models.MessageBox.MakeMessage("В разработке");
-                        }
-                        if (SelectedObjectAction == Program.ObjectActions[(int)ObjectActionsType.Delete])
-                        {
-                            if (SelectedObject == Program.Objects[(int)ObjectsType.File])
-                            {
-                                if (File.Exists(Filepath))
-                                {
-                                    File.Delete(Filepath);
-                                }
-                                else
-                                {
-                                    Console.WriteLine("Файл не существует.");
-                                }
-                            }
-                            else if (SelectedObject == Program.Objects[(int)ObjectsType.Folder])
-                            {
-                                if (Directory.Exists(Filepath))
-                                {
-                                    Directory.Delete(Filepath, true);
-                                }
-                                else
-                                {
-                                    Console.WriteLine("Папка не существует.");
-                                }
-                            }
-                        }
-
-                    }
-                }
-                if (SelectedAction == Program.Actions[(int)ActionsType.builtinmethods])
-                {
-                    if (SelectedEmbeddedAction == Program.EmbeddedActions[(int)EmbeddedActionsType.movingcursor])
-                    {
-                        if (int.TryParse(X, out int x) && int.TryParse(Y, out int y))
-                        {
-                            BuiltinMethod.MovingCursor(x, y);
-                        }
-                    }
-                    if (SelectedEmbeddedAction == Program.EmbeddedActions[(int)EmbeddedActionsType.pressingkeys])
-                    {
-                        if (IsMultiSymbol)
-                        {
-                            BuiltinMethod.PressingKeys(PressingKeys);
+                            WinSystem.RunCmd(CmdCommand);
                         }
                         else
                         {
-                            if (PressingKeys.Contains(','))
+                            if (SelectedObjectAction == Program.ObjectActions[(int)ObjectActionsType.Open])
                             {
-                                var stringkeys = PressingKeys.Split(",");
-                                List<int> intkeys = new List<int>();
-                                foreach (var key in stringkeys)
+                                if (Apppath.Length > 0)
                                 {
-                                    if (int.TryParse(key, out int k))
+                                    Process.Start(Apppath, Filepath);
+                                }
+                                else
+                                {
+                                    if (SelectedObject == Program.Objects[(int)ObjectsType.Url])
                                     {
-                                        intkeys.Add(k);
+                                        Process.Start(new ProcessStartInfo
+                                        {
+                                            FileName = Url,
+                                            UseShellExecute = true
+                                        });
+                                    }
+                                    else
+                                    {
+                                        Process.Start("explorer.exe", Filepath);
+                                        if (System.IO.Path.GetExtension(Filepath) == ".exe")
+                                        {
+                                            WinSystem.RunProcess(Filepath);
+                                        }
                                     }
                                 }
-                                if (intkeys.Count > 0)
+                            }
+                            if (SelectedObjectAction == Program.ObjectActions[(int)ObjectActionsType.Close])
+                            {
+                                Models.MessageBox.MakeMessage("В разработке");
+                            }
+                            if (SelectedObjectAction == Program.ObjectActions[(int)ObjectActionsType.Delete])
+                            {
+                                if (SelectedObject == Program.Objects[(int)ObjectsType.File])
                                 {
-                                    BuiltinMethod.PressingKeys(intkeys.ToArray());
+                                    if (File.Exists(Filepath))
+                                    {
+                                        File.Delete(Filepath);
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("Файл не существует.");
+                                    }
                                 }
+                                else if (SelectedObject == Program.Objects[(int)ObjectsType.Folder])
+                                {
+                                    if (Directory.Exists(Filepath))
+                                    {
+                                        Directory.Delete(Filepath, true);
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("Папка не существует.");
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+                    if (SelectedAction == Program.Actions[(int)ActionsType.builtinmethods])
+                    {
+                        if (SelectedEmbeddedAction == Program.EmbeddedActions[(int)EmbeddedActionsType.movingcursor])
+                        {
+                            if (int.TryParse(X, out int x) && int.TryParse(Y, out int y))
+                            {
+                                BuiltinMethod.MovingCursor(x, y);
+                            }
+                        }
+                        if (SelectedEmbeddedAction == Program.EmbeddedActions[(int)EmbeddedActionsType.pressingkeys])
+                        {
+                            if (IsMultiSymbol)
+                            {
+                                BuiltinMethod.PressingKeys(PressingKeys);
                             }
                             else
                             {
-                                if (int.TryParse(PressingKeys, out int key))
+                                if (PressingKeys.Contains(','))
                                 {
-                                    BuiltinMethod.PressingKeys(key);
+                                    var stringkeys = PressingKeys.Split(",");
+                                    List<int> intkeys = new List<int>();
+                                    foreach (var key in stringkeys)
+                                    {
+                                        if (int.TryParse(key, out int k))
+                                        {
+                                            intkeys.Add(k);
+                                        }
+                                    }
+                                    if (intkeys.Count > 0)
+                                    {
+                                        BuiltinMethod.PressingKeys(intkeys.ToArray());
+                                    }
+                                }
+                                else
+                                {
+                                    if (int.TryParse(PressingKeys, out int key))
+                                    {
+                                        BuiltinMethod.PressingKeys(key);
+                                    }
                                 }
                             }
                         }
+                        if (SelectedEmbeddedAction == Program.EmbeddedActions[(int)EmbeddedActionsType.textspeech])
+                        {
+                            BuiltinMethod.TextSpeech(FileName);
+                        }
                     }
-                    if (SelectedEmbeddedAction == Program.EmbeddedActions[(int)EmbeddedActionsType.textspeech])
-                    {
-                        BuiltinMethod.TextSpeech(FileName);
-                    }
+                    isRun = false;
                 }
-                isrun = false;
+                catch
+                {
+                    MessageBox.MakeMessage($"Произошла ошибка выполнения команды {Title}");
+                    isRun = false;
+                }
             }
         }
 
