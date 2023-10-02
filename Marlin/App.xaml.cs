@@ -18,7 +18,7 @@ namespace Marlin
             ProgramData.LoadData();
 
             Thread.Sleep(1000);
-            WinSystem.CheckRunProcess();
+            WinSystem.RunProcess();
 
             Models.Main.Command.CheckCommands();
 

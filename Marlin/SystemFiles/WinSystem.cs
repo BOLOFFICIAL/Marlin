@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Marlin.SystemFiles
@@ -37,31 +38,43 @@ namespace Marlin.SystemFiles
             });
         }
 
-        public static void CheckRunProcess()
+        public static void RunProcess(string app = null)
         {
             [DllImport("user32.dll")]
             static extern bool SetForegroundWindow(IntPtr hWnd);
 
-            string appName = Process.GetCurrentProcess().ProcessName;
-            int currentProcessId = Process.GetCurrentProcess().Id;
+            List<int> processIds = new List<int>();
+            int currentProcessId = -1;
 
-            List<int> processIds = GetProcessIdsByName(appName);
-            processIds.Remove(currentProcessId);
+            if (app == null)
+            {
+                processIds = GetProcessIdsByName(Process.GetCurrentProcess().ProcessName);
+                currentProcessId = Process.GetCurrentProcess().Id;
+                processIds.Remove(currentProcessId);
+            }
+            else
+            {
+                Thread.Sleep(300);
+                processIds = GetProcessIdsByName(System.IO.Path.GetFileNameWithoutExtension(app));
+            }
 
             if (processIds.Count > 0)
             {
-                int targetProcessId = processIds[0];
-
                 try
                 {
-                    Process targetProcess = Process.GetProcessById(targetProcessId);
-                    SetForegroundWindow(targetProcess.MainWindowHandle);
-                    Process currentProcess = Process.GetCurrentProcess();
-                    currentProcess.Kill();
+                    if (app == null)
+                    {
+                        SetForegroundWindow(Process.GetProcessById(processIds[0]).MainWindowHandle);
+                        Process.GetProcessById(currentProcessId).Kill();
+                    }
+                    else 
+                    {
+                        SetForegroundWindow(Process.GetProcessById(processIds[processIds.Count - 1]).MainWindowHandle);
+                    }
                 }
                 catch (ArgumentException)
                 {
-                    Models.MessageBox.MakeMessage($"Процесс с ID {targetProcessId} не найден.");
+                    Models.MessageBox.MakeMessage($"Возникла ошибка");
                 }
             }
         }

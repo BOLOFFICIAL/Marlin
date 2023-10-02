@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows;
+using System.Windows.Shapes;
 
 namespace Marlin.Models.Main
 {
@@ -131,6 +132,10 @@ namespace Marlin.Models.Main
                                 else
                                 {
                                     Process.Start("explorer.exe", Filepath);
+                                    if (System.IO.Path.GetExtension(Filepath) == ".exe")
+                                    {
+                                        WinSystem.RunProcess(Filepath);
+                                    }
                                 }
                             }
                         }
