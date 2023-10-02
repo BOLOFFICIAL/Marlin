@@ -301,7 +301,7 @@ namespace Marlin.ViewModels.Main
                     return;
                 }
             }
-            var command = CreateCommand(RemoveActionCommand, SelectedCommand.ToString(), Context.Script.Commands.Count);
+            var command = CreateElement(RemoveActionCommand, SelectedCommand.ToString(), Context.Script.Commands.Count);
 
             StackPanel.Children.Add(command);
 
@@ -378,7 +378,7 @@ namespace Marlin.ViewModels.Main
             }
             if (ValidationTrigger(trigger))
             {
-                TriggerPanel.Children.Add(CreateCommand(RemoveTriggerCommand, value, Context.Script.Triggers.Count));
+                TriggerPanel.Children.Add(CreateElement(RemoveTriggerCommand, value, Context.Script.Triggers.Count));
                 Context.Script.Triggers.Add(trigger);
 
                 TextTrigger = "";
@@ -484,7 +484,7 @@ namespace Marlin.ViewModels.Main
                 {
                     value += "Программа: " + Context.Script.Triggers[i].appvalue;
                 }
-                TriggerPanel.Children.Add(CreateCommand(RemoveTriggerCommand, value, i));
+                TriggerPanel.Children.Add(CreateElement(RemoveTriggerCommand, value, i));
             }
         }
 
@@ -496,12 +496,12 @@ namespace Marlin.ViewModels.Main
                 var command = Command.GetCommand(Context.Script.Commands[i]);
                 if (command != null)
                 {
-                    panel.Children.Add(CreateCommand(RemoveActionCommand, command.Title, i));
+                    panel.Children.Add(CreateElement(RemoveActionCommand, command.Title, i));
                 }
             }
         }
 
-        private Border CreateCommand(ICommand command, string commandname, int number)
+        private Border CreateElement(ICommand command, string commandname, int number)
         {
             var border = new Border
             {
