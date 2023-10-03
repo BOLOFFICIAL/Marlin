@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Windows;
 
 namespace Marlin.Models.Main
@@ -129,6 +130,7 @@ namespace Marlin.Models.Main
                                             FileName = Url,
                                             UseShellExecute = true
                                         });
+                                        Thread.Sleep(5000);
                                     }
                                     else
                                     {

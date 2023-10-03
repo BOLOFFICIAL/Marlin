@@ -91,7 +91,8 @@ namespace Marlin.Models.Main
                             if (execute)
                             {
                                 command.ExecuteCommand();
-                                if (!(command.SelectedAction == Program.Actions[(int)SystemFiles.Types.ActionsType.builtinmethods] && command.SelectedEmbeddedAction == Program.EmbeddedActions[(int)EmbeddedActionsType.textspeech]))
+                                if (!(command.SelectedAction == Program.Actions[(int)SystemFiles.Types.ActionsType.builtinmethods] && 
+                                command.SelectedEmbeddedAction == Program.EmbeddedActions[(int)EmbeddedActionsType.textspeech]))
                                 {
                                     Thread.Sleep(delay * 100);
                                 }
