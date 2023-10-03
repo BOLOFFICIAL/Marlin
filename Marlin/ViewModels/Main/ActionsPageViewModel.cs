@@ -1,5 +1,4 @@
 ﻿using Marlin.Commands;
-using Marlin.Commands.Base;
 using Marlin.Models.Main;
 using Marlin.SystemFiles;
 using Marlin.SystemFiles.Types;
@@ -260,12 +259,12 @@ namespace Marlin.ViewModels.Main
             LengthDescription = new GridLength(0, GridUnitType.Star);
             LengthTrigger = new GridLength(0, GridUnitType.Star);
             string delete = "";
-            if (Context.Action == ActionType.Command) 
+            if (Context.Action == ActionType.Command)
             {
                 var command = Models.Main.Command.GetCommand(Context.SelectedId);
                 delete = "команды " + command.Title;
             }
-            if (Context.Action == ActionType.Script) 
+            if (Context.Action == ActionType.Script)
             {
                 var script = Script.GetScript(Context.SelectedId);
                 delete = "скрипта " + script.Title;
@@ -343,7 +342,7 @@ namespace Marlin.ViewModels.Main
                 foreach (var command in Context.ProgramData.Commands)
                 {
                     var border = CreateBorder();
-                    var textBlock = CreateTextBlock(command.Title);
+                    var textBlock = CreateTextBlock(command.Title, command.Checkpuss);
                     var buttonDelete = CreateButton(DeleteActionCommand, command.id, "⨉", 20);
                     var buttonRun = CreateButton(RunActionCommand, command.id, "▷", 20);
                     var buttonEdit = CreateButton(EditActionCommand, command.id, "✎", 15);
@@ -358,7 +357,7 @@ namespace Marlin.ViewModels.Main
                 foreach (var script in Context.ProgramData.Scripts)
                 {
                     var border = CreateBorder();
-                    var textBlock = CreateTextBlock(script.Title);
+                    var textBlock = CreateTextBlock(script.Title, script.Checkpuss);
                     var buttonDelete = CreateButton(DeleteActionCommand, script.id, "⨉", 20);
                     var buttonRun = CreateButton(RunActionCommand, script.id, "▷", 20);
                     var buttonEdit = CreateButton(EditActionCommand, script.id, "✎", 15);
@@ -405,13 +404,18 @@ namespace Marlin.ViewModels.Main
                 return grid;
             }
 
-            TextBlock CreateTextBlock(string title)
+            TextBlock CreateTextBlock(string title, bool checkpass)
             {
+                var foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.FontColor));
+                if (checkpass)
+                {
+                    foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.PageColor));
+                }
                 TextBlock textBlock = new TextBlock
                 {
                     FontSize = 15,
                     FontWeight = FontWeights.Bold,
-                    Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Context.Settings.Theme.FontColor)),
+                    Foreground = foreground,
                     VerticalAlignment = VerticalAlignment.Center,
                     HorizontalAlignment = HorizontalAlignment.Center,
                     Padding = new Thickness(10, 10, 10, 10),
