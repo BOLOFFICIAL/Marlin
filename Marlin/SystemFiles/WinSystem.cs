@@ -67,7 +67,7 @@ namespace Marlin.SystemFiles
                         SetForegroundWindow(Process.GetProcessById(processIds[0]).MainWindowHandle);
                         Process.GetProcessById(currentProcessId).Kill();
                     }
-                    else 
+                    else
                     {
                         SetForegroundWindow(Process.GetProcessById(processIds[processIds.Count - 1]).MainWindowHandle);
                     }

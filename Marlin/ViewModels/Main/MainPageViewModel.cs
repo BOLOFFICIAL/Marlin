@@ -165,7 +165,7 @@ namespace Marlin.ViewModels.Main
                 else
                 {
                     var checkpuss = false;
-                    
+
                     checkpuss = matchingScript.Commands.Any(command => Models.Main.Command.GetCommand(command).Checkpuss == true);
 
                     if (checkpuss)
