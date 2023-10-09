@@ -339,7 +339,7 @@ namespace Marlin.ViewModels.Main
             if (Context.Action == ActionType.Command)
             {
                 Models.Main.Command.CheckCommands();
-                foreach (var command in Context.ProgramData.Commands)
+                foreach (var command in Context.ProgramData.Commands.OrderBy(c=>c.Title))
                 {
                     var border = CreateBorder();
                     var textBlock = CreateTextBlock(command.Title, command.Checkpuss);
@@ -354,7 +354,7 @@ namespace Marlin.ViewModels.Main
 
             if (Context.Action == ActionType.Script)
             {
-                foreach (var script in Context.ProgramData.Scripts)
+                foreach (var script in Context.ProgramData.Scripts.OrderBy(s => s.Title))
                 {
                     var border = CreateBorder();
                     var textBlock = CreateTextBlock(script.Title, script.Checkpuss);

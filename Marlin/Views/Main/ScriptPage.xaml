@@ -189,8 +189,7 @@
                                       Margin="0,5">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="auto"/>
-                                        <ColumnDefinition Width="20"/>
-                                        <ColumnDefinition Width="25"/>
+                                        <ColumnDefinition Width="50"/>
                                         <ColumnDefinition Width="auto"/>
                                     </Grid.ColumnDefinitions>
 
@@ -201,24 +200,30 @@
                                                HorizontalAlignment="Center"
                                                Text="Задержка между командами"/>
 
-                                    <TextBlock Grid.Column="1"
-                                               FontSize="15"
-                                               Padding="0,5"
-                                               Margin="0,0,1,0"
-                                               HorizontalAlignment="Center"
-                                               Text="{Binding Path=TimeDelay}"/>
+                                    <Grid Grid.Column="1">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto"/>
+                                            <ColumnDefinition Width="25"/>
+                                        </Grid.ColumnDefinitions>
 
-                                    <TextBlock Grid.Column="2"
-                                               FontSize="15"
-                                               VerticalAlignment="Center"
-                                               HorizontalAlignment="Left"
-                                               Text="c."/>
+                                        <TextBlock Grid.Column="0"
+                                                   FontSize="15"
+                                                   Padding="0,5"
+                                                   Margin="0,0,3,0"
+                                                   HorizontalAlignment="Center"
+                                                   Text="{Binding Path=TimeDelay}"/>
+
+                                        <TextBlock Grid.Column="1"
+                                                   FontSize="15"
+                                                   VerticalAlignment="Center"
+                                                   HorizontalAlignment="Left"
+                                                   Text="c."/>
+                                    </Grid>
 
                                     <Slider Grid.Column="3" 
                                             Width="100" 
                                             Margin="0,0,15,0"
                                             Minimum="0" 
-                                            TickFrequency="1"
                                             VerticalAlignment="Center"
                                             Maximum="60"
                                             Value="{Binding Path=TimeDelay}"/>
