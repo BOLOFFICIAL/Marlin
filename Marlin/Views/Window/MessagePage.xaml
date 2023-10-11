@@ -115,7 +115,12 @@
                                  Text="{Binding Path=Answer,UpdateSourceTrigger=PropertyChanged}"
                                  FontSize="20"
                                  Margin="10,10,2,10"
-                                 Height="auto"/>
+                                 Height="auto">
+                            <TextBox.InputBindings>
+                                <KeyBinding Key="Enter"
+                                            Command="{Binding SendAnswerCommand}" />
+                            </TextBox.InputBindings>
+                        </TextBox>
 
                         <Button  Grid.Column="1"
                                  BorderThickness="0"

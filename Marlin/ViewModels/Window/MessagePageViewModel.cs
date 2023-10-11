@@ -70,7 +70,7 @@ namespace Marlin.ViewModels.Window
 
         private void OnSendAnswerCommandExecute(object parameter)
         {
-            if (parameter.ToString() != "➤")
+            if (parameter != null && parameter.ToString() != "➤")
             {
                 Context.MessageBox.Answer = parameter.ToString();
             }
