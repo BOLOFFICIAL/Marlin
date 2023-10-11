@@ -100,7 +100,7 @@
                                         HorizontalAlignment="Right"
                                         Margin="30,0,0,0"
                                         Height="25"
-                                        ToolTip="Название по еоторому можно запустить скрипт"
+                                        ToolTip="Название, с помощью которого можно &#013;запустить скрипт."
                                         Background="Transparent"
                                         BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                                         BorderThickness="2">
@@ -164,7 +164,7 @@
                                             HorizontalAlignment="Right"
                                             Margin="30,0,0,0"
                                             Height="25"
-                                            ToolTip="Выбор действий выполняемых скриптом"
+                                            ToolTip="Добавление действий, выполняемых скриптом."
                                             Background="Transparent"
                                             BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                                             BorderThickness="2">
@@ -227,7 +227,7 @@
                                             HorizontalAlignment="Right"
                                             Margin="30,0,0,0"
                                             Height="25"
-                                            ToolTip="Защита скрипта от ручного запуска"
+                                            ToolTip="Защита скрипта от произвольного запуска."
                                             Background="Transparent"
                                             BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                                             BorderThickness="2">
@@ -290,7 +290,7 @@
                                             HorizontalAlignment="Right"
                                             Margin="30,0,0,0"
                                             Height="25"
-                                            ToolTip="Имтервал между запуском команд"
+                                            ToolTip="Интервал между запуском команд."
                                             Background="Transparent"
                                             BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                                             BorderThickness="2">
@@ -397,7 +397,7 @@
                                             HorizontalAlignment="Right"
                                             Margin="30,0,0,0"
                                             Height="25"
-                                            ToolTip="Триггеры по которым будет срабатывать скрипт"
+                                            ToolTip="Создание триггера, при срабатывании &#013;которого будет происходить запуск скрипта."
                                             Background="Transparent"
                                             BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                                             BorderThickness="2">

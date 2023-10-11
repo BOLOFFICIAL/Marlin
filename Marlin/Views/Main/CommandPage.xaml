@@ -100,7 +100,7 @@
                                         HorizontalAlignment="Right"
                                         Margin="30,0,0,0"
                                         Height="25"
-                                        ToolTip="Название по которой можно &#013;обратиться к команде"
+                                        ToolTip="Название, с помощью которого можно &#013;запустить команду."
                                         Background="Transparent"
                                         BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                                         BorderThickness="2">
@@ -163,7 +163,7 @@
                                             HorizontalAlignment="Right"
                                             Margin="30,0,0,0"
                                             Height="25"
-                                            ToolTip="Выбрать тип действия для команду, &#013;создать полностью свое действие &#013;или использовать уже встроенные методы в Marlin"
+                                            ToolTip="Выбор типа действия для команды &#013;(создать полностью свое действие &#013;или использовать уже встроенные методы в Marlin)."
                                             Background="Transparent"
                                             BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                                             BorderThickness="2">
@@ -209,7 +209,7 @@
                                                 HorizontalAlignment="Right"
                                                 Margin="30,0,0,0"
                                                 Height="25"
-                                                ToolTip="При активации пользователь &#013;может указать любую команду подходящую &#013;для командной строки windows"
+                                                ToolTip="Активация показывает поле для ввода команды, &#013;подходящей для командной строки &#013;Windows (cmd)."
                                                 Background="Transparent"
                                                 BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                                                 BorderThickness="2">
@@ -251,7 +251,7 @@
                                                 HorizontalAlignment="Right"
                                                 Margin="30,0,0,0"
                                                 Height="25"
-                                                ToolTip="Ввод команды в формате cmd"
+                                                ToolTip="Ввод команды, подходящей для командной &#013;строки Windows (cmd)."
                                                 Background="Transparent"
                                                 BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                                                 BorderThickness="2">
@@ -298,7 +298,7 @@
                                                     HorizontalAlignment="Right"
                                                     Margin="30,0,0,0"
                                                     Height="25"
-                                                    ToolTip="Выбор типа объекта с которым &#013;будут проводиться действия команды"
+                                                    ToolTip="Выбор типа объекта, с которым будет &#013;проводиться действие команды."
                                                     Background="Transparent"
                                                     BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                                                     BorderThickness="2">
@@ -342,7 +342,7 @@
                                                     HorizontalAlignment="Right"
                                                     Margin="30,0,0,0"
                                                     Height="25"
-                                                    ToolTip="Выбор объекта в зависимости &#013;от выбранного типа орбъекта"
+                                                    ToolTip="Выбор объекта, с которым будет проводиться &#013;действие команды в зависимости от &#013;выбранного типа объекта."
                                                     Background="Transparent"
                                                     BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                                                     BorderThickness="2">
@@ -406,7 +406,7 @@
                                                     HorizontalAlignment="Right"
                                                     Margin="30,0,0,0"
                                                     Height="25"
-                                                    ToolTip="Выбор действия которое можно &#013;сделать с выбранным объектом"
+                                                    ToolTip="Выбор действия для выбранного объекта."
                                                     Background="Transparent"
                                                     BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                                                     BorderThickness="2">
@@ -465,7 +465,7 @@
                                                     HorizontalAlignment="Right"
                                                     Margin="30,0,0,0"
                                                     Height="25"
-                                                    ToolTip="Выбор программы с потомощью которой &#013;будут проводиться действия над выбранным объектом"
+                                                    ToolTip="Выбор программы, с помощью которой будут &#013;проводиться действия над выбранным объектом."
                                                     Background="Transparent"
                                                     BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                                                     BorderThickness="2">
@@ -514,7 +514,7 @@
                                                 HorizontalAlignment="Right"
                                                 Margin="30,0,0,0"
                                                 Height="25"
-                                                ToolTip="Выбор одного из всроеннх методов"
+                                                ToolTip="Выбор одного из встроенных методов."
                                                 Background="Transparent"
                                                 BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                                                 BorderThickness="2">
@@ -563,7 +563,7 @@
                                                     HorizontalAlignment="Right"
                                                     Margin="30,0,0,0"
                                                     Height="25"
-                                                    ToolTip="Ввод текста который будет охвучен Marlin"
+                                                    ToolTip="Ввод текста, который будет озвучен Marlin."
                                                     Background="Transparent"
                                                     BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                                                     BorderThickness="2">
@@ -608,7 +608,7 @@
                                                         HorizontalAlignment="Right"
                                                         Margin="30,0,0,0"
                                                         Height="25"
-                                                        ToolTip="При активации можно указать текст которых будет записан при срабатывании"
+                                                        ToolTip="Активация поля для ввода текста, который &#013;будет записан при срабатывании."
                                                         Background="Transparent"
                                                         BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                                                         BorderThickness="2">
@@ -650,7 +650,7 @@
                                                         HorizontalAlignment="Right"
                                                         Margin="30,0,0,0"
                                                         Height="25"
-                                                        ToolTip="Ввод кода клавиши, для одновременного нажатия нескольких команд необходимо указать коды клавиш через запятую"
+                                                        ToolTip="Ввод кода клавиши (для одновременного &#013;нажатия нескольких клавиш необходимо &#013;указать коды клавиш через запятую)."
                                                         Background="Transparent"
                                                         BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                                                         BorderThickness="2">
@@ -692,7 +692,7 @@
                                                         HorizontalAlignment="Right"
                                                         Margin="30,0,0,0"
                                                         Height="25"
-                                                        ToolTip="Текст который будет записан при срабатывании"
+                                                        ToolTip="Текст, который будет записан при срабатывании."
                                                         Background="Transparent"
                                                         BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                                                         BorderThickness="2">
@@ -763,7 +763,7 @@
                                                     HorizontalAlignment="Right"
                                                     Margin="30,0,0,0"
                                                     Height="25"
-                                                    ToolTip="Координаты на которые будет перемещен курсор"
+                                                    ToolTip="Координаты, на которые будет перемещен курсор."
                                                     Background="Transparent"
                                                     BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                                                     BorderThickness="2">
@@ -827,7 +827,7 @@
                                                 HorizontalAlignment="Right"
                                                 Margin="30,0,0,0"
                                                 Height="25"
-                                                ToolTip="Защита команды от ручного запуска"
+                                                ToolTip="Защита команды от произвольного запуска."
                                                 Background="Transparent"
                                                 BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                                                 BorderThickness="2">
@@ -933,7 +933,7 @@
                                             HorizontalAlignment="Right"
                                             Margin="30,0,0,0"
                                             Height="25"
-                                            ToolTip="создание триггера при срабатывании &#013;которого будет происходить запуск команды"
+                                            ToolTip="Создание триггера, при срабатывании &#013;которого будет происходить запуск команды."
                                             Background="Transparent"
                                             BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                                             BorderThickness="2">
