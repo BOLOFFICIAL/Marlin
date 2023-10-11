@@ -75,6 +75,7 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="auto"/>
                                     <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
 
                                 <TextBlock Grid.Column="0"  
@@ -92,6 +93,23 @@
                                          HorizontalContentAlignment="Center"
                                          VerticalAlignment="Center"
                                          Text="{Binding Path=Title,UpdateSourceTrigger=PropertyChanged}"/>
+
+                                <Border Grid.Column="2"
+                                        CornerRadius="50"
+                                        Width="25"
+                                        HorizontalAlignment="Right"
+                                        Margin="30,0,0,0"
+                                        Height="25"
+                                        ToolTip="Название по еоторому можно запустить скрипт"
+                                        Background="Transparent"
+                                        BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
+                                        BorderThickness="2">
+                                    <TextBlock VerticalAlignment="Center"
+                                               FontWeight="Bold"
+                                               FontSize="15"
+                                               HorizontalAlignment="Center"
+                                               Text="?"/>
+                                </Border>
                             </Grid>
                         </Grid>
 
@@ -99,7 +117,7 @@
                               Margin="0,10,0,5">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
 
                             <TextBlock Grid.Column="0"
@@ -120,6 +138,7 @@
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="auto"/>
                                         <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
 
                                     <ComboBox Grid.Column="0"
@@ -138,6 +157,23 @@
                                             BorderBrush="Transparent"
                                             Foreground="{Binding Path=ExternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
                                             Background="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"/>
+
+                                    <Border Grid.Column="2"
+                                            CornerRadius="50"
+                                            Width="25"
+                                            HorizontalAlignment="Right"
+                                            Margin="30,0,0,0"
+                                            Height="25"
+                                            ToolTip="Выбор действий выполняемых скриптом"
+                                            Background="Transparent"
+                                            BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
+                                            BorderThickness="2">
+                                        <TextBlock VerticalAlignment="Center"
+                                                   FontWeight="Bold"
+                                                   FontSize="15"
+                                                   HorizontalAlignment="Center"
+                                                   Text="?"/>
+                                    </Border>
                                 </Grid>
 
                                 <ScrollContentPresenter Grid.Row="1"
@@ -151,7 +187,7 @@
                               Margin="0,10">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
 
                             <TextBlock Grid.Column="0"
@@ -173,6 +209,7 @@
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="auto"/>
                                         <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
 
                                     <TextBlock Grid.Column="0"  
@@ -183,6 +220,23 @@
 
                                     <CheckBox Grid.Column="1"
                                           IsChecked="{Binding Path=Checkpuss,UpdateSourceTrigger=PropertyChanged}"/>
+
+                                    <Border Grid.Column="2"
+                                            CornerRadius="50"
+                                            Width="25"
+                                            HorizontalAlignment="Right"
+                                            Margin="30,0,0,0"
+                                            Height="25"
+                                            ToolTip="Защита скрипта от ручного запуска"
+                                            Background="Transparent"
+                                            BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
+                                            BorderThickness="2">
+                                        <TextBlock VerticalAlignment="Center"
+                                                   FontWeight="Bold"
+                                                   FontSize="15"
+                                                   HorizontalAlignment="Center"
+                                                   Text="?"/>
+                                    </Border>
                                 </Grid>
 
                                 <Grid Grid.Row="1"
@@ -191,6 +245,7 @@
                                         <ColumnDefinition Width="auto"/>
                                         <ColumnDefinition Width="50"/>
                                         <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
 
                                     <TextBlock Grid.Column="0"
@@ -224,9 +279,27 @@
                                             Width="100" 
                                             Margin="0,0,15,0"
                                             Minimum="0" 
+                                            HorizontalAlignment="Left"
                                             VerticalAlignment="Center"
                                             Maximum="60"
                                             Value="{Binding Path=TimeDelay}"/>
+
+                                    <Border Grid.Column="4"
+                                            CornerRadius="50"
+                                            Width="25"
+                                            HorizontalAlignment="Right"
+                                            Margin="30,0,0,0"
+                                            Height="25"
+                                            ToolTip="Имтервал между запуском команд"
+                                            Background="Transparent"
+                                            BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
+                                            BorderThickness="2">
+                                        <TextBlock VerticalAlignment="Center"
+                                                   FontWeight="Bold"
+                                                   FontSize="15"
+                                                   HorizontalAlignment="Center"
+                                                   Text="?"/>
+                                    </Border>
                                 </Grid>
                             </Grid>
 
@@ -237,7 +310,7 @@
                               Margin="0,10">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
 
                             <TextBlock Grid.Column="0"
@@ -259,6 +332,7 @@
                                         <ColumnDefinition Width="auto"/>
                                         <ColumnDefinition Width="{Binding Path=MarlinTrigger,UpdateSourceTrigger=PropertyChanged}"/>
                                         <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
 
                                     <ComboBox Grid.Column="0"
@@ -316,6 +390,23 @@
                                             BorderBrush="Transparent"
                                             Foreground="{Binding Path=ExternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
                                             Background="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"/>
+
+                                    <Border Grid.Column="3"
+                                            CornerRadius="50"
+                                            Width="25"
+                                            HorizontalAlignment="Right"
+                                            Margin="30,0,0,0"
+                                            Height="25"
+                                            ToolTip="Триггеры по которым будет срабатывать скрипт"
+                                            Background="Transparent"
+                                            BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
+                                            BorderThickness="2">
+                                        <TextBlock VerticalAlignment="Center"
+                                                   FontWeight="Bold"
+                                                   FontSize="15"
+                                                   HorizontalAlignment="Center"
+                                                   Text="?"/>
+                                    </Border>
                                 </Grid>
 
                                 <ScrollContentPresenter Grid.Row="1"
@@ -344,6 +435,7 @@
                                      MinWidth="100"
                                      Padding="10,15,10,5"
                                      TextWrapping="Wrap"
+                                     MaxLength="1000"
                                      Text="{Binding Path=Comment,UpdateSourceTrigger=PropertyChanged}"/>
                         </Grid>
                     </Grid>
