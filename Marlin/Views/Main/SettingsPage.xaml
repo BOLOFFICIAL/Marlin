@@ -457,7 +457,7 @@
                                                             HorizontalAlignment="Right"
                                                             Margin="30,0,0,0"
                                                             Height="25"
-                                                            ToolTip="Скорость с которой будет озвучиваться Marlin"
+                                                            ToolTip="Скорость, с которой будет озвучиваться Marlin."
                                                             Background="Transparent"
                                                             BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                                                             BorderThickness="2">
@@ -495,7 +495,7 @@
                                                             HorizontalAlignment="Right"
                                                             Margin="30,0,0,0"
                                                             Height="25"
-                                                            ToolTip="Активация озвучивания действий и фраз Marlin &#013;при условии что озвучивание активно"
+                                                            ToolTip="Активация озвучивания действий и фраз Marlin."
                                                             Background="Transparent"
                                                             BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                                                             BorderThickness="2">
@@ -590,7 +590,7 @@
                                                             HorizontalAlignment="Right"
                                                             Margin="30,0,0,0"
                                                             Height="25"
-                                                            ToolTip="Имя/Логин по которому Marlin &#013;сможет обращаться к администратору"
+                                                            ToolTip="Имя/Логин, по которому Marlin сможет &#013;обращаться к администратору."
                                                             Background="Transparent"
                                                             BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                                                             BorderThickness="2">
@@ -630,7 +630,7 @@
                                                             HorizontalAlignment="Right"
                                                             Margin="30,0,0,0"
                                                             Height="25"
-                                                            ToolTip="Пароль безопасности &#013;для подтверждения различных действий"
+                                                            ToolTip="Пароль безопасности для подтверждения &#013;различных действий."
                                                             Background="Transparent"
                                                             BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                                                             BorderThickness="2">
@@ -693,7 +693,7 @@
                                                             HorizontalAlignment="Right"
                                                             Margin="30,0,0,0"
                                                             Height="25"
-                                                            ToolTip="Временной ромежуток в течении которого &#013;можно делать действия без подтверждения пароля"
+                                                            ToolTip="Временной промежуток, в течении которого &#013;Marlin не запрашивает подтверждение пароля."
                                                             Background="Transparent"
                                                             BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                                                             BorderThickness="2">
@@ -733,7 +733,7 @@
                                                             HorizontalAlignment="Right"
                                                             Margin="30,0,0,0"
                                                             Height="25"
-                                                            ToolTip="Пол администратора для корректного &#013;обращения от Marlin"
+                                                            ToolTip="Пол администратора для корректного &#013;обращения от Marlin."
                                                             Background="Transparent"
                                                             BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                                                             BorderThickness="2">
@@ -804,7 +804,7 @@
                                                             HorizontalAlignment="Right"
                                                             Margin="30,0,0,0"
                                                             Height="25"
-                                                            ToolTip="Папка в которой будут храниться фаил &#013;с программными данными"
+                                                            ToolTip="Папка, в которой будет храниться файл с &#013;программными данными."
                                                             Background="Transparent"
                                                             BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                                                             BorderThickness="2">
@@ -865,7 +865,7 @@
                                                             HorizontalAlignment="Right"
                                                             Margin="30,0,0,0"
                                                             Height="25"
-                                                            ToolTip="Добавление Marlin в автозагрузку &#013;и посследующий запуск Marlin &#013;при включении ПК"
+                                                            ToolTip="Добавление Marlin в автозагрузку &#013;(автоматический запуск Marlin при включении ПК)."
                                                             Background="Transparent"
                                                             BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                                                             BorderThickness="2">
