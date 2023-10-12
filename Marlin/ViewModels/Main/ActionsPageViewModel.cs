@@ -339,7 +339,7 @@ namespace Marlin.ViewModels.Main
             if (Context.Action == ActionType.Command)
             {
                 Models.Main.Command.CheckCommands();
-                foreach (var command in Context.ProgramData.Commands.OrderBy(c=>c.Title))
+                foreach (var command in Context.ProgramData.Commands)
                 {
                     var border = CreateBorder();
                     var textBlock = CreateTextBlock(command.Title, command.Checkpuss);

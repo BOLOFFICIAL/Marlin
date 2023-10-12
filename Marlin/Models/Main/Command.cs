@@ -144,7 +144,21 @@ namespace Marlin.Models.Main
                             }
                             if (SelectedObjectAction == Program.ObjectActions[(int)ObjectActionsType.Close])
                             {
-                                Models.MessageBox.MakeMessage("В разработке");
+                                if (System.IO.Path.GetExtension(Filepath) == ".exe")
+                                {
+                                    if (System.IO.File.Exists(Filepath))
+                                    {
+                                        string exeFileName = System.IO.Path.GetFileNameWithoutExtension(Filepath);
+
+                                        Process[] processes = Process.GetProcessesByName(exeFileName);
+
+                                        foreach (Process process in processes)
+                                        {
+                                            process.CloseMainWindow();
+                                            process.WaitForExit(); // Ждем, пока процесс завершится
+                                        }
+                                    }
+                                }
                             }
                             if (SelectedObjectAction == Program.ObjectActions[(int)ObjectActionsType.Delete])
                             {
