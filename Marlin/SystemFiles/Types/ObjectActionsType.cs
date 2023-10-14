@@ -4,6 +4,7 @@
     {
         Open,
         Close,
+        Kill,
         Delete
     }
 }

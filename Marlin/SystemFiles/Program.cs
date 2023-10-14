@@ -20,7 +20,7 @@ namespace Marlin.SystemFiles
 
         public readonly static string[] Objects = { "Фаил", "Папка", "Url" };
 
-        public readonly static string[] ObjectActions = { "Открыть", "Закрыть", "Удалить" };
+        public readonly static string[] ObjectActions = { "Открыть", "Завершить работу", "Уничтожить процесс", "Удалить фаил" };
 
         public readonly static string[] ObjectActionsSimple = { "Открыть", "Удалить" };
 

@@ -145,7 +145,7 @@ namespace Marlin.Models.Main
                                         }
                                     }
                                 }
-                                if (SelectedObjectAction == Program.ObjectActions[(int)ObjectActionsType.Close])
+                                if (SelectedObjectAction == Program.ObjectActions[(int)ObjectActionsType.Close] || SelectedObjectAction == Program.ObjectActions[(int)ObjectActionsType.Kill])
                                 {
                                     if (System.IO.Path.GetExtension(Filepath) == ".exe")
                                     {
@@ -157,8 +157,15 @@ namespace Marlin.Models.Main
 
                                             foreach (Process process in processes)
                                             {
-                                                process.CloseMainWindow();
-                                                process.WaitForExit(); // Ждем, пока процесс завершится
+                                                if (SelectedObjectAction == Program.ObjectActions[(int)ObjectActionsType.Kill]) 
+                                                {
+                                                    process.Kill();
+                                                }
+                                                if (SelectedObjectAction == Program.ObjectActions[(int)ObjectActionsType.Close]) 
+                                                {
+                                                    process.CloseMainWindow();
+                                                    //process.WaitForExit(); // Ждем, пока процесс завершится
+                                                }
                                             }
                                         }
                                     }
