@@ -354,7 +354,7 @@ namespace Marlin.ViewModels.Main
 
             if (Context.Action == ActionType.Script)
             {
-                foreach (var script in Context.ProgramData.Scripts.OrderBy(s => s.Title))
+                foreach (var script in Context.ProgramData.Scripts)
                 {
                     var border = CreateBorder();
                     var textBlock = CreateTextBlock(script.Title, script.Checkpuss);

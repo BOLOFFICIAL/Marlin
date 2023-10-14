@@ -153,7 +153,7 @@
 
             <TextBlock Grid.Row="2"
                        Margin="0,0,15,10"
-                       Foreground="{Binding Path=FontColor}"
+                       Foreground="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                        HorizontalAlignment="Right"
                        VerticalAlignment="Bottom"
                        Text="by Bolofficial"/>
