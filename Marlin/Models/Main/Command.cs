@@ -164,7 +164,7 @@ namespace Marlin.Models.Main
                                                 if (SelectedObjectAction == Program.ObjectActions[(int)ObjectActionsType.Close]) 
                                                 {
                                                     process.CloseMainWindow();
-                                                    //process.WaitForExit(); // Ждем, пока процесс завершится
+                                                    process.WaitForExit(); // Ждем, пока процесс завершится
                                                 }
                                             }
                                         }
