@@ -182,7 +182,7 @@
                                                             HorizontalAlignment="Right"
                                                             Margin="30,0,0,0"
                                                             Height="25"
-                                                            ToolTip="Цвет фона полей, на которых расположены &#013;элементы взаимодействия с программой."
+                                                            ToolTip="Цвет фона поля, на котором расположены &#013;элементы взаимодействия с программой."
                                                             Background="Transparent"
                                                             BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                                                             BorderThickness="2">
