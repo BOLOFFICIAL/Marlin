@@ -58,6 +58,9 @@ namespace Marlin.ViewModels.Main
                     case ActionType.Script:
                         return "Скрипты";
 
+                    case ActionType.Reminder:
+                        return "Напоминания";
+
                     default:
                         return "ErrorAction";
                 }
@@ -327,6 +330,10 @@ namespace Marlin.ViewModels.Main
                 if (Context.Action == ActionType.Script)
                 {
                     Program.SetPage(new ScriptPage());
+                }
+                if (Context.Action == ActionType.Reminder)
+                {
+
                 }
             }
         }

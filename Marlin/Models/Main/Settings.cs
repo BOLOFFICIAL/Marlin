@@ -1,4 +1,6 @@
-﻿using Marlin.SystemFiles;
+﻿
+
+using Marlin.SystemFiles;
 using Marlin.SystemFiles.Types;
 using Newtonsoft.Json;
 using System;
@@ -38,8 +40,8 @@ namespace Marlin.Models
 
         public static async Task SaveSettings(bool restart = true)
         {
-            string exePath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
-            string filepath = System.IO.Path.Combine(exePath, "Settings.json");
+            string exePath = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
+            string filepath = Path.Combine(exePath, "Settings.json");
             string Decryptsettings = JsonConvert.SerializeObject(Context.Settings);
             string Encryptsettings = Program.EncryptText(Decryptsettings);
             try
@@ -72,8 +74,8 @@ namespace Marlin.Models
 
         public static void LoadSettings()
         {
-            string exePath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
-            string filepath = System.IO.Path.Combine(exePath, "Settings.json");
+            string exePath = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
+            string filepath = Path.Combine(exePath, "Settings.json");
             string Encryptsettings;
             string Decryptsettings;
             if (File.Exists(filepath))

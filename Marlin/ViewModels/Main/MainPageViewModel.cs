@@ -71,6 +71,11 @@ namespace Marlin.ViewModels.Main
             get => Context.Settings.BackgraundImagePath;
         }
 
+        public string Version
+        {
+            get => Context.ProgramData.Version + " by Bolofficial";
+        }
+
         public string ImageViewport
         {
             get => Context.Settings.ImageViewport;
@@ -196,6 +201,7 @@ namespace Marlin.ViewModels.Main
                     case ActionType.Settings: SystemFiles.Program.SetPage(new SettingsPage()); break;
                     case ActionType.Command: SystemFiles.Program.SetPage(new ActionsPage()); break;
                     case ActionType.Script: SystemFiles.Program.SetPage(new ActionsPage()); break;
+                    case ActionType.Reminder: SystemFiles.Program.SetPage(new ActionsPage()); break;
                 }
             }
             catch

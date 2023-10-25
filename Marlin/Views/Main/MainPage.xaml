@@ -36,7 +36,7 @@
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="{Binding Path=Length}"/>
                 </Grid.ColumnDefinitions>
-                
+
                 <Button Grid.Column="0"
                         BorderBrush="Transparent"
                         BorderThickness="0"
@@ -55,6 +55,7 @@
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="{Binding Path=LengthScript,UpdateSourceTrigger=PropertyChanged}"/>
+                        <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
 
                     <Button Grid.Column="0"
@@ -81,8 +82,8 @@
                             Command="{Binding Path=MenuCommand}"
                             CommandParameter="1"
                             Content="Команды"/>
-                    
-                    <Button Grid.Column="3"
+
+                    <Button Grid.Column="2"
                             FontWeight="Bold"
                             FontSize="15"
                             Background="{Binding Path=PageColor}"
@@ -93,9 +94,20 @@
                             Command="{Binding Path=MenuCommand}"
                             CommandParameter="2"
                             Content="Скрипты"/>
+
+                    <Button Grid.Column="3"
+                            FontWeight="Bold"
+                            FontSize="15"
+                            Background="{Binding Path=PageColor}"
+                            Foreground="{Binding Path=ExternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
+                            Margin="0,0,10,0"
+                            BorderBrush="Transparent"
+                            BorderThickness="0"
+                            Command="{Binding Path=MenuCommand}"
+                            CommandParameter="3"
+                            Content="Напоминания"/>
                 </Grid>
             </Grid>
-            
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition 
@@ -156,7 +168,7 @@
                        Foreground="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                        HorizontalAlignment="Right"
                        VerticalAlignment="Bottom"
-                       Text="by Bolofficial"/>
+                       Text="{Binding Path=Version,UpdateSourceTrigger=PropertyChanged}"/>
         </Grid>
     </Grid>
 </Page>

@@ -3,9 +3,7 @@ using Microsoft.Win32;
 using Newtonsoft.Json;
 using System;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
@@ -144,51 +142,47 @@ namespace Marlin.SystemFiles
         public static void ChangePassword()
         {
             Context.Settings.Password = Context.Settings.NewPassword;
+            ProgramData.SaveData();
         }
 
-        public static string EncryptText(string text)
+        public static string EncryptText(string text, string key = "")
         {
-            using (Aes aesAlg = Aes.Create())
+            if (key.Length == 0)
             {
-                aesAlg.Key = Encoding.UTF8.GetBytes(Math.PI.ToString("F14"));
-                aesAlg.IV = new byte[16]; // Инициализационный вектор
-
-                ICryptoTransform encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
-
-                using (MemoryStream msEncrypt = new MemoryStream())
-                {
-                    using (CryptoStream csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
-                    {
-                        using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
-                        {
-                            swEncrypt.Write(text);
-                        }
-                    }
-                    return Convert.ToBase64String(msEncrypt.ToArray());
-                }
+                key = Math.PI.ToString("F14");
             }
+
+            byte[] textBytes = Encoding.UTF8.GetBytes(text);
+            byte[] keyBytes = Encoding.UTF8.GetBytes(key);
+
+            byte[] encryptedBytes = new byte[textBytes.Length];
+
+            for (int i = 0; i < textBytes.Length; i++)
+            {
+                encryptedBytes[i] = (byte)(textBytes[i] ^ keyBytes[i % keyBytes.Length]);
+            }
+
+            return Convert.ToBase64String(encryptedBytes);
         }
 
-        public static string DecryptText(string cipherText)
+        public static string DecryptText(string encryptedText, string key = "")
         {
-            using (Aes aesAlg = Aes.Create())
+            if (key.Length == 0)
             {
-                aesAlg.Key = Encoding.UTF8.GetBytes(Math.PI.ToString("F14"));
-                aesAlg.IV = new byte[16]; // Инициализационный вектор
-
-                ICryptoTransform decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
-
-                using (MemoryStream msDecrypt = new MemoryStream(Convert.FromBase64String(cipherText)))
-                {
-                    using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
-                    {
-                        using (StreamReader srDecrypt = new StreamReader(csDecrypt))
-                        {
-                            return srDecrypt.ReadToEnd();
-                        }
-                    }
-                }
+                key = Math.PI.ToString("F14");
             }
+
+            byte[] encryptedBytes = Convert.FromBase64String(encryptedText);
+            byte[] keyBytes = Encoding.UTF8.GetBytes(key);
+
+            byte[] decryptedBytes = new byte[encryptedBytes.Length];
+
+            for (int i = 0; i < encryptedBytes.Length; i++)
+            {
+                decryptedBytes[i] = (byte)(encryptedBytes[i] ^ keyBytes[i % keyBytes.Length]);
+            }
+
+            return Encoding.UTF8.GetString(decryptedBytes);
         }
 
         public static void StartActions(TriggersType triggerstype)

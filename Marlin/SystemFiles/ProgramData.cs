@@ -13,12 +13,14 @@ namespace Marlin.SystemFiles
     {
         public List<Command> Commands = new();
         public List<Script> Scripts = new();
+        [JsonIgnore]
+        public string Version = "Marlin 25102023";
 
         public static async Task SaveData()
         {
             string filepath = System.IO.Path.Combine(Context.Settings.MainFolderPath, "MarlinProgramData.json");
             string Decryptprogramdata = JsonConvert.SerializeObject(Context.ProgramData);
-            string Encryptprogramdata = Program.EncryptText(Decryptprogramdata);
+            string Encryptprogramdata = Program.EncryptText(Decryptprogramdata, Context.Settings.Password);
             try
             {
                 using (var sw = new StreamWriter(filepath))
@@ -51,8 +53,12 @@ namespace Marlin.SystemFiles
                     {
                         return;
                     }
-                    Decryptprogramdata = Program.DecryptText(Encryptprogramdata);
+                    Decryptprogramdata = Program.DecryptText(Encryptprogramdata, Context.Settings.Password);
                     Context.ProgramData = JsonConvert.DeserializeObject<ProgramData>(Decryptprogramdata);
+                    foreach (var Command in Context.ProgramData.Commands)
+                    {
+                        Command.isRun = false;
+                    }
                 }
                 catch (Exception)
                 {

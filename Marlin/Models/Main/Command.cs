@@ -108,7 +108,7 @@ namespace Marlin.Models.Main
                 try
                 {
                     isRun = true;
-                    Task.Run(() =>
+                    Task.Run(async () =>
                     {
                         if (SelectedAction == Program.Actions[(int)ActionsType.ownaction])
                         {
@@ -138,7 +138,7 @@ namespace Marlin.Models.Main
                                         else
                                         {
                                             Process.Start("explorer.exe", Filepath);
-                                            if (System.IO.Path.GetExtension(Filepath) == ".exe")
+                                            if (Path.GetExtension(Filepath) == ".exe")
                                             {
                                                 WinSystem.RunProcess(Filepath);
                                             }
@@ -147,26 +147,27 @@ namespace Marlin.Models.Main
                                 }
                                 if (SelectedObjectAction == Program.ObjectActions[(int)ObjectActionsType.Close] || SelectedObjectAction == Program.ObjectActions[(int)ObjectActionsType.Kill])
                                 {
-                                    if (System.IO.Path.GetExtension(Filepath) == ".exe")
+                                    if (Path.GetExtension(Filepath) == ".exe")
                                     {
-                                        if (System.IO.File.Exists(Filepath))
+                                        if (File.Exists(Filepath))
                                         {
-                                            string exeFileName = System.IO.Path.GetFileNameWithoutExtension(Filepath);
+                                            string exeFileName = Path.GetFileNameWithoutExtension(Filepath);
 
                                             Process[] processes = Process.GetProcessesByName(exeFileName);
 
                                             foreach (Process process in processes)
                                             {
-                                                if (SelectedObjectAction == Program.ObjectActions[(int)ObjectActionsType.Kill]) 
+                                                if (SelectedObjectAction == Program.ObjectActions[(int)ObjectActionsType.Kill])
                                                 {
                                                     process.Kill();
                                                 }
-                                                if (SelectedObjectAction == Program.ObjectActions[(int)ObjectActionsType.Close]) 
+                                                if (SelectedObjectAction == Program.ObjectActions[(int)ObjectActionsType.Close])
                                                 {
                                                     process.CloseMainWindow();
-                                                    process.WaitForExit(); // Ждем, пока процесс завершится
+                                                    process.WaitForExitAsync(); // Ждем, пока процесс завершится
                                                 }
                                             }
+                                            isRun = false;
                                         }
                                     }
                                 }
@@ -195,7 +196,6 @@ namespace Marlin.Models.Main
                                         }
                                     }
                                 }
-
                             }
                         }
                         if (SelectedAction == Program.Actions[(int)ActionsType.builtinmethods])

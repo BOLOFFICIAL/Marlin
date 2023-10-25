@@ -5,6 +5,6 @@
         Settings,
         Command,
         Script,
-        Trigger
+        Reminder
     }
 }
