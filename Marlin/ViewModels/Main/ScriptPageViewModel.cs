@@ -146,7 +146,17 @@ namespace Marlin.ViewModels.Main
         public bool Checkpuss
         {
             get => Context.Script.Checkpuss;
-            set => Set(ref Context.Script.Checkpuss, value);
+            set
+            {
+                if (!value)
+                {
+                    if (!Program.Authentication("Для снятия защиты подтвердите пароль", check: true))
+                    {
+                        return;
+                    }
+                }
+                Set(ref Context.Script.Checkpuss, value);
+            }
         }
 
         public int TimeDelay

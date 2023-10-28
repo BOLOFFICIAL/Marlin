@@ -313,6 +313,20 @@ namespace Marlin.ViewModels.Main
                         return;
                     }
                 }
+                else
+                {
+                    var checkpuss = false;
+
+                    checkpuss = script.Commands.Any(command => Models.Main.Command.GetCommand(command).Checkpuss == true);
+
+                    if (checkpuss)
+                    {
+                        if (!SystemFiles.Program.Authentication("Одна или несколько команд защищены паролем.\nДля запуска скрипта подтвердите пароль"))
+                        {
+                            return;
+                        }
+                    }
+                }
                 Sound.PlaySoundAsync(MessageType.Info);
                 script.ExecuteScript();
             }

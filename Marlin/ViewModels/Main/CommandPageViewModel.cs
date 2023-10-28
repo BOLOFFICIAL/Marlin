@@ -237,7 +237,7 @@ namespace Marlin.ViewModels.Main
             {
                 if (!value)
                 {
-                    if (!Program.Authentication("Для снятия защиты подтвердте пароль", check: true))
+                    if (!Program.Authentication("Для снятия защиты подтвердите пароль", check: true))
                     {
                         return;
                     }
