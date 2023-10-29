@@ -26,7 +26,19 @@ namespace Marlin.SystemFiles
 
         public readonly static string[] EmbeddedActions = { "Озвучивание текста", "Нажатие клавиш", "Перемещение курсора" };
 
+        public readonly static string[] DaysOfWeek = { "Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота" };
+
         public readonly static int[] Speeds = Enumerable.Range(-5, 16).ToArray();
+
+        public readonly static int[] Hourss = Enumerable.Range(0, 24).ToArray();
+
+        public readonly static int[] Minutes = Enumerable.Range(0, 60).ToArray();
+
+        public readonly static int[] Days = Enumerable.Range(1, 32).ToArray();
+
+        public readonly static int[] Months = Enumerable.Range(1, 13).ToArray();
+
+        public readonly static int[] Years = Enumerable.Range(2000, 2100).ToArray();
 
         public static async Task SetPage(Page page)
         {

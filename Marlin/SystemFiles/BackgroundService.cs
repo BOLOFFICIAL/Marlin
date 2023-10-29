@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -9,6 +10,14 @@ namespace Marlin.SystemFiles
         public static void StartServise()
         {
             Task.Run(() => { Servise(); });
+        }
+
+        public static DateTime ParseDateTrigger(string datetrigger)
+        {
+            var date = new DateTime();
+
+            return date;
+
         }
 
         private static void Servise()
@@ -26,26 +35,57 @@ namespace Marlin.SystemFiles
                     {
                         if (trigger.triggertype == Types.TriggersType.Time)
                         {
-                            DateTime triggerTime = DateTime.Parse(trigger.textvalue);
+                            if (trigger.textvalue.Length == 7)
+                            {
+                                var time = trigger.textvalue.Substring(2);
+                                if (DateTime.TryParse(time, out DateTime timetrigger))
+                                {
+                                    if (now.Hour == timetrigger.Hour && now.Minute == timetrigger.Minute && now.Second == timetrigger.Second)
+                                    {
+                                        command.ExecuteCommand();
+                                        executed = true;
+                                        break;
 
-                            if (trigger.textvalue.Contains('.') && trigger.textvalue.Contains(':'))
-                            {
-                                if (now == triggerTime)
-                                {
-                                    command.ExecuteCommand();
-                                    executed = true;
-                                    break;
+                                    }
                                 }
                             }
-                            else if (!trigger.textvalue.Contains('.') && trigger.textvalue.Contains(':'))
+                            else
                             {
-                                if (now.Hour == triggerTime.Hour && now.Minute == triggerTime.Minute && now.Second == triggerTime.Second)
+                                var moment = trigger.textvalue.Split(" в");
+                                if (Program.DaysOfWeek.Contains(moment[0]))
                                 {
-                                    command.ExecuteCommand();
-                                    executed = true;
-                                    break;
+                                    var day = Array.IndexOf(Program.DaysOfWeek, moment[0]);
+                                    if ((int)now.DayOfWeek == day)
+                                    {
+                                        var time = moment[1];
+                                        if (DateTime.TryParse(time, out DateTime timetrigger))
+                                        {
+                                            if (now.Hour == timetrigger.Hour && now.Minute == timetrigger.Minute && now.Second == timetrigger.Second)
+                                            {
+                                                command.ExecuteCommand();
+                                                executed = true;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    if (DateTime.TryParse(trigger.textvalue.Replace("в ", ""), out DateTime date))
+                                    {
+                                        if (now.Date == date.Date)
+                                        {
+                                            if (now.Hour == date.Hour && now.Minute == date.Minute && now.Second == date.Second)
+                                            {
+                                                command.ExecuteCommand();
+                                                executed = true;
+                                                break;
+                                            }
+                                        }
+                                    }
                                 }
                             }
+                            DateTime triggerTime = ParseDateTrigger(trigger.textvalue);
                         }
                         else if (trigger.triggertype == Types.TriggersType.StartApp)
                         {
@@ -67,25 +107,56 @@ namespace Marlin.SystemFiles
                     {
                         if (trigger.triggertype == Types.TriggersType.Time)
                         {
-                            DateTime triggerTime = DateTime.Parse(trigger.textvalue);
-                            if (trigger.textvalue.Contains('.') && trigger.textvalue.Contains(':'))
+                            if (trigger.textvalue.Length == 7)
                             {
-                                if (now.Date == triggerTime.Date && now.Hour == triggerTime.Hour && now.Minute == triggerTime.Minute && now.Second == triggerTime.Second)
+                                var time = trigger.textvalue.Substring(2);
+                                if (DateTime.TryParse(time, out DateTime timetrigger))
                                 {
-                                    script.ExecuteScript();
-                                    executed = true;
-                                    break;
+                                    if (now.Hour == timetrigger.Hour && now.Minute == timetrigger.Minute && now.Second == timetrigger.Second)
+                                    {
+                                        script.ExecuteScript();
+                                        executed = true;
+                                        break;
+                                    }
                                 }
                             }
-                            else if (!trigger.textvalue.Contains('.') && trigger.textvalue.Contains(':'))
+                            else
                             {
-                                if (now.Hour == triggerTime.Hour && now.Minute == triggerTime.Minute && now.Second == triggerTime.Second)
+                                var moment = trigger.textvalue.Split(" в");
+                                if (Program.DaysOfWeek.Contains(moment[0]))
                                 {
-                                    script.ExecuteScript();
-                                    executed = true;
-                                    break;
+                                    var day = Array.IndexOf(Program.DaysOfWeek, moment[0]);
+                                    if ((int)now.DayOfWeek == day)
+                                    {
+                                        var time = moment[1];
+                                        if (DateTime.TryParse(time, out DateTime timetrigger))
+                                        {
+                                            if (now.Hour == timetrigger.Hour && now.Minute == timetrigger.Minute && now.Second == timetrigger.Second)
+                                            {
+                                                script.ExecuteScript();
+                                                executed = true;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    if (DateTime.TryParse(trigger.textvalue.Replace("в ", ""), out DateTime date))
+                                    {
+                                        if (now.Date == date.Date)
+                                        {
+                                            if (now.Hour == date.Hour && now.Minute == date.Minute && now.Second == date.Second)
+                                            {
+                                                script.ExecuteScript();
+                                                executed = true;
+                                                break;
+                                            }
+                                        }
+                                    }
                                 }
                             }
+                            DateTime triggerTime = ParseDateTrigger(trigger.textvalue);
                         }
                         else if (trigger.triggertype == Types.TriggersType.StartApp)
                         {

@@ -6,8 +6,8 @@
       xmlns:vm="clr-namespace:Marlin.ViewModels.Main"
       xmlns:local="clr-namespace:Marlin.Views.Main"
       mc:Ignorable="d" 
-      d:DesignHeight="1450" 
-      d:DesignWidth="800"
+      d:DesignHeight="1500" 
+      d:DesignWidth="1000"
       Title="CommandPage"
       Foreground="{Binding Path=FontColor}">
     <Page.DataContext>
@@ -866,7 +866,6 @@
                                 <Grid Grid.Row="0">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="auto"/>
-                                        <ColumnDefinition Width="{Binding Path=MarlinTrigger,UpdateSourceTrigger=PropertyChanged}"/>
                                         <ColumnDefinition Width="auto"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
@@ -882,52 +881,190 @@
 
                                     <Grid Grid.Column="1">
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height ="{Binding Path=TextTriggerLength,UpdateSourceTrigger=PropertyChanged}"/>
-                                            <RowDefinition Height ="{Binding Path=AppTriggerLength,UpdateSourceTrigger=PropertyChanged}"/>
+                                            <RowDefinition Height="{Binding Path=TextTriggerLength}"/>
+                                            <RowDefinition Height="{Binding Path=TimeTriggerLength}"/>
+                                            <RowDefinition Height="{Binding Path=MarlinTriggerLength}"/>
+                                            <RowDefinition Height="{Binding Path=AppTriggerLength}"/>
                                         </Grid.RowDefinitions>
 
-                                        <TextBox Grid.Row="0"
-                                                 FontSize="15"
-                                                 Padding="10,0"
-                                                 Margin="0,13,10,0"
-                                                 Text="{Binding Path=TextTrigger,UpdateSourceTrigger=PropertyChanged}"
-                                                 MaxWidth="350"/>
+                                        <Grid Grid.Row="0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="auto"/>
+                                                <ColumnDefinition Width="auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBox Grid.Column="0"
+                                                     FontSize="15"
+                                                     Padding="10,0"
+                                                     MinWidth="100"
+                                                     Margin="0,13,10,0"
+                                                     Text="{Binding Path=TextTrigger,UpdateSourceTrigger=PropertyChanged}"
+                                                     MaxWidth="350"/>
+
+                                            <Button Grid.Column="1"
+                                                    Content="Добавить"
+                                                    Command="{Binding Path=AddTriggerCommand,UpdateSourceTrigger=PropertyChanged}"
+                                                    BorderThickness="0"
+                                                    BorderBrush="Transparent"
+                                                    Foreground="{Binding Path=ExternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
+                                                    Background="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"/>
+                                        </Grid>
 
                                         <Grid Grid.Row="1">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="auto"/>
                                                 <ColumnDefinition Width="auto"/>
+                                                <ColumnDefinition Width="auto"/>
+                                                <ColumnDefinition Width="auto"/>
+                                                <ColumnDefinition Width="auto"/>
                                             </Grid.ColumnDefinitions>
 
-                                            <Button Grid.Column="0"
-                                                    BorderThickness="0"
-                                                    Margin="0,0,10,0"
-                                                    BorderBrush="Transparent"
-                                                    Command="{Binding Path=AppTriggerCommand}"
-                                                    Foreground="{Binding Path=ExternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
-                                                    Background="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
-                                                    Content="Выбрать программу"/>
+                                            <ComboBox Grid.Column="0"
+                                                      FontSize="15"
+                                                      Margin="0,4,10,0"
+                                                      SelectedValue="{Binding Path=SelectedHour,UpdateSourceTrigger=PropertyChanged}"
+                                                      ItemsSource="{Binding Path=Hours,UpdateSourceTrigger=PropertyChanged}"
+                                                      SelectedIndex="0"/>
+                                            
+                                            <ComboBox Grid.Column="1"
+                                                      FontSize="15"
+                                                      Margin="0,4,5,0"
+                                                      SelectedValue="{Binding Path=SelectedMinute,UpdateSourceTrigger=PropertyChanged}"
+                                                      ItemsSource="{Binding Path=Minutes,UpdateSourceTrigger=PropertyChanged}"
+                                                      SelectedIndex="0"/>
+                                            
+                                            <Label Grid.Column="2"
+                                                   FontSize="15"
+                                                   Margin="0,5,0,0"
+                                                   Foreground="{Binding Path=FontColor,UpdateSourceTrigger=PropertyChanged}"
+                                                   Content="Повторять"/>
+                                            
+                                            <CheckBox Grid.Column="3"
+                                                      Margin="0,4,5,0"
+                                                      IsChecked="{Binding Path=Periodically,UpdateSourceTrigger=PropertyChanged}"/>
 
-                                            <TextBlock Grid.Column="1"
-                                                       Margin="0,0,10,0"
-                                                       FontSize="15"
-                                                       VerticalAlignment="Center"
-                                                       HorizontalAlignment="Center"
-                                                       Padding="10,0"
-                                                       Text="{Binding Path=AppTrigger,UpdateSourceTrigger=PropertyChanged}"
-                                                       MaxWidth="300"/>
+                                            <Grid Grid.Column="4">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="{Binding Path=Datetriggerlength,UpdateSourceTrigger=PropertyChanged}"/>
+                                                    <RowDefinition Height="{Binding Path=Weektriggerlength,UpdateSourceTrigger=PropertyChanged}"/>
+                                                </Grid.RowDefinitions>
+
+                                                <Grid Grid.Row="0">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="auto"/>
+                                                        <ColumnDefinition Width="auto"/>
+                                                        <ColumnDefinition Width="auto"/>
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <Label Grid.Column="0"
+                                                           FontSize="15"
+                                                           Margin="0,5,10,0"
+                                                           Foreground="{Binding Path=FontColor,UpdateSourceTrigger=PropertyChanged}"
+                                                           Content="Дата:"/>
+
+                                                    <TextBox Grid.Column="1"
+                                                             Padding="10,0"
+                                                             FontSize="15"
+                                                             HorizontalContentAlignment="Center"
+                                                             MinWidth="80"
+                                                             Text="{Binding Path=DateTrigger,UpdateSourceTrigger=PropertyChanged}"
+                                                             Margin="0,10,10,0"/>
+
+                                                    <Button Grid.Column="2"
+                                                            Content="Добавить"
+                                                            Command="{Binding Path=AddTriggerCommand,UpdateSourceTrigger=PropertyChanged}"
+                                                            BorderThickness="0"
+                                                            BorderBrush="Transparent"
+                                                            Foreground="{Binding Path=ExternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
+                                                            Background="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"/>
+                                                </Grid>
+
+                                                <Grid Grid.Row="1">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="auto"/>
+                                                        <ColumnDefinition Width="auto"/>
+                                                        <ColumnDefinition Width="auto"/>
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <Label Grid.Column="0"
+                                                           FontSize="15"
+                                                           Margin="0,5,10,0"
+                                                           Foreground="{Binding Path=FontColor,UpdateSourceTrigger=PropertyChanged}"
+                                                           Content="День недели:"/>
+
+                                                    <ComboBox Grid.Column="1"
+                                                              FontSize="15"
+                                                              SelectedIndex="1"
+                                                              Margin="0,4,10,0"
+                                                              SelectedValue="{Binding Path=SelectedDay,UpdateSourceTrigger=PropertyChanged}"
+                                                              ItemsSource="{Binding Path=DaysOfWeek,UpdateSourceTrigger=PropertyChanged}"/>
+
+                                                    <Button Grid.Column="2"
+                                                            Content="Добавить"
+                                                            Command="{Binding Path=AddTriggerCommand,UpdateSourceTrigger=PropertyChanged}"
+                                                            BorderThickness="0"
+                                                            BorderBrush="Transparent"
+                                                            Foreground="{Binding Path=ExternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
+                                                            Background="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"/>
+                                                </Grid>
+                                            </Grid>
+                                        </Grid>
+
+                                        <Grid Grid.Row="2">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            
+                                            <Button Grid.Column="0"
+                                                    Content="Добавить"
+                                                    Command="{Binding Path=AddTriggerCommand,UpdateSourceTrigger=PropertyChanged}"
+                                                    BorderThickness="0"
+                                                    BorderBrush="Transparent"
+                                                    Foreground="{Binding Path=ExternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
+                                                    Background="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"/>
+                                        </Grid>
+
+                                        <Grid Grid.Row="3">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="auto"/>
+                                                <ColumnDefinition Width="auto"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <Grid Grid.Column="0">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto"/>
+                                                    <ColumnDefinition Width="auto"/>
+                                                </Grid.ColumnDefinitions>
+
+                                                <Button Grid.Column="0"
+                                                        BorderThickness="0"
+                                                        Margin="0,0,10,0"
+                                                        BorderBrush="Transparent"
+                                                        Command="{Binding Path=AppTriggerCommand}"
+                                                        Foreground="{Binding Path=ExternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
+                                                        Background="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
+                                                        Content="Выбрать программу"/>
+
+                                                <TextBlock Grid.Column="1"
+                                                           Margin="0,0,10,0"
+                                                           FontSize="15"
+                                                           VerticalAlignment="Center"
+                                                           HorizontalAlignment="Center"
+                                                           Padding="10,0"
+                                                           Text="{Binding Path=AppTrigger,UpdateSourceTrigger=PropertyChanged}"
+                                                           MaxWidth="300"/>
+                                            </Grid>
+
+                                            <Button Grid.Column="1"
+                                                    Content="Добавить"
+                                                    Command="{Binding Path=AddTriggerCommand,UpdateSourceTrigger=PropertyChanged}"
+                                                    BorderThickness="0"
+                                                    BorderBrush="Transparent"
+                                                    Foreground="{Binding Path=ExternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
+                                                    Background="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"/>
                                         </Grid>
                                     </Grid>
 
-                                    <Button Grid.Column="2"
-                                            Content="Добавить"
-                                            Command="{Binding Path=AddTriggerCommand,UpdateSourceTrigger=PropertyChanged}"
-                                            BorderThickness="0"
-                                            BorderBrush="Transparent"
-                                            Foreground="{Binding Path=ExternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
-                                            Background="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"/>
-
-                                    <Border Grid.Column="3"
+                                    <Border Grid.Column="2"
                                             CornerRadius="50"
                                             Width="25"
                                             HorizontalAlignment="Right"

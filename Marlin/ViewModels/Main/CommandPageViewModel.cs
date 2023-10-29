@@ -32,16 +32,26 @@ namespace Marlin.ViewModels.Main
         public ICommand RemoveTriggerCommand { get; }
 
         private StackPanel triggerpanel = new StackPanel();
-        private string selectedtrigger;
+        private string selectedtrigger = "";
+        private int selectedhour = 0;
+        private int selectedminute = 0;
+        private string datetrigger = "";
+        private string selectredday = "";
 
-        private string triggervalue;
-        private string apptrigger;
+        private string triggervalue = "";
+        private string apptrigger = "";
+
+        private bool periodically = false;
 
         private string[] _objectActions = Program.ObjectActions;
 
         private GridLength texttriggerlength = new GridLength(0, GridUnitType.Pixel);
+        private GridLength timetriggerlength = new GridLength(0, GridUnitType.Pixel);
         private GridLength marlintriggerlength = GridLength.Auto;
         private GridLength apptriggerlength = new GridLength(0, GridUnitType.Pixel);
+
+        private GridLength datetriggerlength = GridLength.Auto;
+        private GridLength weektriggerlength = new GridLength(0, GridUnitType.Pixel);
 
         private string _pagetitle = "Новая команда";
 
@@ -326,16 +336,34 @@ namespace Marlin.ViewModels.Main
             set => Set(ref texttriggerlength, value);
         }
 
+        public GridLength TimeTriggerLength
+        {
+            get => timetriggerlength;
+            set => Set(ref timetriggerlength, value);
+        }
+
         public GridLength AppTriggerLength
         {
             get => apptriggerlength;
             set => Set(ref apptriggerlength, value);
         }
 
-        public GridLength MarlinTrigger
+        public GridLength MarlinTriggerLength
         {
             get => marlintriggerlength;
             set => Set(ref marlintriggerlength, value);
+        }
+
+        public GridLength Datetriggerlength
+        {
+            get => datetriggerlength;
+            set => Set(ref datetriggerlength, value);
+        }
+
+        public GridLength Weektriggerlength
+        {
+            get => weektriggerlength;
+            set => Set(ref weektriggerlength, value);
         }
 
         public string TextTrigger
@@ -376,6 +404,45 @@ namespace Marlin.ViewModels.Main
             get => Program.Triggers;
         }
 
+        public string[] DaysOfWeek
+        {
+            get => Program.DaysOfWeek;
+        }
+
+        public int[] Hours
+        {
+            get => Program.Hourss;
+        }
+
+        public int[] Minutes
+        {
+            get => Program.Minutes;
+        }
+
+        public int SelectedHour
+        {
+            get => selectedhour;
+            set => Set(ref selectedhour, value);
+        }
+
+        public int SelectedMinute
+        {
+            get => selectedminute;
+            set => Set(ref selectedminute, value);
+        }
+
+        public string SelectedDay
+        {
+            get => selectredday;
+            set => Set(ref selectredday, value);
+        }
+
+        public string DateTrigger
+        {
+            get => datetrigger;
+            set => Set(ref datetrigger, value);
+        }
+
         public string SelectedTrigger
         {
             get => selectedtrigger;
@@ -383,23 +450,33 @@ namespace Marlin.ViewModels.Main
             {
                 if (Set(ref selectedtrigger, value))
                 {
-                    TextTrigger = "";
-                    AppTrigger = "";
-                    if (SelectedTrigger == Program.Triggers[(int)TriggersType.Phrase] || SelectedTrigger == Program.Triggers[(int)TriggersType.Time])
+                    if (SelectedTrigger == Program.Triggers[(int)TriggersType.Phrase])
                     {
                         TextTriggerLength = GridLength.Auto;
-                        MarlinTrigger = GridLength.Auto;
+                        TimeTriggerLength = new GridLength(0, GridUnitType.Pixel);
+                        MarlinTriggerLength = new GridLength(0, GridUnitType.Pixel);
+                        AppTriggerLength = new GridLength(0, GridUnitType.Pixel);
+                    }
+                    if (SelectedTrigger == Program.Triggers[(int)TriggersType.Time])
+                    {
+                        TextTriggerLength = new GridLength(0, GridUnitType.Pixel);
+                        TimeTriggerLength = GridLength.Auto;
+                        MarlinTriggerLength = new GridLength(0, GridUnitType.Pixel);
                         AppTriggerLength = new GridLength(0, GridUnitType.Pixel);
                     }
                     if (SelectedTrigger == Program.Triggers[(int)TriggersType.StartMarlin])
                     {
-                        MarlinTrigger = new GridLength(0, GridUnitType.Pixel);
+                        TextTriggerLength = new GridLength(0, GridUnitType.Pixel);
+                        TimeTriggerLength = new GridLength(0, GridUnitType.Pixel);
+                        MarlinTriggerLength = GridLength.Auto;
+                        AppTriggerLength = new GridLength(0, GridUnitType.Pixel);
                     }
                     if (SelectedTrigger == Program.Triggers[(int)TriggersType.StartApp])
                     {
                         TextTriggerLength = new GridLength(0, GridUnitType.Pixel);
+                        TimeTriggerLength = new GridLength(0, GridUnitType.Pixel);
+                        MarlinTriggerLength = new GridLength(0, GridUnitType.Pixel);
                         AppTriggerLength = GridLength.Auto;
-                        MarlinTrigger = GridLength.Auto;
                     }
                 }
             }
@@ -525,6 +602,25 @@ namespace Marlin.ViewModels.Main
                 {
                     LengthMultiSymbol = new GridLength(0, GridUnitType.Pixel);
                     LengthSymbolCode = GridLength.Auto;
+                }
+            }
+        }
+
+        public bool Periodically
+        {
+            get => periodically;
+            set
+            {
+                Set(ref periodically, value);
+                if (value)
+                {
+                    Datetriggerlength = new GridLength(0, GridUnitType.Pixel);
+                    Weektriggerlength = GridLength.Auto;
+                }
+                else
+                {
+                    Datetriggerlength = GridLength.Auto;
+                    Weektriggerlength = new GridLength(0, GridUnitType.Pixel);
                 }
             }
         }
@@ -661,6 +757,31 @@ namespace Marlin.ViewModels.Main
             {
                 return true;
             }
+            if (SelectedTrigger == Program.Triggers[(int)TriggersType.Time])
+            {
+                if (!periodically)
+                {
+                    if (datetrigger.Length > 0)
+                    {
+                        if (datetrigger.Contains(':'))
+                        {
+                            return false;
+                        }
+                        else
+                        {
+                            return DateTime.TryParse(DateTrigger, out DateTime date);
+                        }
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    return true;
+                }
+            }
             return TextTrigger.Length > 0;
         }
 
@@ -677,10 +798,27 @@ namespace Marlin.ViewModels.Main
             }
             if (SelectedTrigger == Program.Triggers[(int)TriggersType.Time])
             {
-                trigger.textvalue = TextTrigger;
+                if (periodically)
+                {
+                    trigger.textvalue = $"{SelectedDay} в ";
+                }
+                else
+                {
+                    if (DateTrigger.Length > 0)
+                    {
+                        trigger.textvalue = $"{DateTime.Parse(DateTrigger).ToString("dd.MM.yyyy")} в ";
+                    }
+                    else
+                    {
+                        trigger.textvalue = "В ";
+                    }
+                }
+                var hour = SelectedHour < 10 ? "0" + SelectedHour.ToString() : SelectedHour.ToString();
+                var minute = SelectedMinute < 10 ? "0" + SelectedMinute.ToString() : SelectedMinute.ToString();
+                trigger.textvalue += $"{hour}:{minute}";
                 trigger.triggertype = TriggersType.Time;
                 trigger.appvalue = "";
-                value += "Время: " + TextTrigger;
+                value += "Время: " + trigger.textvalue;
             }
             if (SelectedTrigger == Program.Triggers[(int)TriggersType.StartMarlin])
             {
@@ -708,19 +846,6 @@ namespace Marlin.ViewModels.Main
 
         private bool ValidationTrigger(Models.Main.Trigger trigger)
         {
-            if (trigger.triggertype == TriggersType.Time)
-            {
-                if (!trigger.textvalue.Contains(".") && !trigger.textvalue.Contains(":"))
-                {
-                    Models.MessageBox.MakeMessage("Некорректная запись времени", MessageType.Error);
-                    return false;
-                }
-                if (!DateTime.TryParse(trigger.textvalue, out DateTime time))
-                {
-                    Models.MessageBox.MakeMessage("Некорректная запись времени", MessageType.Error);
-                    return false;
-                }
-            }
             foreach (var trg in Context.Command.Triggers)
             {
                 if (Program.Equals(trg, trigger))
