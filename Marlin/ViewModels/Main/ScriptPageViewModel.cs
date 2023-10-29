@@ -33,7 +33,7 @@ namespace Marlin.ViewModels.Main
         private int selectedhour = 0;
         private int selectedminute = 0;
         private string datetrigger = "";
-        private string selectredday = "";
+        private int selectredday = 0;
 
         private string _pagetitle = "Новый скрипт";
 
@@ -64,9 +64,14 @@ namespace Marlin.ViewModels.Main
             Context.Script = new Models.Main.Script();
             Context.CopyScript = JsonConvert.DeserializeObject<Script>(JsonConvert.SerializeObject(Context.Script));
 
+            var now = DateTime.Now;
+            selectredday = (int)now.DayOfWeek;
+            SelectedHour = now.Hour;
+            SelectedMinute = now.Minute;
+            DateTrigger = now.Date.ToString("dd.MM");
+
             if (Context.SelectedId > -1)
             {
-
                 Context.Script = JsonConvert.DeserializeObject<Script>(JsonConvert.SerializeObject(Script.GetScript(Context.SelectedId)));
                 LoadCommands();
                 PageTitle = Context.Script.Title;
@@ -338,7 +343,7 @@ namespace Marlin.ViewModels.Main
             set => Set(ref selectedminute, value);
         }
 
-        public string SelectedDay
+        public int SelectedDay
         {
             get => selectredday;
             set => Set(ref selectredday, value);
@@ -492,7 +497,7 @@ namespace Marlin.ViewModels.Main
             {
                 if (periodically)
                 {
-                    trigger.textvalue = $"{SelectedDay} в ";
+                    trigger.textvalue = $"{Program.DaysOfWeek[SelectedDay]} в ";
                 }
                 else
                 {

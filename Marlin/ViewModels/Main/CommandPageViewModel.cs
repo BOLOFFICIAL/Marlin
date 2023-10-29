@@ -36,7 +36,7 @@ namespace Marlin.ViewModels.Main
         private int selectedhour = 0;
         private int selectedminute = 0;
         private string datetrigger = "";
-        private string selectredday = "";
+        private int selectredday = 0;
 
         private string triggervalue = "";
         private string apptrigger = "";
@@ -67,10 +67,14 @@ namespace Marlin.ViewModels.Main
             RemoveTriggerCommand = new LambdaCommand(OnRemoveTriggerCommandExecuted);
             SelectedTrigger = Program.Triggers[0];
 
-
-
             Context.Command = new Command();
             Context.CopyCommand = JsonConvert.DeserializeObject<Command>(JsonConvert.SerializeObject(Context.Command));
+
+            var now = DateTime.Now;
+            selectredday = (int)now.DayOfWeek;
+            SelectedHour = now.Hour;
+            SelectedMinute = now.Minute;
+            DateTrigger = now.Date.ToString("dd.MM");
 
             if (Context.SelectedId > -1)
             {
@@ -431,7 +435,7 @@ namespace Marlin.ViewModels.Main
             set => Set(ref selectedminute, value);
         }
 
-        public string SelectedDay
+        public int SelectedDay
         {
             get => selectredday;
             set => Set(ref selectredday, value);
@@ -800,7 +804,7 @@ namespace Marlin.ViewModels.Main
             {
                 if (periodically)
                 {
-                    trigger.textvalue = $"{SelectedDay} в ";
+                    trigger.textvalue = $"{Program.DaysOfWeek[SelectedDay]} в ";
                 }
                 else
                 {

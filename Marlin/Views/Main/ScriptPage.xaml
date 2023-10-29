@@ -380,33 +380,38 @@
                                                 <ColumnDefinition Width="auto"/>
                                                 <ColumnDefinition Width="auto"/>
                                                 <ColumnDefinition Width="auto"/>
+                                                <ColumnDefinition Width="auto"/>
                                             </Grid.ColumnDefinitions>
 
-                                            <ComboBox Grid.Column="0"
-                                                      FontSize="15"
-                                                      Margin="0,4,10,0"
-                                                      SelectedValue="{Binding Path=SelectedHour,UpdateSourceTrigger=PropertyChanged}"
-                                                      ItemsSource="{Binding Path=Hours,UpdateSourceTrigger=PropertyChanged}"
-                                                      SelectedIndex="0"/>
+                                            <Label Grid.Column="0"
+                                                   FontSize="15"
+                                                   Margin="0,5,5,0"
+                                                   Foreground="{Binding Path=FontColor,UpdateSourceTrigger=PropertyChanged}"
+                                                   Content="Время:"/>
 
                                             <ComboBox Grid.Column="1"
                                                       FontSize="15"
-                                                      Margin="0,4,5,0"
-                                                      SelectedValue="{Binding Path=SelectedMinute,UpdateSourceTrigger=PropertyChanged}"
-                                                      ItemsSource="{Binding Path=Minutes,UpdateSourceTrigger=PropertyChanged}"
-                                                      SelectedIndex="0"/>
+                                                      Margin="0,4,10,0"
+                                                      SelectedIndex="{Binding Path=SelectedHour,UpdateSourceTrigger=PropertyChanged}"
+                                                      ItemsSource="{Binding Path=Hours,UpdateSourceTrigger=PropertyChanged}"/>
 
-                                            <Label Grid.Column="2"
+                                            <ComboBox Grid.Column="2"
+                                                      FontSize="15"
+                                                      Margin="0,4,5,0"
+                                                      SelectedIndex="{Binding Path=SelectedMinute,UpdateSourceTrigger=PropertyChanged}"
+                                                      ItemsSource="{Binding Path=Minutes,UpdateSourceTrigger=PropertyChanged}"/>
+
+                                            <Label Grid.Column="3"
                                                    FontSize="15"
                                                    Margin="0,5,0,0"
                                                    Foreground="{Binding Path=FontColor,UpdateSourceTrigger=PropertyChanged}"
                                                    Content="Повторять"/>
 
-                                            <CheckBox Grid.Column="3"
+                                            <CheckBox Grid.Column="4"
                                                       Margin="0,4,5,0"
                                                       IsChecked="{Binding Path=Periodically,UpdateSourceTrigger=PropertyChanged}"/>
 
-                                            <Grid Grid.Column="4">
+                                            <Grid Grid.Column="5">
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition Height="{Binding Path=Datetriggerlength,UpdateSourceTrigger=PropertyChanged}"/>
                                                     <RowDefinition Height="{Binding Path=Weektriggerlength,UpdateSourceTrigger=PropertyChanged}"/>
@@ -457,9 +462,8 @@
 
                                                     <ComboBox Grid.Column="1"
                                                               FontSize="15"
-                                                              SelectedIndex="1"
                                                               Margin="0,4,10,0"
-                                                              SelectedValue="{Binding Path=SelectedDay,UpdateSourceTrigger=PropertyChanged}"
+                                                              SelectedIndex="{Binding Path=SelectedDay,UpdateSourceTrigger=PropertyChanged}"
                                                               ItemsSource="{Binding Path=DaysOfWeek,UpdateSourceTrigger=PropertyChanged}"/>
 
                                                     <Button Grid.Column="2"
