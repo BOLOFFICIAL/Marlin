@@ -12,14 +12,6 @@ namespace Marlin.SystemFiles
             Task.Run(() => { Servise(); });
         }
 
-        public static DateTime ParseDateTrigger(string datetrigger)
-        {
-            var date = new DateTime();
-
-            return date;
-
-        }
-
         private static void Servise()
         {
             while (true)
@@ -85,7 +77,6 @@ namespace Marlin.SystemFiles
                                     }
                                 }
                             }
-                            DateTime triggerTime = ParseDateTrigger(trigger.textvalue);
                         }
                         else if (trigger.triggertype == Types.TriggersType.StartApp)
                         {
@@ -156,7 +147,6 @@ namespace Marlin.SystemFiles
                                     }
                                 }
                             }
-                            DateTime triggerTime = ParseDateTrigger(trigger.textvalue);
                         }
                         else if (trigger.triggertype == Types.TriggersType.StartApp)
                         {
