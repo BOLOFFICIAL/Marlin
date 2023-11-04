@@ -14,7 +14,7 @@ namespace Marlin.SystemFiles
         public List<Command> Commands = new();
         public List<Script> Scripts = new();
         [JsonIgnore]
-        public string Version = "Marlin 25102023";
+        public string Version = "Marlin 05112023";
 
         public static async Task SaveData()
         {
