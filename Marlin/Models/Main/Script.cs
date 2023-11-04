@@ -16,6 +16,8 @@ namespace Marlin.Models.Main
         public bool execute = true;
         public bool isrun = false;
         public List<int> Commands = new();
+        public List<int> Scripts = new();
+        public List<int> Actions = new();
         public List<Trigger> Triggers = new List<Trigger>();
 
         public static Script GetScript(int Id)
@@ -70,40 +72,130 @@ namespace Marlin.Models.Main
         public static void RemoveScript(int selectedid)
         {
             Context.ProgramData.Scripts.Remove(Script.GetScript(selectedid));
+            foreach (var script in Context.ProgramData.Scripts)
+            {
+                var resactions = new List<int>();
+                var rescommands = new List<int>();
+                var resscripts = new List<int>();
+
+                var commandindex = 0;
+                var scriptindex = 0;
+
+                for (int i = 0; i < script.Actions.Count; i++)
+                {
+                    if (script.Actions[i] == 0)
+                    {
+                        rescommands.Add(script.Commands[commandindex]);
+                        resactions.Add(0);
+                        commandindex++;
+                    }
+                    if (script.Actions[i] == 1)
+                    {
+                        if (script.Scripts[scriptindex] != selectedid)
+                        {
+                            resscripts.Add(script.Scripts[scriptindex]);
+                            resactions.Add(1);
+                        }
+                        scriptindex++;
+                    }
+                }
+
+                script.Commands = rescommands;
+                script.Actions = resactions;
+                script.Scripts = resscripts;
+            }
             ProgramData.SaveData();
+        }
+
+        public override string ToString()
+        {
+            return Title;
+        }
+
+        public static List<Script> ClearFromZero()
+        {
+            var deletescript = new List<Script>();
+            var resscripts = new List<Script>();
+
+            foreach (var script in Context.ProgramData.Scripts)
+            {
+                if (script.Actions.Count != 0)
+                {
+                    resscripts.Add(script);
+                }
+                else
+                {
+                    deletescript.Add(script);
+                }
+            }
+            foreach (var script in deletescript)
+            {
+                Script.RemoveScript(script.id);
+            }
+            if (deletescript.Count > 0)
+            {
+                resscripts = ClearFromZero();
+            }
+            return resscripts;
         }
 
         public void ExecuteScript()
         {
-            if (!isrun)
+            int delay = TimeDelay == 0 ? 5 : TimeDelay * 10;
+            isrun = true;
+            var commandindex = 0;
+            var scriptindex = 0;
+            foreach (var action in Actions)
             {
-                isrun = true;
-
-                int delay = TimeDelay == 0 ? 5 : TimeDelay * 10;
-
-                Task.Run(() =>
+                if (action == 0)
                 {
-                    foreach (var commandindex in Commands)
+                    var command = Command.GetCommand(Commands[commandindex]);
+                    if (command != null)
                     {
-                        var command = Command.GetCommand(commandindex);
-                        if (command != null)
+                        if (execute)
                         {
-                            if (execute)
+                            command.ExecuteCommand();
+                            if (!(command.SelectedAction == Program.Actions[(int)SystemFiles.Types.ActionsType.builtinmethods] &&
+                            command.SelectedEmbeddedAction == Program.EmbeddedActions[(int)EmbeddedActionsType.textspeech]))
                             {
-                                command.ExecuteCommand();
-                                if (!(command.SelectedAction == Program.Actions[(int)SystemFiles.Types.ActionsType.builtinmethods] &&
-                                command.SelectedEmbeddedAction == Program.EmbeddedActions[(int)EmbeddedActionsType.textspeech]))
-                                {
-                                    Thread.Sleep(delay * 100);
-                                }
-                            }
-                            else
-                            {
-                                return;
+                                Thread.Sleep(delay * 100);
                             }
                         }
+                        else
+                        {
+                            return;
+                        }
                     }
-                    isrun = false;
+                    commandindex++;
+                }
+                if (action == 1)
+                {
+                    var script = Script.GetScript(Scripts[scriptindex]);
+                    if (script != null)
+                    {
+                        if (execute)
+                        {
+                            script.ExecuteScript();
+                            Thread.Sleep(delay * 100);
+                        }
+                        else
+                        {
+                            return;
+                        }
+                    }
+                    scriptindex++;
+                }
+            }
+            isrun = false;
+        }
+
+        public void ExecuteScriptAsync()
+        {
+            //if (!isrun)
+            {
+                Task.Run(() =>
+                {
+                    ExecuteScript();
                 });
             }
         }

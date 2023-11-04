@@ -103,149 +103,154 @@ namespace Marlin.Models.Main
 
         public void ExecuteCommand()
         {
+            isRun = true;
+            if (SelectedAction == Program.Actions[(int)ActionsType.ownaction])
+            {
+                if (IsReadyCmdCommand)
+                {
+                    WinSystem.RunCmd(CmdCommand);
+                }
+                else
+                {
+                    if (SelectedObjectAction == Program.ObjectActions[(int)ObjectActionsType.Open])
+                    {
+                        if (Apppath.Length > 0)
+                        {
+                            Process.Start(Apppath, Filepath);
+                        }
+                        else
+                        {
+                            if (SelectedObject == Program.Objects[(int)ObjectsType.Url])
+                            {
+                                Process.Start(new ProcessStartInfo
+                                {
+                                    FileName = Url,
+                                    UseShellExecute = true
+                                });
+                                Thread.Sleep(5000);
+                            }
+                            else
+                            {
+                                Process.Start("explorer.exe", Filepath);
+                                if (Path.GetExtension(Filepath) == ".exe")
+                                {
+                                    WinSystem.RunProcess(Filepath);
+                                }
+                            }
+                        }
+                    }
+                    if (SelectedObjectAction == Program.ObjectActions[(int)ObjectActionsType.Close] || SelectedObjectAction == Program.ObjectActions[(int)ObjectActionsType.Kill])
+                    {
+                        if (Path.GetExtension(Filepath) == ".exe")
+                        {
+                            if (File.Exists(Filepath))
+                            {
+                                string exeFileName = Path.GetFileNameWithoutExtension(Filepath);
+
+                                Process[] processes = Process.GetProcessesByName(exeFileName);
+
+                                foreach (Process process in processes)
+                                {
+                                    if (SelectedObjectAction == Program.ObjectActions[(int)ObjectActionsType.Kill])
+                                    {
+                                        process.Kill();
+                                    }
+                                    if (SelectedObjectAction == Program.ObjectActions[(int)ObjectActionsType.Close])
+                                    {
+                                        process.CloseMainWindow();
+                                        process.WaitForExitAsync(); // Ждем, пока процесс завершится
+                                    }
+                                }
+                                isRun = false;
+                            }
+                        }
+                    }
+                    if (SelectedObjectAction == Program.ObjectActions[(int)ObjectActionsType.Delete])
+                    {
+                        if (SelectedObject == Program.Objects[(int)ObjectsType.File])
+                        {
+                            if (File.Exists(Filepath))
+                            {
+                                File.Delete(Filepath);
+                            }
+                            else
+                            {
+                                Console.WriteLine("Файл не существует.");
+                            }
+                        }
+                        else if (SelectedObject == Program.Objects[(int)ObjectsType.Folder])
+                        {
+                            if (Directory.Exists(Filepath))
+                            {
+                                Directory.Delete(Filepath, true);
+                            }
+                            else
+                            {
+                                Console.WriteLine("Папка не существует.");
+                            }
+                        }
+                    }
+                }
+            }
+            if (SelectedAction == Program.Actions[(int)ActionsType.builtinmethods])
+            {
+                if (SelectedEmbeddedAction == Program.EmbeddedActions[(int)EmbeddedActionsType.movingcursor])
+                {
+                    if (int.TryParse(X, out int x) && int.TryParse(Y, out int y))
+                    {
+                        BuiltinMethod.MovingCursor(x, y);
+                    }
+                }
+                if (SelectedEmbeddedAction == Program.EmbeddedActions[(int)EmbeddedActionsType.pressingkeys])
+                {
+                    if (IsMultiSymbol)
+                    {
+                        BuiltinMethod.PressingKeys(PressingKeys);
+                    }
+                    else
+                    {
+                        if (PressingKeys.Contains(','))
+                        {
+                            var stringkeys = PressingKeys.Split(",");
+                            List<int> intkeys = new List<int>();
+                            foreach (var key in stringkeys)
+                            {
+                                if (int.TryParse(key, out int k))
+                                {
+                                    intkeys.Add(k);
+                                }
+                            }
+                            if (intkeys.Count > 0)
+                            {
+                                BuiltinMethod.PressingKeys(intkeys.ToArray());
+                            }
+                        }
+                        else
+                        {
+                            if (int.TryParse(PressingKeys, out int key))
+                            {
+                                BuiltinMethod.PressingKeys(key);
+                            }
+                        }
+                    }
+                }
+                if (SelectedEmbeddedAction == Program.EmbeddedActions[(int)EmbeddedActionsType.textspeech])
+                {
+                    BuiltinMethod.TextSpeech(FileName);
+                }
+            }
+            isRun = false;
+        }
+
+        public void ExecuteCommandAsync()
+        {
             if (!isRun)
             {
                 try
                 {
-                    isRun = true;
                     Task.Run(async () =>
                     {
-                        if (SelectedAction == Program.Actions[(int)ActionsType.ownaction])
-                        {
-                            if (IsReadyCmdCommand)
-                            {
-                                WinSystem.RunCmd(CmdCommand);
-                            }
-                            else
-                            {
-                                if (SelectedObjectAction == Program.ObjectActions[(int)ObjectActionsType.Open])
-                                {
-                                    if (Apppath.Length > 0)
-                                    {
-                                        Process.Start(Apppath, Filepath);
-                                    }
-                                    else
-                                    {
-                                        if (SelectedObject == Program.Objects[(int)ObjectsType.Url])
-                                        {
-                                            Process.Start(new ProcessStartInfo
-                                            {
-                                                FileName = Url,
-                                                UseShellExecute = true
-                                            });
-                                            Thread.Sleep(5000);
-                                        }
-                                        else
-                                        {
-                                            Process.Start("explorer.exe", Filepath);
-                                            if (Path.GetExtension(Filepath) == ".exe")
-                                            {
-                                                WinSystem.RunProcess(Filepath);
-                                            }
-                                        }
-                                    }
-                                }
-                                if (SelectedObjectAction == Program.ObjectActions[(int)ObjectActionsType.Close] || SelectedObjectAction == Program.ObjectActions[(int)ObjectActionsType.Kill])
-                                {
-                                    if (Path.GetExtension(Filepath) == ".exe")
-                                    {
-                                        if (File.Exists(Filepath))
-                                        {
-                                            string exeFileName = Path.GetFileNameWithoutExtension(Filepath);
-
-                                            Process[] processes = Process.GetProcessesByName(exeFileName);
-
-                                            foreach (Process process in processes)
-                                            {
-                                                if (SelectedObjectAction == Program.ObjectActions[(int)ObjectActionsType.Kill])
-                                                {
-                                                    process.Kill();
-                                                }
-                                                if (SelectedObjectAction == Program.ObjectActions[(int)ObjectActionsType.Close])
-                                                {
-                                                    process.CloseMainWindow();
-                                                    process.WaitForExitAsync(); // Ждем, пока процесс завершится
-                                                }
-                                            }
-                                            isRun = false;
-                                        }
-                                    }
-                                }
-                                if (SelectedObjectAction == Program.ObjectActions[(int)ObjectActionsType.Delete])
-                                {
-                                    if (SelectedObject == Program.Objects[(int)ObjectsType.File])
-                                    {
-                                        if (File.Exists(Filepath))
-                                        {
-                                            File.Delete(Filepath);
-                                        }
-                                        else
-                                        {
-                                            Console.WriteLine("Файл не существует.");
-                                        }
-                                    }
-                                    else if (SelectedObject == Program.Objects[(int)ObjectsType.Folder])
-                                    {
-                                        if (Directory.Exists(Filepath))
-                                        {
-                                            Directory.Delete(Filepath, true);
-                                        }
-                                        else
-                                        {
-                                            Console.WriteLine("Папка не существует.");
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        if (SelectedAction == Program.Actions[(int)ActionsType.builtinmethods])
-                        {
-                            if (SelectedEmbeddedAction == Program.EmbeddedActions[(int)EmbeddedActionsType.movingcursor])
-                            {
-                                if (int.TryParse(X, out int x) && int.TryParse(Y, out int y))
-                                {
-                                    BuiltinMethod.MovingCursor(x, y);
-                                }
-                            }
-                            if (SelectedEmbeddedAction == Program.EmbeddedActions[(int)EmbeddedActionsType.pressingkeys])
-                            {
-                                if (IsMultiSymbol)
-                                {
-                                    BuiltinMethod.PressingKeys(PressingKeys);
-                                }
-                                else
-                                {
-                                    if (PressingKeys.Contains(','))
-                                    {
-                                        var stringkeys = PressingKeys.Split(",");
-                                        List<int> intkeys = new List<int>();
-                                        foreach (var key in stringkeys)
-                                        {
-                                            if (int.TryParse(key, out int k))
-                                            {
-                                                intkeys.Add(k);
-                                            }
-                                        }
-                                        if (intkeys.Count > 0)
-                                        {
-                                            BuiltinMethod.PressingKeys(intkeys.ToArray());
-                                        }
-                                    }
-                                    else
-                                    {
-                                        if (int.TryParse(PressingKeys, out int key))
-                                        {
-                                            BuiltinMethod.PressingKeys(key);
-                                        }
-                                    }
-                                }
-                            }
-                            if (SelectedEmbeddedAction == Program.EmbeddedActions[(int)EmbeddedActionsType.textspeech])
-                            {
-                                BuiltinMethod.TextSpeech(FileName);
-                            }
-                        }
-                        isRun = false;
+                        ExecuteCommand();
                     });
                 }
                 catch
@@ -264,9 +269,38 @@ namespace Marlin.Models.Main
         public static void RemoveCommand(int selectedid)
         {
             Context.ProgramData.Commands.Remove(Models.Main.Command.GetCommand(selectedid));
+
             foreach (var script in Context.ProgramData.Scripts)
             {
-                script.Commands.RemoveAll(id => id == selectedid);
+                var resactions = new List<int>();
+                var rescommands = new List<int>();
+                var resscripts = new List<int>();
+
+                var commandindex = 0;
+                var scriptindex = 0;
+
+                for (int i = 0; i < script.Actions.Count; i++)
+                {
+                    if (script.Actions[i] == 0)
+                    {
+                        if (script.Commands[commandindex] != selectedid)
+                        {
+                            rescommands.Add(script.Commands[commandindex]);
+                            resactions.Add(0);
+                        }
+                        commandindex++;
+                    }
+                    if (script.Actions[i] == 1)
+                    {
+                        resscripts.Add(script.Scripts[scriptindex]);
+                        resactions.Add(1);
+                        scriptindex++;
+                    }
+                }
+
+                script.Commands = rescommands;
+                script.Actions = resactions;
+                script.Scripts = resscripts;
             }
             ProgramData.SaveData();
         }

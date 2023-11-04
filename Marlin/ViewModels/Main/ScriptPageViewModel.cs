@@ -29,11 +29,14 @@ namespace Marlin.ViewModels.Main
         private StackPanel panel = new StackPanel();
         private StackPanel triggerpanel = new StackPanel();
         private string selectedtrigger;
-        private Command _selectedCommand = new();
+        private Models.Main.Command _selectedCommand = new();
+        private Script _selectedScript = new();
         private int selectedhour = 0;
         private int selectedminute = 0;
         private string datetrigger = "";
         private int selectredday = 0;
+        private bool _isCommand = true;
+        private bool _isScript = false;
 
         private string _pagetitle = "Новый скрипт";
 
@@ -46,6 +49,9 @@ namespace Marlin.ViewModels.Main
         private GridLength timetriggerlength = new GridLength(0, GridUnitType.Pixel);
         private GridLength marlintriggerlength = GridLength.Auto;
         private GridLength apptriggerlength = new GridLength(0, GridUnitType.Pixel);
+
+        private GridLength commandlength = GridLength.Auto;
+        private GridLength scriptlength = new GridLength(0, GridUnitType.Pixel);
 
         private GridLength datetriggerlength = GridLength.Auto;
         private GridLength weektriggerlength = new GridLength(0, GridUnitType.Pixel);
@@ -73,7 +79,7 @@ namespace Marlin.ViewModels.Main
             if (Context.SelectedId > -1)
             {
                 Context.Script = JsonConvert.DeserializeObject<Script>(JsonConvert.SerializeObject(Script.GetScript(Context.SelectedId)));
-                LoadCommands();
+                LoadActions();
                 PageTitle = Context.Script.Title;
                 Context.CopyScript = JsonConvert.DeserializeObject<Script>(JsonConvert.SerializeObject(Script.GetScript(Context.SelectedId)));
                 LoadTrigger();
@@ -142,6 +148,40 @@ namespace Marlin.ViewModels.Main
             get => Context.Settings.ViewportUnits;
         }
 
+        public bool IsCommand
+        {
+            get => _isCommand;
+            set
+            {
+                if (Set(ref _isCommand, value))
+                {
+                    IsScript = !value;
+                    if (IsScript)
+                    {
+                        Scriptlength = GridLength.Auto;
+                        Commandlength = new GridLength(0, GridUnitType.Pixel);
+                    }
+                }
+            }
+        }
+
+        public bool IsScript
+        {
+            get => _isScript;
+            set
+            {
+                if (Set(ref _isScript, value))
+                {
+                    IsCommand = !value;
+                    if (IsCommand)
+                    {
+                        Commandlength = GridLength.Auto;
+                        Scriptlength = new GridLength(0, GridUnitType.Pixel);
+                    }
+                }
+            }
+        }
+
         public StackPanel StackPanel
         {
             get => panel;
@@ -188,15 +228,36 @@ namespace Marlin.ViewModels.Main
             set => Set(ref Context.Script.Comment, value);
         }
 
-        public List<Command> Commands
+        public List<Models.Main.Command> Commands
         {
             get => Context.ProgramData.Commands;
         }
 
-        public Command SelectedCommand
+        public List<Script> Scripts
+        {
+            get
+            {
+                if (Context.SelectedId > -1)
+                {
+                    return ScriptsWithoutLoops(Context.SelectedId);
+                }
+                else
+                {
+                    return Context.ProgramData.Scripts;
+                }
+            }
+        }
+
+        public Models.Main.Command SelectedCommand
         {
             get => _selectedCommand;
             set => Set(ref _selectedCommand, value);
+        }
+
+        public Script SelectedScript
+        {
+            get => _selectedScript;
+            set => Set(ref _selectedScript, value);
         }
 
         public string PageTitle
@@ -258,6 +319,18 @@ namespace Marlin.ViewModels.Main
         {
             get => weektriggerlength;
             set => Set(ref weektriggerlength, value);
+        }
+
+        public GridLength Commandlength
+        {
+            get => commandlength;
+            set => Set(ref commandlength, value);
+        }
+
+        public GridLength Scriptlength
+        {
+            get => scriptlength;
+            set => Set(ref scriptlength, value);
         }
 
         public string TextTrigger
@@ -391,7 +464,7 @@ namespace Marlin.ViewModels.Main
 
         private bool CanButtonActionCommandExecute(object p)
         {
-            return !Program.Equals(Context.Script, Context.CopyScript) && Context.Script.Commands.Count > 1;
+            return !Program.Equals(Context.Script, Context.CopyScript) && Context.Script.Actions.Count > 1;
         }
 
         private void OnToMainCommandExecuted(object p)
@@ -406,25 +479,55 @@ namespace Marlin.ViewModels.Main
 
         private void OnAddActionCommandExecuted(object p)
         {
-            if (Context.Script.Commands.Count(cmd => cmd == SelectedCommand.id) == 1)
+            if (IsCommand)
             {
-                Models.MessageBox.MakeMessage("В этом скрипте уже присутствует такая команда.\nДобавить команду повторно?", SystemFiles.Types.MessageType.YesNoQuestion);
-                if (Context.MessageBox.Answer == "No")
+                if (Context.Script.Commands.Count(cmd => cmd == SelectedCommand.id) == 1)
                 {
-                    return;
+                    Models.MessageBox.MakeMessage("В этом скрипте уже присутствует такая команда.\nДобавить команду повторно?", SystemFiles.Types.MessageType.YesNoQuestion);
+                    if (Context.MessageBox.Answer == "No")
+                    {
+                        return;
+                    }
                 }
+                var command = CreateElement(RemoveActionCommand, "Команда: " + SelectedCommand.ToString(), Context.Script.Commands.Count, 0, Context.Script.Actions.Count);
+
+                StackPanel.Children.Add(command);
+
+                Context.Script.Commands.Add(SelectedCommand.id);
+                Context.Script.Actions.Add(0);
             }
-            var command = CreateElement(RemoveActionCommand, SelectedCommand.ToString(), Context.Script.Commands.Count);
+            if (IsScript)
+            {
+                if (Context.Script.Scripts.Count(scrpt => scrpt == SelectedScript.id) == 1)
+                {
+                    Models.MessageBox.MakeMessage("В этом скрипте уже присутствует такой скрипт.\nДобавить скрипт повторно?", SystemFiles.Types.MessageType.YesNoQuestion);
+                    if (Context.MessageBox.Answer == "No")
+                    {
+                        return;
+                    }
+                }
+                var script = CreateElement(RemoveActionCommand, "Скрипт: " + SelectedScript.ToString(), Context.Script.Scripts.Count, 1, Context.Script.Actions.Count);
 
-            StackPanel.Children.Add(command);
+                StackPanel.Children.Add(script);
 
-            Context.Script.Commands.Add(SelectedCommand.id);
+                Context.Script.Scripts.Add(SelectedScript.id);
+                Context.Script.Actions.Add(1);
+            }
         }
 
         private void OnRemoveActionCommandExecuted(object p)
         {
-            Context.Script.Commands.RemoveAt((int)p);
-            LoadCommands();
+            var actioncode = ((string)p).Split(',');
+            if (int.Parse(actioncode[1]) == 0)
+            {
+                Context.Script.Commands.RemoveAt(int.Parse(actioncode[0]));
+            }
+            if (int.Parse(actioncode[1]) == 1)
+            {
+                Context.Script.Scripts.RemoveAt(int.Parse(actioncode[0]));
+            }
+            Context.Script.Actions.RemoveAt(int.Parse(actioncode[2]));
+            LoadActions();
         }
 
         private void OnRemoveTriggerCommandExecuted(object p)
@@ -533,7 +636,7 @@ namespace Marlin.ViewModels.Main
             }
             if (ValidationTrigger(trigger))
             {
-                TriggerPanel.Children.Add(CreateElement(RemoveTriggerCommand, value, Context.Script.Triggers.Count));
+                TriggerPanel.Children.Add(CreateElement(RemoveTriggerCommand, value, Context.Script.Triggers.Count, 0, 0));
                 Context.Script.Triggers.Add(trigger);
 
                 TextTrigger = "";
@@ -626,24 +729,40 @@ namespace Marlin.ViewModels.Main
                 {
                     value += "Программа: " + Context.Script.Triggers[i].appvalue;
                 }
-                TriggerPanel.Children.Add(CreateElement(RemoveTriggerCommand, value, i));
+                TriggerPanel.Children.Add(CreateElement(RemoveTriggerCommand, value, i, 0, 0));
             }
         }
 
-        private void LoadCommands()
+        private void LoadActions()
         {
             panel.Children.Clear();
-            for (int i = 0; i < Context.Script.Commands.Count; i++)
+            int comandindex = 0;
+            int scriptindex = 0;
+
+            for (int i = 0; i < Context.Script.Actions.Count; i++)
             {
-                var command = Command.GetCommand(Context.Script.Commands[i]);
-                if (command != null)
+                if (Context.Script.Actions[i] == 0)
                 {
-                    panel.Children.Add(CreateElement(RemoveActionCommand, command.Title, i));
+                    var command = Models.Main.Command.GetCommand(Context.Script.Commands[comandindex]);
+                    if (command != null)
+                    {
+                        panel.Children.Add(CreateElement(RemoveActionCommand, "Команда: " + command.Title, comandindex, Context.Script.Actions[i], i));
+                    }
+                    comandindex++;
+                }
+                if (Context.Script.Actions[i] == 1)
+                {
+                    var script = Script.GetScript(Context.Script.Scripts[scriptindex]);
+                    if (script != null)
+                    {
+                        panel.Children.Add(CreateElement(RemoveActionCommand, "Скрипт: " + script.Title, scriptindex, Context.Script.Actions[i], i));
+                    }
+                    scriptindex++;
                 }
             }
         }
 
-        private Border CreateElement(ICommand command, string commandname, int number)
+        private Border CreateElement(ICommand command, string commandname, int number, int action, int action_number)
         {
             var border = new Border
             {
@@ -688,7 +807,7 @@ namespace Marlin.ViewModels.Main
                 VerticalAlignment = VerticalAlignment.Center,
                 FontWeight = FontWeights.Bold,
                 Command = command,
-                CommandParameter = number,
+                CommandParameter = number + "," + action + "," + action_number,
                 Background = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0)),
                 BorderBrush = Brushes.Transparent,
                 Margin = new Thickness(10, 5, 10, 5)
@@ -710,5 +829,37 @@ namespace Marlin.ViewModels.Main
             return border;
         }
 
+        private bool CheckLoopInScripts(int script_id, Script script)
+        {
+            foreach (var sc in script.Scripts)
+            {
+                var sctpt = Script.GetScript(sc);
+                if (sctpt.id == script_id)
+                {
+                    return false;
+                }
+                else
+                {
+                    if (!CheckLoopInScripts(script_id, sctpt))
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        private List<Script> ScriptsWithoutLoops(int scriptid)
+        {
+            var scriptsWithoutLoops = new List<Script>();
+            foreach (var script in Context.ProgramData.Scripts)
+            {
+                if (script.id != scriptid && CheckLoopInScripts(scriptid, script))
+                {
+                    scriptsWithoutLoops.Add(script);
+                }
+            }
+            return scriptsWithoutLoops;
+        }
     }
 }

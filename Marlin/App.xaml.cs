@@ -1,4 +1,5 @@
 ﻿using Marlin.Models;
+using Marlin.Models.Main;
 using Marlin.SystemFiles;
 using System.Threading;
 using System.Windows;
@@ -21,6 +22,7 @@ namespace Marlin
             WinSystem.RunProcess();
 
             Models.Main.Command.CheckCommands();
+            Context.ProgramData.Scripts = Script.ClearFromZero();
 
             Program.StartActions(SystemFiles.Types.TriggersType.StartMarlin);
 

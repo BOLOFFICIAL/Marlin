@@ -148,7 +148,7 @@ namespace Marlin.ViewModels.Main
                         return;
                     }
                 }
-                matchingCommand.ExecuteCommand();
+                matchingCommand.ExecuteCommandAsync();
                 return;
             }
 
@@ -181,7 +181,7 @@ namespace Marlin.ViewModels.Main
                         }
                     }
                 }
-                matchingScript.ExecuteScript();
+                matchingScript.ExecuteScriptAsync();
                 return;
             }
             Process.Start(new ProcessStartInfo

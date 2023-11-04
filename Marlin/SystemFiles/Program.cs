@@ -223,7 +223,7 @@ namespace Marlin.SystemFiles
                                 continue;
                             }
                         }
-                        command.ExecuteCommand();
+                        command.ExecuteCommandAsync();
                     }
                 }
             }
@@ -248,7 +248,7 @@ namespace Marlin.SystemFiles
                                 return;
                             }
                         }
-                        script.ExecuteScript();
+                        script.ExecuteScriptAsync();
                     }
                 }
             }

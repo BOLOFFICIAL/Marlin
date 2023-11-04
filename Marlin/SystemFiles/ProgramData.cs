@@ -32,7 +32,7 @@ namespace Marlin.SystemFiles
             }
             catch (Exception)
             {
-                MessageBox.MakeMessage("Возникла ошибка сохранения данных", MessageType.Error);
+                //MessageBox.MakeMessage("Возникла ошибка сохранения данных", MessageType.Error);
             }
         }
 

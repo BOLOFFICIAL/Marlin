@@ -140,7 +140,7 @@
                                        Foreground="{Binding Path=PageColor}"
                                        HorizontalAlignment="Left"
                                        FontWeight="Bold"
-                                       Text="Команды:"/>
+                                       Text="Действия:"/>
 
                             <ScrollViewer Grid.Row="1" 
                                           Margin="0,-10,0,10"

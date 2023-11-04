@@ -138,10 +138,55 @@
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="auto"/>
                                         <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="auto"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <ComboBox Grid.Column="0"
+                                    <Grid Grid.Column="0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Grid Grid.Column="0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <RadioButton Grid.Column="0"
+                                                         IsChecked="{Binding Path=IsCommand,UpdateSourceTrigger=PropertyChanged}"
+                                                         Margin="0,0,5,0"/>
+                                            <TextBlock Grid.Column="1"
+                                                       Margin="0,5,10,0"
+                                                       FontSize="15"
+                                                       Text="Команды"/>
+                                        </Grid>
+
+                                        <Grid Grid.Column="1">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="13*"/>
+                                                <ColumnDefinition Width="7*"/>
+                                                <ColumnDefinition Width="28*"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <RadioButton Grid.Column="0"
+                                                         IsChecked="{Binding Path=IsScript,UpdateSourceTrigger=PropertyChanged}"
+                                                         Margin="0,0,5,0"/>
+                                            <TextBlock Grid.Column="1"
+                                                       Margin="0,5,10,0"
+                                                       FontSize="15"
+                                                       Text="Скрипты"/>
+                                        </Grid>
+                                    </Grid>
+
+                                    <Grid Grid.Column="1">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="{Binding Path=Commandlength,UpdateSourceTrigger=PropertyChanged}"/>
+                                            <RowDefinition Height="{Binding Path=Scriptlength,UpdateSourceTrigger=PropertyChanged}"/>
+                                        </Grid.RowDefinitions>
+
+                                        <ComboBox Grid.Row="0"
                                               FontSize="15"
                                               MaxWidth="400"
                                               SelectedIndex="0"
@@ -150,7 +195,17 @@
                                               ItemsSource="{Binding Path=Commands,UpdateSourceTrigger=PropertyChanged}"
                                               HorizontalContentAlignment="Center"/>
 
-                                    <Button Grid.Column="1"
+                                        <ComboBox Grid.Row="1"
+                                                  FontSize="15"
+                                                  MaxWidth="400"
+                                                  SelectedIndex="0"
+                                                  Margin="0,0,10,0"
+                                                  SelectedValue="{Binding Path=SelectedScript,UpdateSourceTrigger=PropertyChanged}"
+                                                  ItemsSource="{Binding Path=Scripts,UpdateSourceTrigger=PropertyChanged}"
+                                                  HorizontalContentAlignment="Center"/>
+                                    </Grid>
+
+                                    <Button Grid.Column="2"
                                             Content="Добавить"
                                             Command="{Binding Path=AddActionCommand}"
                                             BorderThickness="0"
@@ -158,7 +213,7 @@
                                             Foreground="{Binding Path=ExternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
                                             Background="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"/>
 
-                                    <Border Grid.Column="2"
+                                    <Border Grid.Column="3"
                                             CornerRadius="50"
                                             Width="25"
                                             HorizontalAlignment="Right"
@@ -303,7 +358,7 @@
                                 </Grid>
                             </Grid>
 
-                            
+
                         </Grid>
 
                         <Grid Grid.Row="3"
@@ -584,7 +639,7 @@
 
             </Border>
 
-                <Grid Grid.Row="2"
+            <Grid Grid.Row="2"
                   Margin="25,0,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto"/>

@@ -34,10 +34,9 @@ namespace Marlin.SystemFiles
                                 {
                                     if (now.Hour == timetrigger.Hour && now.Minute == timetrigger.Minute && now.Second == timetrigger.Second)
                                     {
-                                        command.ExecuteCommand();
+                                        command.ExecuteCommandAsync();
                                         executed = true;
                                         break;
-
                                     }
                                 }
                             }
@@ -54,7 +53,7 @@ namespace Marlin.SystemFiles
                                         {
                                             if (now.Hour == timetrigger.Hour && now.Minute == timetrigger.Minute && now.Second == timetrigger.Second)
                                             {
-                                                command.ExecuteCommand();
+                                                command.ExecuteCommandAsync();
                                                 executed = true;
                                                 break;
                                             }
@@ -69,7 +68,7 @@ namespace Marlin.SystemFiles
                                         {
                                             if (now.Hour == date.Hour && now.Minute == date.Minute && now.Second == date.Second)
                                             {
-                                                command.ExecuteCommand();
+                                                command.ExecuteCommandAsync();
                                                 executed = true;
                                                 break;
                                             }
@@ -105,7 +104,7 @@ namespace Marlin.SystemFiles
                                 {
                                     if (now.Hour == timetrigger.Hour && now.Minute == timetrigger.Minute && now.Second == timetrigger.Second)
                                     {
-                                        script.ExecuteScript();
+                                        script.ExecuteScriptAsync();
                                         executed = true;
                                         break;
                                     }
@@ -124,7 +123,7 @@ namespace Marlin.SystemFiles
                                         {
                                             if (now.Hour == timetrigger.Hour && now.Minute == timetrigger.Minute && now.Second == timetrigger.Second)
                                             {
-                                                script.ExecuteScript();
+                                                script.ExecuteScriptAsync();
                                                 executed = true;
                                                 break;
                                             }
@@ -139,7 +138,7 @@ namespace Marlin.SystemFiles
                                         {
                                             if (now.Hour == date.Hour && now.Minute == date.Minute && now.Second == date.Second)
                                             {
-                                                script.ExecuteScript();
+                                                script.ExecuteScriptAsync();
                                                 executed = true;
                                                 break;
                                             }

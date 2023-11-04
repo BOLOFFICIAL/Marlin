@@ -4,6 +4,7 @@ using Marlin.SystemFiles;
 using Marlin.SystemFiles.Types;
 using Marlin.ViewModels.Base;
 using Marlin.Views.Main;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -40,6 +41,7 @@ namespace Marlin.ViewModels.Main
             AddActionCommand = new LambdaCommand(OnAddActionCommandExecuted);
             DeleteActionCommand = new LambdaCommand(OnDeleteActionCommandExecuted);
             Models.Main.Command.CheckCommands();
+            Context.ProgramData.Scripts = Script.ClearFromZero();
             LoadActions();
         }
 
@@ -176,7 +178,7 @@ namespace Marlin.ViewModels.Main
                         if (Context.Action == ActionType.Script)
                         {
                             var script = Script.GetScript(textBox.Text);
-                            if (script.Comment.Length > 0 || script.Triggers.Count > 0 || script.Commands.Count > 0)
+                            if (script.Comment.Length > 0 || script.Triggers.Count > 0 || script.Actions.Count > 0)
                             {
                                 Description = script.Comment;
                                 LoadTrigger(script.Triggers);
@@ -190,7 +192,7 @@ namespace Marlin.ViewModels.Main
                                 {
                                     LengthTrigger = new GridLength(1, GridUnitType.Star);
                                 }
-                                if (script.Commands.Count > 0)
+                                if (script.Actions.Count > 0)
                                 {
                                     LengthScriptCommand = new GridLength(1, GridUnitType.Star);
                                 }
@@ -265,24 +267,43 @@ namespace Marlin.ViewModels.Main
             if (Context.Action == ActionType.Command)
             {
                 var command = Models.Main.Command.GetCommand(Context.SelectedId);
-                delete = "команды " + command.Title;
+                delete = "команду " + command.Title;
             }
             if (Context.Action == ActionType.Script)
             {
                 var script = Script.GetScript(Context.SelectedId);
-                delete = "скрипта " + script.Title;
+                delete = "скрипт " + script.Title;
             }
-            if (Program.Authentication($"Для удаления {delete} подтвердите пароль", check: true))
+            if (DateTime.Now - Context.LastCheckPassword > TimeSpan.FromSeconds(Context.Settings.TimeCheckPassword))
             {
-                if (Context.Action == ActionType.Command)
+                if (Program.Authentication($"Чтоб удалить {delete} подтвердите пароль"))
                 {
-                    Models.Main.Command.RemoveCommand(Context.SelectedId);
+                    if (Context.Action == ActionType.Command)
+                    {
+                        Models.Main.Command.RemoveCommand(Context.SelectedId);
+                    }
+                    if (Context.Action == ActionType.Script)
+                    {
+                        Script.RemoveScript(Context.SelectedId);
+                    }
+                    LoadActions();
                 }
-                if (Context.Action == ActionType.Script)
+            }
+            else
+            {
+                Models.MessageBox.MakeMessage($"Удалить {delete}?", MessageType.YesNoQuestion);
+                if (Context.MessageBox.Answer == "Yes")
                 {
-                    Script.RemoveScript(Context.SelectedId);
+                    if (Context.Action == ActionType.Command)
+                    {
+                        Models.Main.Command.RemoveCommand(Context.SelectedId);
+                    }
+                    if (Context.Action == ActionType.Script)
+                    {
+                        Script.RemoveScript(Context.SelectedId);
+                    }
+                    LoadActions();
                 }
-                LoadActions();
             }
         }
 
@@ -300,7 +321,7 @@ namespace Marlin.ViewModels.Main
                     }
                 }
                 Sound.PlaySoundAsync(MessageType.Info);
-                command.ExecuteCommand();
+                command.ExecuteCommandAsync();
             }
 
             if (Context.Action == ActionType.Script)
@@ -328,7 +349,7 @@ namespace Marlin.ViewModels.Main
                     }
                 }
                 Sound.PlaySoundAsync(MessageType.Info);
-                script.ExecuteScript();
+                script.ExecuteScriptAsync();
             }
         }
 
@@ -354,7 +375,6 @@ namespace Marlin.ViewModels.Main
 
         private void LoadActions()
         {
-            Context.ProgramData.Scripts.RemoveAll(scrpt => scrpt.Commands.Count == 0);
             StackPanel.Children.Clear();
 
             if (Context.Action == ActionType.Command)
@@ -375,6 +395,7 @@ namespace Marlin.ViewModels.Main
 
             if (Context.Action == ActionType.Script)
             {
+                Context.ProgramData.Scripts = Script.ClearFromZero();
                 foreach (var script in Context.ProgramData.Scripts)
                 {
                     var border = CreateBorder();
@@ -498,9 +519,20 @@ namespace Marlin.ViewModels.Main
         private void LoadScriptCommand(Models.Main.Script script)
         {
             ScriptCommandPanel.Children.Clear();
-            foreach (var command in script.Commands)
+            var commandindex = 0;
+            var scriptindex = 0;
+            foreach (var action in script.Actions)
             {
-                ScriptCommandPanel.Children.Add(CreateElement(Models.Main.Command.GetCommand(command).ToString()));
+                if (action == 0)
+                {
+                    ScriptCommandPanel.Children.Add(CreateElement("Команда: " + Models.Main.Command.GetCommand(script.Commands[commandindex]).ToString()));
+                    commandindex++;
+                }
+                if (action == 1)
+                {
+                    ScriptCommandPanel.Children.Add(CreateElement("Скрипт: " + Models.Main.Script.GetScript(script.Scripts[scriptindex]).ToString()));
+                    scriptindex++;
+                }
             }
         }
 
