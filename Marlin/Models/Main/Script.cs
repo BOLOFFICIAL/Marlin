@@ -191,12 +191,52 @@ namespace Marlin.Models.Main
 
         public void ExecuteScriptAsync()
         {
-            //if (!isrun)
             {
                 Task.Run(() =>
                 {
                     ExecuteScript();
                 });
+            }
+        }
+
+        internal static void UpdateScripts()
+        {
+            foreach (var script in Context.ProgramData.Scripts)
+            {
+                var rescommand = new List<int>();
+                var resscript = new List<int>();
+                var resaction = new List<int>();
+
+                var comandindex = 0;
+                var scriptindex = 0;
+
+                foreach (var action in script.Actions)
+                {
+                    if (action == 0)
+                    {
+                        var cmmnd = Command.GetCommand(script.Commands[comandindex]);
+                        if (cmmnd != null)
+                        {
+                            rescommand.Add(script.Commands[comandindex]);
+                            resaction.Add(0);
+                        }
+                        comandindex++;
+                    }
+                    if (action == 1)
+                    {
+                        var scrpt = Script.GetScript(script.Scripts[scriptindex]);
+                        if (scrpt != null)
+                        {
+                            rescommand.Add(script.Scripts[scriptindex]);
+                            resaction.Add(1);
+                        }
+                        scriptindex++;
+                    }
+                }
+
+                script.Commands = rescommand;
+                script.Scripts = resscript;
+                script.Actions = resaction;
             }
         }
     }

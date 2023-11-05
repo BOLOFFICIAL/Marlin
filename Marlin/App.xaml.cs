@@ -19,7 +19,10 @@ namespace Marlin
             Thread.Sleep(1000);
             WinSystem.RunProcess();
 
-            Models.Main.Command.CheckCommands();
+            Command.CheckCommands();
+
+            Script.UpdateScripts();
+
             Context.ProgramData.Scripts = Script.ClearFromZero();
 
             Program.StartActions(SystemFiles.Types.TriggersType.StartMarlin);
