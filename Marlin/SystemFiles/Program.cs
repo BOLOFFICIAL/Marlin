@@ -141,7 +141,10 @@ namespace Marlin.SystemFiles
                 }
                 else
                 {
-                    Models.MessageBox.MakeMessage(error, MessageType.Error);
+                    if (Context.MessageBox.Answer.Length>0) 
+                    {
+                        Models.MessageBox.MakeMessage(error, MessageType.Error); 
+                    }
                     return false;
                 }
             }

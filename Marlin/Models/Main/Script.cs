@@ -74,35 +74,43 @@ namespace Marlin.Models.Main
             Context.ProgramData.Scripts.Remove(Script.GetScript(selectedid));
             foreach (var script in Context.ProgramData.Scripts)
             {
-                var resactions = new List<int>();
-                var rescommands = new List<int>();
-                var resscripts = new List<int>();
-
-                var commandindex = 0;
-                var scriptindex = 0;
-
-                for (int i = 0; i < script.Actions.Count; i++)
+                try
                 {
-                    if (script.Actions[i] == 0)
-                    {
-                        rescommands.Add(script.Commands[commandindex]);
-                        resactions.Add(0);
-                        commandindex++;
-                    }
-                    if (script.Actions[i] == 1)
-                    {
-                        if (script.Scripts[scriptindex] != selectedid)
-                        {
-                            resscripts.Add(script.Scripts[scriptindex]);
-                            resactions.Add(1);
-                        }
-                        scriptindex++;
-                    }
-                }
+                    var resactions = new List<int>();
+                    var rescommands = new List<int>();
+                    var resscripts = new List<int>();
 
-                script.Commands = rescommands;
-                script.Actions = resactions;
-                script.Scripts = resscripts;
+                    var commandindex = 0;
+                    var scriptindex = 0;
+
+                    for (int i = 0; i < script.Actions.Count; i++)
+                    {
+                        if (script.Actions[i] == 0)
+                        {
+                            rescommands.Add(script.Commands[commandindex]);
+                            resactions.Add(0);
+                            commandindex++;
+                        }
+                        if (script.Actions[i] == 1)
+                        {
+                            if (script.Scripts[scriptindex] != selectedid)
+                            {
+                                resscripts.Add(script.Scripts[scriptindex]);
+                                resactions.Add(1);
+                            }
+                            scriptindex++;
+                        }
+                    }
+
+                    script.Commands = rescommands;
+                    script.Actions = resactions;
+                    script.Scripts = resscripts;
+                }
+                catch 
+                {
+                    Context.ProgramData.Scripts.Remove(script);
+                    return;
+                }
             }
             ProgramData.SaveData();
         }
@@ -136,6 +144,7 @@ namespace Marlin.Models.Main
             {
                 resscripts = ClearFromZero();
             }
+
             return resscripts;
         }
 
@@ -203,40 +212,48 @@ namespace Marlin.Models.Main
         {
             foreach (var script in Context.ProgramData.Scripts)
             {
-                var rescommand = new List<int>();
-                var resscript = new List<int>();
-                var resaction = new List<int>();
-
-                var comandindex = 0;
-                var scriptindex = 0;
-
-                foreach (var action in script.Actions)
+                try 
                 {
-                    if (action == 0)
-                    {
-                        var cmmnd = Command.GetCommand(script.Commands[comandindex]);
-                        if (cmmnd != null)
-                        {
-                            rescommand.Add(script.Commands[comandindex]);
-                            resaction.Add(0);
-                        }
-                        comandindex++;
-                    }
-                    if (action == 1)
-                    {
-                        var scrpt = Script.GetScript(script.Scripts[scriptindex]);
-                        if (scrpt != null)
-                        {
-                            rescommand.Add(script.Scripts[scriptindex]);
-                            resaction.Add(1);
-                        }
-                        scriptindex++;
-                    }
-                }
+                    var rescommand = new List<int>();
+                    var resscript = new List<int>();
+                    var resaction = new List<int>();
 
-                script.Commands = rescommand;
-                script.Scripts = resscript;
-                script.Actions = resaction;
+                    var comandindex = 0;
+                    var scriptindex = 0;
+
+                    foreach (var action in script.Actions)
+                    {
+                        if (action == 0)
+                        {
+                            var cmmnd = Command.GetCommand(script.Commands[comandindex]);
+                            if (cmmnd != null)
+                            {
+                                rescommand.Add(script.Commands[comandindex]);
+                                resaction.Add(0);
+                            }
+                            comandindex++;
+                        }
+                        if (action == 1)
+                        {
+                            var scrpt = Script.GetScript(script.Scripts[scriptindex]);
+                            if (scrpt != null)
+                            {
+                                rescommand.Add(script.Scripts[scriptindex]);
+                                resaction.Add(1);
+                            }
+                            scriptindex++;
+                        }
+                    }
+
+                    script.Commands = rescommand;
+                    script.Scripts = resscript;
+                    script.Actions = resaction;
+                }
+                catch 
+                {
+                    Context.ProgramData.Scripts.Remove(script);
+                    return;
+                }
             }
         }
     }

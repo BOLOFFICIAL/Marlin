@@ -40,8 +40,8 @@ namespace Marlin.ViewModels.Main
             RunActionCommand = new LambdaCommand(OnRunActionCommandExecuted);
             AddActionCommand = new LambdaCommand(OnAddActionCommandExecuted);
             DeleteActionCommand = new LambdaCommand(OnDeleteActionCommandExecuted);
-            Models.Main.Command.CheckCommands();
-            Context.ProgramData.Scripts = Script.ClearFromZero();
+            //Models.Main.Command.CheckCommands();
+            //Context.ProgramData.Scripts = Script.ClearFromZero();
             LoadActions();
         }
 
@@ -376,10 +376,12 @@ namespace Marlin.ViewModels.Main
         private void LoadActions()
         {
             StackPanel.Children.Clear();
+            Models.Main.Command.CheckCommands();
+            Context.ProgramData.Scripts = Script.ClearFromZero();
+            ProgramData.SaveData();
 
             if (Context.Action == ActionType.Command)
             {
-                Models.Main.Command.CheckCommands();
                 foreach (var command in Context.ProgramData.Commands)
                 {
                     var border = CreateBorder();
@@ -395,7 +397,6 @@ namespace Marlin.ViewModels.Main
 
             if (Context.Action == ActionType.Script)
             {
-                Context.ProgramData.Scripts = Script.ClearFromZero();
                 foreach (var script in Context.ProgramData.Scripts)
                 {
                     var border = CreateBorder();

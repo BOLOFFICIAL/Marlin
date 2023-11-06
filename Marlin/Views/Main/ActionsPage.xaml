@@ -54,7 +54,7 @@
 
                     <Border Grid.Row="0"
                             CornerRadius="25"
-                            Margin="0,0,0,10"
+                            Margin="0,0,0,8"
                             Background="{Binding Path=InternalBackgroundColor,UpdateSourceTrigger=PropertyChanged}"
                             BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
                             BorderThickness="2">
