@@ -109,6 +109,7 @@ namespace Marlin.Models.Main
                 catch 
                 {
                     Context.ProgramData.Scripts.Remove(script);
+                    ProgramData.SaveData();
                     return;
                 }
             }
@@ -238,7 +239,7 @@ namespace Marlin.Models.Main
                             var scrpt = Script.GetScript(script.Scripts[scriptindex]);
                             if (scrpt != null)
                             {
-                                rescommand.Add(script.Scripts[scriptindex]);
+                                resscript.Add(script.Scripts[scriptindex]);
                                 resaction.Add(1);
                             }
                             scriptindex++;

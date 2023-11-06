@@ -272,35 +272,44 @@ namespace Marlin.Models.Main
 
             foreach (var script in Context.ProgramData.Scripts)
             {
-                var resactions = new List<int>();
-                var rescommands = new List<int>();
-                var resscripts = new List<int>();
-
-                var commandindex = 0;
-                var scriptindex = 0;
-
-                for (int i = 0; i < script.Actions.Count; i++)
+                try
                 {
-                    if (script.Actions[i] == 0)
-                    {
-                        if (script.Commands[commandindex] != selectedid)
-                        {
-                            rescommands.Add(script.Commands[commandindex]);
-                            resactions.Add(0);
-                        }
-                        commandindex++;
-                    }
-                    if (script.Actions[i] == 1)
-                    {
-                        resscripts.Add(script.Scripts[scriptindex]);
-                        resactions.Add(1);
-                        scriptindex++;
-                    }
-                }
+                    var resactions = new List<int>();
+                    var rescommands = new List<int>();
+                    var resscripts = new List<int>();
 
-                script.Commands = rescommands;
-                script.Actions = resactions;
-                script.Scripts = resscripts;
+                    var commandindex = 0;
+                    var scriptindex = 0;
+
+                    for (int i = 0; i < script.Actions.Count; i++)
+                    {
+                        if (script.Actions[i] == 0)
+                        {
+                            if (script.Commands[commandindex] != selectedid)
+                            {
+                                rescommands.Add(script.Commands[commandindex]);
+                                resactions.Add(0);
+                            }
+                            commandindex++;
+                        }
+                        if (script.Actions[i] == 1)
+                        {
+                            resscripts.Add(script.Scripts[scriptindex]);
+                            resactions.Add(1);
+                            scriptindex++;
+                        }
+                    }
+
+                    script.Commands = rescommands;
+                    script.Actions = resactions;
+                    script.Scripts = resscripts;
+                }
+                catch 
+                {
+                    Context.ProgramData.Scripts.Remove(script);
+                    ProgramData.SaveData();
+                    return;
+                }
             }
             ProgramData.SaveData();
         }
