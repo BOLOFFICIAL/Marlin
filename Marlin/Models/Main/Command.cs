@@ -1,5 +1,4 @@
-﻿using Marlin.Commands.Base;
-using Marlin.SystemFiles;
+﻿using Marlin.SystemFiles;
 using Marlin.SystemFiles.Types;
 using System;
 using System.Collections.Generic;
@@ -23,7 +22,6 @@ namespace Marlin.Models.Main
         public string Url = "";
         public bool isRun = false;
         public bool Checkpuss = false;
-        public bool OneTime = false;
         public string ResultCommand = "";
         public string SelectedAction = Program.Actions[0];
         public string SelectedEmbeddedAction = Program.EmbeddedActions[0];
@@ -242,10 +240,6 @@ namespace Marlin.Models.Main
                 }
             }
             isRun = false;
-            if (OneTime) 
-            {
-                RemoveCommand(id);
-            }
         }
 
         public void ExecuteCommandAsync()

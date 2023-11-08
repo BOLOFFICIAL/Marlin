@@ -260,12 +260,6 @@ namespace Marlin.ViewModels.Main
             }
         }
 
-        public bool OneTime
-        {
-            get => Context.Command.OneTime;
-            set => Set(ref Context.Command.OneTime, value);
-        }
-
         public string SelectedAction
         {
             get => Context.Command.SelectedAction;
