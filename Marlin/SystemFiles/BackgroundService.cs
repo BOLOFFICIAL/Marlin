@@ -16,7 +16,7 @@ namespace Marlin.SystemFiles
         {
             while (true)
             {
-                Thread.Sleep(1000);
+                Thread.Sleep(555);
                 var now = DateTime.Now;
 
                 foreach (var command in Context.ProgramData.Commands)

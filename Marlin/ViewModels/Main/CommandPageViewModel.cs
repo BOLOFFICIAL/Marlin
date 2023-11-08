@@ -708,8 +708,8 @@ namespace Marlin.ViewModels.Main
                     Command.AddCommand(Context.Command);
                 }
 
+                Sound.PlaySoundAsync(MessageType.Info);
                 ProgramData.SaveData();
-
                 Program.SetPage(new ActionsPage());
             }
         }

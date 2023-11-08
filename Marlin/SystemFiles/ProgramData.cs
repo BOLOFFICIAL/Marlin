@@ -14,7 +14,7 @@ namespace Marlin.SystemFiles
         public List<Command> Commands = new();
         public List<Script> Scripts = new();
         [JsonIgnore]
-        public string Version = "Marlin 05112023";
+        public string Version = "Marlin 08112023";
 
         public static async Task SaveData()
         {
@@ -28,7 +28,7 @@ namespace Marlin.SystemFiles
                     await sw.WriteAsync(Encryptprogramdata);
                     await sw.FlushAsync();
                 }
-                Sound.PlaySoundAsync(MessageType.Info);
+                //Sound.PlaySoundAsync(MessageType.Info);
             }
             catch (Exception)
             {

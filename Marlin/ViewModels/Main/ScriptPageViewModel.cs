@@ -456,7 +456,7 @@ namespace Marlin.ViewModels.Main
                 {
                     Script.AddScript(Context.Script);
                 }
-
+                Sound.PlaySoundAsync(MessageType.Info);
                 ProgramData.SaveData();
                 Program.SetPage(new ActionsPage());
             }
