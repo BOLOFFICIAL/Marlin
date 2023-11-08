@@ -11,6 +11,7 @@ namespace Marlin.Models.Main
         public int id = 1;
         public string Title = "";
         public bool Checkpuss = false;
+        public bool OneTime = false;
         public int TimeDelay = 0;
         public string Comment = "";
         public bool execute = true;
@@ -106,7 +107,7 @@ namespace Marlin.Models.Main
                     script.Actions = resactions;
                     script.Scripts = resscripts;
                 }
-                catch 
+                catch
                 {
                     Context.ProgramData.Scripts.Remove(script);
                     ProgramData.SaveData();
@@ -159,44 +160,62 @@ namespace Marlin.Models.Main
             {
                 if (action == 0)
                 {
-                    var command = Command.GetCommand(Commands[commandindex]);
-                    if (command != null)
+                    try
                     {
-                        if (execute)
+                        var command = Command.GetCommand(Commands[commandindex]);
+                        if (command != null)
                         {
-                            command.ExecuteCommand();
-                            if (!(command.SelectedAction == Program.Actions[(int)SystemFiles.Types.ActionsType.builtinmethods] &&
-                            command.SelectedEmbeddedAction == Program.EmbeddedActions[(int)EmbeddedActionsType.textspeech]))
+                            if (execute)
                             {
-                                Thread.Sleep(delay * 100);
+                                command.ExecuteCommand();
+                                if (!(command.SelectedAction == Program.Actions[(int)SystemFiles.Types.ActionsType.builtinmethods] &&
+                                command.SelectedEmbeddedAction == Program.EmbeddedActions[(int)EmbeddedActionsType.textspeech]))
+                                {
+                                    Thread.Sleep(delay * 100);
+                                }
+                            }
+                            else
+                            {
+                                return;
                             }
                         }
-                        else
-                        {
-                            return;
-                        }
                     }
-                    commandindex++;
+                    catch { }
+                    finally
+                    {
+                        commandindex++;
+                    }
                 }
                 if (action == 1)
                 {
-                    var script = Script.GetScript(Scripts[scriptindex]);
-                    if (script != null)
+                    try
                     {
-                        if (execute)
+                        var script = Script.GetScript(Scripts[scriptindex]);
+                        if (script != null)
                         {
-                            script.ExecuteScript();
-                            Thread.Sleep(delay * 100);
-                        }
-                        else
-                        {
-                            return;
+                            if (execute)
+                            {
+                                script.ExecuteScript();
+                                Thread.Sleep(delay * 100);
+                            }
+                            else
+                            {
+                                return;
+                            }
                         }
                     }
-                    scriptindex++;
+                    catch { }
+                    finally
+                    {
+                        scriptindex++;
+                    }
                 }
             }
             isrun = false;
+            if (OneTime)
+            {
+                RemoveScript(id);
+            }
         }
 
         public void ExecuteScriptAsync()
@@ -213,7 +232,7 @@ namespace Marlin.Models.Main
         {
             foreach (var script in Context.ProgramData.Scripts)
             {
-                try 
+                try
                 {
                     var rescommand = new List<int>();
                     var resscript = new List<int>();
@@ -250,7 +269,7 @@ namespace Marlin.Models.Main
                     script.Scripts = resscript;
                     script.Actions = resaction;
                 }
-                catch 
+                catch
                 {
                     Context.ProgramData.Scripts.Remove(script);
                     return;

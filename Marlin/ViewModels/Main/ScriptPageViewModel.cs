@@ -216,6 +216,12 @@ namespace Marlin.ViewModels.Main
             }
         }
 
+        public bool OneTime
+        {
+            get => Context.Script.OneTime;
+            set => Set(ref Context.Script.OneTime, value);
+        }
+
         public int TimeDelay
         {
             get => Context.Script.TimeDelay;

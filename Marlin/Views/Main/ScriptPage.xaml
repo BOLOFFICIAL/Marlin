@@ -257,6 +257,7 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="auto"/>
                                     <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
                                 </Grid.RowDefinitions>
 
                                 <Grid Grid.Row="0"
@@ -355,6 +356,49 @@
                                                    HorizontalAlignment="Center"
                                                    Text="?"/>
                                     </Border>
+                                </Grid>
+
+                                <Grid Grid.Row="2">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Grid Grid.Row="0"
+                                          Margin="0,0,0,10">
+
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto"/>
+                                            <ColumnDefinition Width="auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock Grid.Column="0"  
+                                                   FontSize="15"
+                                                   Margin="0,0,10,0"
+                                                   Foreground="{Binding Path=FontColor,UpdateSourceTrigger=PropertyChanged}"
+                                                   Text="Удалить после выполнения"/>
+
+                                        <CheckBox Grid.Column="1"
+                                                  IsChecked="{Binding Path=OneTime,UpdateSourceTrigger=PropertyChanged}"/>
+
+                                        <Border Grid.Column="2"
+                                                CornerRadius="50"
+                                                Width="25"
+                                                HorizontalAlignment="Right"
+                                                Margin="30,0,0,0"
+                                                Height="25"
+                                                ToolTip="Удаление скрипта после выполнения."
+                                                Background="Transparent"
+                                                BorderBrush="{Binding Path=PageColor,UpdateSourceTrigger=PropertyChanged}"
+                                                BorderThickness="2">
+                                            <TextBlock VerticalAlignment="Center"
+                                                       FontWeight="Bold"
+                                                       FontSize="15"
+                                                       HorizontalAlignment="Center"
+                                                       Text="?"/>
+                                        </Border>
+                                    </Grid>
                                 </Grid>
                             </Grid>
 

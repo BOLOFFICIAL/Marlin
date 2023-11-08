@@ -1,9 +1,11 @@
 ﻿using Marlin.Commands;
+using Marlin.Commands.Base;
 using Marlin.Models.Main;
 using Marlin.SystemFiles;
 using Marlin.SystemFiles.Types;
 using Marlin.ViewModels.Base;
 using Marlin.Views.Main;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +14,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
+using static System.Windows.Forms.Design.AxImporter;
 
 namespace Marlin.ViewModels.Main
 {
@@ -40,8 +43,6 @@ namespace Marlin.ViewModels.Main
             RunActionCommand = new LambdaCommand(OnRunActionCommandExecuted);
             AddActionCommand = new LambdaCommand(OnAddActionCommandExecuted);
             DeleteActionCommand = new LambdaCommand(OnDeleteActionCommandExecuted);
-            //Models.Main.Command.CheckCommands();
-            //Context.ProgramData.Scripts = Script.ClearFromZero();
             LoadActions();
         }
 
@@ -309,10 +310,18 @@ namespace Marlin.ViewModels.Main
 
         private void OnRunActionCommandExecuted(object p)
         {
+            LengthAbout = new GridLength(0, GridUnitType.Pixel);
+
             Context.SelectedId = (int)p;
+
             if (Context.Action == ActionType.Command)
             {
                 var command = Models.Main.Command.GetCommand(Context.SelectedId);
+                if (command.OneTime) 
+                {
+                    command = JsonConvert.DeserializeObject<Models.Main.Command>(JsonConvert.SerializeObject(Models.Main.Command.GetCommand(Context.SelectedId)));
+                    Models.Main.Command.RemoveCommand(Context.SelectedId);
+                }
                 if (command.Checkpuss)
                 {
                     if (!Program.Authentication("Для запуска комманды подтвердите пароль"))
@@ -326,7 +335,8 @@ namespace Marlin.ViewModels.Main
 
             if (Context.Action == ActionType.Script)
             {
-                var script = Script.GetScript(Context.SelectedId);
+                var script = JsonConvert.DeserializeObject<Script>(JsonConvert.SerializeObject(Script.GetScript(Context.SelectedId)));
+
                 if (script.Checkpuss)
                 {
                     if (!Program.Authentication("Для запуска скрипта необходимо подтвердить пароль"))
@@ -348,9 +358,61 @@ namespace Marlin.ViewModels.Main
                         }
                     }
                 }
+
+                if (script.OneTime)
+                {
+                    Script.RemoveScript(Context.SelectedId);
+                }
+                else
+                {
+                    var updatescript = Script.GetScript(Context.SelectedId);
+
+                    var rescommand = new List<int>();
+                    var resscript = new List<int>();
+                    var resaction = new List<int>();
+
+                    var comandindex = 0;
+                    var scriptindex = 0;
+
+                    foreach (var action in updatescript.Actions)
+                    {
+                        if (action == 0)
+                        {
+                            var cmmnd = Models.Main.Command.GetCommand(updatescript.Commands[comandindex]);
+                            if (cmmnd != null && !cmmnd.OneTime)
+                            {
+                                rescommand.Add(updatescript.Commands[comandindex]);
+                                resaction.Add(0);
+                            }
+                            comandindex++;
+                        }
+                        if (action == 1)
+                        {
+                            var scrpt = Script.GetScript(updatescript.Scripts[scriptindex]);
+                            if (scrpt != null && !scrpt.OneTime)
+                            {
+                                resscript.Add(updatescript.Scripts[scriptindex]);
+                                resaction.Add(1);
+                            }
+                            scriptindex++;
+                        }
+                    }
+
+                    updatescript.Commands = rescommand;
+                    updatescript.Scripts = resscript;
+                    updatescript.Actions = resaction;
+
+                    if (resaction.Count == 0)
+                    {
+                        Script.RemoveScript(Context.SelectedId);
+                    }
+                }
+
                 Sound.PlaySoundAsync(MessageType.Info);
                 script.ExecuteScriptAsync();
             }
+
+            LoadActions();
         }
 
         private void OnAddActionCommandExecuted(object p)

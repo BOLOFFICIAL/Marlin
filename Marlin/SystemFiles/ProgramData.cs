@@ -28,7 +28,7 @@ namespace Marlin.SystemFiles
                     await sw.WriteAsync(Encryptprogramdata);
                     await sw.FlushAsync();
                 }
-                Sound.PlaySoundAsync(MessageType.Info);
+                //Sound.PlaySoundAsync(MessageType.Info);
             }
             catch (Exception)
             {
