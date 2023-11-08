@@ -532,7 +532,8 @@ namespace Marlin.ViewModels.Main
 
         private void OnRemoveTriggerCommandExecuted(object p)
         {
-            Context.Script.Triggers.RemoveAt((int)p);
+            var number = ((string)p).Split(",")[0];
+            Context.Script.Triggers.RemoveAt(int.Parse(number));
             LoadTrigger();
         }
 

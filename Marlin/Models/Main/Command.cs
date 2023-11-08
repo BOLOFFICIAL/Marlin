@@ -339,9 +339,9 @@ namespace Marlin.Models.Main
                 RemoveCommand(id);
             }
 
-            foreach (var id in filteredCommandsFolder)
+            if (filteredCommandsFile.Count>0) 
             {
-                RemoveCommand(id);
+                CheckCommands();
             }
         }
     }
