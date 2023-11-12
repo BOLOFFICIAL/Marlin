@@ -40,6 +40,8 @@ namespace Marlin.Models
             Context.Window = window;
 
             window.ShowDialog();
+
+            Context.MainWindow.Topmost = Context.Settings.TopMost;
         }
 
         private static void SetMessageColor()

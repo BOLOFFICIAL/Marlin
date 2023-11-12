@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using Marlin.SystemFiles;
+using System.Windows.Controls;
 
 namespace Marlin.Views.Message
 {
@@ -7,6 +8,8 @@ namespace Marlin.Views.Message
         public MessagePage()
         {
             InitializeComponent();
+            Context.MainWindow.Topmost = false;
+            Context.Window.Topmost = true;
         }
     }
 }
