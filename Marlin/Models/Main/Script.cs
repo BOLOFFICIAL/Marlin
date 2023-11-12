@@ -106,7 +106,7 @@ namespace Marlin.Models.Main
                     script.Actions = resactions;
                     script.Scripts = resscripts;
                 }
-                catch 
+                catch
                 {
                     Context.ProgramData.Scripts.Remove(script);
                     ProgramData.SaveData();
@@ -213,7 +213,7 @@ namespace Marlin.Models.Main
         {
             foreach (var script in Context.ProgramData.Scripts)
             {
-                try 
+                try
                 {
                     var rescommand = new List<int>();
                     var resscript = new List<int>();
@@ -250,7 +250,7 @@ namespace Marlin.Models.Main
                     script.Scripts = resscript;
                     script.Actions = resaction;
                 }
-                catch 
+                catch
                 {
                     Context.ProgramData.Scripts.Remove(script);
                     return;

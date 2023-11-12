@@ -68,11 +68,11 @@ namespace Marlin.ViewModels.Main
         public bool TopMost
         {
             get => Context.Settings.TopMost;
-            set 
+            set
             {
                 Set(ref Context.Settings.TopMost, value);
                 Context.MainWindow.Topmost = value;
-            } 
+            }
         }
 
         public string FontColor

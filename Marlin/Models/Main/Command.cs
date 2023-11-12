@@ -304,7 +304,7 @@ namespace Marlin.Models.Main
                     script.Actions = resactions;
                     script.Scripts = resscripts;
                 }
-                catch 
+                catch
                 {
                     Context.ProgramData.Scripts.Remove(script);
                     ProgramData.SaveData();
@@ -339,7 +339,7 @@ namespace Marlin.Models.Main
                 RemoveCommand(id);
             }
 
-            if (filteredCommandsFile.Count>0) 
+            if (filteredCommandsFile.Count > 0)
             {
                 CheckCommands();
             }
