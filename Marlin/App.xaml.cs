@@ -14,6 +14,7 @@ namespace Marlin
             base.OnStartup(e);
 
             Settings.LoadSettings();
+            
             ProgramData.LoadData();
 
             Thread.Sleep(1000);

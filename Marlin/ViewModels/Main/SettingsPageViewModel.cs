@@ -65,6 +65,16 @@ namespace Marlin.ViewModels.Main
             set => Set(ref Context.Settings.IsАutorun, value);
         }
 
+        public bool TopMost
+        {
+            get => Context.Settings.TopMost;
+            set 
+            {
+                Set(ref Context.Settings.TopMost, value);
+                Context.MainWindow.Topmost = value;
+            } 
+        }
+
         public string FontColor
         {
             get => Context.Settings.Theme.FontColor;

@@ -22,6 +22,7 @@ namespace Marlin.Models
         public string MainFolder = "";
         public string MainFolderPath = "";
         public bool IsSay = true;
+        public bool TopMost = false;
         public int Speed = 3;
         public string Gender = "";
         public bool IsАutorun = true;

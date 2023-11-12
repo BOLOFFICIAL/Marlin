@@ -11,6 +11,7 @@ namespace Marlin
         {
             InitializeComponent();
             Context.MainWindow = this;
+            this.Topmost = Context.Settings.TopMost;
             Context.MainWindow.Content = new MainPage();
         }
 
